@@ -15,7 +15,7 @@
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",
   "name": "@wireapp/desktop-updater-spec",
-  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-meta",
+  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-spec",
   "scripts": {
     "build": "yarn build:node",
     "build:node": "tsc",
