@@ -78,6 +78,7 @@ export interface Decision {
   /**
    * True, if user selected to do the update.
    */
+
   allow: boolean;
   /**
    * True, if user enabled automatic updates.
