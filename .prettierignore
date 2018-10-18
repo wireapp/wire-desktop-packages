@@ -1,0 +1,5 @@
+.travis.yml
+**/dist/**
+CHANGELOG.md
+node_modules
+package.json
