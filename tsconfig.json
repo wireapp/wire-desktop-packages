@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["DOM", "ES2017"],
+    "jsx": "react",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2017"
+  }
+}

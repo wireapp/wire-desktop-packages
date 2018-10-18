@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "lerna": "3.4.3"
+  },
+  "private": true,
+  "scripts": {
+    "boot": "lerna bootstrap --reject-cycles",
+    "clean": "lerna run clean",
+    "dist": "yarn clean && lerna run dist",
+    "test:all": "yarn && yarn dist && lerna run test"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
