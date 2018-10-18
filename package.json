@@ -1,13 +1,55 @@
 {
   "devDependencies": {
-    "lerna": "3.4.3"
+    "babel-eslint": "10.0.1",
+    "eslint": "5.7.0",
+    "eslint-config-prettier": "3.1.0",
+    "eslint-plugin-jasmine": "2.10.1",
+    "eslint-plugin-no-unsanitized": "3.0.2",
+    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-react": "7.11.1",
+    "husky": "1.1.2",
+    "lerna": "3.4.3",
+    "lint-staged": "7.3.0",
+    "prettier": "1.14.3",
+    "tslint": "5.11.0",
+    "tslint-config-prettier": "1.15.0",
+    "tslint-plugin-prettier": "2.0.0",
+    "typescript": "3.1.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "tslint --config tslint.json --project tsconfig.json --fix",
+      "git add"
+    ],
+    "*.{json,md,scss,yml}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "private": true,
   "scripts": {
     "boot": "lerna bootstrap --reject-cycles",
     "clean": "lerna run clean",
     "dist": "yarn clean && lerna run dist",
-    "test:all": "yarn && yarn dist && lerna run test"
+    "fix": "yarn fix:other && yarn fix:js && yarn fix:ts",
+    "fix:js": "yarn lint:js --fix",
+    "fix:other": "yarn prettier --write",
+    "fix:ts": "yarn lint:ts --fix",
+    "lint": "yarn lint:js && yarn lint:other && yarn lint:ts",
+    "lint:js": "eslint --ignore-path .gitignore --ext .js,.jsx",
+    "lint:other": "yarn prettier --list-different",
+    "lint:ts": "tslint --config tslint.json --project tsconfig.json \"**/*.ts\"",
+    "prettier": "prettier \"**/*.{json,md,scss,yml}\"",
+    "test:all": "yarn && yarn dist && yarn lint && lerna run test"
   },
   "workspaces": [
     "packages/*"
