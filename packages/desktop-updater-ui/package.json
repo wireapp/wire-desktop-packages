@@ -33,7 +33,7 @@
   },
   "license": "GPL-3.0",
   "main": "./src/main/Installer.tsx",
-  "name": "@wireapp/desktop-updater-interface",
+  "name": "@wireapp/desktop-updater-ui",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-ui",
   "scripts": {
     "build": "yarn clean && webpack",
