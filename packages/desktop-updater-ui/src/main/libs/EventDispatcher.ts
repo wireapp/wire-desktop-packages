@@ -18,7 +18,7 @@
  */
 
 export class EventDispatcher {
-  public static send(type: string, datas: {}): void {
-    window.dispatchEvent(new CustomEvent(type, {detail: datas}));
+  public static send(type: string, data: {}): void {
+    window.dispatchEvent(new CustomEvent(type, {detail: data}));
   }
 }
