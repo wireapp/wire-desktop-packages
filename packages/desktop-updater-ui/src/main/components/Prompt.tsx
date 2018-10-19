@@ -114,20 +114,10 @@ class Prompt extends React.Component<Props, State> {
     const changelogUrl: string = customEvent.detail.changelogUrl;
     const isWebappBlacklisted: boolean = customEvent.detail.isWebappBlacklisted;
     const isWebappTamperedWith: boolean = customEvent.detail.isWebappTamperedWith;
-    const isUpdatesInstallAutomatically: boolean = customEvent.detail.isUpdatesInstallAutomatically;
 
-    console.log('Received metadata from parent:');
-    console.log(metadata);
-    console.log(changelogUrl);
-    console.log(isWebappBlacklisted);
-    console.log(isWebappTamperedWith);
-    console.log(isUpdatesInstallAutomatically);
-
-    // Set the metadata
     this.setState({metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith});
   };
 
-  // Send back the decision
   onDecisionTaken(userDecision: Partial<any>): void {
     const decision = {...this.state.decision, ...userDecision};
 
@@ -298,8 +288,7 @@ class Prompt extends React.Component<Props, State> {
                   ).toFixed(2)}{' '}
                   MB
                   <br />
-                  <Text bold>Checksum of the update:</Text>{' '}
-                  {this.state.metadata.fileChecksum.toString('hex') /*.replace(/(.{2})/g,"$1 ")*/}
+                  <Text bold>Checksum of the update:</Text> {this.state.metadata.fileChecksum.toString('hex')}
                   <br />
                   <Text bold>This update is digitally signed.</Text>
                 </Paragraph>

@@ -41,7 +41,6 @@ export default class WrapperOutdated extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    // Get metadata
     window.addEventListener('onDataReceived', this._onDataReceived, false);
   }
 

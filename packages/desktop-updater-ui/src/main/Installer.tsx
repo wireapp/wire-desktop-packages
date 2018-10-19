@@ -18,31 +18,24 @@
  */
 
 import * as React from 'react';
-import {render} from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
 import Installer from './components/Installer';
 
-const rootEl = document.getElementById('root');
-
-render(
-  <AppContainer>
-    <Installer />
-  </AppContainer>,
-  rootEl
-);
-
-// Hot Module Replacement API
-declare let module: {hot: any};
+function render(Component: React.ComponentClass) {
+  ReactDOM.render(
+    <AppContainer>
+      <Component />
+    </AppContainer>,
+    document.getElementById('root')
+  );
+}
 
 if (module.hot) {
   module.hot.accept('./components/Installer', () => {
     const NewInstaller = require('./components/Installer').default;
-
-    render(
-      <AppContainer>
-        <NewInstaller />
-      </AppContainer>,
-      rootEl
-    );
+    render(NewInstaller);
   });
 }
+
+render(Installer);

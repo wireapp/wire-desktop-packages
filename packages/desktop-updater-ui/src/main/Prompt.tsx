@@ -18,31 +18,24 @@
  */
 
 import * as React from 'react';
-import {render} from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
 import Prompt from './components/Prompt';
 
-const rootEl = document.getElementById('root');
-
-render(
-  <AppContainer>
-    <Prompt />
-  </AppContainer>,
-  rootEl
-);
-
-// Hot Module Replacement API
-declare let module: {hot: any};
+function render(Component: React.ComponentClass) {
+  ReactDOM.render(
+    <AppContainer>
+      <Component />
+    </AppContainer>,
+    document.getElementById('root')
+  );
+}
 
 if (module.hot) {
   module.hot.accept('./components/Prompt', () => {
     const NewPrompt = require('./components/Prompt').default;
-
-    render(
-      <AppContainer>
-        <NewPrompt />
-      </AppContainer>,
-      rootEl
-    );
+    render(NewPrompt);
   });
 }
+
+render(Prompt);

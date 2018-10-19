@@ -1,22 +1,14 @@
 html,
 body {
-  // Disable selection
-  -webkit-user-select: none;
   user-select: none;
   cursor: default;
 
   .selectable {
-    -webkit-user-select: text;
     user-select: text;
     cursor: text;
   }
 
   ::selection {
-    background: #171717;
-    color: #fff;
-  }
-
-  ::-webkit-selection {
     background: #171717;
     color: #fff;
   }
@@ -33,7 +25,6 @@ body {
     }
   }
 
-  // Hide overflow
   overflow: hidden;
 
   // Window dragging

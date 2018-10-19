@@ -59,7 +59,6 @@ export default class Installer extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    // Add listener
     window.addEventListener('updateProgress', this.updateProgress, false);
   }
 
