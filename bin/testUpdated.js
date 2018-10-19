@@ -16,7 +16,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  *
  */
-
+//@ts-check
 const {execSync} = require('child_process');
 
 let output;
