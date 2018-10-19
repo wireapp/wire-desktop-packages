@@ -20,7 +20,9 @@
 const {execSync} = require('child_process');
 
 let output;
+
 console.info('Checking for updated packages');
+
 try {
   output = execSync(`npx lerna updated`);
 } catch (error) {
