@@ -17,17 +17,22 @@
  *
  */
 
+//@ts-check
+
 const certutils = require('./certutils');
 const electron = require('electron');
 const https = require('https');
-const path = require('path');
-const url = require('url');
 
 const {app, ipcMain} = electron;
 const BrowserWindow = electron.BrowserWindow;
-const APP_PATH = app.getAppPath();
 
-let mainWindow;
+const platform = {
+  IS_LINUX: process.platform === 'linux',
+  IS_MAC_OS: process.platform === 'darwin',
+  IS_WINDOWS: process.platform === 'win32',
+};
+
+let mainWindow = null;
 
 const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
 
@@ -73,13 +78,7 @@ const createWindow = () => {
 
   mainWindow.on('closed', () => (mainWindow = null));
 
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(APP_PATH, 'index.html'),
-      protocol: 'file:',
-      slashes: true,
-    })
-  );
+  mainWindow.loadFile('index.html');
 
   mainWindow.webContents.on('dom-ready', () => {
     const hostnames = [
@@ -97,7 +96,7 @@ const createWindow = () => {
   });
 };
 
-app.on('ready', createWindow);
+app.on('ready', () => createWindow());
 
 app.on('window-all-closed', () => {
   app.quit();
@@ -108,3 +107,7 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+if (platform.IS_LINUX) {
+  app.disableHardwareAcceleration();
+}
