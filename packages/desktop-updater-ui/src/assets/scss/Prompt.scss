@@ -1,0 +1,20 @@
+div#root {
+  div.content {
+    width: 480px;
+  }
+
+  // Buttons
+  .decision {
+    a {
+      width: 47.5%;
+
+      &:first-child {
+        margin-right: 2.5%;
+      }
+
+      &:last-child {
+        margin-left: 2.5%;
+      }
+    }
+  }
+}

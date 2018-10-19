@@ -1,0 +1,45 @@
+html,
+body {
+  // Disable selection
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+
+  .selectable {
+    -webkit-user-select: text;
+    user-select: text;
+    cursor: text;
+  }
+
+  ::selection {
+    background: #171717;
+    color: #fff;
+  }
+
+  ::-webkit-selection {
+    background: #171717;
+    color: #fff;
+  }
+
+  background-color: transparent;
+
+  div#root {
+    .node {
+      background: transparent;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  }
+
+  // Hide overflow
+  overflow: hidden;
+
+  // Window dragging
+  -webkit-app-region: drag;
+
+  button {
+    -webkit-app-region: no-drag;
+  }
+}
