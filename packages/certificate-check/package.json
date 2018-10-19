@@ -27,6 +27,7 @@
   "license": "GPL-3.0",
   "main": "src/main.js",
   "name": "@wireapp/certificate-check",
+  "private": true,
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check",
   "scripts": {
     "build": "exit 0",
