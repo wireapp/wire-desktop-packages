@@ -8,7 +8,7 @@
       "category": "Network"
     }
   },
-  "description": "Wire Certificate Pinning Debugger",
+  "description": "Tool to check that Wire's domains use the expected certificate.",
   "dependencies": {
     "jquery": "3.3.1",
     "jsrsasign": "8.0.12",
