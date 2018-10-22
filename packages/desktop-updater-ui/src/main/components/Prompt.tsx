@@ -73,14 +73,6 @@ class Prompt extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-
-    this.onDecisionTaken = this.onDecisionTaken.bind(this);
-    this.onUpdateClick = this.onUpdateClick.bind(this);
-    this.onLaterClick = this.onLaterClick.bind(this);
-
-    this.showChangelog = this.showChangelog.bind(this);
-    this.hideChangelog = this.hideChangelog.bind(this);
-    this.toggleCheckbox = this.toggleCheckbox.bind(this);
   }
 
   static state = {
@@ -109,7 +101,7 @@ class Prompt extends React.Component<Props, State> {
     });
   }
 
-  onDataReceived = (event: Event) => {
+  onDataReceived = (event: Event): void => {
     const customEvent = event as CustomEvent;
     const metadata: Updater.Metadata = customEvent.detail.metadata;
     const changelogUrl: string = customEvent.detail.changelogUrl;
@@ -119,27 +111,27 @@ class Prompt extends React.Component<Props, State> {
     this.setState({metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith});
   };
 
-  onDecisionTaken(userDecision: Partial<any>): void {
+  onDecisionTaken = (userDecision: Partial<any>): void => {
     const decision = {...this.state.decision, ...userDecision};
 
     console.log('Sending back decision:');
     console.log(decision);
 
     EventDispatcher.send('decision', decision);
-  }
+  };
 
   componentWillUnmount(): void {
     window.removeEventListener('onDataReceived', this.onDataReceived);
   }
 
-  onUpdateClick(event: React.MouseEvent<HTMLElement>): void {
+  onUpdateClick = (event: React.MouseEvent<HTMLElement>): void => {
     this.onDecisionTaken({
       allow: true,
       skipThisUpdate: false,
     });
-  }
+  };
 
-  hideChangelog(): void {
+  hideChangelog = (): void => {
     const timeline = anime.timeline({
       autoplay: false,
       direction: 'normal',
@@ -171,9 +163,9 @@ class Prompt extends React.Component<Props, State> {
         targets: this.content,
       })
       .play();
-  }
+  };
 
-  showChangelog(): void {
+  showChangelog = (): void => {
     const timeline = anime.timeline({
       autoplay: false,
       direction: 'normal',
@@ -205,24 +197,24 @@ class Prompt extends React.Component<Props, State> {
         targets: this.modal,
       })
       .play();
-  }
+  };
 
-  onLaterClick(event: React.MouseEvent<HTMLElement>): void {
+  onLaterClick = (): void => {
     this.onDecisionTaken({
       allow: false,
       installAutomatically: false,
       skipThisUpdate: false,
     });
-  }
+  };
 
-  toggleCheckbox(event: React.ChangeEvent<HTMLInputElement>): void {
+  toggleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({
       decision: {
         ...this.state.decision,
         installAutomatically: event.target.checked,
       },
     });
-  }
+  };
 
   render() {
     // Build title and description
