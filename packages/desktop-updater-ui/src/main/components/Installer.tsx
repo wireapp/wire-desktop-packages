@@ -62,6 +62,9 @@ class Installer extends React.Component<Props, State> {
     window.addEventListener('updateProgress', this.updateProgress, false);
   }
 
+  // use componentdidupdate instead of updateprogress
+  componentDidUpdate(prevProps: Props, prevState: State) {}
+
   updateProgress = (event: Event): void => {
     const customEvent = event as CustomEvent;
     const detail: ProgressInterface = customEvent.detail;
@@ -71,7 +74,7 @@ class Installer extends React.Component<Props, State> {
     this.setState({progress: detail});
   };
 
-  finishedProgress(): void {
+  finishedProgress = (): void => {
     this.setState({
       installing: true,
       progress: {
@@ -79,7 +82,7 @@ class Installer extends React.Component<Props, State> {
         percent: 0,
       },
     });
-  }
+  };
 
   componentWillUnmount(): void {
     window.removeEventListener('updateProgress', this.updateProgress);
