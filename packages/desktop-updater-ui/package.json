@@ -32,7 +32,7 @@
     "style-loader": "0.23.1"
   },
   "license": "GPL-3.0",
-  "main": "./dist/commonjs/index.js",
+  "main": "./dist/es6/index.js",
   "name": "@wireapp/desktop-updater-ui",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-ui",
   "scripts": {
