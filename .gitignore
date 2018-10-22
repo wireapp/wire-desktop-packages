@@ -1,6 +1,7 @@
 *hot-update.js*
 .DS_Store
 *.env
+**/src/**/*.d.ts
 .idea
 .vscode
 .yarnclean

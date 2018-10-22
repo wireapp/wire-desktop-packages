@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "dist/commonjs",
+    "module": "es6",
+    "rootDir": "src/main"
+  },
+  "exclude": ["dist", "node_modules"],
+  "extends": "../../tsconfig.json"
+}

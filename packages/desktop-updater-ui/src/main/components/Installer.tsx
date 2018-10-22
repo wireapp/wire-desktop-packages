@@ -24,13 +24,13 @@ import './../assets/scss/Main.scss';
 import {Columns, Content, H2, Loading, Paragraph, Small, StyledApp} from '@wireapp/react-ui-kit';
 
 interface ProgressInterface {
-  startedAt: number;
   elapsed: number;
-  total: number;
-  transferred: number;
-  speed: number; // bytes
   percent: number;
   remaining: number | undefined;
+  speed: number; // bytes
+  startedAt: number;
+  total: number;
+  transferred: number;
 }
 
 interface Props {}
