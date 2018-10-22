@@ -49,7 +49,7 @@ import {
 
 import * as Updater from '@wireapp/desktop-updater-spec';
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 interface State {
   metadata: Updater.Metadata | null;
@@ -337,4 +337,4 @@ class Prompt extends React.Component<Props, State> {
   }
 }
 
-export default Prompt;
+export {Prompt};

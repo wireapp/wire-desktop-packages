@@ -28,9 +28,9 @@ interface State {
   environment: string | undefined;
 }
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default class WrapperOutdated extends React.Component<Props, State> {
+class WrapperOutdated extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -75,3 +75,5 @@ export default class WrapperOutdated extends React.Component<Props, State> {
     );
   }
 }
+
+export {WrapperOutdated};

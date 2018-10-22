@@ -22,6 +22,8 @@
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.1.0",
+    "@storybook/addon-actions": "4.0.0-rc.1",
+    "@storybook/react": "4.0.0-rc.1",
     "babel-loader": "8.0.4",
     "css-loader": "1.0.0",
     "html-webpack-plugin": "3.2.0",
@@ -35,13 +37,14 @@
     "webpack-dev-server": "3.1.9"
   },
   "license": "GPL-3.0",
-  "main": "./src/main/Installer.tsx",
+  "main": "./dist/desktop-updater-ui.bundle.js",
   "name": "@wireapp/desktop-updater-ui",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-ui",
   "scripts": {
     "build": "yarn clean && webpack --mode production",
     "clean": "rimraf dist",
     "dist": "yarn clean && webpack --mode production",
+    "start": "start-storybook -p 9001 -c .storybook",
     "test": "exit 0",
     "watch": "webpack-dev-server"
   },

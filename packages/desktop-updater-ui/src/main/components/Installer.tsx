@@ -33,14 +33,14 @@ interface ProgressInterface {
   remaining: number | undefined;
 }
 
-export interface Props {}
+interface Props {}
 
 interface State {
   progress: ProgressInterface;
   installing: boolean;
 }
 
-export default class Installer extends React.Component<Props, State> {
+class Installer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -118,3 +118,5 @@ export default class Installer extends React.Component<Props, State> {
     );
   }
 }
+
+export {Installer};
