@@ -53,7 +53,7 @@ import {
 
 import * as Updater from '@wireapp/desktop-updater-spec';
 
-export interface Props {}
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 interface State {
   metadata: Updater.Metadata | null;
@@ -230,7 +230,7 @@ class Prompt extends React.Component<Props, State> {
 
   render() {
     // Custom markdown
-    const heading = props => {
+    const heading: React.SFC<{level: number}> = props => {
       switch (props.level) {
         case 1:
           return <H1>{props.children}</H1>;
@@ -247,7 +247,7 @@ class Prompt extends React.Component<Props, State> {
       }
     };
 
-    const paragraph = props => {
+    const paragraph: React.SFC = props => {
       return <Paragraph>{props.children}</Paragraph>;
     };
 
