@@ -27,7 +27,7 @@ interface ProgressInterface {
   elapsed: number;
   percent: number;
   remaining: number | undefined;
-  speed: number; // bytes
+  speed: number; // in bytes
   startedAt: number;
   total: number;
   transferred: number;
@@ -54,22 +54,22 @@ class Installer extends React.Component<Props, State> {
         total: 0,
         transferred: 0,
       },
+      ...props,
     };
-    this.updateProgress = this.updateProgress.bind(this);
   }
 
   componentDidMount(): void {
     window.addEventListener('updateProgress', this.updateProgress, false);
   }
 
-  updateProgress(event: Event): void {
+  updateProgress = (event: Event): void => {
     const customEvent = event as CustomEvent;
     const detail: ProgressInterface = customEvent.detail;
     if (detail.percent === 1) {
       return this.finishedProgress();
     }
     this.setState({progress: detail});
-  }
+  };
 
   finishedProgress(): void {
     this.setState({

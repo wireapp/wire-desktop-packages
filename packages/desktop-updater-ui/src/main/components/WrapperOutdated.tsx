@@ -28,34 +28,33 @@ interface State {
   environment: string | undefined;
 }
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props {}
 
 class WrapperOutdated extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       environment: undefined,
+      ...props,
     };
-    this._onDataReceived = this._onDataReceived.bind(this);
-    this._onCloseClick = this._onCloseClick.bind(this);
   }
 
   componentDidMount(): void {
     window.addEventListener('onDataReceived', this._onDataReceived, false);
   }
 
-  _onDataReceived(event: Event): void {
+  _onDataReceived = (event: Event): void => {
     const environment = (event as CustomEvent).detail;
     this.setState({environment});
-  }
+  };
 
-  _onCloseClick(): void {
+  _onCloseClick = (): void => {
     EventDispatcher.send('onButtonClicked', {showDetails: true});
-  }
+  };
 
-  componentWillUnmount(): void {
+  componentWillUnmount = (): void => {
     window.removeEventListener('onDataReceived', this._onDataReceived);
-  }
+  };
 
   render() {
     return (
