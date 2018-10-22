@@ -26,8 +26,8 @@ import * as anime from 'animejs';
 import * as Long from 'long';
 import {DateTime} from 'luxon';
 
-import './../assets/scss/Main.scss';
-import './../assets/scss/Prompt.scss';
+import '../../../src/main/assets/scss/Main.scss';
+import '../../../src/main/assets/scss/Prompt.scss';
 
 import {COLOR} from '@wireapp/react-ui-kit/dist/Identity';
 

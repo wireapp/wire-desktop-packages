@@ -18,8 +18,8 @@
  */
 
 import * as React from 'react';
-import './../assets/scss/Installer.scss';
-import './../assets/scss/Main.scss';
+import '../../../src/main/assets/scss/Installer.scss';
+import '../../../src/main/assets/scss/Main.scss';
 
 import {Columns, Content, H2, Loading, Paragraph, Small, StyledApp} from '@wireapp/react-ui-kit';
 
