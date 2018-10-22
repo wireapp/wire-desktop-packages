@@ -242,7 +242,7 @@ class Prompt extends React.Component<Props, State> {
           return <H4>{props.children}</H4>;
         case 5:
           return <H5>{props.children}</H5>;
-        case 6:
+        default:
           return <H6>{props.children}</H6>;
       }
     };
