@@ -38,7 +38,12 @@ import {
   Checkbox,
   Container,
   Content,
+  H1,
   H2,
+  H3,
+  H4,
+  H5,
+  H6,
   Link,
   Paragraph,
   Small,
@@ -224,6 +229,28 @@ class Prompt extends React.Component<Props, State> {
   }
 
   render() {
+    // Custom markdown
+    const heading = props => {
+      switch (props.level) {
+        case 1:
+          return <H1>{props.children}</H1>;
+        case 2:
+          return <H2>{props.children}</H2>;
+        case 3:
+          return <H3>{props.children}</H3>;
+        case 4:
+          return <H4>{props.children}</H4>;
+        case 5:
+          return <H5>{props.children}</H5>;
+        case 6:
+          return <H6>{props.children}</H6>;
+      }
+    };
+
+    const paragraph = props => {
+      return <Paragraph>{props.children}</Paragraph>;
+    };
+
     // Build title and description
     let title: string;
     let description: string;
@@ -248,7 +275,7 @@ class Prompt extends React.Component<Props, State> {
                 <H2>What's new</H2>
                 <Paragraph>
                   {this.state.metadata.changelog !== '' ? (
-                    <Markdown source={this.state.metadata.changelog} />
+                    <Markdown source={this.state.metadata.changelog} renderers={{heading, paragraph}} />
                   ) : (
                     <Small>No changelog is available for this update</Small>
                   )}
