@@ -17,12 +17,18 @@
  *
  */
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pkg = require('./package.json');
 const webpack = require('webpack');
 
 const projectName = pkg.name.replace('@wireapp/', '');
 
 module.exports = {
+  devServer: {
+    contentBase: `${__dirname}/dist`,
+    open: true,
+    port: 8080,
+  },
   devtool: 'source-map',
   entry: {
     [projectName]: `${__dirname}/${pkg.main}`,
@@ -45,7 +51,12 @@ module.exports = {
     filename: `[name].bundle.js`,
     path: `${__dirname}/dist`,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: `${__dirname}/src/main/index.html`,
+    }),
+  ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
