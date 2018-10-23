@@ -5,10 +5,6 @@ import React from 'react';
 import {WrapperOutdated} from '../src/main/components/WrapperOutdated';
 import {storiesOf} from '@storybook/react';
 
-// Installer
-
-const stories = storiesOf('Installer', module);
-
 const installerFakeData = {
   elapsed: 8.607,
   percent: 0.847333998771668,
@@ -19,9 +15,8 @@ const installerFakeData = {
   transferred: 6336123,
 };
 
-stories.addDecorator(withKnobs);
-
-stories
+storiesOf('Installer', module)
+  .addDecorator(withKnobs)
   .add('Starting', () => <Installer />)
   .add('In progress', () => <Installer installing={false} progress={installerFakeData} />)
   .add('Finished', () => <Installer installing={true} progress={installerFakeData} />)
