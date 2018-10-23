@@ -28,16 +28,35 @@ import {DateTime} from 'luxon';
 
 import '../../../src/main/assets/scss/Prompt.scss';
 
-import {COLOR} from '@wireapp/react-ui-kit/dist/Identity';
 import {Modal} from './ModalBack';
 
-import {ButtonLink, Checkbox, Container, Heading, Link, Paragraph, Small, Text} from '@wireapp/react-ui-kit';
+import {
+  COLOR,
+  Checkbox,
+  CheckboxLabel,
+  Container,
+  H1,
+  H2,
+  H3,
+  H4,
+  Link,
+  Paragraph,
+  Small,
+  Text,
+} from '@wireapp/react-ui-kit';
 
-import {GlobalStyle, MainContent, MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {
+  DecisionButton,
+  GlobalStyle,
+  MainContent,
+  MainHeading,
+  SelectableParagraph,
+  UpdaterContainer,
+} from './UpdaterStyles';
 
 import * as Updater from '@wireapp/desktop-updater-spec';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props {}
 
 interface State {
   metadata: Updater.Metadata | null;
@@ -61,23 +80,25 @@ class Prompt extends React.Component<Props, State> {
 
   public static TOPIC = {
     ON_DATA_RECEIVED: 'Prompt.TOPIC.ON_DATA_RECEIVED',
+    SEND_DECISION: 'Prompt.TOPIC.SEND_DECISION',
+    SEND_RESIZE_BROWSER_WINDOW: 'Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
   };
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      changelogUrl: '',
+      decision: {
+        allow: false,
+        installAutomatically: false,
+      },
+      isUpdatesInstallAutomatically: false,
+      isWebappBlacklisted: false,
+      isWebappTamperedWith: false,
+      metadata: null,
+      ...props,
+    };
   }
-
-  static state = {
-    changelogUrl: '',
-    decision: {
-      allow: false,
-      installAutomatically: false,
-    },
-    isUpdatesInstallAutomatically: false,
-    isWebappBlacklisted: false,
-    isWebappTamperedWith: false,
-    metadata: null,
-  };
 
   componentDidMount() {
     // Get metadata
@@ -93,6 +114,10 @@ class Prompt extends React.Component<Props, State> {
     });
   }
 
+  componentWillUnmount(): void {
+    window.removeEventListener(Prompt.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
+  }
+
   onDataReceived = (event: Event): void => {
     const customEvent = event as CustomEvent;
     const metadata: Updater.Metadata = customEvent.detail.metadata;
@@ -105,16 +130,8 @@ class Prompt extends React.Component<Props, State> {
 
   onDecisionTaken = (userDecision: Partial<any>): void => {
     const decision = {...this.state.decision, ...userDecision};
-
-    console.log('Sending back decision:');
-    console.log(decision);
-
-    EventDispatcher.send('decision', decision);
+    EventDispatcher.send(Prompt.TOPIC.SEND_DECISION, decision);
   };
-
-  componentWillUnmount(): void {
-    window.removeEventListener(Prompt.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
-  }
 
   onUpdateClick = (event: React.MouseEvent<HTMLElement>): void => {
     this.onDecisionTaken({
@@ -136,7 +153,7 @@ class Prompt extends React.Component<Props, State> {
           if (this.modal) {
             this.modal.style.display = 'none';
           }
-          EventDispatcher.send('resizeBrowserWindow', Prompt.PROMPT_WINDOW_SIZE);
+          EventDispatcher.send(Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW, Prompt.PROMPT_WINDOW_SIZE);
         },
         duration: 250,
         opacity: [1, 0],
@@ -167,7 +184,7 @@ class Prompt extends React.Component<Props, State> {
       .add({
         ...Prompt.defaultAnimationSettings,
         complete: () => {
-          EventDispatcher.send('resizeBrowserWindow', Prompt.CHANGELOG_WINDOW_SIZE);
+          EventDispatcher.send(Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW, Prompt.CHANGELOG_WINDOW_SIZE);
           if (this.content) {
             this.content.style.display = 'none';
           }
@@ -215,7 +232,7 @@ class Prompt extends React.Component<Props, State> {
     if (this.state.isWebappTamperedWith) {
       title = 'Wire needs to be reinstalled';
       description =
-        'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your datas.';
+        'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your data.';
     } else if (this.state.isWebappBlacklisted) {
       title = 'Your version of Wire is outdated';
       description = 'To continue using Wire, please update to the latest version.';
@@ -223,6 +240,28 @@ class Prompt extends React.Component<Props, State> {
       title = 'A new version of Wire is available';
       description = 'Update to latest version for the best Wire Desktop experience.';
     }
+
+    // Custom markdown
+    const heading: React.SFC<{level: number}> = props => {
+      switch (props.level) {
+        case 1:
+          return <H1>{props.children}</H1>;
+        case 2:
+          return <H2>{props.children}</H2>;
+        case 3:
+          return <H3>{props.children}</H3>;
+        case 4:
+        case 5:
+        case 6:
+          return <H4>{props.children}</H4>;
+        default:
+          return <H1>{props.children}</H1>;
+      }
+    };
+
+    const paragraph: React.SFC = props => {
+      return <Paragraph>{props.children}</Paragraph>;
+    };
 
     return (
       <UpdaterContainer>
@@ -233,10 +272,7 @@ class Prompt extends React.Component<Props, State> {
                 <MainHeading>What's new</MainHeading>
                 <Paragraph>
                   {this.state.metadata.changelog !== '' ? (
-                    <Markdown
-                      source={this.state.metadata.changelog}
-                      renderers={{heading: Heading, paragraph: Paragraph}}
-                    />
+                    <Markdown source={this.state.metadata.changelog} renderers={{heading, paragraph}} />
                   ) : (
                     <Small>No changelog is available for this update</Small>
                   )}
@@ -258,7 +294,7 @@ class Prompt extends React.Component<Props, State> {
                 ) : (
                   ''
                 )}
-                <Paragraph className="selectable" style={{wordBreak: 'break-all', marginBottom: 0}}>
+                <SelectableParagraph>
                   <Text bold>Version:</Text> {this.state.metadata.webappVersionNumber}
                   <br />
                   <Text bold>Released on:</Text>{' '}
@@ -279,7 +315,7 @@ class Prompt extends React.Component<Props, State> {
                   <Text bold>Checksum of the update:</Text> {this.state.metadata.fileChecksum.toString('hex')}
                   <br />
                   <Text bold>This update is digitally signed.</Text>
-                </Paragraph>
+                </SelectableParagraph>
               </div>
             </Modal>
           </div>
@@ -287,7 +323,7 @@ class Prompt extends React.Component<Props, State> {
           ''
         )}
         <div ref={elem => (this.content = elem)}>
-          <MainContent className="content">
+          <MainContent style={{width: '480px'}}>
             <MainHeading>{title}</MainHeading>
             <Paragraph>
               {description}{' '}
@@ -306,21 +342,16 @@ class Prompt extends React.Component<Props, State> {
                 checked={this.state.isUpdatesInstallAutomatically}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleCheckbox(event)}
               >
-                <Text fontSize="14px">Install Wire updates automatically in the future</Text>
+                <CheckboxLabel>{'Install Wire updates automatically in the future'}</CheckboxLabel>
               </Checkbox>
             </Paragraph>
             <Container className="decision">
-              <ButtonLink
-                style={{marginBottom: '0px'}}
-                backgroundColor={COLOR.WHITE}
-                color={COLOR.GRAY_DARKEN_72}
-                onClick={this.onLaterClick}
-              >
+              <DecisionButton backgroundColor={COLOR.WHITE} color={COLOR.GRAY_DARKEN_72} onClick={this.onLaterClick}>
                 {this.state.isWebappBlacklisted || this.state.isWebappTamperedWith ? 'Quit' : 'Later'}
-              </ButtonLink>
-              <ButtonLink style={{marginBottom: '0px'}} onClick={this.onUpdateClick}>
+              </DecisionButton>
+              <DecisionButton backgroundColor={COLOR.BLUE} onClick={this.onUpdateClick}>
                 {this.state.isWebappTamperedWith ? 'Reinstall' : 'Update'}
-              </ButtonLink>
+              </DecisionButton>
             </Container>
           </MainContent>
         </div>

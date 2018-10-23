@@ -1,4 +1,5 @@
-import {boolean, number, withKnobs} from '@storybook/addon-knobs';
+import * as Long from 'long';
+import {boolean, number, select, withKnobs} from '@storybook/addon-knobs';
 import {Installer} from '../src/main/components/Installer';
 import {Prompt} from '../src/main/components/Prompt';
 import React from 'react';
@@ -24,6 +25,35 @@ function installerStoryGenerator(data) {
         total: number('Total size (in bytes)', progress.total),
         transferred: number('Transferred size (in bytes)', progress.transferred),
       }}
+    />
+  );
+}
+function wrapperOutdatedStoryGenerator(data) {
+  const {environment} = data;
+
+  return (
+    <WrapperOutdated
+      environment={select(
+        'Platform',
+        {
+          Darwin: 'darwin',
+          Others: 'win32',
+        },
+        environment,
+        'platformSelection'
+      )}
+    />
+  );
+}
+function promptStoryGenerator(data) {
+  const {metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith} = data;
+
+  return (
+    <Prompt
+      metadata={metadata}
+      changelogUrl={changelogUrl}
+      isWebappBlacklisted={isWebappBlacklisted}
+      isWebappTamperedWith={isWebappTamperedWith}
     />
   );
 }
@@ -73,8 +103,36 @@ storiesOf('Installer', module)
     })
   );
 
-storiesOf('Prompt', module).add('New update is available', () => <Prompt />);
+storiesOf('Prompt', module).add('New update is available', () =>
+  promptStoryGenerator({
+    changelogUrl: 'https://wire.com',
+    isWebappBlacklisted: false,
+    isWebappTamperedWith: false,
+    metadata: {
+      author: ['Wire Swiss GmbH'],
+      changelog: `### Improved
+- Suggestions for mentions get more real estate.
+### Fixed
+- The cursor in the input bar was off for right-to-left languages.
+- If someone used ' or similar special character in their name we displayed the HTML entity instead in system messages. So Papa John's we would show asPapa John#34;s.
+- Decreasing the window size could cause the input area to not display correctly.
+- The manage services button in the add participants list will open team settings.`,
+      expiresOn: '2018-10-31T00:00:00+00:00',
+      /* eslint-disable no-magic-numbers */
+      fileChecksum: Buffer.alloc(32, 12),
+      fileChecksumCompressed: Buffer.alloc(32, 34),
+      fileContentLength: Long.fromNumber(9498238),
+      /* eslint-enable no-magic-numbers */
+      minimumClientVersion: '2.4.3',
+      minimumWebAppVersion: '2018-10-23-12-05-prod',
+      releaseDate: '2018-10-17T00:00:00+00:00',
+      specVersion: 1,
+      targetEnvironment: 'INTERNAL',
+      webappVersionNumber: '2018-10-23-12-05-prod',
+    },
+  })
+);
 
 storiesOf('WrapperOutdated', module)
-  .add('macOS', () => <WrapperOutdated environment="Darwin" />)
-  .add('others', () => <WrapperOutdated environment="win32" />);
+  .add('macOS', () => wrapperOutdatedStoryGenerator({environment: 'darwin'}))
+  .add('Others', () => wrapperOutdatedStoryGenerator({environment: 'win32'}));

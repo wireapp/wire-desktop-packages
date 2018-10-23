@@ -10,6 +10,7 @@
     "@wireapp/react-ui-kit": "4.3.7",
     "animejs": "2.2.0",
     "electron": "3.0.4",
+    "long": "4.0.0",
     "luxon": "1.4.3",
     "react": "16.5.2",
     "react-dom": "16.5.2",

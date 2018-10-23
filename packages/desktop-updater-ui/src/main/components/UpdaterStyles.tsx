@@ -17,7 +17,7 @@
  *
  */
 
-import {Columns, Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
+import {Button, Columns, Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
 import styled, {createGlobalStyle} from 'styled-components';
 
 const UpdaterContainer = styled(StyledApp)`
@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: default;
     background-color: transparent;
     overflow: hidden;
-    -webkit-app-region: drag;
+    -webkit-app-region: no-drag;
   }
 
   html::selection, body::selection {
@@ -38,14 +38,16 @@ const GlobalStyle = createGlobalStyle`
     color: #fff;
   }
 
-  button {
-    -webkit-app-region: no-drag;
+  button, input, label, form {
+    -webkit-app-region: drag;
   }
 `;
 
 const SelectableParagraph = styled(Paragraph)`
   user-select: text;
   cursor: text;
+  word-break: break-all;
+  margin-bottom: 0;
 `;
 
 const MainHeading = styled(H2)`
@@ -77,7 +79,13 @@ const ProgressBlockStats = styled(ProgressBlock)`
   width: 80%;
 `;
 
+const DecisionButton = styled(Button)`
+  margin-bottom: 0;
+  font-size: 14px;
+`;
+
 export {
+  DecisionButton,
   GlobalStyle,
   MainContent,
   MainHeading,

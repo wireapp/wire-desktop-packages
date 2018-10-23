@@ -66,7 +66,7 @@ class WrapperOutdated extends React.Component<Props, State> {
             ''
           ) : (
             <ButtonLink style={{marginBottom: '0px'}} onClick={this._onCloseClick}>
-              {this.state.environment === 'Darwin' ? 'Open the Mac App Store' : 'Go on Wire.com'}
+              {this.state.environment.toLowerCase() === 'darwin' ? 'Open the Mac App Store' : 'Go on Wire.com'}
             </ButtonLink>
           )}
         </Content>

@@ -20,6 +20,7 @@
 import {ArrowIcon} from '@wireapp/react-ui-kit';
 import * as React from 'react';
 import styled from 'styled-components';
+import {GlobalStyle} from './UpdaterStyles';
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -118,6 +119,7 @@ const Modal: React.SFC<Props> = ({children, fullscreen, onClose, onBackgroundCli
         data-uie-name="modal-background"
       />
     )}
+    <GlobalStyle />
   </ModalWrapper>
 );
 

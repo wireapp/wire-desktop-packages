@@ -1,11 +1,7 @@
 div#root {
-  div.content {
-    width: 480px;
-  }
-
   // Buttons
   .decision {
-    a {
+    button {
       width: 47.5%;
 
       &:first-child {
