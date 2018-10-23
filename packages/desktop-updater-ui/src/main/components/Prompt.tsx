@@ -222,6 +222,7 @@ class Prompt extends React.Component<Props, State> {
         ...this.state.decision,
         installAutomatically: event.target.checked,
       },
+      isUpdatesInstallAutomatically: event.target.checked,
     });
   };
 
