@@ -17,7 +17,7 @@
  *
  */
 
-import {Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
+import {Columns, Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
 import styled, {createGlobalStyle} from 'styled-components';
 
 const UpdaterContainer = styled(StyledApp)`
@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     user-select: none;
     cursor: default;
-    background-color: red;
+    background-color: transparent;
     overflow: hidden;
     -webkit-app-region: drag;
   }
@@ -36,6 +36,10 @@ const GlobalStyle = createGlobalStyle`
   html::selection, body::selection {
     background: #171717;
     color: #fff;
+  }
+
+  button {
+    -webkit-app-region: no-drag;
   }
 `;
 
@@ -52,4 +56,34 @@ const MainContent = styled(Content)`
   padding: 24px 34px;
 `;
 
-export {GlobalStyle, MainContent, MainHeading, SelectableParagraph, UpdaterContainer};
+const ProgressContainer = styled(Columns)`
+  display: block;
+  clear: both;
+`;
+
+const ProgressBlock = styled.div`
+  display: inline;
+  float: left;
+`;
+
+const ProgressBlockLoader = styled(ProgressBlock)`
+  width: 20%;
+  max-width: 43px;
+  margin-right: 20px;
+`;
+
+const ProgressBlockStats = styled(ProgressBlock)`
+  float: left;
+  width: 80%;
+`;
+
+export {
+  GlobalStyle,
+  MainContent,
+  MainHeading,
+  SelectableParagraph,
+  UpdaterContainer,
+  ProgressContainer,
+  ProgressBlockLoader,
+  ProgressBlockStats,
+};

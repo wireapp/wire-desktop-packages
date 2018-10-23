@@ -18,11 +18,17 @@
  */
 
 import * as React from 'react';
-import '../../../src/main/assets/scss/Installer.scss';
-import '../../../src/main/assets/scss/Main.scss';
 
-import {Columns, Loading, Paragraph, Small} from '@wireapp/react-ui-kit';
-import {GlobalStyle, MainContent, MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {Loading, Paragraph, Small} from '@wireapp/react-ui-kit';
+import {
+  GlobalStyle,
+  MainContent,
+  MainHeading,
+  ProgressBlockLoader,
+  ProgressBlockStats,
+  ProgressContainer,
+  UpdaterContainer,
+} from './UpdaterStyles';
 
 interface ProgressInterface {
   elapsed: number;
@@ -100,12 +106,12 @@ class Installer extends React.Component<Props, State> {
       <UpdaterContainer>
         <MainContent>
           <MainHeading>{this.state.installing ? 'Installing' : 'Downloading'} the update</MainHeading>
-          <Columns className="progress">
-            <div>
+          <ProgressContainer>
+            <ProgressBlockLoader>
               <Loading progress={this.state.progress.percent} />
-            </div>
-            <div>
-              <Paragraph id="progress">
+            </ProgressBlockLoader>
+            <ProgressBlockStats>
+              <Paragraph>
                 {this.state.installing
                   ? `Installing...`
                   : `${
@@ -115,14 +121,14 @@ class Installer extends React.Component<Props, State> {
                           ? `Download has started...`
                           : `${Math.round(this.state.progress.remaining)} seconds remaining`
                     }`}
-                <Small className="stats">
+                <Small style={{display: 'block'}}>
                   {(this.state.progress.transferred / 1000000).toFixed(1)} of{' '}
                   {(this.state.progress.total / 1000000).toFixed(1)} MB at{' '}
                   {(this.state.progress.speed / 1000000).toFixed(1)} Mb/s
                 </Small>
               </Paragraph>
-            </div>
-          </Columns>
+            </ProgressBlockStats>
+          </ProgressContainer>
         </MainContent>
         <GlobalStyle />
       </UpdaterContainer>
