@@ -26,7 +26,7 @@ import {UpdaterContainer} from './UpdaterStyles';
 
 interface ProgressInterface {
   elapsed: number;
-  percent: number | null;
+  percent: number | undefined;
   remaining: number | undefined;
   speed: number; // in bytes
   startedAt: number;
@@ -48,7 +48,7 @@ class Installer extends React.Component<Props, State> {
       installing: false,
       progress: {
         elapsed: 0,
-        percent: null,
+        percent: undefined,
         remaining: undefined,
         speed: 0,
         startedAt: 0,
@@ -86,7 +86,7 @@ class Installer extends React.Component<Props, State> {
       installing: true,
       progress: {
         ...this.state.progress,
-        percent: null,
+        percent: undefined,
       },
     });
   };
