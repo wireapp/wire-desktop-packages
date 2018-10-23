@@ -26,26 +26,14 @@ import * as anime from 'animejs';
 import * as Long from 'long';
 import {DateTime} from 'luxon';
 
-import '../../../src/main/assets/scss/Main.scss';
 import '../../../src/main/assets/scss/Prompt.scss';
 
 import {COLOR} from '@wireapp/react-ui-kit/dist/Identity';
-
 import {Modal} from './ModalBack';
 
-import {
-  ButtonLink,
-  Checkbox,
-  Container,
-  Content,
-  H2,
-  Heading,
-  Link,
-  Paragraph,
-  Small,
-  StyledApp,
-  Text,
-} from '@wireapp/react-ui-kit';
+import {ButtonLink, Checkbox, Container, Content, Heading, Link, Paragraph, Small, Text} from '@wireapp/react-ui-kit';
+
+import {MainHeading, UpdaterContainer} from './UpdaterStyles';
 
 import * as Updater from '@wireapp/desktop-updater-spec';
 
@@ -71,6 +59,10 @@ class Prompt extends React.Component<Props, State> {
     easing: 'easeInOutSine',
   };
 
+  public static TOPIC = {
+    ON_DATA_RECEIVED: 'Prompt.TOPIC.ON_DATA_RECEIVED',
+  };
+
   constructor(props: Props) {
     super(props);
   }
@@ -89,7 +81,7 @@ class Prompt extends React.Component<Props, State> {
 
   componentDidMount() {
     // Get metadata
-    window.addEventListener('onDataReceived', this.onDataReceived, false);
+    window.addEventListener(Prompt.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
 
     // Show popup
     anime({
@@ -121,7 +113,7 @@ class Prompt extends React.Component<Props, State> {
   };
 
   componentWillUnmount(): void {
-    window.removeEventListener('onDataReceived', this.onDataReceived);
+    window.removeEventListener(Prompt.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
   }
 
   onUpdateClick = (event: React.MouseEvent<HTMLElement>): void => {
@@ -233,12 +225,12 @@ class Prompt extends React.Component<Props, State> {
     }
 
     return (
-      <StyledApp className="node">
+      <UpdaterContainer>
         {this.state.metadata !== null ? (
           <div className="modal" style={{display: 'none'}} ref={elem => (this.modal = elem)}>
             <Modal fullscreen onClose={this.hideChangelog}>
               <div>
-                <H2>What's new</H2>
+                <MainHeading>What's new</MainHeading>
                 <Paragraph>
                   {this.state.metadata.changelog !== '' ? (
                     <Markdown
@@ -296,7 +288,7 @@ class Prompt extends React.Component<Props, State> {
         )}
         <div ref={elem => (this.content = elem)}>
           <Content className="content" style={{padding: '24px 34px'}}>
-            <H2>{title}</H2>
+            <MainHeading>{title}</MainHeading>
             <Paragraph>
               {description}{' '}
               <Link
@@ -332,7 +324,7 @@ class Prompt extends React.Component<Props, State> {
             </Container>
           </Content>
         </div>
-      </StyledApp>
+      </UpdaterContainer>
     );
   }
 }

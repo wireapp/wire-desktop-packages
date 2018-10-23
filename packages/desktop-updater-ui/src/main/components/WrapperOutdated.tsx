@@ -20,9 +20,9 @@
 import {EventDispatcher} from '../libs/EventDispatcher';
 
 import * as React from 'react';
-import './../assets/scss/Main.scss';
+import {MainHeading, UpdaterContainer} from './UpdaterStyles';
 
-import {ButtonLink, Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
+import {ButtonLink, Content, Paragraph} from '@wireapp/react-ui-kit';
 
 interface State {
   environment: string | undefined;
@@ -58,9 +58,9 @@ class WrapperOutdated extends React.Component<Props, State> {
 
   render() {
     return (
-      <StyledApp className="node">
+      <UpdaterContainer>
         <Content style={{padding: '24px 34px'}}>
-          <H2>Wire must be updated</H2>
+          <MainHeading>Wire must be updated</MainHeading>
           <Paragraph>This version of Wire is no longer supported. To continue to use it, please update it.</Paragraph>
           {typeof this.state.environment !== 'string' ? (
             ''
@@ -70,7 +70,7 @@ class WrapperOutdated extends React.Component<Props, State> {
             </ButtonLink>
           )}
         </Content>
-      </StyledApp>
+      </UpdaterContainer>
     );
   }
 }
