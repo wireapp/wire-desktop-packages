@@ -25,7 +25,7 @@ import {Columns, Content, H2, Loading, Paragraph, Small, StyledApp} from '@wirea
 
 interface ProgressInterface {
   elapsed: number;
-  percent: number;
+  percent: number | null;
   remaining: number | undefined;
   speed: number; // in bytes
   startedAt: number;
@@ -47,7 +47,7 @@ class Installer extends React.Component<Props, State> {
       installing: false,
       progress: {
         elapsed: 0,
-        percent: 0,
+        percent: null,
         remaining: undefined,
         speed: 0,
         startedAt: 0,
@@ -58,16 +58,22 @@ class Installer extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount(): void {
-    window.addEventListener('updateProgress', this.updateProgress, false);
+  public static TOPIC = {
+    ON_PROGRESS: 'Installer.TOPIC.ON_PROGRESS',
+  };
+
+  componentWillReceiveProps(nextProps: Props) {
+    this.setState(nextProps);
   }
 
-  // use componentdidupdate instead of updateprogress
-  componentDidUpdate(prevProps: Props, prevState: State) {}
+  componentDidMount(): void {
+    window.addEventListener(Installer.TOPIC.ON_PROGRESS, this.updateProgress, false);
+  }
 
   updateProgress = (event: Event): void => {
     const customEvent = event as CustomEvent;
     const detail: ProgressInterface = customEvent.detail;
+
     if (detail.percent === 1) {
       return this.finishedProgress();
     }
@@ -79,13 +85,13 @@ class Installer extends React.Component<Props, State> {
       installing: true,
       progress: {
         ...this.state.progress,
-        percent: 0,
+        percent: null,
       },
     });
   };
 
   componentWillUnmount(): void {
-    window.removeEventListener('updateProgress', this.updateProgress);
+    window.removeEventListener(Installer.TOPIC.ON_PROGRESS, this.updateProgress);
   }
 
   render() {
