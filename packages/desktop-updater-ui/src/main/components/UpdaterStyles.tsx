@@ -17,7 +17,7 @@
  *
  */
 
-import {H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
+import {Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
 import styled, {createGlobalStyle} from 'styled-components';
 
 const UpdaterContainer = styled(StyledApp)`
@@ -48,4 +48,8 @@ const MainHeading = styled(H2)`
   margin-top: 0;
 `;
 
-export {UpdaterContainer, GlobalStyle, SelectableParagraph, MainHeading};
+const MainContent = styled(Content)`
+  padding: 24px 34px;
+`;
+
+export {GlobalStyle, MainContent, MainHeading, SelectableParagraph, UpdaterContainer};

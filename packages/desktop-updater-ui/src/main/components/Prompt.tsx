@@ -31,9 +31,9 @@ import '../../../src/main/assets/scss/Prompt.scss';
 import {COLOR} from '@wireapp/react-ui-kit/dist/Identity';
 import {Modal} from './ModalBack';
 
-import {ButtonLink, Checkbox, Container, Content, Heading, Link, Paragraph, Small, Text} from '@wireapp/react-ui-kit';
+import {ButtonLink, Checkbox, Container, Heading, Link, Paragraph, Small, Text} from '@wireapp/react-ui-kit';
 
-import {MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {GlobalStyle, MainContent, MainHeading, UpdaterContainer} from './UpdaterStyles';
 
 import * as Updater from '@wireapp/desktop-updater-spec';
 
@@ -287,7 +287,7 @@ class Prompt extends React.Component<Props, State> {
           ''
         )}
         <div ref={elem => (this.content = elem)}>
-          <Content className="content" style={{padding: '24px 34px'}}>
+          <MainContent className="content">
             <MainHeading>{title}</MainHeading>
             <Paragraph>
               {description}{' '}
@@ -322,8 +322,9 @@ class Prompt extends React.Component<Props, State> {
                 {this.state.isWebappTamperedWith ? 'Reinstall' : 'Update'}
               </ButtonLink>
             </Container>
-          </Content>
+          </MainContent>
         </div>
+        <GlobalStyle />
       </UpdaterContainer>
     );
   }

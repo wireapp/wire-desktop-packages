@@ -21,8 +21,8 @@ import * as React from 'react';
 import '../../../src/main/assets/scss/Installer.scss';
 import '../../../src/main/assets/scss/Main.scss';
 
-import {Columns, Content, H2, Loading, Paragraph, Small, StyledApp} from '@wireapp/react-ui-kit';
-import {UpdaterContainer} from './UpdaterStyles';
+import {Columns, Loading, Paragraph, Small} from '@wireapp/react-ui-kit';
+import {GlobalStyle, MainContent, MainHeading, UpdaterContainer} from './UpdaterStyles';
 
 interface ProgressInterface {
   elapsed: number;
@@ -98,8 +98,8 @@ class Installer extends React.Component<Props, State> {
   render() {
     return (
       <UpdaterContainer>
-        <Content style={{padding: '24px 34px'}}>
-          <H2>{this.state.installing ? 'Installing' : 'Downloading'} the update</H2>
+        <MainContent>
+          <MainHeading>{this.state.installing ? 'Installing' : 'Downloading'} the update</MainHeading>
           <Columns className="progress">
             <div>
               <Loading progress={this.state.progress.percent} />
@@ -123,8 +123,9 @@ class Installer extends React.Component<Props, State> {
               </Paragraph>
             </div>
           </Columns>
-        </Content>
-      </StyledApp>
+        </MainContent>
+        <GlobalStyle />
+      </UpdaterContainer>
     );
   }
 }

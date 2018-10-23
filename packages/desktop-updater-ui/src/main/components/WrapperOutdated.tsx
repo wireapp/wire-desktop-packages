@@ -20,7 +20,7 @@
 import {EventDispatcher} from '../libs/EventDispatcher';
 
 import * as React from 'react';
-import {MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {GlobalStyle, MainHeading, UpdaterContainer} from './UpdaterStyles';
 
 import {ButtonLink, Content, Paragraph} from '@wireapp/react-ui-kit';
 
@@ -70,6 +70,7 @@ class WrapperOutdated extends React.Component<Props, State> {
             </ButtonLink>
           )}
         </Content>
+        <GlobalStyle />
       </UpdaterContainer>
     );
   }
