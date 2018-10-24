@@ -33,7 +33,11 @@ const GlobalStyle = createGlobalStyle`
     -webkit-app-region: no-drag;
   }
 
-  html::selection, body::selection {
+  *::selection {
+    background: #171717;
+    color: #fff;
+  }
+  *::-webkit-selection {
     background: #171717;
     color: #fff;
   }
