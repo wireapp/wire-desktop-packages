@@ -6,7 +6,28 @@ import {Prompt} from '../src/main/components/Prompt';
 import React from 'react';
 import {WrapperOutdated} from '../src/main/components/WrapperOutdated';
 
-addDecorator(withKnobs);
+const GENERIC_METADATA = {
+  author: ['Wire Swiss GmbH'],
+  changelog: `### Improved
+- Suggestions for mentions get more real estate.
+### Fixed
+- The cursor in the input bar was off for right-to-left languages.
+- If someone used ' or similar special character in their name we displayed the HTML entity instead in system messages. So Papa John's we would show asPapa John#34;s.
+- Decreasing the window size could cause the input area to not display correctly.
+- The manage services button in the add participants list will open team settings.`,
+  expiresOn: '2018-10-31T00:00:00+00:00',
+  fileChecksum: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
+  fileChecksumCompressed: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
+  /* eslint-disable no-magic-numbers */
+  fileContentLength: 9498238,
+  /* eslint-enable no-magic-numbers */
+  minimumClientVersion: '2.4.3',
+  minimumWebAppVersion: '2018-10-23-12-05-prod',
+  releaseDate: '2018-10-17T00:00:00+00:00',
+  specVersion: 1,
+  targetEnvironment: 'INTERNAL',
+  webappVersionNumber: '2018-10-23-12-05-prod',
+};
 
 function renderInstaller(data) {
   const PERCENTAGE_MULTIPLY = 100;
@@ -74,6 +95,8 @@ function renderWrapperOutdated(data) {
   );
 }
 
+addDecorator(withKnobs);
+
 storiesOf('Installer', module)
   .add('Starting', () =>
     renderInstaller({
@@ -118,28 +141,6 @@ storiesOf('Installer', module)
     })
   );
 
-const GENERIC_METADATA = {
-  author: ['Wire Swiss GmbH'],
-  changelog: `### Improved
-- Suggestions for mentions get more real estate.
-### Fixed
-- The cursor in the input bar was off for right-to-left languages.
-- If someone used ' or similar special character in their name we displayed the HTML entity instead in system messages. So Papa John's we would show asPapa John#34;s.
-- Decreasing the window size could cause the input area to not display correctly.
-- The manage services button in the add participants list will open team settings.`,
-  expiresOn: '2018-10-31T00:00:00+00:00',
-  fileChecksum: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
-  fileChecksumCompressed: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
-  /* eslint-disable no-magic-numbers */
-  fileContentLength: 9498238,
-  /* eslint-enable no-magic-numbers */
-  minimumClientVersion: '2.4.3',
-  minimumWebAppVersion: '2018-10-23-12-05-prod',
-  releaseDate: '2018-10-17T00:00:00+00:00',
-  specVersion: 1,
-  targetEnvironment: 'INTERNAL',
-  webappVersionNumber: '2018-10-23-12-05-prod',
-};
 storiesOf('Prompt', module)
   .add('New update is available', () =>
     renderPrompt({
@@ -157,7 +158,7 @@ storiesOf('Prompt', module)
       metadata: GENERIC_METADATA,
     })
   )
-  .add('Bundle is damanged', () =>
+  .add('Bundle is damaged', () =>
     renderPrompt({
       changelogUrl: 'https://medium.com/@wireupdates',
       isWebappBlacklisted: false,
