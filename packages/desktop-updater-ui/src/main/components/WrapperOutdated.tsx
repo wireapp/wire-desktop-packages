@@ -17,18 +17,20 @@
  *
  */
 
-import {EventDispatcher} from '../libs/EventDispatcher';
-
 import * as React from 'react';
 import {DecisionButton, GlobalStyle, MainHeading, UpdaterContainer} from './UpdaterStyles';
 
 import {Content, Paragraph} from '@wireapp/react-ui-kit';
 
-interface State {
-  environment: string | undefined;
+enum OS_FAMILY {
+  DARWIN = 'darwin',
 }
 
-interface Props {}
+interface State {}
+
+interface Props {
+  environment?: OS_FAMILY;
+}
 
 class WrapperOutdated extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -38,6 +40,10 @@ class WrapperOutdated extends React.Component<Props, State> {
       ...props,
     };
   }
+
+  public static TOPIC = {
+    ON_BUTTON_CLICK: 'WrapperOutdated.TOPIC.ON_BUTTON_CLICK',
+  };
 
   componentDidMount(): void {
     window.addEventListener('onDataReceived', this._onDataReceived, false);
@@ -56,10 +62,18 @@ class WrapperOutdated extends React.Component<Props, State> {
     this.setState({environment});
   };
 
-  _onCloseClick = (): void => {
-    EventDispatcher.send('onButtonClicked', {showDetails: true});
+  private readonly onCloseClick = (): void => {
+    window.dispatchEvent(new CustomEvent(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {detail: {showDetails: true}}));
   };
 
+  private renderButtonText(os?: OS_FAMILY): string {
+    switch (os) {
+      case OS_FAMILY.DARWIN:
+        return 'Open the Mac App Store';
+      default:
+        return 'Go on Wire.com';
+    }
+  }
   render() {
     return (
       <UpdaterContainer>
@@ -70,7 +84,7 @@ class WrapperOutdated extends React.Component<Props, State> {
             ''
           ) : (
             <DecisionButton onClick={this._onCloseClick}>
-              {this.state.environment.toLowerCase() === 'darwin' ? 'Open the Mac App Store' : 'Go on Wire.com'}
+              {this.renderButtonText(this.props.environment.toLowerCase())}
             </DecisionButton>
           )}
         </Content>
@@ -80,4 +94,4 @@ class WrapperOutdated extends React.Component<Props, State> {
   }
 }
 
-export {WrapperOutdated};
+export {WrapperOutdated, OS_FAMILY};
