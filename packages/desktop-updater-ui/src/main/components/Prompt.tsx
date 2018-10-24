@@ -298,6 +298,17 @@ class Prompt extends React.Component<Props, State> {
                 ) : (
                   ''
                 )}
+                {this.state.metadata.targetEnvironment !== 'PRODUCTION' ? (
+                  <SelectableParagraph>
+                    <Text bold color={COLOR.RED}>
+                      Warning: This release is intended for {this.state.metadata.targetEnvironment.toLowerCase()} use
+                      only.
+                    </Text>
+                    <br />
+                  </SelectableParagraph>
+                ) : (
+                  ''
+                )}
                 <SelectableParagraph>
                   <Text bold>Version:</Text> {this.state.metadata.webappVersionNumber}
                   <br />
