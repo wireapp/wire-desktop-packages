@@ -68,7 +68,17 @@ function renderPrompt(data) {
         minimumWebAppVersion: metadata.minimumWebAppVersion,
         releaseDate: text('Release date of this version', metadata.releaseDate),
         specVersion: 1,
-        targetEnvironment: text('Environment targeted', metadata.targetEnvironment),
+        targetEnvironment: select(
+          'Environment targeted',
+          {
+            DEV: 'DEV',
+            EDGE: 'EDGE',
+            INTERNAL: 'INTERNAL',
+            PRODUCTION: 'PRODUCTION',
+            STAGING: 'STAGING',
+          },
+          metadata.targetEnvironment
+        ),
         webappVersionNumber: text('Web app version', metadata.webappVersionNumber),
       }}
       changelogUrl={text('URL of the changelog page?', changelogUrl)}
