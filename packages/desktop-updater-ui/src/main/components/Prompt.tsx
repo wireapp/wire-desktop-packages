@@ -26,8 +26,6 @@ import * as anime from 'animejs';
 import * as Long from 'long';
 import {DateTime} from 'luxon';
 
-import '../../../src/main/assets/scss/Prompt.scss';
-
 import {Modal} from './ModalBack';
 
 import {
@@ -59,7 +57,7 @@ import * as Updater from '@wireapp/desktop-updater-spec';
 interface Props {}
 
 interface State {
-  metadata: Updater.Metadata | null;
+  metadata?: Updater.Metadata;
   decision: Updater.Decision;
   changelogUrl: string;
   isWebappBlacklisted: boolean;
@@ -95,7 +93,7 @@ class Prompt extends React.Component<Props, State> {
       isUpdatesInstallAutomatically: false,
       isWebappBlacklisted: false,
       isWebappTamperedWith: false,
-      metadata: null,
+      metadata: undefined,
       ...props,
     };
   }
@@ -255,12 +253,8 @@ class Prompt extends React.Component<Props, State> {
           return <H2>{props.children}</H2>;
         case 3:
           return <H3>{props.children}</H3>;
-        case 4:
-        case 5:
-        case 6:
-          return <H4>{props.children}</H4>;
         default:
-          return <H1>{props.children}</H1>;
+          return <H4>{props.children}</H4>;
       }
     };
 
@@ -270,7 +264,7 @@ class Prompt extends React.Component<Props, State> {
 
     return (
       <UpdaterContainer>
-        {this.state.metadata !== null ? (
+        {this.state.metadata ? (
           <div className="modal" style={{display: 'none'}} ref={elem => (this.modal = elem)}>
             <Modal fullscreen onClose={this.hideChangelog}>
               <div>

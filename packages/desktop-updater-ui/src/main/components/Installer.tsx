@@ -32,8 +32,8 @@ import {
 
 interface ProgressInterface {
   elapsed: number;
-  percent: number | undefined;
-  remaining: number | undefined;
+  percent?: number;
+  remaining?: number;
   speed: number; // in bytes
   startedAt: number;
   total: number;
