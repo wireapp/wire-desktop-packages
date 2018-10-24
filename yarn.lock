@@ -1766,7 +1766,7 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/styled-components@^4.0.1":
+"@types/styled-components@4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.0.1.tgz#5eb9a5474dbde3becab2bcc8f04e0b8e8dcf8c06"
   integrity sha512-y6BV+wMRengSgc5GiMi2xwT8VqjgrZFF+x/OForTnIX/VMoYvZY+Kk6mUOeGBscVaUfiAU9PU0YLsKS2y8mP9A==
@@ -1917,13 +1917,13 @@
     "@webassemblyjs/wast-parser" "1.7.8"
     "@xtuc/long" "4.2.1"
 
-"@wireapp/react-ui-kit@4.3.7":
-  version "4.3.7"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.7.tgz#b74a9df3d8b57b20f0b926c40c3d9b08b5333458"
-  integrity sha512-xPmZEwMsg4YNNyxHl9czmTfIk00z5xCypmgSUucFw4oUv8X48hCduhHjio+77hWfISbNLySSonBcKa+s+OLbLA==
+"@wireapp/react-ui-kit@4.3.10":
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.10.tgz#cd5b77f5e2b83c6b012796b0f439e75119ded89c"
+  integrity sha512-PcT5RDNxEB6BNyAhfy3xOW2jLRy9Jjpe84i7x8HDK0cbbnl9Hmm6pWComfQWXjG2Isfg+cgjueaO1HV6/u7Wug==
   dependencies:
     "@types/color" "3.0.0"
-    bazinga64 "5.3.17"
+    bazinga64 "5.3.18"
     color "3.1.0"
     react "16.5.2"
     react-dom "16.5.2"
@@ -2683,10 +2683,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.17:
-  version "5.3.17"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.17.tgz#51dd94b4d0fff409667a04b3e39dd6e3b24d6363"
-  integrity sha512-aZ/y4CswCePm6h7TcwpKDmeiEpd7Y4qZZqWDBjzZS2/8VgWlvoyPam0jum8EkpCiFBjy/QFTVI6tDVkTJjJjmg==
+bazinga64@5.3.18:
+  version "5.3.18"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.18.tgz#becc55a3dbb261670fe00ac0e679a36189bd2eac"
+  integrity sha512-VaOrZ2HTYEMqqZ8u9Sk4fR5OLiwhM3ltOibyatp5n6DWm4oQaKHjealhh11aeLtb1DPEq2RxYeHbmCSHBvslkw==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -6902,7 +6902,7 @@ logdown@3.2.7:
   dependencies:
     chalk "^2.3.0"
 
-long@4.0.0, long@^4.0.0:
+long@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/long/-/long-4.0.0.tgz#9a7b71cfb7d361a194ea555241c92f7468d5bf28"
   integrity sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==
