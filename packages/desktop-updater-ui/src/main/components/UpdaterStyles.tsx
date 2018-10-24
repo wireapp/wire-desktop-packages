@@ -18,7 +18,7 @@
  */
 
 import {Button, Columns, Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
-import styled, {createGlobalStyle} from 'styled-components';
+import styled, {StyledComponentClass, createGlobalStyle} from 'styled-components';
 
 const UpdaterContainer = styled(StyledApp)`
   background-color: transparent;
@@ -50,7 +50,7 @@ const SelectableParagraph = styled(Paragraph)`
   margin-bottom: 0;
 `;
 
-const MainHeading = styled(H2)`
+const MainHeading: StyledComponentClass<React.ClassAttributes<HTMLHeadingElement>, any, any> = styled(H2)`
   margin-top: 0;
 `;
 
@@ -79,9 +79,18 @@ const ProgressBlockStats = styled(ProgressBlock)`
   width: 80%;
 `;
 
-const DecisionButton = styled(Button)`
+const DecisionButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(Button)`
   margin-bottom: 0;
   font-size: 14px;
+  width: 47.5%;
+
+  &:first-child {
+    margin-right: 2.5%;
+  }
+
+  &:last-child {
+    margin-left: 2.5%;
+  }
 `;
 
 export {
