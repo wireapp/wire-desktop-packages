@@ -353,7 +353,7 @@ class Prompt extends React.Component<Props, State> {
             ) : (
               ''
             )}
-            <Container className="decision">
+            <Container>
               <DecisionButton backgroundColor={COLOR.WHITE} color={COLOR.GRAY_DARKEN_72} onClick={this.onLaterClick}>
                 {this.state.isWebappBlacklisted || this.state.isWebappTamperedWith ? 'Quit' : 'Later'}
               </DecisionButton>

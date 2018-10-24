@@ -17,10 +17,9 @@
  *
  */
 
+import {Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
-import {GlobalStyle, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
-
-import {Content, Paragraph} from '@wireapp/react-ui-kit';
+import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
 
 interface State {
   environment?: NodeJS.Platform;
@@ -45,10 +44,11 @@ class WrapperOutdated extends React.Component<Props, State> {
 
   public static TOPIC = {
     ON_BUTTON_CLICK: 'WrapperOutdated.TOPIC.ON_BUTTON_CLICK',
+    ON_DATA_RECEIVED: 'WrapperOutdated.TOPIC.ON_DATA_RECEIVED',
   };
 
   componentDidMount(): void {
-    window.addEventListener('onDataReceived', this._onDataReceived, false);
+    window.addEventListener(WrapperOutdated.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -56,10 +56,10 @@ class WrapperOutdated extends React.Component<Props, State> {
   }
 
   componentWillUnmount(): void {
-    window.removeEventListener('onDataReceived', this._onDataReceived);
+    window.removeEventListener(WrapperOutdated.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
   }
 
-  _onDataReceived = (event: Event): void => {
+  onDataReceived = (event: Event): void => {
     const environment = (event as CustomEvent).detail;
     this.setState({environment});
   };
@@ -79,7 +79,7 @@ class WrapperOutdated extends React.Component<Props, State> {
   render() {
     return (
       <UpdaterContainer>
-        <Content style={{padding: '24px 34px'}}>
+        <MainContent>
           <MainHeading>Wire must be updated</MainHeading>
           <Paragraph>This version of Wire is no longer supported. To continue to use it, please update it.</Paragraph>
           {typeof this.state.environment !== 'string' ? (
@@ -87,7 +87,7 @@ class WrapperOutdated extends React.Component<Props, State> {
           ) : (
             <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.state.environment)}</RegularButton>
           )}
-        </Content>
+        </MainContent>
         <GlobalStyle />
       </UpdaterContainer>
     );
