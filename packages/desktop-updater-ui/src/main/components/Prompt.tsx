@@ -59,7 +59,7 @@ import * as Updater from '@wireapp/desktop-updater-spec';
 interface Props {}
 
 interface State {
-  metadata: Updater.Metadata | null;
+  metadata?: Updater.Metadata;
   decision: Updater.Decision;
   changelogUrl: string;
   isWebappBlacklisted: boolean;
@@ -95,7 +95,7 @@ class Prompt extends React.Component<Props, State> {
       isUpdatesInstallAutomatically: false,
       isWebappBlacklisted: false,
       isWebappTamperedWith: false,
-      metadata: null,
+      metadata: undefined,
       ...props,
     };
   }
@@ -262,7 +262,7 @@ class Prompt extends React.Component<Props, State> {
 
     return (
       <UpdaterContainer>
-        {this.state.metadata !== null ? (
+        {this.state.metadata ? (
           <div className="modal" style={{display: 'none'}} ref={elem => (this.modal = elem)}>
             <Modal fullscreen onClose={this.hideChangelog}>
               <div>
