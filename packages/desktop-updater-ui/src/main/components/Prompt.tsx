@@ -114,6 +114,10 @@ class Prompt extends React.Component<Props, State> {
     });
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    this.setState(nextProps);
+  }
+
   componentWillUnmount(): void {
     window.removeEventListener(Prompt.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
   }
@@ -338,14 +342,18 @@ class Prompt extends React.Component<Props, State> {
                 Learn more about this update
               </Link>
             </Paragraph>
-            <Paragraph>
-              <Checkbox
-                checked={this.state.isUpdatesInstallAutomatically}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleCheckbox(event)}
-              >
-                <CheckboxLabel>{'Install Wire updates automatically in the future'}</CheckboxLabel>
-              </Checkbox>
-            </Paragraph>
+            {this.state.isWebappTamperedWith === false ? (
+              <Paragraph>
+                <Checkbox
+                  checked={this.state.isUpdatesInstallAutomatically}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleCheckbox(event)}
+                >
+                  <CheckboxLabel>{'Install Wire updates automatically in the future'}</CheckboxLabel>
+                </Checkbox>
+              </Paragraph>
+            ) : (
+              ''
+            )}
             <Container className="decision">
               <DecisionButton backgroundColor={COLOR.WHITE} color={COLOR.GRAY_DARKEN_72} onClick={this.onLaterClick}>
                 {this.state.isWebappBlacklisted || this.state.isWebappTamperedWith ? 'Quit' : 'Later'}

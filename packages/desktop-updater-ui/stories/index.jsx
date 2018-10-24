@@ -1,5 +1,5 @@
 import * as Long from 'long';
-import {boolean, number, select, withKnobs} from '@storybook/addon-knobs';
+import {boolean, number, select, text, withKnobs} from '@storybook/addon-knobs';
 import {Installer} from '../src/main/components/Installer';
 import {Prompt} from '../src/main/components/Prompt';
 import React from 'react';
@@ -39,8 +39,7 @@ function wrapperOutdatedStoryGenerator(data) {
           Darwin: 'darwin',
           Others: 'win32',
         },
-        environment,
-        'platformSelection'
+        environment
       )}
     />
   );
@@ -50,10 +49,23 @@ function promptStoryGenerator(data) {
 
   return (
     <Prompt
-      metadata={metadata}
-      changelogUrl={changelogUrl}
-      isWebappBlacklisted={isWebappBlacklisted}
-      isWebappTamperedWith={isWebappTamperedWith}
+      metadata={{
+        author: ['Wire Swiss GmbH'],
+        changelog: text('Changelog', metadata.changelog),
+        expiresOn: text('Expiration of this update', metadata.expiresOn),
+        fileChecksum: metadata.fileChecksum,
+        fileChecksumCompressed: metadata.fileChecksumCompressed,
+        fileContentLength: Long.fromNumber(number('File length (in bytes)', metadata.fileContentLength)),
+        minimumClientVersion: metadata.minimumClientVersion,
+        minimumWebAppVersion: metadata.minimumWebAppVersion,
+        releaseDate: text('Release date of this version', metadata.releaseDate),
+        specVersion: 1,
+        targetEnvironment: text('Environment targeted', metadata.targetEnvironment),
+        webappVersionNumber: text('Web app version', metadata.webappVersionNumber),
+      }}
+      changelogUrl={text('URL of the changelog page?', changelogUrl)}
+      isWebappBlacklisted={boolean('Is the webapp version blacklisted?', isWebappBlacklisted)}
+      isWebappTamperedWith={boolean('Is the webapp data corrupted?', isWebappTamperedWith)}
     />
   );
 }
@@ -103,36 +115,55 @@ storiesOf('Installer', module)
     })
   );
 
-storiesOf('Prompt', module).add('New update is available', () =>
-  promptStoryGenerator({
-    changelogUrl: 'https://wire.com',
-    isWebappBlacklisted: false,
-    isWebappTamperedWith: false,
-    metadata: {
-      author: ['Wire Swiss GmbH'],
-      changelog: `### Improved
+const GENERIC_METADATA = {
+  author: ['Wire Swiss GmbH'],
+  changelog: `### Improved
 - Suggestions for mentions get more real estate.
 ### Fixed
 - The cursor in the input bar was off for right-to-left languages.
 - If someone used ' or similar special character in their name we displayed the HTML entity instead in system messages. So Papa John's we would show asPapa John#34;s.
 - Decreasing the window size could cause the input area to not display correctly.
 - The manage services button in the add participants list will open team settings.`,
-      expiresOn: '2018-10-31T00:00:00+00:00',
-      /* eslint-disable no-magic-numbers */
-      fileChecksum: Buffer.alloc(32, 12),
-      fileChecksumCompressed: Buffer.alloc(32, 34),
-      fileContentLength: Long.fromNumber(9498238),
-      /* eslint-enable no-magic-numbers */
-      minimumClientVersion: '2.4.3',
-      minimumWebAppVersion: '2018-10-23-12-05-prod',
-      releaseDate: '2018-10-17T00:00:00+00:00',
-      specVersion: 1,
-      targetEnvironment: 'INTERNAL',
-      webappVersionNumber: '2018-10-23-12-05-prod',
-    },
-  })
-);
+  expiresOn: '2018-10-31T00:00:00+00:00',
+  fileChecksum: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
+  fileChecksumCompressed: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
+  /* eslint-disable no-magic-numbers */
+  fileContentLength: 9498238,
+  /* eslint-enable no-magic-numbers */
+  minimumClientVersion: '2.4.3',
+  minimumWebAppVersion: '2018-10-23-12-05-prod',
+  releaseDate: '2018-10-17T00:00:00+00:00',
+  specVersion: 1,
+  targetEnvironment: 'INTERNAL',
+  webappVersionNumber: '2018-10-23-12-05-prod',
+};
+storiesOf('Prompt', module)
+  .addDecorator(withKnobs)
+  .add('New update is available', () =>
+    promptStoryGenerator({
+      changelogUrl: 'https://medium.com/@wireupdates',
+      isWebappBlacklisted: false,
+      isWebappTamperedWith: false,
+      metadata: GENERIC_METADATA,
+    })
+  )
+  .add('Webapp version is blacklisted', () =>
+    promptStoryGenerator({
+      changelogUrl: 'https://medium.com/@wireupdates',
+      isWebappBlacklisted: true,
+      isWebappTamperedWith: false,
+      metadata: GENERIC_METADATA,
+    })
+  )
+  .add('Bundle is damanged', () =>
+    promptStoryGenerator({
+      changelogUrl: 'https://medium.com/@wireupdates',
+      isWebappBlacklisted: false,
+      isWebappTamperedWith: true,
+      metadata: GENERIC_METADATA,
+    })
+  );
 
 storiesOf('WrapperOutdated', module)
-  .add('macOS', () => wrapperOutdatedStoryGenerator({environment: 'darwin'}))
-  .add('Others', () => wrapperOutdatedStoryGenerator({environment: 'win32'}));
+  .addDecorator(withKnobs)
+  .add('Wrapper version is blacklisted', () => wrapperOutdatedStoryGenerator({environment: 'darwin'}));

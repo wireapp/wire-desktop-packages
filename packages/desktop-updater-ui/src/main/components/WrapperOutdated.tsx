@@ -20,9 +20,9 @@
 import {EventDispatcher} from '../libs/EventDispatcher';
 
 import * as React from 'react';
-import {GlobalStyle, MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {DecisionButton, GlobalStyle, MainHeading, UpdaterContainer} from './UpdaterStyles';
 
-import {ButtonLink, Content, Paragraph} from '@wireapp/react-ui-kit';
+import {Content, Paragraph} from '@wireapp/react-ui-kit';
 
 interface State {
   environment: string | undefined;
@@ -43,6 +43,14 @@ class WrapperOutdated extends React.Component<Props, State> {
     window.addEventListener('onDataReceived', this._onDataReceived, false);
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    this.setState(nextProps);
+  }
+
+  componentWillUnmount(): void {
+    window.removeEventListener('onDataReceived', this._onDataReceived);
+  }
+
   _onDataReceived = (event: Event): void => {
     const environment = (event as CustomEvent).detail;
     this.setState({environment});
@@ -50,10 +58,6 @@ class WrapperOutdated extends React.Component<Props, State> {
 
   _onCloseClick = (): void => {
     EventDispatcher.send('onButtonClicked', {showDetails: true});
-  };
-
-  componentWillUnmount = (): void => {
-    window.removeEventListener('onDataReceived', this._onDataReceived);
   };
 
   render() {
@@ -65,9 +69,9 @@ class WrapperOutdated extends React.Component<Props, State> {
           {typeof this.state.environment !== 'string' ? (
             ''
           ) : (
-            <ButtonLink style={{marginBottom: '0px'}} onClick={this._onCloseClick}>
+            <DecisionButton onClick={this._onCloseClick}>
               {this.state.environment.toLowerCase() === 'darwin' ? 'Open the Mac App Store' : 'Go on Wire.com'}
-            </ButtonLink>
+            </DecisionButton>
           )}
         </Content>
         <GlobalStyle />

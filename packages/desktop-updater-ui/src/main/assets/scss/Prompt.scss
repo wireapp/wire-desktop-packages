@@ -1,16 +1,14 @@
-div#root {
-  // Buttons
-  .decision {
-    button {
-      width: 47.5%;
+// Buttons
+.decision {
+  button {
+    width: 47.5%;
 
-      &:first-child {
-        margin-right: 2.5%;
-      }
+    &:first-child {
+      margin-right: 2.5%;
+    }
 
-      &:last-child {
-        margin-left: 2.5%;
-      }
+    &:last-child {
+      margin-left: 2.5%;
     }
   }
 }
