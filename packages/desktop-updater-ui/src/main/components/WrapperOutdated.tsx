@@ -18,18 +18,16 @@
  */
 
 import * as React from 'react';
-import {DecisionButton, GlobalStyle, MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {GlobalStyle, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
 
 import {Content, Paragraph} from '@wireapp/react-ui-kit';
 
-enum OS_FAMILY {
-  DARWIN = 'darwin',
+interface State {
+  environment?: NodeJS.Platform;
 }
 
-interface State {}
-
 interface Props {
-  environment?: OS_FAMILY;
+  environment?: NodeJS.Platform;
 }
 
 class WrapperOutdated extends React.Component<Props, State> {
@@ -40,6 +38,10 @@ class WrapperOutdated extends React.Component<Props, State> {
       ...props,
     };
   }
+
+  public static OS_FAMILY: {[s: string]: NodeJS.Platform} = {
+    DARWIN: 'darwin',
+  };
 
   public static TOPIC = {
     ON_BUTTON_CLICK: 'WrapperOutdated.TOPIC.ON_BUTTON_CLICK',
@@ -66,9 +68,9 @@ class WrapperOutdated extends React.Component<Props, State> {
     window.dispatchEvent(new CustomEvent(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {detail: {showDetails: true}}));
   };
 
-  private renderButtonText(os?: OS_FAMILY): string {
+  private renderButtonText(os?: NodeJS.Platform): string {
     switch (os) {
-      case OS_FAMILY.DARWIN:
+      case WrapperOutdated.OS_FAMILY.DARWIN:
         return 'Open the Mac App Store';
       default:
         return 'Go on Wire.com';
@@ -83,9 +85,7 @@ class WrapperOutdated extends React.Component<Props, State> {
           {typeof this.state.environment !== 'string' ? (
             ''
           ) : (
-            <DecisionButton onClick={this._onCloseClick}>
-              {this.renderButtonText(this.props.environment.toLowerCase())}
-            </DecisionButton>
+            <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.state.environment)}</RegularButton>
           )}
         </Content>
         <GlobalStyle />
@@ -94,4 +94,4 @@ class WrapperOutdated extends React.Component<Props, State> {
   }
 }
 
-export {WrapperOutdated, OS_FAMILY};
+export {WrapperOutdated};

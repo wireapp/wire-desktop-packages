@@ -1,10 +1,10 @@
 import * as Long from 'long';
 import {addDecorator, storiesOf} from '@storybook/react';
 import {boolean, number, select, text, withKnobs} from '@storybook/addon-knobs';
-import {OS_FAMILY, WrapperOutdated} from '../src/main/components/WrapperOutdated';
 import {Installer} from '../src/main/components/Installer';
 import {Prompt} from '../src/main/components/Prompt';
 import React from 'react';
+import {WrapperOutdated} from '../src/main/components/WrapperOutdated';
 
 addDecorator(withKnobs);
 
@@ -66,7 +66,7 @@ function renderWrapperOutdated(data) {
         'Platform',
         {
           Others: null,
-          macOS: OS_FAMILY.DARWIN,
+          macOS: WrapperOutdated.OS_FAMILY.DARWIN,
         },
         environment
       )}

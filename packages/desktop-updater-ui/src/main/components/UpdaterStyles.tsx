@@ -79,9 +79,14 @@ const ProgressBlockStats = styled(ProgressBlock)`
   width: 80%;
 `;
 
-const DecisionButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(Button)`
+const RegularButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(Button)`
   margin-bottom: 0;
   font-size: 14px;
+`;
+
+const DecisionButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(
+  RegularButton
+)`
   width: 47.5%;
 
   &:first-child {
@@ -98,9 +103,10 @@ export {
   GlobalStyle,
   MainContent,
   MainHeading,
-  SelectableParagraph,
-  UpdaterContainer,
-  ProgressContainer,
   ProgressBlockLoader,
   ProgressBlockStats,
+  ProgressContainer,
+  RegularButton,
+  SelectableParagraph,
+  UpdaterContainer,
 };
