@@ -1,9 +1,9 @@
 import * as Long from 'long';
 import {boolean, number, select, withKnobs} from '@storybook/addon-knobs';
+import {OS_FAMILY, WrapperOutdated} from '../src/main/components/WrapperOutdated';
 import {Installer} from '../src/main/components/Installer';
 import {Prompt} from '../src/main/components/Prompt';
 import React from 'react';
-import {WrapperOutdated} from '../src/main/components/WrapperOutdated';
 import {storiesOf} from '@storybook/react';
 
 function installerStoryGenerator(data) {
@@ -36,8 +36,8 @@ function wrapperOutdatedStoryGenerator(data) {
       environment={select(
         'Platform',
         {
-          Darwin: 'darwin',
-          Others: 'win32',
+          Others: null,
+          macOS: OS_FAMILY.DARWIN,
         },
         environment,
         'platformSelection'
@@ -134,5 +134,6 @@ storiesOf('Prompt', module).add('New update is available', () =>
 );
 
 storiesOf('WrapperOutdated', module)
+  .addDecorator(withKnobs)
   .add('macOS', () => wrapperOutdatedStoryGenerator({environment: 'darwin'}))
   .add('Others', () => wrapperOutdatedStoryGenerator({environment: 'win32'}));

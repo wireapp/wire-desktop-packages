@@ -17,44 +17,38 @@
  *
  */
 
-import {EventDispatcher} from '../libs/EventDispatcher';
-
 import * as React from 'react';
 import {GlobalStyle, MainHeading, UpdaterContainer} from './UpdaterStyles';
 
 import {ButtonLink, Content, Paragraph} from '@wireapp/react-ui-kit';
 
-interface State {
-  environment: string | undefined;
+enum OS_FAMILY {
+  DARWIN = 'darwin',
 }
 
-interface Props {}
+interface State {}
+
+interface Props {
+  environment?: OS_FAMILY;
+}
 
 class WrapperOutdated extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      environment: undefined,
-      ...props,
-    };
+  public static TOPIC = {
+    ON_BUTTON_CLICK: 'WrapperOutdated.TOPIC.ON_BUTTON_CLICK',
+  };
+
+  private readonly onCloseClick = (): void => {
+    window.dispatchEvent(new CustomEvent(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {detail: {showDetails: true}}));
+  };
+
+  private renderButtonText(os?: OS_FAMILY): string {
+    switch (os) {
+      case OS_FAMILY.DARWIN:
+        return 'Open the Mac App Store';
+      default:
+        return 'Go on Wire.com';
+    }
   }
-
-  componentDidMount(): void {
-    window.addEventListener('onDataReceived', this._onDataReceived, false);
-  }
-
-  _onDataReceived = (event: Event): void => {
-    const environment = (event as CustomEvent).detail;
-    this.setState({environment});
-  };
-
-  _onCloseClick = (): void => {
-    EventDispatcher.send('onButtonClicked', {showDetails: true});
-  };
-
-  componentWillUnmount = (): void => {
-    window.removeEventListener('onDataReceived', this._onDataReceived);
-  };
 
   render() {
     return (
@@ -62,13 +56,9 @@ class WrapperOutdated extends React.Component<Props, State> {
         <Content style={{padding: '24px 34px'}}>
           <MainHeading>Wire must be updated</MainHeading>
           <Paragraph>This version of Wire is no longer supported. To continue to use it, please update it.</Paragraph>
-          {typeof this.state.environment !== 'string' ? (
-            ''
-          ) : (
-            <ButtonLink style={{marginBottom: '0px'}} onClick={this._onCloseClick}>
-              {this.state.environment.toLowerCase() === 'darwin' ? 'Open the Mac App Store' : 'Go on Wire.com'}
-            </ButtonLink>
-          )}
+          <ButtonLink style={{marginBottom: '0px'}} onClick={this.onCloseClick}>
+            {this.renderButtonText(this.props.environment)}
+          </ButtonLink>
         </Content>
         <GlobalStyle />
       </UpdaterContainer>
@@ -76,4 +66,4 @@ class WrapperOutdated extends React.Component<Props, State> {
   }
 }
 
-export {WrapperOutdated};
+export {WrapperOutdated, OS_FAMILY};
