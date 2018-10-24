@@ -271,7 +271,12 @@ class Prompt extends React.Component<Props, State> {
                 <MainHeading>What's new</MainHeading>
                 <Paragraph>
                   {this.state.metadata.changelog !== '' ? (
-                    <Markdown source={this.state.metadata.changelog} renderers={{heading, paragraph}} />
+                    <Markdown
+                      escapeHtml={true}
+                      skipHtml={true}
+                      source={this.state.metadata.changelog}
+                      renderers={{heading, paragraph}}
+                    />
                   ) : (
                     <Small>No changelog is available for this update</Small>
                   )}
