@@ -26,8 +26,6 @@ import * as anime from 'animejs';
 import * as Long from 'long';
 import {DateTime} from 'luxon';
 
-import '../../../src/main/assets/scss/Prompt.scss';
-
 import {Modal} from './ModalBack';
 
 import {

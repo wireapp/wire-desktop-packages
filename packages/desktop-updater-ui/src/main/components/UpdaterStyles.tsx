@@ -82,6 +82,15 @@ const ProgressBlockStats = styled(ProgressBlock)`
 const DecisionButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(Button)`
   margin-bottom: 0;
   font-size: 14px;
+  width: 47.5%;
+
+  &:first-child {
+    margin-right: 2.5%;
+  }
+
+  &:last-child {
+    margin-left: 2.5%;
+  }
 `;
 
 export {
