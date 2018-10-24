@@ -1,12 +1,14 @@
 import * as Long from 'long';
+import {addDecorator, storiesOf} from '@storybook/react';
 import {boolean, number, select, withKnobs} from '@storybook/addon-knobs';
 import {OS_FAMILY, WrapperOutdated} from '../src/main/components/WrapperOutdated';
 import {Installer} from '../src/main/components/Installer';
 import {Prompt} from '../src/main/components/Prompt';
 import React from 'react';
-import {storiesOf} from '@storybook/react';
 
-function installerStoryGenerator(data) {
+addDecorator(withKnobs);
+
+function renderInstaller(data) {
   const PERCENTAGE_MULTIPLY = 100;
   const {progress, installing} = data;
 
@@ -28,7 +30,21 @@ function installerStoryGenerator(data) {
     />
   );
 }
-function wrapperOutdatedStoryGenerator(data) {
+
+function renderPrompt(data) {
+  const {metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith} = data;
+
+  return (
+    <Prompt
+      metadata={metadata}
+      changelogUrl={changelogUrl}
+      isWebappBlacklisted={isWebappBlacklisted}
+      isWebappTamperedWith={isWebappTamperedWith}
+    />
+  );
+}
+
+function renderWrapperOutdated(data) {
   const {environment} = data;
 
   return (
@@ -45,23 +61,10 @@ function wrapperOutdatedStoryGenerator(data) {
     />
   );
 }
-function promptStoryGenerator(data) {
-  const {metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith} = data;
-
-  return (
-    <Prompt
-      metadata={metadata}
-      changelogUrl={changelogUrl}
-      isWebappBlacklisted={isWebappBlacklisted}
-      isWebappTamperedWith={isWebappTamperedWith}
-    />
-  );
-}
 
 storiesOf('Installer', module)
-  .addDecorator(withKnobs)
   .add('Starting', () =>
-    installerStoryGenerator({
+    renderInstaller({
       installing: false,
       progress: {
         elapsed: 0,
@@ -75,7 +78,7 @@ storiesOf('Installer', module)
     })
   )
   .add('In progress', () =>
-    installerStoryGenerator({
+    renderInstaller({
       installing: false,
       progress: {
         elapsed: 8,
@@ -89,7 +92,7 @@ storiesOf('Installer', module)
     })
   )
   .add('Finished', () =>
-    installerStoryGenerator({
+    renderInstaller({
       installing: true,
       progress: {
         elapsed: 8,
@@ -104,7 +107,7 @@ storiesOf('Installer', module)
   );
 
 storiesOf('Prompt', module).add('New update is available', () =>
-  promptStoryGenerator({
+  renderPrompt({
     changelogUrl: 'https://wire.com',
     isWebappBlacklisted: false,
     isWebappTamperedWith: false,
@@ -134,6 +137,5 @@ storiesOf('Prompt', module).add('New update is available', () =>
 );
 
 storiesOf('WrapperOutdated', module)
-  .addDecorator(withKnobs)
-  .add('macOS', () => wrapperOutdatedStoryGenerator({environment: 'darwin'}))
-  .add('Others', () => wrapperOutdatedStoryGenerator({environment: 'win32'}));
+  .add('macOS', () => renderWrapperOutdated({environment: 'darwin'}))
+  .add('Others', () => renderWrapperOutdated({environment: 'win32'}));
