@@ -52,15 +52,14 @@ function renderInstaller(data) {
   const PERCENTAGE_MULTIPLY = 100;
   const {progress, installing} = data;
 
+  const percent = number('Percentage (0-100)', progress.percent);
+
   return (
     <Installer
       installing={boolean('Are we installing?', installing)}
       progress={{
         elapsed: number('Elapsed time (seconds)', progress.elapsed),
-        percent:
-          number('Percentage (0-100)', progress.percent * PERCENTAGE_MULTIPLY) === 0
-            ? undefined
-            : progress.percent / PERCENTAGE_MULTIPLY,
+        percent: percent === 0 ? undefined : percent / PERCENTAGE_MULTIPLY,
         remaining: number('Remaining time (in seconds)', progress.remaining),
         speed: number('Current downloading speed (in bytes)', progress.speed),
         startedAt: number('Started at (unix timestamp)', progress.startedAt),
