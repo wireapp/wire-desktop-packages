@@ -17,7 +17,10 @@
  *
  */
 
-import {configure} from '@storybook/react';
+import {addDecorator, configure} from '@storybook/react';
+import {withConsole} from '@storybook/addon-console';
+
+addDecorator((storyFn, context) => withConsole()(storyFn)(context));
 
 function loadStories() {
   require('../stories/index.jsx');
