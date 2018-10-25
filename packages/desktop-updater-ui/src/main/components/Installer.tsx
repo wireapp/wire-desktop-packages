@@ -19,7 +19,7 @@
 
 import * as React from 'react';
 
-import {Loading, Paragraph, Small} from '@wireapp/react-ui-kit';
+import {Loading, Paragraph} from '@wireapp/react-ui-kit';
 import {
   GlobalStyle,
   MainContent,
