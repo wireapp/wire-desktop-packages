@@ -269,6 +269,19 @@ class Prompt extends React.Component<Props, State> {
             <Modal fullscreen onClose={this.hideChangelog}>
               <div>
                 <MainHeading>What's new</MainHeading>
+                {this.state.metadata.targetEnvironment !== 'PRODUCTION' ? (
+                  <Paragraph style={{marginBottom: '10px'}}>
+                    <Text fontSize="12px" bold style={{backgroundColor: COLOR.RED, padding: '5px'}} color={COLOR.WHITE}>
+                      WARNING
+                    </Text>{' '}
+                    <Text fontSize="14px" bold color={COLOR.RED}>
+                      This release is intended for {this.state.metadata.targetEnvironment.toLowerCase()} environment
+                      only.
+                    </Text>
+                  </Paragraph>
+                ) : (
+                  ''
+                )}
                 <Paragraph>
                   {this.state.metadata.changelog !== '' ? (
                     <Markdown
@@ -298,26 +311,22 @@ class Prompt extends React.Component<Props, State> {
                 ) : (
                   ''
                 )}
-                {this.state.metadata.targetEnvironment !== 'PRODUCTION' ? (
-                  <SelectableParagraph>
-                    <Text bold color={COLOR.RED}>
-                      Warning: This release is intended for {this.state.metadata.targetEnvironment.toLowerCase()}{' '}
-                      channel only.
-                    </Text>
-                    <br />
-                  </SelectableParagraph>
-                ) : (
-                  ''
-                )}
-                <SelectableParagraph>
-                  <Text bold>Version:</Text> {this.state.metadata.webappVersionNumber}
+                <SelectableParagraph fontSize="14px">
+                  <Text fontSize="14px" bold>
+                    Version:
+                  </Text>{' '}
+                  {this.state.metadata.webappVersionNumber}
                   <br />
-                  <Text bold>Released on:</Text>{' '}
+                  <Text fontSize="14px" bold>
+                    Released on:
+                  </Text>{' '}
                   {DateTime.fromISO(this.state.metadata.releaseDate, {zone: 'utc'})
                     .setLocale('en-US')
                     .toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}
                   <br />
-                  <Text bold>Size of the update:</Text>{' '}
+                  <Text fontSize="14px" bold>
+                    Size of the update:
+                  </Text>{' '}
                   {(
                     new Long(
                       this.state.metadata.fileContentLength.low,
@@ -327,9 +336,14 @@ class Prompt extends React.Component<Props, State> {
                   ).toFixed(2)}{' '}
                   MB
                   <br />
-                  <Text bold>Checksum of the update:</Text> {this.state.metadata.fileChecksum.toString('hex')}
+                  <Text fontSize="14px" bold>
+                    Checksum of the update:
+                  </Text>{' '}
+                  {this.state.metadata.fileChecksum.toString('hex')}
                   <br />
-                  <Text bold>This update is digitally signed.</Text>
+                  <Text fontSize="14px" bold>
+                    This update is digitally signed.
+                  </Text>
                 </SelectableParagraph>
               </div>
             </Modal>
