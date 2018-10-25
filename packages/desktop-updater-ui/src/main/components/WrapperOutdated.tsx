@@ -19,6 +19,7 @@
 
 import {Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
+import {EventDispatcher} from '../libs/EventDispatcher';
 import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
 
 interface State {
@@ -65,7 +66,7 @@ class WrapperOutdated extends React.Component<Props, State> {
   };
 
   private readonly onCloseClick = (): void => {
-    window.dispatchEvent(new CustomEvent(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {detail: {showDetails: true}}));
+    EventDispatcher.send(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {showDetails: true});
   };
 
   private renderButtonText(os?: NodeJS.Platform): string {
@@ -82,11 +83,7 @@ class WrapperOutdated extends React.Component<Props, State> {
         <MainContent>
           <MainHeading>Wire must be updated</MainHeading>
           <Paragraph>This version of Wire is no longer supported. To continue to use it, please update it.</Paragraph>
-          {typeof this.state.environment !== 'string' ? (
-            ''
-          ) : (
-            <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.state.environment)}</RegularButton>
-          )}
+          <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.state.environment)}</RegularButton>
         </MainContent>
         <GlobalStyle />
       </UpdaterContainer>
