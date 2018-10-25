@@ -17,10 +17,14 @@
  *
  */
 
-import {ArrowIcon} from '@wireapp/react-ui-kit';
+import {ArrowIcon, QUERY} from '@wireapp/react-ui-kit';
 import * as React from 'react';
 import styled from 'styled-components';
 import {GlobalStyle} from './UpdaterStyles';
+
+interface ModalBodyProps {
+  fullscreen?: boolean;
+}
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -35,8 +39,8 @@ const ModalWrapper = styled.div`
   overflow-y: auto;
 `;
 
-const ModalBody: any = styled.div`
-  ${(props: any) =>
+const ModalBody = styled.div<ModalBodyProps & React.HTMLAttributes<HTMLDivElement>>`
+  ${props =>
     props.fullscreen
       ? `
       position: fixed;
@@ -47,7 +51,7 @@ const ModalBody: any = styled.div`
       border-radius: 0;
       justify-content: center;
       box-shadow: none;
-      @media (max-width: 767px) {
+      @media (${QUERY.tabletDown}) {
         width: initial;
       }
       `
@@ -56,19 +60,20 @@ const ModalBody: any = styled.div`
       border-radius: 8px;
       box-shadow: 0 16px 64px 0 rgba(0, 0, 0, 0.16);
       justify-content: space-between;
-      @media (max-width: 767px) {
+      @media (${QUERY.tabletDown}) {
         width: 100%;
       }
       `};
   align-items: center;
-  background-color: transparent;
   display: flex;
   flex-direction: column;
-  padding: 34px;
-  padding-top: 54px;
   z-index: 9999;
   margin: auto;
   -webkit-transform: translate3d(0, 0, 0);
+
+  background-color: transparent;
+  padding: 34px;
+  padding-top: 54px;
 `;
 
 const ModalClose = styled(ArrowIcon)`
@@ -84,7 +89,7 @@ const ModalClose = styled(ArrowIcon)`
   cursor: pointer;
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled.div<React.HTMLAttributes<HTMLDivElement>>`
   max-width: 100%;
   overflow-y: auto;
 `;
@@ -101,13 +106,19 @@ const ModalBackground = styled.div`
 
 const noop = () => {};
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  fullscreen: boolean;
-  onBackgroundClick?: (event: React.MouseEvent<HTMLElement>) => void;
-  onClose?: (event: React.MouseEvent<HTMLElement>) => void;
+interface ModalProps {
+  fullscreen?: boolean;
+  onBackgroundClick?: () => void;
+  onClose?: () => void;
 }
 
-const Modal: React.SFC<Props> = ({children, fullscreen, onClose, onBackgroundClick}) => (
+const Modal: React.SFC<ModalProps & React.HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  fullscreen,
+  onClose,
+  onBackgroundClick,
+  ...props
+}) => (
   <ModalWrapper>
     <ModalBody fullscreen={fullscreen}>
       <ModalContent>{children}</ModalContent>
