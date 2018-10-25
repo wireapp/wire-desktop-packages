@@ -17,7 +17,7 @@
  *
  */
 
-import {Button, Columns, Content, H2, Paragraph, StyledApp} from '@wireapp/react-ui-kit';
+import {Button, Column, Columns, Content, H2, Paragraph, Small, StyledApp} from '@wireapp/react-ui-kit';
 import styled, {StyledComponentClass, createGlobalStyle} from 'styled-components';
 
 const UpdaterContainer = styled(StyledApp)`
@@ -62,26 +62,12 @@ const MainContent = styled(Content)`
   padding: 24px 34px;
 `;
 
-const ProgressContainer = styled(Columns)`
-  display: block;
-  clear: both;
-`;
-
-const ProgressBlock = styled.div`
-  display: inline;
-  float: left;
-`;
-
+const ProgressContainer = Columns;
+const ProgressBlock = Column;
 const ProgressBlockLoader = styled(ProgressBlock)`
-  width: 20%;
   max-width: 43px;
-  margin-right: 20px;
 `;
-
-const ProgressBlockStats = styled(ProgressBlock)`
-  float: left;
-  width: 80%;
-`;
+const ProgressBlockStats = ProgressBlock;
 
 const RegularButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(Button)`
   margin-bottom: 0;
@@ -102,6 +88,10 @@ const DecisionButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButton
   }
 `;
 
+const SmallBlock = styled(Small)`
+  display: block;
+`;
+
 export {
   DecisionButton,
   GlobalStyle,
@@ -112,5 +102,6 @@ export {
   ProgressContainer,
   RegularButton,
   SelectableParagraph,
+  SmallBlock,
   UpdaterContainer,
 };

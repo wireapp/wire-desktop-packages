@@ -27,6 +27,7 @@ import {
   ProgressBlockLoader,
   ProgressBlockStats,
   ProgressContainer,
+  SmallBlock,
   UpdaterContainer,
 } from './UpdaterStyles';
 
@@ -121,11 +122,11 @@ class Installer extends React.Component<Props, State> {
                           ? `Download has started...`
                           : `${Math.round(this.state.progress.remaining)} seconds remaining`
                     }`}
-                <Small style={{display: 'block'}}>
+                <SmallBlock>
                   {(this.state.progress.transferred / 1000000).toFixed(1)} of{' '}
                   {(this.state.progress.total / 1000000).toFixed(1)} MB at{' '}
                   {(this.state.progress.speed / 1000000).toFixed(1)} Mb/s
-                </Small>
+                </SmallBlock>
               </Paragraph>
             </ProgressBlockStats>
           </ProgressContainer>
