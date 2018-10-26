@@ -1687,11 +1687,6 @@
     react-modal "^3.6.1"
     react-treebeard "^3.1.0"
 
-"@types/animejs@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@types/animejs/-/animejs-2.0.0.tgz#9163f06aba47595b99951d5560c10e78223f0e20"
-  integrity sha512-ftF0qNj3VcmJvbFSIR6wyKqmgpOxZJXCAhBgOzrRyPK/CzWSvKtFKDvflvMC9a2dr9/MpDNoMmrOBUOKBzj6Qw==
-
 "@types/color-convert@*":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@types/color-convert/-/color-convert-1.9.0.tgz#bfa8203e41e7c65471e9841d7e306a7cd8b5172d"

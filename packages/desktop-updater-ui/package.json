@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@types/animejs": "2.0.0",
     "@types/luxon": "1.4.0",
     "@types/node": "10.12.0",
     "@types/react": "16.4.18",
