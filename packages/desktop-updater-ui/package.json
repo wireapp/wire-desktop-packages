@@ -14,7 +14,7 @@
     "react-markdown": "4.0.3",
     "styled-components": "4.0.2"
   },
-  "description": "Interface for the Wire's desktop updater.",
+  "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
     "@babel/core": "7.1.2",
     "@babel/plugin-proposal-class-properties": "7.1.0",
