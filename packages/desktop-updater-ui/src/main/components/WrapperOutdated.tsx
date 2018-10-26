@@ -17,47 +17,26 @@
  *
  */
 
-import {Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
-import {EventDispatcher} from '../libs/EventDispatcher';
-import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
+import {WrapperOutdated} from './WrapperOutdatedView';
 
-interface State {
+export interface WrapperOutdatedState {
   environment?: NodeJS.Platform;
 }
 
-interface Props {
-  environment?: NodeJS.Platform;
-}
+interface Props {}
 
-class WrapperOutdated extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      environment: undefined,
-      ...props,
-    };
-  }
-
-  public static OS_FAMILY: {[s: string]: NodeJS.Platform} = {
-    DARWIN: 'darwin',
-  };
-
+class WrapperOutdatedContainer extends React.Component<Props, WrapperOutdatedState> {
   public static TOPIC = {
-    ON_BUTTON_CLICK: 'WrapperOutdated.TOPIC.ON_BUTTON_CLICK',
-    ON_DATA_RECEIVED: 'WrapperOutdated.TOPIC.ON_DATA_RECEIVED',
+    ON_DATA_RECEIVED: 'WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED',
   };
 
   componentDidMount(): void {
-    window.addEventListener(WrapperOutdated.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    this.setState(nextProps);
+    window.addEventListener(WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
   }
 
   componentWillUnmount(): void {
-    window.removeEventListener(WrapperOutdated.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
+    window.removeEventListener(WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
   }
 
   onDataReceived = (event: Event): void => {
@@ -65,30 +44,9 @@ class WrapperOutdated extends React.Component<Props, State> {
     this.setState({environment});
   };
 
-  private readonly onCloseClick = (): void => {
-    EventDispatcher.send(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {showDetails: true});
-  };
-
-  private renderButtonText(os?: NodeJS.Platform): string {
-    switch (os) {
-      case WrapperOutdated.OS_FAMILY.DARWIN:
-        return 'Open the Mac App Store';
-      default:
-        return 'Go on Wire.com';
-    }
-  }
   render() {
-    return (
-      <UpdaterContainer>
-        <MainContent>
-          <MainHeading>Wire must be updated</MainHeading>
-          <Paragraph>This version of Wire is no longer supported. To continue to use it, please update it.</Paragraph>
-          <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.state.environment)}</RegularButton>
-        </MainContent>
-        <GlobalStyle />
-      </UpdaterContainer>
-    );
+    return <WrapperOutdated {...this.state} />;
   }
 }
 
-export {WrapperOutdated};
+export {WrapperOutdatedContainer};

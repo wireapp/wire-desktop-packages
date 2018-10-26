@@ -18,18 +18,7 @@
  */
 
 import * as React from 'react';
-
-import {Loading, Paragraph} from '@wireapp/react-ui-kit';
-import {
-  GlobalStyle,
-  MainContent,
-  MainHeading,
-  ProgressBlockLoader,
-  ProgressBlockStats,
-  ProgressContainer,
-  SmallBlock,
-  UpdaterContainer,
-} from './UpdaterStyles';
+import {Installer} from './InstallerView';
 
 interface ProgressInterface {
   elapsed: number;
@@ -41,41 +30,37 @@ interface ProgressInterface {
   transferred: number;
 }
 
-interface Props {}
-
-interface State {
+export interface InstallerContainerState {
   progress: ProgressInterface;
   installing: boolean;
 }
 
-class Installer extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      installing: false,
-      progress: {
-        elapsed: 0,
-        percent: undefined,
-        remaining: undefined,
-        speed: 0,
-        startedAt: 0,
-        total: 0,
-        transferred: 0,
-      },
-      ...props,
-    };
-  }
+interface Props {}
+
+class InstallerContainer extends React.Component<Props, InstallerContainerState> {
+  state = {
+    installing: false,
+    progress: {
+      elapsed: 0,
+      percent: undefined,
+      remaining: undefined,
+      speed: 0,
+      startedAt: 0,
+      total: 0,
+      transferred: 0,
+    },
+  };
 
   public static TOPIC = {
     ON_PROGRESS: 'Installer.TOPIC.ON_PROGRESS',
   };
 
-  componentWillReceiveProps(nextProps: Props) {
-    this.setState(nextProps);
+  componentDidMount(): void {
+    window.addEventListener(InstallerContainer.TOPIC.ON_PROGRESS, this.updateProgress, false);
   }
 
-  componentDidMount(): void {
-    window.addEventListener(Installer.TOPIC.ON_PROGRESS, this.updateProgress, false);
+  componentWillUnmount(): void {
+    window.removeEventListener(InstallerContainer.TOPIC.ON_PROGRESS, this.updateProgress);
   }
 
   updateProgress = (event: Event): void => {
@@ -98,43 +83,9 @@ class Installer extends React.Component<Props, State> {
     });
   };
 
-  componentWillUnmount(): void {
-    window.removeEventListener(Installer.TOPIC.ON_PROGRESS, this.updateProgress);
-  }
-
   render() {
-    return (
-      <UpdaterContainer>
-        <MainContent>
-          <MainHeading>{this.state.installing ? 'Installing' : 'Downloading'} the update</MainHeading>
-          <ProgressContainer>
-            <ProgressBlockLoader>
-              <Loading progress={this.state.progress.percent} />
-            </ProgressBlockLoader>
-            <ProgressBlockStats>
-              <Paragraph>
-                {this.state.installing
-                  ? `Installing...`
-                  : `${
-                      this.state.progress.startedAt === 0
-                        ? `Download is starting...`
-                        : typeof this.state.progress.remaining === 'undefined'
-                          ? `Download has started...`
-                          : `${Math.round(this.state.progress.remaining)} seconds remaining`
-                    }`}
-                <SmallBlock>
-                  {(this.state.progress.transferred / 1000000).toFixed(1)} of{' '}
-                  {(this.state.progress.total / 1000000).toFixed(1)} MB at{' '}
-                  {(this.state.progress.speed / 1000000).toFixed(1)} Mb/s
-                </SmallBlock>
-              </Paragraph>
-            </ProgressBlockStats>
-          </ProgressContainer>
-        </MainContent>
-        <GlobalStyle />
-      </UpdaterContainer>
-    );
+    return <Installer {...this.state} />;
   }
 }
 
-export {Installer};
+export {InstallerContainer};
