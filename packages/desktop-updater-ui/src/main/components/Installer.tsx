@@ -17,59 +17,75 @@
  *
  */
 
-import {Loading, Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
-import {InstallerContainerState} from './InstallerContainer';
-import {
-  GlobalStyle,
-  MainContent,
-  MainHeading,
-  ProgressBlockLoader,
-  ProgressBlockStats,
-  ProgressContainer,
-  SmallBlock,
-  UpdaterContainer,
-} from './UpdaterStyles';
+import {Installer} from './InstallerView';
 
-interface Props extends InstallerContainerState {}
+interface ProgressInterface {
+  elapsed: number;
+  percent?: number;
+  remaining?: number;
+  speed: number; // in bytes
+  startedAt: number;
+  total: number;
+  transferred: number;
+}
 
-interface State {}
+export interface InstallerContainerState {
+  progress: ProgressInterface;
+  installing: boolean;
+}
 
-class Installer extends React.Component<Props, State> {
+interface Props {}
+
+class InstallerContainer extends React.Component<Props, InstallerContainerState> {
+  state = {
+    installing: false,
+    progress: {
+      elapsed: 0,
+      percent: undefined,
+      remaining: undefined,
+      speed: 0,
+      startedAt: 0,
+      total: 0,
+      transferred: 0,
+    },
+  };
+
+  public static TOPIC = {
+    ON_PROGRESS: 'Installer.TOPIC.ON_PROGRESS',
+  };
+
+  componentDidMount(): void {
+    window.addEventListener(InstallerContainer.TOPIC.ON_PROGRESS, this.updateProgress, false);
+  }
+
+  componentWillUnmount(): void {
+    window.removeEventListener(InstallerContainer.TOPIC.ON_PROGRESS, this.updateProgress);
+  }
+
+  updateProgress = (event: Event): void => {
+    const customEvent = event as CustomEvent;
+    const detail: ProgressInterface = customEvent.detail;
+
+    if (detail.percent === 1) {
+      return this.finishedProgress();
+    }
+    this.setState({progress: detail});
+  };
+
+  finishedProgress = (): void => {
+    this.setState({
+      installing: true,
+      progress: {
+        ...this.state.progress,
+        percent: undefined,
+      },
+    });
+  };
+
   render() {
-    const {installing, progress} = this.props;
-    return (
-      <UpdaterContainer>
-        <MainContent>
-          <MainHeading>{`${installing ? 'Installing' : 'Downloading'} the update`}</MainHeading>
-          <ProgressContainer>
-            <ProgressBlockLoader>
-              <Loading progress={progress.percent} />
-            </ProgressBlockLoader>
-            <ProgressBlockStats>
-              <Paragraph>
-                {installing
-                  ? `Installing...`
-                  : `${
-                      progress.startedAt === 0
-                        ? `Download is starting...`
-                        : progress.remaining
-                          ? `${Math.round(progress.remaining)} seconds remaining`
-                          : `Download has started...`
-                    }`}
-                <SmallBlock>
-                  {`${(progress.transferred / 1000000).toFixed(1)} of `}
-                  {`${(progress.total / 1000000).toFixed(1)} MB at `}
-                  {`${(progress.speed / 1000000).toFixed(1)}  Mb/s`}
-                </SmallBlock>
-              </Paragraph>
-            </ProgressBlockStats>
-          </ProgressContainer>
-        </MainContent>
-        <GlobalStyle />
-      </UpdaterContainer>
-    );
+    return <Installer {...this.state} />;
   }
 }
 
-export {Installer};
+export {InstallerContainer};

@@ -20,10 +20,10 @@
 import * as Long from 'long';
 import {addDecorator, storiesOf} from '@storybook/react';
 import {boolean, number, select, text, withKnobs} from '@storybook/addon-knobs';
-import {Installer} from '../src/main/components/Installer';
-import {Prompt} from '../src/main/components/Prompt';
+import {Installer} from '../src/main/components/InstallerView';
+import {Prompt} from '../src/main/components/PromptView';
 import React from 'react';
-import {WrapperOutdated} from '../src/main/components/WrapperOutdated';
+import {WrapperOutdated} from '../src/main/components/WrapperOutdatedView';
 
 const GENERIC_METADATA = {
   author: ['Wire Swiss GmbH'],

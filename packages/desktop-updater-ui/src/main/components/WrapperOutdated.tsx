@@ -17,52 +17,36 @@
  *
  */
 
-import {Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
-import {EventDispatcher} from '../libs/EventDispatcher';
-import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
-import {WrapperOutdatedState} from './WrapperOutdatedContainer';
+import {WrapperOutdated} from './WrapperOutdatedView';
 
-interface State {}
+export interface WrapperOutdatedState {
+  environment?: NodeJS.Platform;
+}
 
-interface Props extends WrapperOutdatedState {}
+interface Props {}
 
-class WrapperOutdated extends React.Component<Props, State> {
-  public static OS_FAMILY: {[key: string]: NodeJS.Platform} = {
-    DARWIN: 'darwin',
-  };
-
+class WrapperOutdatedContainer extends React.Component<Props, WrapperOutdatedState> {
   public static TOPIC = {
-    ON_BUTTON_CLICK: 'WrapperOutdated.TOPIC.ON_BUTTON_CLICK',
+    ON_DATA_RECEIVED: 'WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED',
   };
 
-  private readonly onCloseClick = (): void => {
-    EventDispatcher.send(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {showDetails: true});
-  };
-
-  private renderButtonText(os?: NodeJS.Platform): string {
-    switch (os) {
-      case WrapperOutdated.OS_FAMILY.DARWIN:
-        return 'Open the Mac App Store';
-      default:
-        return 'Go on Wire.com';
-    }
+  componentDidMount(): void {
+    window.addEventListener(WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
   }
 
+  componentWillUnmount(): void {
+    window.removeEventListener(WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
+  }
+
+  onDataReceived = (event: Event): void => {
+    const environment = (event as CustomEvent).detail;
+    this.setState({environment});
+  };
+
   render() {
-    return (
-      <UpdaterContainer>
-        <MainContent>
-          <MainHeading>{'Wire must be updated'}</MainHeading>
-          <Paragraph>
-            {'This version of Wire is no longer supported. To continue to use it, please update it.'}
-          </Paragraph>
-          <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.props.environment)}</RegularButton>
-        </MainContent>
-        <GlobalStyle />
-      </UpdaterContainer>
-    );
+    return <WrapperOutdated {...this.state} />;
   }
 }
 
-export {WrapperOutdated};
+export {WrapperOutdatedContainer};

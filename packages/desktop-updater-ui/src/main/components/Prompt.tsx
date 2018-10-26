@@ -18,132 +18,44 @@
  */
 
 import * as Updater from '@wireapp/desktop-updater-spec';
-import {COLOR, Checkbox, CheckboxLabel, Container, Link, Opacity, Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
-import {EventDispatcher} from '../libs/EventDispatcher';
-import {PromptChangelogModal} from './PromptChangelogModal';
-import {PromptContainerState} from './PromptContainer';
-import {DecisionButton, GlobalStyle, MainContent, MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {Prompt} from './PromptView';
 
-interface Props extends PromptContainerState {}
-
-interface State {
-  decision: Updater.Decision;
-  isUpdatesInstallAutomatically: boolean;
-  showChangelog: boolean;
+export interface PromptContainerState {
+  metadata?: Updater.Metadata;
+  changelogUrl: string;
+  isWebappBlacklisted: boolean;
+  isWebappTamperedWith: boolean;
 }
 
-class Prompt extends React.Component<Props, State> {
-  state = {
-    decision: {
-      allow: false,
-      installAutomatically: false,
-    },
-    isUpdatesInstallAutomatically: false,
-    showChangelog: false,
-  };
+interface Props {}
 
+class PromptContainer extends React.Component<Props, PromptContainerState> {
   public static TOPIC = {
-    SEND_DECISION: 'Prompt.TOPIC.SEND_DECISION',
-    SEND_RESIZE_BROWSER_WINDOW: 'Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
+    ON_DATA_RECEIVED: 'PromptContainer.TOPIC.ON_DATA_RECEIVED',
   };
 
-  onDecisionTaken = (userDecision: Partial<any>): void => {
-    const decision = {...this.state.decision, ...userDecision};
-    EventDispatcher.send(Prompt.TOPIC.SEND_DECISION, decision);
-  };
+  componentDidMount() {
+    window.addEventListener(PromptContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
+  }
 
-  onUpdateClick = (event: React.MouseEvent<HTMLElement>): void => {
-    this.onDecisionTaken({
-      allow: true,
-      skipThisUpdate: false,
-    });
-  };
+  componentWillUnmount(): void {
+    window.removeEventListener(PromptContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
+  }
 
-  onLaterClick = (): void => {
-    this.onDecisionTaken({
-      allow: false,
-      installAutomatically: false,
-      skipThisUpdate: false,
-    });
-  };
+  onDataReceived = (event: Event): void => {
+    const customEvent = event as CustomEvent;
+    const metadata: Updater.Metadata = customEvent.detail.metadata;
+    const changelogUrl: string = customEvent.detail.changelogUrl;
+    const isWebappBlacklisted: boolean = customEvent.detail.isWebappBlacklisted;
+    const isWebappTamperedWith: boolean = customEvent.detail.isWebappTamperedWith;
 
-  toggleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({
-      decision: {
-        ...this.state.decision,
-        installAutomatically: event.target.checked,
-      },
-      isUpdatesInstallAutomatically: event.target.checked,
-    });
-  };
-
-  toggleChangelog = (event?: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState(state => ({
-      showChangelog: !state.showChangelog,
-    }));
+    this.setState({metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith});
   };
 
   render() {
-    const {isWebappTamperedWith, isWebappBlacklisted, metadata, changelogUrl} = this.props;
-    let title: string;
-    let description: string;
-    if (isWebappTamperedWith) {
-      title = 'Wire needs to be reinstalled';
-      description =
-        'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your data.';
-    } else if (isWebappBlacklisted) {
-      title = 'Your version of Wire is outdated';
-      description = 'To continue using Wire, please update to the latest version.';
-    } else {
-      title = 'A new version of Wire is available';
-      description = 'Update to latest version for the best Wire Desktop experience.';
-    }
-    return (
-      <UpdaterContainer>
-        <Opacity in={metadata && this.state.showChangelog} mountOnEnter={false} unmountOnExit={true}>
-          <PromptChangelogModal
-            onClose={() => this.toggleChangelog()}
-            metadata={metadata}
-            changelogUrl={changelogUrl}
-          />
-        </Opacity>
-        <Opacity in={!this.state.showChangelog}>
-          <MainContent style={{width: '480px'}}>
-            <MainHeading>{title}</MainHeading>
-            <Paragraph>
-              {description}
-              <Link
-                fontSize="16px"
-                textTransform="normal"
-                style={{fontWeight: 'normal'}}
-                onClick={this.toggleChangelog}
-                color={COLOR.BLUE}
-              >
-                {' Learn more about this update'}
-              </Link>
-            </Paragraph>
-            {!isWebappTamperedWith && (
-              <Paragraph>
-                <Checkbox checked={this.state.isUpdatesInstallAutomatically} onChange={this.toggleCheckbox}>
-                  <CheckboxLabel>{'Install Wire updates automatically in the future'}</CheckboxLabel>
-                </Checkbox>
-              </Paragraph>
-            )}
-            <Container>
-              <DecisionButton backgroundColor={COLOR.WHITE} color={COLOR.GRAY_DARKEN_72} onClick={this.onLaterClick}>
-                {isWebappBlacklisted || isWebappTamperedWith ? 'Quit' : 'Later'}
-              </DecisionButton>
-              <DecisionButton backgroundColor={COLOR.BLUE} onClick={this.onUpdateClick}>
-                {isWebappTamperedWith ? 'Reinstall' : 'Update'}
-              </DecisionButton>
-            </Container>
-          </MainContent>
-        </Opacity>
-        <GlobalStyle />
-      </UpdaterContainer>
-    );
+    return <Prompt {...this.state} />;
   }
 }
 
-export {Prompt};
+export {PromptContainer};
