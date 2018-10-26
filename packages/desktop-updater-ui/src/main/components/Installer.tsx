@@ -53,9 +53,9 @@ class Installer extends React.Component<Props, State> {
                   : `${
                       progress.startedAt === 0
                         ? `Download is starting...`
-                        : typeof progress.remaining === 'undefined'
-                          ? `Download has started...`
-                          : `${Math.round(progress.remaining)} seconds remaining`
+                        : progress.remaining
+                          ? `${Math.round(progress.remaining)} seconds remaining`
+                          : `Download has started...`
                     }`}
                 <SmallBlock>
                   {`${(progress.transferred / 1000000).toFixed(1)} of `}

@@ -88,7 +88,7 @@ class PromptChangelogModal extends React.Component<Props, State> {
     return (
       <Modal fullscreen onClose={this.hideChangelog} style={{backgroundColor: 'white'}}>
         <MainHeading>{"What's new"}</MainHeading>
-        {metadata.targetEnvironment !== 'PRODUCTION' ? (
+        {metadata.targetEnvironment !== 'PRODUCTION' && (
           <Paragraph style={{marginBottom: 10}}>
             <Text fontSize="12px" bold style={{backgroundColor: COLOR.RED, padding: 5}} color={COLOR.WHITE}>
               {'WARNING'}
@@ -97,9 +97,9 @@ class PromptChangelogModal extends React.Component<Props, State> {
               {` This release is intended for ${metadata.targetEnvironment.toLowerCase()} environment only.`}
             </BoldText>
           </Paragraph>
-        ) : null}
+        )}
         <Paragraph>
-          {metadata.changelog !== '' ? (
+          {metadata.changelog ? (
             <Markdown
               escapeHtml={true}
               skipHtml={true}
