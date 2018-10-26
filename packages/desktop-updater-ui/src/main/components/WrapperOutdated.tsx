@@ -39,7 +39,7 @@ class WrapperOutdated extends React.Component<Props, State> {
     };
   }
 
-  public static OS_FAMILY: {[s: string]: NodeJS.Platform} = {
+  public static OS_FAMILY: {[key: string]: NodeJS.Platform} = {
     DARWIN: 'darwin',
   };
 
@@ -81,8 +81,10 @@ class WrapperOutdated extends React.Component<Props, State> {
     return (
       <UpdaterContainer>
         <MainContent>
-          <MainHeading>Wire must be updated</MainHeading>
-          <Paragraph>This version of Wire is no longer supported. To continue to use it, please update it.</Paragraph>
+          <MainHeading>{'Wire must be updated'}</MainHeading>
+          <Paragraph>
+            {'This version of Wire is no longer supported. To continue to use it, please update it.'}
+          </Paragraph>
           <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.state.environment)}</RegularButton>
         </MainContent>
         <GlobalStyle />
