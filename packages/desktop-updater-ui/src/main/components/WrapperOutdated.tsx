@@ -21,12 +21,11 @@ import {Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
 import {EventDispatcher} from '../libs/EventDispatcher';
 import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
+import {WrapperOutdatedState} from './WrapperOutdatedContainer';
 
 interface State {}
 
-interface Props {
-  environment?: NodeJS.Platform;
-}
+interface Props extends WrapperOutdatedState {}
 
 class WrapperOutdated extends React.Component<Props, State> {
   public static OS_FAMILY: {[key: string]: NodeJS.Platform} = {
@@ -49,6 +48,7 @@ class WrapperOutdated extends React.Component<Props, State> {
         return 'Go on Wire.com';
     }
   }
+
   render() {
     return (
       <UpdaterContainer>
