@@ -31,6 +31,7 @@ interface State {
   decision: Updater.Decision;
   isUpdatesInstallAutomatically: boolean;
   showChangelog: boolean;
+  showPrompt: boolean;
 }
 
 class Prompt extends React.Component<Props, State> {
@@ -41,6 +42,7 @@ class Prompt extends React.Component<Props, State> {
     },
     isUpdatesInstallAutomatically: false,
     showChangelog: false,
+    showPrompt: true,
   };
 
   public static TOPIC = {
@@ -79,9 +81,30 @@ class Prompt extends React.Component<Props, State> {
   };
 
   toggleChangelog = (event?: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState(state => ({
-      showChangelog: !state.showChangelog,
-    }));
+    const showPrompt = !this.state.showPrompt;
+    if (this.state.showPrompt && !this.state.showChangelog) {
+      this.setState(state => ({
+        showPrompt: false,
+      }));
+      setTimeout(
+        () =>
+          this.setState(state => ({
+            showChangelog: true,
+          })),
+        1000
+      );
+    } else {
+      this.setState(state => ({
+        showChangelog: false,
+      }));
+      setTimeout(
+        () =>
+          this.setState(state => ({
+            showPrompt: true,
+          })),
+        1000
+      );
+    }
   };
 
   render() {
@@ -108,7 +131,7 @@ class Prompt extends React.Component<Props, State> {
             changelogUrl={changelogUrl}
           />
         </Opacity>
-        <Opacity in={!this.state.showChangelog}>
+        <Opacity in={this.state.showPrompt}>
           <MainContent style={{width: '480px'}}>
             <MainHeading>{title}</MainHeading>
             <Paragraph>
