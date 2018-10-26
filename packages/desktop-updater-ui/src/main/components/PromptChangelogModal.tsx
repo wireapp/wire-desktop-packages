@@ -18,8 +18,7 @@
  */
 
 import * as Updater from '@wireapp/desktop-updater-spec';
-import {COLOR, H1, H2, H3, H4, Link, Opacity, Paragraph, Small, Text} from '@wireapp/react-ui-kit';
-import * as anime from 'animejs';
+import {COLOR, H1, H2, H3, H4, Link, Paragraph, Small, Text} from '@wireapp/react-ui-kit';
 import * as Long from 'long';
 import {DateTime} from 'luxon';
 import * as React from 'react';
@@ -42,65 +41,17 @@ interface State {
 class PromptChangelogModal extends React.Component<Props, State> {
   private static readonly PROMPT_WINDOW_SIZE = {height: 287, width: 480};
   private static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(289 * 1.4), width: Math.round(480 * 1.3)};
-  // private static readonly defaultAnimationSettings = {easing: 'easeInOutSine'};
-
-  // private modal: HTMLElement | null = null;
 
   public static TOPIC = {
     SEND_RESIZE_BROWSER_WINDOW: 'PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
   };
 
-  componentDidMount() {
-    // anime({
-    //   ...PromptChangelogModal.defaultAnimationSettings,
-    //   delay: 1000,
-    //   duration: 250,
-    //   opacity: [0, 1],
-    //   targets: this.content,
-    // });
-  }
-
   hideChangelog = (): void => {
-    // if (this.modal) {
-    //   this.modal.style.display = 'none';
-    // }
-
     EventDispatcher.send(
       PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
       PromptChangelogModal.PROMPT_WINDOW_SIZE
     );
     this.props.onClose();
-    // const timeline = anime.timeline({
-    //   autoplay: false,
-    //   direction: 'normal',
-    // });
-
-    // timeline
-    //   .add({
-    //     ...PromptChangelogModal.defaultAnimationSettings,
-    // complete: () => {
-    //   if (this.modal) {
-    //     this.modal.style.display = 'none';
-    //   }
-    //       EventDispatcher.send(PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW, PromptChangelogModal.PROMPT_WINDOW_SIZE);
-    //     },
-    //     duration: 250,
-    //     opacity: [1, 0],
-    //     targets: this.modal,
-    //   })
-    //   .add({
-    //     ...PromptChangelogModal.defaultAnimationSettings,
-    //     begin: () => {
-    //       if (this.content) {
-    //         this.content.style.display = 'block';
-    //       }
-    //     },
-    //     delay: 500,
-    //     duration: 250,
-    //     opacity: [0, 1],
-    //     targets: this.content,
-    //   })
-    //   .play();
   };
 
   showChangelog = (): void => {
@@ -108,41 +59,6 @@ class PromptChangelogModal extends React.Component<Props, State> {
       PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
       PromptChangelogModal.CHANGELOG_WINDOW_SIZE
     );
-    // if (this.modal) {
-    //   this.modal.style.display = 'block';
-    // }
-
-    // const timeline = anime.timeline({
-    //   autoplay: false,
-    //   direction: 'normal',
-    // });
-
-    // timeline
-    //   .add({
-    //     ...PromptChangelogModal.defaultAnimationSettings,
-    //     complete: () => {
-    //       EventDispatcher.send(PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW, PromptChangelogModal.CHANGELOG_WINDOW_SIZE);
-    //       if (this.content) {
-    //         this.content.style.display = 'none';
-    //       }
-    //     },
-    //     duration: 250,
-    //     opacity: [1, 0],
-    //     targets: this.content,
-    //   })
-    //   .add({
-    //     ...PromptChangelogModal.defaultAnimationSettings,
-    //     begin: () => {
-    //       if (this.modal) {
-    //         this.modal.style.display = 'block';
-    //       }
-    //     },
-    //     delay: 500,
-    //     duration: 250,
-    //     opacity: [0, 1],
-    //     targets: this.modal,
-    //   })
-    //   .play();
   };
 
   render() {
