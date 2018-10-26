@@ -37,29 +37,30 @@ interface State {}
 
 class Installer extends React.Component<Props, State> {
   render() {
+    const {installing, progress} = this.props;
     return (
       <UpdaterContainer>
         <MainContent>
-          <MainHeading>{`${this.props.installing ? 'Installing' : 'Downloading'} the update`}</MainHeading>
+          <MainHeading>{`${installing ? 'Installing' : 'Downloading'} the update`}</MainHeading>
           <ProgressContainer>
             <ProgressBlockLoader>
-              <Loading progress={this.props.progress.percent} />
+              <Loading progress={progress.percent} />
             </ProgressBlockLoader>
             <ProgressBlockStats>
               <Paragraph>
-                {this.props.installing
+                {installing
                   ? `Installing...`
                   : `${
-                      this.props.progress.startedAt === 0
+                      progress.startedAt === 0
                         ? `Download is starting...`
-                        : typeof this.props.progress.remaining === 'undefined'
+                        : typeof progress.remaining === 'undefined'
                           ? `Download has started...`
-                          : `${Math.round(this.props.progress.remaining)} seconds remaining`
+                          : `${Math.round(progress.remaining)} seconds remaining`
                     }`}
                 <SmallBlock>
-                  {`${(this.props.progress.transferred / 1000000).toFixed(1)} of `}
-                  {`${(this.props.progress.total / 1000000).toFixed(1)} MB at `}
-                  {`${(this.props.progress.speed / 1000000).toFixed(1)}  Mb/s`}
+                  {`${(progress.transferred / 1000000).toFixed(1)} of `}
+                  {`${(progress.total / 1000000).toFixed(1)} MB at `}
+                  {`${(progress.speed / 1000000).toFixed(1)}  Mb/s`}
                 </SmallBlock>
               </Paragraph>
             </ProgressBlockStats>

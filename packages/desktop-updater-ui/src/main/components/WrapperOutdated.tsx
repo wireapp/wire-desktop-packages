@@ -22,47 +22,19 @@ import * as React from 'react';
 import {EventDispatcher} from '../libs/EventDispatcher';
 import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
 
-interface State {
-  environment?: NodeJS.Platform;
-}
+interface State {}
 
 interface Props {
   environment?: NodeJS.Platform;
 }
 
 class WrapperOutdated extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      environment: undefined,
-      ...props,
-    };
-  }
-
   public static OS_FAMILY: {[key: string]: NodeJS.Platform} = {
     DARWIN: 'darwin',
   };
 
   public static TOPIC = {
     ON_BUTTON_CLICK: 'WrapperOutdated.TOPIC.ON_BUTTON_CLICK',
-    ON_DATA_RECEIVED: 'WrapperOutdated.TOPIC.ON_DATA_RECEIVED',
-  };
-
-  componentDidMount(): void {
-    window.addEventListener(WrapperOutdated.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    this.setState(nextProps);
-  }
-
-  componentWillUnmount(): void {
-    window.removeEventListener(WrapperOutdated.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
-  }
-
-  onDataReceived = (event: Event): void => {
-    const environment = (event as CustomEvent).detail;
-    this.setState({environment});
   };
 
   private readonly onCloseClick = (): void => {
@@ -85,7 +57,7 @@ class WrapperOutdated extends React.Component<Props, State> {
           <Paragraph>
             {'This version of Wire is no longer supported. To continue to use it, please update it.'}
           </Paragraph>
-          <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.state.environment)}</RegularButton>
+          <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.props.environment)}</RegularButton>
         </MainContent>
         <GlobalStyle />
       </UpdaterContainer>

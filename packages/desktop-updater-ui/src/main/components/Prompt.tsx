@@ -85,27 +85,27 @@ class Prompt extends React.Component<Props, State> {
   };
 
   render() {
+    const {isWebappTamperedWith, isWebappBlacklisted, metadata, changelogUrl} = this.props;
     let title: string;
     let description: string;
-    if (this.props.isWebappTamperedWith) {
+    if (isWebappTamperedWith) {
       title = 'Wire needs to be reinstalled';
       description =
         'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your data.';
-    } else if (this.props.isWebappBlacklisted) {
+    } else if (isWebappBlacklisted) {
       title = 'Your version of Wire is outdated';
       description = 'To continue using Wire, please update to the latest version.';
     } else {
       title = 'A new version of Wire is available';
       description = 'Update to latest version for the best Wire Desktop experience.';
     }
-
     return (
       <UpdaterContainer>
-        <Opacity in={this.props.metadata && this.state.showChangelog}>
+        <Opacity in={metadata && this.state.showChangelog} mountOnEnter={false} unmountOnExit={true}>
           <PromptChangelogModal
             onClose={() => this.toggleChangelog()}
-            metadata={this.props.metadata}
-            changelogUrl={this.props.changelogUrl}
+            metadata={metadata}
+            changelogUrl={changelogUrl}
           />
         </Opacity>
         <Opacity in={!this.state.showChangelog}>
@@ -123,19 +123,19 @@ class Prompt extends React.Component<Props, State> {
                 {' Learn more about this update'}
               </Link>
             </Paragraph>
-            {this.props.isWebappTamperedWith === false ? (
+            {!isWebappTamperedWith && (
               <Paragraph>
                 <Checkbox checked={this.state.isUpdatesInstallAutomatically} onChange={this.toggleCheckbox}>
                   <CheckboxLabel>{'Install Wire updates automatically in the future'}</CheckboxLabel>
                 </Checkbox>
               </Paragraph>
-            ) : null}
+            )}
             <Container>
               <DecisionButton backgroundColor={COLOR.WHITE} color={COLOR.GRAY_DARKEN_72} onClick={this.onLaterClick}>
-                {this.props.isWebappBlacklisted || this.props.isWebappTamperedWith ? 'Quit' : 'Later'}
+                {isWebappBlacklisted || isWebappTamperedWith ? 'Quit' : 'Later'}
               </DecisionButton>
               <DecisionButton backgroundColor={COLOR.BLUE} onClick={this.onUpdateClick}>
-                {this.props.isWebappTamperedWith ? 'Reinstall' : 'Update'}
+                {isWebappTamperedWith ? 'Reinstall' : 'Update'}
               </DecisionButton>
             </Container>
           </MainContent>

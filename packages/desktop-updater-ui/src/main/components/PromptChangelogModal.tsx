@@ -23,9 +23,19 @@ import * as Long from 'long';
 import {DateTime} from 'luxon';
 import * as React from 'react';
 import * as Markdown from 'react-markdown';
+import styled from 'styled-components';
 import {EventDispatcher} from '../libs/EventDispatcher';
 import {Modal} from './ModalBack';
 import {MainHeading, SelectableParagraph} from './UpdaterStyles';
+
+const BoldText = styled(Text)`
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+const NormalText = styled(Text)`
+  font-size: 14px;
+`;
 
 interface Props {
   metadata: any;
@@ -62,6 +72,7 @@ class PromptChangelogModal extends React.Component<Props, State> {
   };
 
   render() {
+    const {metadata, changelogUrl} = this.props;
     const heading: React.SFC<{level: number}> = props => {
       switch (props.level) {
         case 1:
@@ -77,35 +88,35 @@ class PromptChangelogModal extends React.Component<Props, State> {
     return (
       <Modal fullscreen onClose={this.hideChangelog} style={{backgroundColor: 'white'}}>
         <MainHeading>{"What's new"}</MainHeading>
-        {this.props.metadata.targetEnvironment !== 'PRODUCTION' ? (
+        {metadata.targetEnvironment !== 'PRODUCTION' ? (
           <Paragraph style={{marginBottom: 10}}>
             <Text fontSize="12px" bold style={{backgroundColor: COLOR.RED, padding: 5}} color={COLOR.WHITE}>
               {'WARNING'}
             </Text>
-            <Text fontSize="14px" bold color={COLOR.RED}>
-              {` This release is intended for ${this.props.metadata.targetEnvironment.toLowerCase()} environment only.`}
-            </Text>
+            <BoldText color={COLOR.RED}>
+              {` This release is intended for ${metadata.targetEnvironment.toLowerCase()} environment only.`}
+            </BoldText>
           </Paragraph>
         ) : null}
         <Paragraph>
-          {this.props.metadata.changelog !== '' ? (
+          {metadata.changelog !== '' ? (
             <Markdown
               escapeHtml={true}
               skipHtml={true}
-              source={this.props.metadata.changelog}
+              source={metadata.changelog}
               renderers={{heading, paragraph: Paragraph}}
             />
           ) : (
             <Small>{'No changelog is available for this update'}</Small>
           )}
         </Paragraph>
-        {this.props.changelogUrl && (
+        {changelogUrl && (
           <Paragraph>
             <Link
               fontSize="14px"
               textTransform="normal"
               style={{fontWeight: 'normal'}}
-              href={this.props.changelogUrl}
+              href={changelogUrl}
               target="_blank"
               rel="noopener noreferrer"
               color={COLOR.BLUE}
@@ -114,39 +125,32 @@ class PromptChangelogModal extends React.Component<Props, State> {
             </Link>
           </Paragraph>
         )}
-        <SelectableParagraph fontSize="14px">
-          <Text fontSize="14px" bold>
-            {'Version: '}
-          </Text>
-          {this.props.metadata.webappVersionNumber}
-          <br />
-          <Text fontSize="14px" bold>
-            {'Released on: '}
-          </Text>
-          {DateTime.fromISO(this.props.metadata.releaseDate, {zone: 'utc'})
-            .setLocale('en-US')
-            .toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}
-          <br />
-          <Text fontSize="14px" bold>
-            {'Size of the update: '}
-          </Text>
-          {(
-            new Long(
-              this.props.metadata.fileContentLength.low,
-              this.props.metadata.fileContentLength.high,
-              this.props.metadata.fileContentLength.unsigned
-            ).toNumber() / 1000000
-          ).toFixed(2)}
-          {' MB'}
-          <br />
-          <Text fontSize="14px" bold>
-            {'Checksum of the update: '}
-          </Text>
-          {this.props.metadata.fileChecksum.toString('hex')}
-          <br />
-          <Text fontSize="14px" bold>
-            {'This update is digitally signed.'}
-          </Text>
+        <SelectableParagraph>
+          <NormalText block>
+            <BoldText>{'Version: '}</BoldText>
+            {metadata.webappVersionNumber}
+          </NormalText>
+          <NormalText block>
+            <BoldText>{'Released on: '}</BoldText>
+            {DateTime.fromISO(metadata.releaseDate, {zone: 'utc'})
+              .setLocale('en-US')
+              .toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}
+          </NormalText>
+          <NormalText block>
+            <BoldText>{'Size of the update: '}</BoldText>
+            {`${(
+              new Long(
+                metadata.fileContentLength.low,
+                metadata.fileContentLength.high,
+                metadata.fileContentLength.unsigned
+              ).toNumber() / 1000000
+            ).toFixed(2)} MB`}
+          </NormalText>
+          <NormalText block>
+            <BoldText>{'Checksum of the update: '}</BoldText>
+            {metadata.fileChecksum.toString('hex')}
+          </NormalText>
+          <BoldText>{'This update is digitally signed.'}</BoldText>
         </SelectableParagraph>
       </Modal>
     );
