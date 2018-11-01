@@ -51,7 +51,11 @@ module.exports = {
     "prefer-promise-reject-errors": 2,
     "prettier/prettier": 2,
     "react/prefer-stateless-function": 2,
-    "sort-imports": 2,
+    "sort-imports": ["error", {
+      "ignoreCase": true,
+      "ignoreMemberSort": false,
+      "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+    }],
     "sort-keys": [
       2,
       "asc",
