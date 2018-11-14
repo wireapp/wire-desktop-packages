@@ -21,7 +21,7 @@ const crypto = require('crypto');
 const https = require('https');
 const rs = require('jsrsasign');
 
-const {PINS} = require('./static');
+const {PINS} = require('./pinningData');
 
 module.exports = {
   buildCert: buffer => {

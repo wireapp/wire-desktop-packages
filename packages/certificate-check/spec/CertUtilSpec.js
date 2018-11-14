@@ -20,8 +20,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const {buildCert, getFingerprint, hostnameShouldBePinned, verifyPinning} = require('../src/main');
-const {WILDCARD_CERT_FINGERPRINT} = require('../src/static');
+const {buildCert, getFingerprint, hostnameShouldBePinned, verifyPinning} = require('../src/CertUtil');
+const {WILDCARD_CERT_FINGERPRINT} = require('../src/pinningData');
 
 describe('hostnameShouldBePinned', () => {
   it('pins app.wire.com', () => {

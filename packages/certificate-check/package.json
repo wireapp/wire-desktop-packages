@@ -10,11 +10,11 @@
     "src"
   ],
   "license": "GPL-3.0",
-  "main": "src/main.js",
+  "main": "src/CertUtil.js",
   "name": "@wireapp/certificate-check",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check",
   "scripts": {
     "test": "jasmine"
   },
-  "version": "0.0.0"
+  "version": "0.0.1"
 }
