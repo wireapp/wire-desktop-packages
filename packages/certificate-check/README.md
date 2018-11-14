@@ -8,25 +8,4 @@ For licensing information, see the attached LICENSE file and the list of third-p
 
 ## Certificate Check
 
-Tool to check that Wire's domains use the expected certificate.
-
-### Screenshot
-
-![Screenshot](./preview.png)
-
-### Usage
-
-**Node.js**
-
-```bash
-yarn
-yarn start
-```
-
-**Additional terminal usage**
-
-There is a command-line interface to output the certificate fingerprint. It works like this:
-
-```bash
-node get_fingerprint.js --url https://app.wire.com
-```
+Utilities to check that Wire's domains use the expected certificate.
