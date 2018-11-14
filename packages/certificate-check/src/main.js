@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2017 Wire Swiss GmbH
+ * Copyright (C) 2018 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,97 +17,137 @@
  *
  */
 
-//@ts-check
-
-const certutils = require('./certutils');
-const electron = require('electron');
+const crypto = require('crypto');
 const https = require('https');
+const rs = require('jsrsasign');
 
-const {app, ipcMain} = electron;
-const BrowserWindow = electron.BrowserWindow;
+const {PINS} = require('./static');
 
-const platform = {
-  IS_LINUX: process.platform === 'linux',
-  IS_MAC_OS: process.platform === 'darwin',
-  IS_WINDOWS: process.platform === 'win32',
-};
-
-let mainWindow = null;
-
-const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
-
-const connect = hostname => {
-  return new Promise(resolve => {
-    https
-      .get(`https://${hostname}`)
-      .on('socket', socket => {
-        socket.on('secureConnect', () => {
-          const cert = socket.getPeerCertificate(true);
-          const certData = {
-            data: buildCert(cert),
-            issuerCert: {
-              data: buildCert(cert.issuerCertificate),
-            },
-          };
-          resolve({certData, hostname});
+module.exports = {
+  buildCert: buffer => {
+    return `-----BEGIN CERTIFICATE-----\n${buffer.toString('base64')}\n-----END CERTIFICATE-----`;
+  },
+  getDERFormattedCertificate: url => {
+    return new Promise((resolve, reject) => {
+      try {
+        const request = https.get(url, () => {
+          const certificate = request.socket.getPeerCertificate(true);
+          resolve(certificate.raw);
         });
-      })
-      .on('error', err => {
-        console.error(err);
-        resolve({certData: {}, hostname});
-      });
-  });
-};
-
-const verifyHosts = hostnames => {
-  const certPromises = hostnames.map(hostname => connect(hostname));
-
-  return Promise.all(certPromises).then(objects =>
-    objects.forEach(({certData, hostname}) => {
-      const result = certutils.verifyPinning(hostname, certData);
-      mainWindow.webContents.send('result', {hostname, result});
-    })
-  );
-};
-
-const createWindow = () => {
-  mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
-  });
-
-  mainWindow.on('closed', () => (mainWindow = null));
-
-  mainWindow.loadFile('index.html');
-
-  mainWindow.webContents.on('dom-ready', () => {
-    const hostnames = [
-      'app.wire.com',
-      'prod-assets.wire.com',
-      'prod-nginz-https.wire.com',
-      'prod-nginz-ssl.wire.com',
-      'wire.com',
-    ];
-    mainWindow.show();
-    ipcMain.on('jquery-ready', () => {
-      mainWindow.webContents.send('hostnames', hostnames);
-      verifyHosts(hostnames);
+      } catch (error) {
+        reject(error);
+      }
     });
-  });
+  },
+  getFingerprint: derCert => {
+    const derBinary = derCert.toString('binary');
+    const hexDerFileContents = rs.rstrtohex(derBinary);
+    const pemString = rs.KJUR.asn1.ASN1Util.getPEMStringFromHex(hexDerFileContents, 'CERTIFICATE');
+    const publicKey = rs.X509.getPublicKeyInfoPropOfCertPEM(pemString);
+    const publicKeyBytes = Buffer.from(publicKey.keyhex, 'hex').toString('binary');
+    return crypto
+      .createHash('sha256')
+      .update(publicKeyBytes)
+      .digest('base64');
+  },
+  hostnameShouldBePinned: hostname => {
+    return PINS.some(pin => pin.url.test(hostname.toLowerCase().trim()));
+  },
+  verifyPinning(hostname, certificate) {
+    const {
+      data: certData,
+      issuerCert: {data: issuerCertData},
+    } = certificate;
+
+    let issuerCertHex;
+    let publicKey;
+    let publicKeyBytes;
+    let publicKeyFingerprint;
+
+    try {
+      issuerCertHex = rs.pemtohex(issuerCertData);
+      publicKey = rs.X509.getPublicKeyInfoPropOfCertPEM(certData);
+      publicKeyBytes = Buffer.from(publicKey.keyhex, 'hex').toString('binary');
+      publicKeyFingerprint = crypto
+        .createHash('sha256')
+        .update(publicKeyBytes)
+        .digest('base64');
+    } catch (error) {
+      console.error('verifyPinning', error);
+      return {decoding: false};
+    }
+
+    const result = {};
+
+    const errorMessages = [];
+
+    for (const pin of PINS) {
+      const {url, publicKeyInfo = [], issuerRootPubkeys = []} = pin;
+
+      if (url.test(hostname.toLowerCase().trim())) {
+        if (issuerRootPubkeys.length > 0) {
+          result.verifiedIssuerRootPubkeys = issuerRootPubkeys.some(pubkey =>
+            rs.X509.verifySignature(issuerCertHex, rs.KEYUTIL.getKey(pubkey))
+          );
+          if (!result.verifiedIssuerRootPubkeys) {
+            errorMessages.push(
+              `Issuer root public key signatures: none of "${issuerRootPubkeys.join(', ')}" could be verified.`
+            );
+          }
+        }
+
+        result.verifiedPublicKeyInfo = publicKeyInfo
+          .reduce((arr, pubkey) => {
+            const {
+              fingerprints: knownFingerprints = [],
+              algorithmID: knownAlgorithmID = '',
+              algorithmParam: knownAlgorithmParam = null,
+            } = pubkey;
+
+            const fingerprintCheck =
+              knownFingerprints.length > 0
+                ? knownFingerprints.some(knownFingerprint => knownFingerprint === publicKeyFingerprint)
+                : undefined;
+            const algorithmIDCheck = knownAlgorithmID === publicKey.algoid;
+            const algorithmParamCheck = knownAlgorithmParam === publicKey.algparam;
+
+            if (!fingerprintCheck) {
+              errorMessages.push(
+                `Public key fingerprints: "${publicKeyFingerprint}" could not be verified with any of the known fingerprints "${knownFingerprints.join(
+                  ', '
+                )}".`
+              );
+            }
+
+            if (!algorithmIDCheck) {
+              errorMessages.push(
+                `Algorithm ID: "${publicKey.algoid}" could not be verified with the known ID "${knownAlgorithmID}".`
+              );
+            }
+
+            if (!algorithmParamCheck) {
+              errorMessages.push(
+                `Algorithm parameter: "${
+                  publicKey.algparam
+                }" could not be verified with the known parameter "${knownAlgorithmParam}".`
+              );
+            }
+
+            arr.push(fingerprintCheck, algorithmIDCheck, algorithmParamCheck);
+
+            return arr;
+          }, [])
+          .every(value => Boolean(value));
+
+        break;
+      }
+
+      if (errorMessages.length > 0) {
+        result.errorMessage = errorMessages.join('\n');
+        result.certificate = certificate;
+      }
+    }
+
+    return result;
+  },
 };
-
-app.on('ready', () => createWindow());
-
-app.on('window-all-closed', () => {
-  app.quit();
-});
-
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
-
-if (platform.IS_LINUX) {
-  app.disableHardwareAcceleration();
-}

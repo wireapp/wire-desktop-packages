@@ -1,44 +1,20 @@
 {
-  "build": {
-    "appId": "com.wire.certificatecheck",
-    "mac": {
-      "category": "Network"
-    },
-    "linux": {
-      "category": "Network"
-    }
-  },
-  "description": "Tool to check that Wire's domains use the expected certificate.",
   "dependencies": {
-    "jquery": "3.3.1",
-    "jsrsasign": "8.0.12",
-    "logdown": "3.2.7",
-    "yargs": "12.0.2"
+    "jsrsasign": "8.0.12"
   },
+  "description": "Utilities to check that Wire's domains use the expected certificate.",
   "devDependencies": {
-    "electron": "3.0.8",
-    "electron-builder": "20.28.4"
+    "jasmine": "3.3.0"
   },
   "files": [
-    "index.html",
-    "get_fingerprint.js",
     "src"
   ],
   "license": "GPL-3.0",
   "main": "src/main.js",
   "name": "@wireapp/certificate-check",
-  "private": true,
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check",
   "scripts": {
-    "build": "exit 0",
-    "clean": "exit 0",
-    "dist": "exit 0",
-    "dist:linux": "electron-builder --linux deb --x64",
-    "dist:macos": "electron-builder --mac --x64",
-    "dist:windows": "electron-builder --win --ia32",
-    "pack": "electron-builder --dir",
-    "start": "electron .",
-    "test": "exit 0"
+    "test": "jasmine"
   },
-  "version": "0.1.4"
+  "version": "0.0.0"
 }
