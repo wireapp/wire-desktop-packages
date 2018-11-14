@@ -141,11 +141,11 @@ module.exports = {
 
         break;
       }
+    }
 
-      if (errorMessages.length > 0) {
-        result.errorMessage = errorMessages.join('\n');
-        result.certificate = certificate;
-      }
+    if (errorMessages.length > 0) {
+      result.errorMessage = errorMessages.join('\n');
+      result.certificate = certificate;
     }
 
     return result;
