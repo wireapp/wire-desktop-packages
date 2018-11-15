@@ -4,17 +4,23 @@
   },
   "description": "Utilities to check that Wire's domains use the expected certificate.",
   "devDependencies": {
-    "jasmine": "3.3.0"
+    "jasmine": "3.3.0",
+    "rimraf": "2.6.2",
+    "typescript": "3.1.6"
   },
   "files": [
-    "src"
+    "dist"
   ],
   "license": "GPL-3.0",
-  "main": "src/CertUtil.js",
+  "main": "dist/commonjs/CertUtil.js",
   "name": "@wireapp/certificate-check",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check",
   "scripts": {
-    "test": "jasmine"
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "dist": "yarn clean && yarn build",
+    "test": "jasmine",
+    "test:project": "yarn dist && yarn test"
   },
   "version": "0.0.2"
 }
