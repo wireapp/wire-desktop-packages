@@ -29,8 +29,7 @@
     "css-loader": "1.0.1",
     "react-hot-loader": "4.3.12",
     "rimraf": "2.6.2",
-    "style-loader": "0.23.1",
-    "typescript": "3.1.6"
+    "style-loader": "0.23.1"
   },
   "files": [
     "dist/es6",
