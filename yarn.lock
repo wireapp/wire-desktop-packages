@@ -1978,21 +1978,21 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
-"@wireapp/react-ui-kit@4.3.20":
-  version "4.3.20"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.20.tgz#8b2c8a275e345699db1345e9a05f9125361f6d5e"
-  integrity sha512-nV9+fviVP3h+yCcibDmngKi5hwhbkhbx9Dult8F06XpxFE0uztAf+GNbbUfaOl9KSNQg9N0ieYSxccQcd+MgLg==
+"@wireapp/react-ui-kit@4.3.24":
+  version "4.3.24"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.24.tgz#541c069cd403941542ce1cecc67868458674e3bf"
+  integrity sha512-AgJxPZqWdNjZoDHqHJQUqb4JDc/beGaGnqC69fznohH0Yh72abUVULh2gyHj4m0rBkqv6eur0N+k5N9VU3rzHw==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
-    bazinga64 "5.3.25"
+    bazinga64 "5.3.27"
     color "3.1.0"
     react "16.6.3"
     react-dom "16.6.3"
     react-transition-group "2.5.0"
     recompose "0.30.0"
     styled-components "4.1.1"
-    styled-normalize "8.0.3"
+    styled-normalize "8.0.4"
     styled-transition-group "1.0.0"
 
 "@xtuc/ieee754@^1.2.0":
@@ -2680,10 +2680,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.25:
-  version "5.3.25"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.25.tgz#5737d9560b78088db4bc08128a2b71e866c625d2"
-  integrity sha512-hqTDBEGPBLpJlxO0TOM1AWFRfGlgMOwIU4bgSeEsynP3YHZJ7coC0n5K93e7LOKplP7Hnhl3x0Vo/tk0W9oYJQ==
+bazinga64@5.3.27:
+  version "5.3.27"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.27.tgz#3f0464855575b791f88cc7ba4cb36221cb34eba2"
+  integrity sha512-GKPG3JjMV6nTg7S8NS1weDHPgAk9406oRkQ7WvmlsclY/s9Doj9yBISxNMSp03hN0hxsnSy1wwMyIGhpjki1AA==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -9558,10 +9558,10 @@ styled-components@4.1.1:
     stylis-rule-sheet "^0.0.10"
     supports-color "^5.5.0"
 
-styled-normalize@8.0.3:
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/styled-normalize/-/styled-normalize-8.0.3.tgz#c8d71240a0fa6e17d1443dd5aa837c8287a77f26"
-  integrity sha512-2PFV3BLYxlsQcdVkl0adUIzUB8/KyP6Uqd+XB/e/yiqUTrQHk6ZJ1XsRiMVyzdiEtHyY2yDTo5h01ITIEx9ibw==
+styled-normalize@8.0.4:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/styled-normalize/-/styled-normalize-8.0.4.tgz#6a0885dc16c61d88813dab8f5137da928fe0c947"
+  integrity sha512-dXkKPnT+JcpqYnS0iQiBhUCOdheDz9xEm3H+ZARJV7l4WCXmRkwCx20ujkIYfESoYaiefbuX+F+rbtF6Ku5kvA==
 
 styled-transition-group@1.0.0:
   version "1.0.0"
