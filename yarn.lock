@@ -2028,10 +2028,10 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
-"@wireapp/react-ui-kit@4.3.26":
-  version "4.3.26"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.26.tgz#f99f8c7b50bc8a4fc220b6df1aa81f6c6d2a3c87"
-  integrity sha512-C9CjYgi15P31vuH+d0NfnNByd0YOO+z62Tm8TL0EAue1FJBkpCuKtbiqsOzJsbsurgDqOpheuruP+qdcxtPnRw==
+"@wireapp/react-ui-kit@4.3.27":
+  version "4.3.27"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.27.tgz#cbb01ca76eb138cdcd39cc34cb2aac1ecdefb587"
+  integrity sha512-O5bpu8j1G3C4X4zfeH7ynlzJc5pB3+ZI8/yAyWiV4U+t8br0pMcRoXt95rW6KuPmOXAGRUgBxxknP9fYzSzGdQ==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
