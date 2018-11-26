@@ -23,7 +23,7 @@
     "@babel/preset-typescript": "7.1.0",
     "@storybook/addon-actions": "4.0.8",
     "@storybook/addon-console": "1.1.0",
-    "@storybook/addon-knobs": "4.0.8",
+    "@storybook/addon-knobs": "4.0.9",
     "@storybook/react": "4.0.8",
     "babel-loader": "8.0.4",
     "css-loader": "1.0.1",
