@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Wire Certificate Pinning Debugger</title>
+    <script>
+      const {ipcRenderer, shell} = require('electron');
+      const os = require('os');
+
+      function isReady(callback) {
+        if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+          callback()
+        } else {
+          window.addEventListener('load', callback);
+        }
+      }
+
+      const createElement = (type, options) => {
+        const el = document.createElement(type);
+        Object.keys(options).forEach(option => el[option] = options[option]);
+        return el;
+      }
+
+      const getElementById = id => document.getElementById(id);
+
+      let log = `--- Wire Certificate Check log from ${new Date().toISOString()} on ${os.platform()} ${os.arch()} ---\n\n`;
+
+      isReady(() => {
+        const divHostnames = getElementById('hostnames');
+        ipcRenderer.on('hostnames', (event, hostnames) => hostnames.forEach(hostname => {
+          const divHostname = createElement('div', {id: `host-${hostname.replace(/\./g, '-')}`});
+          const spanStatus = createElement('span', {className: 'status'});
+          const spanHostname = createElement('span', {innerText: hostname});
+
+          divHostname.appendChild(spanStatus);
+          divHostname.appendChild(spanHostname);
+          divHostnames.appendChild(divHostname);
+        }));
+
+        ipcRenderer.on('result', (event, data) => {
+          const {hostname, result} = data;
+          const {errorMessage = '', verifiedPublicKeyInfo, certificate: {data: certData = {}} = {}} = result;
+          let icon;
+
+          if (verifiedPublicKeyInfo === true) {
+            icon = '✔️';
+          } else {
+            icon = '❌';
+            const spanResult = getElementById('result');
+            const pResultText = getElementById('result-text');
+
+            if (!pResultText) {
+              const pText = createElement('p', {id: 'result-text', innerText: 'At least one check failed.'});
+              spanResult.appendChild(pText);
+              getElementById('sendmail').style.display = 'block';
+            }
+
+            log += `*${hostname}*: ${errorMessage}\n`;
+            log += `\nRemote certificate:\n${JSON.stringify(result)}\n\n------------------------------------------------------------------\n\n`;
+          }
+
+          const query = `#host-${hostname.replace(/\./g, '-')} .status`;
+          document.querySelector(query).innerHTML = icon;
+        });
+
+        getElementById('sendmail').addEventListener('click', event => {
+          event.preventDefault();
+          shell.openExternal(`mailto:support+web@wire.com?subject=${encodeURIComponent('Certificate Check Report')}&body=${encodeURIComponent(log)}`);
+        });
+
+        ipcRenderer.send('html-ready');
+      });
+    </script>
+  </head>
+  <body style="font-family: Arial, sans-serif;">
+    <h1>Wire Certificate Check</h1>
+    <h2>Testing domains:</h2>
+    <div id="hostnames"></div>
+    <span id="result"></span> <button id="sendmail" style="display: none">Send log via email</button>
+  </body>
+</html>

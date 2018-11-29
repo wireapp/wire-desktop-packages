@@ -1,0 +1,39 @@
+{
+  "build": {
+    "appId": "com.wire.certificatecheck",
+    "mac": {
+      "category": "Network"
+    },
+    "linux": {
+      "category": "Network"
+    }
+  },
+  "description": "Tool to check that Wire's domains use the expected certificate.",
+  "dependencies": {
+    "@wireapp/certificate-check": "0.0.3"
+  },
+  "devDependencies": {
+    "electron": "3.0.9",
+    "electron-builder": "20.36.2"
+  },
+  "files": [
+    "electron"
+  ],
+  "license": "GPL-3.0",
+  "main": "main.js",
+  "name": "@wireapp/certificate-check-tool",
+  "private": true,
+  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check-tool",
+  "scripts": {
+    "build": "exit 0",
+    "clean": "exit 0",
+    "dist": "exit 0",
+    "dist:linux": "electron-builder --linux deb --x64",
+    "dist:macos": "electron-builder --mac --x64",
+    "dist:windows": "electron-builder --win --ia32",
+    "pack": "electron-builder --dir",
+    "start": "electron .",
+    "test": "exit 0"
+  },
+  "version": "0.1.4"
+}
