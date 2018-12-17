@@ -1748,15 +1748,15 @@
   dependencies:
     global "^4.3.2"
 
-"@storybook/addon-knobs@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-4.1.1.tgz#cb131121ffeac10d5d7ddfc28ba036449c2a4a11"
-  integrity sha512-SmXdN8YTGkWijKZeQw/0IkfP7pkLaywlKmrb/6eyb6fCqwhdY9pPmAxiWPBwmBjozQPYcYkAzWi8lANuehDt2g==
+"@storybook/addon-knobs@4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-4.1.2.tgz#bb79d443a51788701dc2d97cd3b821267715cac1"
+  integrity sha512-qtdsFhzAoHN50IzWbqE2bsPkaaOMbBb8OtX8kriPqSJaMkNHYBq4EyB23Bgv7zIu9sk3smoCUBA0ArhaKikL4A==
   dependencies:
     "@emotion/styled" "^0.10.6"
-    "@storybook/addons" "4.1.1"
-    "@storybook/components" "4.1.1"
-    "@storybook/core-events" "4.1.1"
+    "@storybook/addons" "4.1.2"
+    "@storybook/components" "4.1.2"
+    "@storybook/core-events" "4.1.2"
     copy-to-clipboard "^3.0.8"
     core-js "^2.5.7"
     escape-html "^1.0.3"
@@ -1766,16 +1766,6 @@
     qs "^6.5.2"
     react-color "^2.14.1"
     react-lifecycles-compat "^3.0.4"
-    util-deprecate "^1.0.2"
-
-"@storybook/addons@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-4.1.1.tgz#79aa4b81cc54ae46590926acf2dd7e0fcb5cc25a"
-  integrity sha512-Q6d754uRHBEf2aUCyAgIfL4JF0RZ6Yf/FcZYXKG1MsKVLonbRVSGjsm+R4wsndjvnZF3Ts37WhpZ/1fGP78Zzg==
-  dependencies:
-    "@storybook/channels" "4.1.1"
-    "@storybook/components" "4.1.1"
-    global "^4.3.2"
     util-deprecate "^1.0.2"
 
 "@storybook/addons@4.1.2":
@@ -1797,11 +1787,6 @@
     global "^4.3.2"
     json-stringify-safe "^5.0.1"
 
-"@storybook/channels@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-4.1.1.tgz#53268bfb77a854e39bfd3c89991ac2114092a018"
-  integrity sha512-ILOi+y9wtqOP7cYcVNBCx8vYTXsObz6O9jFKxQKL55lbnlUqyRVTEf4qlA1ilkZqPBM7PwtZs+zX31hgJfWYog==
-
 "@storybook/channels@4.1.2":
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@storybook/channels/-/channels-4.1.2.tgz#4efc82e2775fc143d5c5aa95b332ddd0e5b5bdd2"
@@ -1811,22 +1796,6 @@
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@storybook/client-logger/-/client-logger-4.1.2.tgz#4169e84a9a6d001eb99bcd1a2e365977f365fc34"
   integrity sha512-T+B5pOVuBInx9WRYT/0bz/4QsPtlbexjZThl6Fb6E0xM6anHL9ADgY591Bd3lCVXi0UnPgx9Zw2hhBFC1WNrvQ==
-
-"@storybook/components@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@storybook/components/-/components-4.1.1.tgz#81633e13134dd53ee1e707268b1e89aa2642c5c7"
-  integrity sha512-dJE1vKg8NOiWt/FpQ60ym7xn+WcVkoiUeXG8vXPFxOqcI00yZizHtwJexWT6ltX8u7i2ODF6IU9dyUI3L2nOyQ==
-  dependencies:
-    "@emotion/core" "^0.13.1"
-    "@emotion/provider" "^0.11.2"
-    "@emotion/styled" "^0.10.6"
-    global "^4.3.2"
-    lodash "^4.17.11"
-    prop-types "^15.6.2"
-    react-inspector "^2.3.0"
-    react-split-pane "^0.1.84"
-    react-textarea-autosize "^7.0.4"
-    render-fragment "^0.1.1"
 
 "@storybook/components@4.1.2":
   version "4.1.2"
@@ -1843,11 +1812,6 @@
     react-split-pane "^0.1.84"
     react-textarea-autosize "^7.0.4"
     render-fragment "^0.1.1"
-
-"@storybook/core-events@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-4.1.1.tgz#29e95368f298d12bcd685c9825de8509de5d62d4"
-  integrity sha512-XEEjzXjteTtRy6A/jzZkQmldFFmYsoFM2lz0KTTXdFtUvW4rcjqhR9GuicALqRh0c25T9QtGKf0BLCsK4WAtSw==
 
 "@storybook/core-events@4.1.2":
   version "4.1.2"
