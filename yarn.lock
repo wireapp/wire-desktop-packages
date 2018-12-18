@@ -2340,10 +2340,10 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
-"@wireapp/react-ui-kit@4.3.32":
-  version "4.3.32"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.32.tgz#b24fa0669bc0f4b7ee868488a7e72d4cc93a53ba"
-  integrity sha512-v9mOuGybqvxuZIoZ+X20/NgtJ4Xygl2GVUPio4pU1DQHa4w8sY7MA7T2lL811wJsPAYJ6K8CSLh8uCWJtLclxQ==
+"@wireapp/react-ui-kit@4.3.33":
+  version "4.3.33"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.33.tgz#bf6eba8e169d67ad89d96bee5d21142498cb27b2"
+  integrity sha512-EolEXI6y9tbrmZhI9/B0tXkQDlvMJSyM8yDFy9mZ4MAGuO7Awk4smM5AhBketGSYhOUdbUYc9nIM93p44JdRQA==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
@@ -2351,7 +2351,7 @@
     color "3.1.0"
     react "16.6.3"
     react-dom "16.6.3"
-    react-transition-group "2.5.0"
+    react-transition-group "2.5.1"
     recompose "0.30.0"
     styled-components "4.1.2"
     styled-normalize "8.0.4"
@@ -9640,7 +9640,17 @@ react-textarea-autosize@^7.0.4:
   dependencies:
     prop-types "^15.6.0"
 
-react-transition-group@2.5.0, react-transition-group@^2.0.0:
+react-transition-group@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.5.1.tgz#67fbd8d30ebb1c57a149d554dbb82eabefa61f0d"
+  integrity sha512-8x/CxUL9SjYFmUdzsBPTgtKeCxt7QArjNSte0wwiLtF/Ix/o1nWNJooNy5o9XbHIKS31pz7J5VF2l41TwlvbHQ==
+  dependencies:
+    dom-helpers "^3.3.1"
+    loose-envify "^1.4.0"
+    prop-types "^15.6.2"
+    react-lifecycles-compat "^3.0.4"
+
+react-transition-group@^2.0.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.5.0.tgz#70bca0e3546102c4dc5cf3f5f57f73447cce6874"
   integrity sha512-qYB3JBF+9Y4sE4/Mg/9O6WFpdoYjeeYqx0AFb64PTazVy8RPMiE3A47CG9QmM4WJ/mzDiZYslV+Uly6O1Erlgw==
