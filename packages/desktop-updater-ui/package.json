@@ -9,7 +9,7 @@
     "electron": "3.0.13",
     "long": "4.0.0",
     "luxon": "1.8.2",
-    "react": "16.6.3",
+    "react": "16.7.0",
     "react-dom": "16.6.3",
     "react-markdown": "4.0.4",
     "styled-components": "4.1.3"
