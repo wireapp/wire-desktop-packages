@@ -2409,20 +2409,20 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
-"@wireapp/react-ui-kit@4.3.33":
-  version "4.3.33"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.33.tgz#bf6eba8e169d67ad89d96bee5d21142498cb27b2"
-  integrity sha512-EolEXI6y9tbrmZhI9/B0tXkQDlvMJSyM8yDFy9mZ4MAGuO7Awk4smM5AhBketGSYhOUdbUYc9nIM93p44JdRQA==
+"@wireapp/react-ui-kit@4.3.34":
+  version "4.3.34"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.34.tgz#c1078e210b17022c7ff619743b7f2f6388651b68"
+  integrity sha512-DCRhkftKvASenQv1lCvOPBNr5lKBuxEF6gX94Vg0fegyUrK8+VEc0rUmKVGUK/122XdjJx6fI1hq45ca8EDbtw==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
-    bazinga64 "5.3.33"
+    bazinga64 "5.3.34"
     color "3.1.0"
-    react "16.6.3"
+    react "16.7.0"
     react-dom "16.6.3"
     react-transition-group "2.5.1"
     recompose "0.30.0"
-    styled-components "4.1.2"
+    styled-components "4.1.3"
     styled-normalize "8.0.4"
     styled-transition-group "1.0.0"
 
@@ -3241,10 +3241,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.33:
-  version "5.3.33"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.33.tgz#f8918d226860c884bb30f88cb40569e2e7ebfa2a"
-  integrity sha512-otZdlbvQfqxEFZL6TxY1EDjHmhToynn3GIxFIzeYIvJXF4f0BX3BDvD+InwrS0wo8KlNrwxnqH9lntB0fkcZFw==
+bazinga64@5.3.34:
+  version "5.3.34"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.34.tgz#ebae370e37d3d159ba3fc36dc583120fa9008557"
+  integrity sha512-kdu2+ydmdPxmCww06deNbGkxFIpwZuI8N8vmoWabhQofY3SOE+cSABYmPYvs+mgBLu6dOzJ8H3wjRPv+CH+/zQ==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -9805,16 +9805,6 @@ react-treebeard@^3.1.0:
     shallowequal "^1.1.0"
     velocity-react "^1.4.1"
 
-react@16.6.3:
-  version "16.6.3"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.6.3.tgz#25d77c91911d6bbdd23db41e70fb094cc1e0871c"
-  integrity sha512-zCvmH2vbEolgKxtqXL2wmGCUxUyNheYn/C+PD1YAjfxHC54+MhdruyhO7QieQrYsYeTxrn93PM2y0jRH1zEExw==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.11.2"
-
 react@16.7.0, react@^16.6.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.7.0.tgz#b674ec396b0a5715873b350446f7ea0802ab6381"
@@ -11112,22 +11102,6 @@ style-loader@0.23.1, style-loader@^0.23.1:
   dependencies:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
-
-styled-components@4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-4.1.2.tgz#f8a685e3b2bcd03c5beac7f2c02bb6ad237da9b3"
-  integrity sha512-NdvWatJ2WLqZxAvto+oH0k7GAC/TlAUJTrHoXJddjbCrU6U23EmVbb9LXJBF+d6q6hH+g9nQYOWYPUeX/Vlc2w==
-  dependencies:
-    "@emotion/is-prop-valid" "^0.6.8"
-    "@emotion/unitless" "^0.7.0"
-    babel-plugin-styled-components ">= 1"
-    css-to-react-native "^2.2.2"
-    memoize-one "^4.0.0"
-    prop-types "^15.5.4"
-    react-is "^16.6.0"
-    stylis "^3.5.0"
-    stylis-rule-sheet "^0.0.10"
-    supports-color "^5.5.0"
 
 styled-components@4.1.3:
   version "4.1.3"
