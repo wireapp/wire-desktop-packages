@@ -2401,18 +2401,18 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
-"@wireapp/react-ui-kit@4.3.34":
-  version "4.3.34"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.34.tgz#c1078e210b17022c7ff619743b7f2f6388651b68"
-  integrity sha512-DCRhkftKvASenQv1lCvOPBNr5lKBuxEF6gX94Vg0fegyUrK8+VEc0rUmKVGUK/122XdjJx6fI1hq45ca8EDbtw==
+"@wireapp/react-ui-kit@4.3.35":
+  version "4.3.35"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.35.tgz#95f8cba4ed5091fc8cb34806d736d48b1cbc17fc"
+  integrity sha512-+NUgEfkY+TWEdzc8DRqasdNB9Ue8PhK1sd37/vvxQBTmx1HAIqNzXGb4kNdpFJcmoIcTTLOTex2qhzPrwayvlQ==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
-    bazinga64 "5.3.34"
+    bazinga64 "5.3.35"
     color "3.1.0"
     react "16.7.0"
-    react-dom "16.6.3"
-    react-transition-group "2.5.1"
+    react-dom "16.7.0"
+    react-transition-group "2.5.2"
     recompose "0.30.0"
     styled-components "4.1.3"
     styled-normalize "8.0.4"
@@ -3233,10 +3233,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.34:
-  version "5.3.34"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.34.tgz#ebae370e37d3d159ba3fc36dc583120fa9008557"
-  integrity sha512-kdu2+ydmdPxmCww06deNbGkxFIpwZuI8N8vmoWabhQofY3SOE+cSABYmPYvs+mgBLu6dOzJ8H3wjRPv+CH+/zQ==
+bazinga64@5.3.35:
+  version "5.3.35"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.35.tgz#f5ac38e44dae30706c7efa4d703f1a166114d25d"
+  integrity sha512-EM6Op2XDfUPW4FMXLHmczvIEe21L7ASkBfiEuSCRTj+rKOmDKf4xSabgMmlKPnM8F7OTdc12XxVDzxr7m174FA==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -9649,16 +9649,6 @@ react-docgen@^3.0.0-rc.1:
     node-dir "^0.1.10"
     recast "^0.15.0"
 
-react-dom@16.6.3:
-  version "16.6.3"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.6.3.tgz#8fa7ba6883c85211b8da2d0efeffc9d3825cccc0"
-  integrity sha512-8ugJWRCWLGXy+7PmNh8WJz3g1TaTUt1XyoIcFN+x0Zbkoz+KKdUyx1AQLYJdbFXjuF41Nmjn5+j//rxvhFjgSQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.11.2"
-
 react-dom@16.7.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.7.0.tgz#a17b2a7ca89ee7390bc1ed5eb81783c7461748b8"
@@ -9764,10 +9754,10 @@ react-textarea-autosize@^7.0.4:
   dependencies:
     prop-types "^15.6.0"
 
-react-transition-group@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.5.1.tgz#67fbd8d30ebb1c57a149d554dbb82eabefa61f0d"
-  integrity sha512-8x/CxUL9SjYFmUdzsBPTgtKeCxt7QArjNSte0wwiLtF/Ix/o1nWNJooNy5o9XbHIKS31pz7J5VF2l41TwlvbHQ==
+react-transition-group@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.5.2.tgz#9457166a9ba6ce697a3e1b076b3c049b9fb2c408"
+  integrity sha512-vwHP++S+f6KL7rg8V1mfs62+MBKtbMeZDR8KiNmD7v98Gs3UPGsDZDahPJH2PVprFW5YHJfh6cbNim3zPndaSQ==
   dependencies:
     dom-helpers "^3.3.1"
     loose-envify "^1.4.0"
@@ -10418,14 +10408,6 @@ sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
-
-scheduler@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.11.2.tgz#a8db5399d06eba5abac51b705b7151d2319d33d3"
-  integrity sha512-+WCP3s3wOaW4S7C1tl3TEXp4l9lJn0ZK8G3W3WKRWmw77Z2cIFUW2MiNTMHn5sCjxN+t7N43HAOOgMjyAg5hlg==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.12.0:
   version "0.12.0"
