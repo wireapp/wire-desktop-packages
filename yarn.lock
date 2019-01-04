@@ -2400,14 +2400,14 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
-"@wireapp/react-ui-kit@4.3.36":
-  version "4.3.36"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.36.tgz#84410a74d7e3edb6f877237b37cc8964123ab94e"
-  integrity sha512-3fS8ZnNJ7gSHgBECZUIvndsoAyyy99agA1hRE0SJH7Xca0oqo40hugw6RE5GsabXx5y0rceJR6/dJym7NvEBMQ==
+"@wireapp/react-ui-kit@4.3.38":
+  version "4.3.38"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.38.tgz#ab53c9882088c20dc0d66da5fda79df46c744a7f"
+  integrity sha512-bXZbtFMcaNPYux0UY5ZmTJIXtdK71dXjUSG0jB13rGzwrMcYy0umKfH77mIYC5RTKlW9NAWA3SDZGE2AUtnTJg==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
-    bazinga64 "5.3.36"
+    bazinga64 "5.3.37"
     color "3.1.0"
     react "16.7.0"
     react-dom "16.7.0"
@@ -3232,10 +3232,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.36:
-  version "5.3.36"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.36.tgz#81a9c96f6f4d9ca2c8eef4905f3a9966f29192d5"
-  integrity sha512-S/GrE2YzeTz8pkDNiVBbEDPC6itZdckXaciOUwV2YZyZ5ZR3+Y8hOO5wVThupaFVDovzuBSa2pqkKATzLZkl2A==
+bazinga64@5.3.37:
+  version "5.3.37"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.37.tgz#5ec510a8ed9473efdc9ed8674707ecfd8e268ee4"
+  integrity sha512-0DNsG7ZXCHyC15mWMj50ELiQs/QGNqVg+v8H3wE97zzgiBIYdPEqkBfLyoIfQHyZ6TGdUsBA29+yg8dNQ0WUdA==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
