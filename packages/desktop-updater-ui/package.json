@@ -21,7 +21,7 @@
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.1.0",
-    "@storybook/addon-actions": "4.1.6",
+    "@storybook/addon-actions": "4.1.7",
     "@storybook/addon-console": "1.1.0",
     "@storybook/addon-knobs": "4.1.6",
     "@storybook/react": "4.1.6",
