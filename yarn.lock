@@ -2212,10 +2212,10 @@
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.0.tgz#719551d2352d301ac8b81db732acb6bdc28dbdef"
   integrity sha512-1w52Nyx4Gq47uuu0EVcsHBxZFJgurQ+rTKS3qMHxR1GY2T8c2AJYd6vZoZ9q1rupaDjU0yT+Jc2XTyXkjeMA+Q==
 
-"@types/luxon@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.4.1.tgz#ece499ada215fb253e07c7ac05d30731412ba6aa"
-  integrity sha512-mYv/gbkOJ40CDgR8st5sosfFNrJncdlkpdzQSNRdU86UQg3oWWmll4AO/7B8F5FlBC6YrIXqXDSnkoCBqo+uMA==
+"@types/luxon@1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.4.2.tgz#996b90d6a40977a9f856b3e22aefcec6a8fd66d0"
+  integrity sha512-YOJd6g4YR1UMPuY+P15WEKEsMjk+rS63J8zQZ7dvoXE3QlUQ7IsYVnZjvIhyXkjHlTqqb8xcd3VBgAeRXBOSOA==
 
 "@types/node@*", "@types/node@10.12.18", "@types/node@^10.12.18":
   version "10.12.18"
