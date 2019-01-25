@@ -2440,14 +2440,14 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/react-ui-kit@4.3.39":
-  version "4.3.39"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.39.tgz#45490e54b0aaee0adc742efdfaea481d9c8c29e8"
-  integrity sha512-AmTYQBaPGv/5Bin+A8rXYkOd1tNqHl1f7H/4ueJK2lLl+36mj4hwPgYFK7tpUFC/PPtTwJrHYUr2nZbx34K2YA==
+"@wireapp/react-ui-kit@4.3.40":
+  version "4.3.40"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.40.tgz#1bd6918cadfa63a86d73310676de2c8aea9be959"
+  integrity sha512-BM93zcHKDYxhlWJCNM4QuDdh08LWIjvw184eCocaKfQWeJF/DytHnTFBeQzlCJOqnxvyHwe21SaCMKe7h4gaKg==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
-    bazinga64 "5.3.38"
+    bazinga64 "5.3.39"
     color "3.1.0"
     react "16.7.0"
     react-dom "16.7.0"
@@ -3232,10 +3232,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.38:
-  version "5.3.38"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.38.tgz#0675f77f6014b6711637f33fad5ce3d6fd8e1073"
-  integrity sha512-nWG5b9LuWXiPmDr63JR3ht/meQ1QE+ebfOpmCFYxZccQlFCRa4azkERZP34ZEuFR1hQXx6zoWdNALiDebrDzWQ==
+bazinga64@5.3.39:
+  version "5.3.39"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.39.tgz#e2d9557071470845817662a0b1e8541f01969b91"
+  integrity sha512-6YeY69cv8cXAyPEENEUaZrsEAdOsFXcgkqLT05oh/79H2xruqzYQah6eW7l0LXUTz56qeeDSMfuuz+CUFWmi0Q==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
