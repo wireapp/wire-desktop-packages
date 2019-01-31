@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@types/luxon": "1.10.2",
+    "@types/luxon": "1.10.3",
     "@types/node": "10.12.20",
     "@types/react": "16.7.22",
     "@types/react-dom": "16.0.11",
