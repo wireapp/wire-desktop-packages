@@ -7779,10 +7779,10 @@ lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.2, lru-cache@^4.1.3:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-luxon@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.11.0.tgz#e0d87e967fb8c1c6d2279d8ca0c55f2ba76ea9f3"
-  integrity sha512-eZRCr3NO83dYOn392giRppz2Z5DVAiHIq3wnt0sKGiTD77v6iscVVH+WAWGPG7A1R7kAVRTK4C0daX/SThEsiQ==
+luxon@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.11.1.tgz#4b59f28264ae7ec27b42fe0fb18564dae771d2f7"
+  integrity sha512-ZmfPxP91Swg5MmHOeV/hvdIWiUYm6LCySg0xVRBVtOHZdNqiD32qxUhMek4XbyyXWtKdGMUD+hW+o5pilbRVuA==
 
 make-dir@^1.0.0:
   version "1.3.0"
