@@ -2405,10 +2405,10 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/react-ui-kit@4.3.41":
-  version "4.3.41"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.41.tgz#f59a8773e85fe8d980a0e7e791e1d6105880199b"
-  integrity sha512-Jkn2m/YWrKbjgw3JvVYMCZYTO61qHWENteMwCCCaUQ2r1T0h0Typ+EfNwmw24u40kL49MZnZJiMSgZv8glJqmg==
+"@wireapp/react-ui-kit@4.3.42":
+  version "4.3.42"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.42.tgz#cb6b09ad984409ed3b2e03bc550918e44bb37fd6"
+  integrity sha512-83fdArATztdLR0ECy3t43UIm1sY2JpIjtCjvmhMQtKKPeJl/DxFlE5RQta7hng6HT3s4RslviOLv27LshFhJ4A==
   dependencies:
     "@types/color" "3.0.0"
     "@types/styled-components" "4.0.3"
