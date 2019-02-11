@@ -8,7 +8,7 @@
     "@wireapp/react-ui-kit": "4.3.42",
     "electron": "4.0.4",
     "long": "4.0.0",
-    "luxon": "1.11.1",
+    "luxon": "1.11.2",
     "react": "16.8.1",
     "react-dom": "16.8.1",
     "react-markdown": "4.0.6",
