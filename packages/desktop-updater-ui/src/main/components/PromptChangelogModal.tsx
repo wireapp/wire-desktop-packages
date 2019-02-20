@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2018 Wire Swiss GmbH
+ * Copyright (C) 2019 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import {DateTime} from 'luxon';
 import * as React from 'react';
 import * as Markdown from 'react-markdown';
 import styled from 'styled-components';
-import {EventDispatcher} from '../libs/EventDispatcher';
+//import {EventDispatcher} from '../libs/EventDispatcher';
 import {Modal} from './ModalBack';
 import {MainHeading, SelectableParagraph} from './UpdaterStyles';
 
@@ -38,7 +38,7 @@ const NormalText = styled(Text)`
 `;
 
 interface Props {
-  metadata: any;
+  manifest: any;
   changelogUrl: string;
   onClose: () => void;
 }
@@ -49,30 +49,15 @@ interface State {
 }
 
 class PromptChangelogModal extends React.Component<Props, State> {
-  private static readonly PROMPT_WINDOW_SIZE = {height: 287, width: 480};
-  private static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(289 * 1.4), width: Math.round(480 * 1.3)};
-
-  public static TOPIC = {
-    SEND_RESIZE_BROWSER_WINDOW: 'PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
-  };
+  public static readonly PROMPT_WINDOW_SIZE = {height: 287, width: 480};
+  public static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(289 * 1.4), width: Math.round(480 * 1.3)};
 
   hideChangelog = (): void => {
-    EventDispatcher.send(
-      PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
-      PromptChangelogModal.PROMPT_WINDOW_SIZE
-    );
     this.props.onClose();
   };
 
-  showChangelog = (): void => {
-    EventDispatcher.send(
-      PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
-      PromptChangelogModal.CHANGELOG_WINDOW_SIZE
-    );
-  };
-
   render() {
-    const {metadata, changelogUrl} = this.props;
+    const {manifest, changelogUrl} = this.props;
     const heading: React.SFC<{level: number}> = props => {
       switch (props.level) {
         case 1:
@@ -85,27 +70,25 @@ class PromptChangelogModal extends React.Component<Props, State> {
           return <H4>{props.children}</H4>;
       }
     };
+    const paragraph: React.SFC = props => {
+      return <Paragraph>{props.children}</Paragraph>;
+    };
     return (
       <Modal fullscreen onClose={this.hideChangelog} style={{backgroundColor: 'white'}}>
         <MainHeading>{"What's new"}</MainHeading>
-        {metadata.targetEnvironment !== 'PRODUCTION' && (
+        {manifest.targetEnvironment !== 'PRODUCTION' && (
           <Paragraph style={{marginBottom: 10}}>
             <Text fontSize="12px" bold style={{backgroundColor: COLOR.RED, padding: 5}} color={COLOR.WHITE}>
               {'WARNING'}
             </Text>
             <BoldText color={COLOR.RED}>
-              {` This release is intended for ${metadata.targetEnvironment.toLowerCase()} environment only.`}
+              {` This release is intended for ${manifest.targetEnvironment.toLowerCase()} environment only.`}
             </BoldText>
           </Paragraph>
         )}
         <Paragraph>
-          {metadata.changelog ? (
-            <Markdown
-              escapeHtml={true}
-              skipHtml={true}
-              source={metadata.changelog}
-              renderers={{heading, paragraph: Paragraph}}
-            />
+          {typeof manifest.changelog === 'string' ? (
+            <Markdown escapeHtml={true} skipHtml={true} source={manifest.changelog} renderers={{heading, paragraph}} />
           ) : (
             <Small>{'No changelog is available for this update'}</Small>
           )}
@@ -128,11 +111,11 @@ class PromptChangelogModal extends React.Component<Props, State> {
         <SelectableParagraph>
           <NormalText block>
             <BoldText>{'Version: '}</BoldText>
-            {metadata.webappVersionNumber}
+            {manifest.webappVersionNumber}
           </NormalText>
           <NormalText block>
             <BoldText>{'Released on: '}</BoldText>
-            {DateTime.fromISO(metadata.releaseDate, {zone: 'utc'})
+            {DateTime.fromISO(manifest.releaseDate, {zone: 'utc'})
               .setLocale('en-US')
               .toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}
           </NormalText>
@@ -140,15 +123,15 @@ class PromptChangelogModal extends React.Component<Props, State> {
             <BoldText>{'Size of the update: '}</BoldText>
             {`${(
               new Long(
-                metadata.fileContentLength.low,
-                metadata.fileContentLength.high,
-                metadata.fileContentLength.unsigned
+                manifest.fileContentLength.low,
+                manifest.fileContentLength.high,
+                manifest.fileContentLength.unsigned
               ).toNumber() / 1000000
             ).toFixed(2)} MB`}
           </NormalText>
           <NormalText block>
             <BoldText>{'Checksum of the update: '}</BoldText>
-            {metadata.fileChecksum.toString('hex')}
+            {manifest.fileChecksum.toString('hex')}
           </NormalText>
           <BoldText>{'This update is digitally signed.'}</BoldText>
         </SelectableParagraph>

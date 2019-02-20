@@ -19,7 +19,7 @@
 
 import * as Long from 'long';
 
-export interface Metadata {
+export interface Manifest {
   /**
    * Author of the update.
    */
@@ -33,7 +33,7 @@ export interface Metadata {
   /**
    * Date when the file is considered as expired (cannot be validated anymore).
    *
-   * The metadata can be re-signed with a new expiration date (e.g. if no version
+   * The manifest can be re-signed with a new expiration date (e.g. if no version
    * is released in the meantime).
    *
    * If the latest available version has an expired `expiresOn` field the
@@ -78,7 +78,7 @@ export interface Metadata {
   releaseDate: string;
 
   /**
-   * Metadata version.
+   * Manifest version.
    */
   specVersion: number;
 

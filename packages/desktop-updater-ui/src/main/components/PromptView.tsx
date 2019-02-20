@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2018 Wire Swiss GmbH
+ * Copyright (C) 2019 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,15 @@ class Prompt extends React.Component<Props, State> {
     SEND_RESIZE_BROWSER_WINDOW: 'Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.showChangelog !== prevState.showChangelog) {
+      EventDispatcher.send(
+        Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
+        this.state.showChangelog ? PromptChangelogModal.CHANGELOG_WINDOW_SIZE : PromptChangelogModal.PROMPT_WINDOW_SIZE
+      );
+    }
+  }
+
   onDecisionTaken = (userDecision: Partial<any>): void => {
     const decision = {...this.state.decision, ...userDecision};
     EventDispatcher.send(Prompt.TOPIC.SEND_DECISION, decision);
@@ -85,7 +94,7 @@ class Prompt extends React.Component<Props, State> {
   };
 
   render() {
-    const {isWebappTamperedWith, isWebappBlacklisted, metadata, changelogUrl} = this.props;
+    const {isWebappTamperedWith, isWebappBlacklisted, manifest, changelogUrl} = this.props;
     let title: string;
     let description: string;
     if (isWebappTamperedWith) {
@@ -101,10 +110,10 @@ class Prompt extends React.Component<Props, State> {
     }
     return (
       <UpdaterContainer>
-        <Opacity in={metadata && this.state.showChangelog} mountOnEnter={false} unmountOnExit={true}>
+        <Opacity in={manifest && this.state.showChangelog} mountOnEnter={false} unmountOnExit={true}>
           <PromptChangelogModal
             onClose={() => this.toggleChangelog()}
-            metadata={metadata}
+            manifest={manifest}
             changelogUrl={changelogUrl}
           />
         </Opacity>

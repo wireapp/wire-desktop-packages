@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2018 Wire Swiss GmbH
+ * Copyright (C) 2019 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,8 +54,8 @@ class Installer extends React.Component<Props, State> {
                       progress.startedAt === 0
                         ? `Download is starting...`
                         : progress.remaining
-                          ? `${Math.round(progress.remaining)} seconds remaining`
-                          : `Download has started...`
+                        ? `${Math.round(progress.remaining)} seconds remaining`
+                        : `Download has started...`
                     }`}
                 <SmallBlock>
                   {`${(progress.transferred / 1000000).toFixed(1)} of `}

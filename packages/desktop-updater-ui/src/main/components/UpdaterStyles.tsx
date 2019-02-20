@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2018 Wire Swiss GmbH
+ * Copyright (C) 2019 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: default;
     background-color: transparent;
     overflow: hidden;
-    -webkit-app-region: no-drag;
+    -webkit-app-region: drag;
   }
 
   *::selection {
@@ -42,8 +42,8 @@ const GlobalStyle = createGlobalStyle`
     color: #fff;
   }
 
-  button, input, label, form {
-    -webkit-app-region: drag;
+  button, input, label {
+    -webkit-app-region: no-drag;
   }
 `;
 
@@ -55,14 +55,25 @@ const SelectableParagraph = styled(Paragraph)`
 `;
 
 const MainHeading: StyledComponentClass<React.ClassAttributes<HTMLHeadingElement>, any, any> = styled(H2)`
-  margin-top: 0;
+  margin-top: 20px;
+  @media (max-width: 480px) {
+    margin-top: 20px;
+  }
 `;
 
 const MainContent = styled(Content)`
   padding: 24px 34px;
 `;
 
-const ProgressContainer = Columns;
+const ProgressContainer = styled(Columns)`
+  -webkit-flex-direction: row;
+  flex-direction: row;
+
+  @media (max-width: 480px) {
+    -webkit-flex-direction: row;
+    flex-direction: row;
+  }
+`;
 const ProgressBlock = Column;
 const ProgressBlockLoader = styled(ProgressBlock)`
   max-width: 43px;

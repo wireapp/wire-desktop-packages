@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2018 Wire Swiss GmbH
+ * Copyright (C) 2019 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ import {Prompt} from '../src/main/components/PromptView';
 import React from 'react';
 import {WrapperOutdated} from '../src/main/components/WrapperOutdatedView';
 
-const GENERIC_METADATA = {
+const GENERIC_MANIFEST = {
   author: ['Wire Swiss GmbH'],
   changelog: `### Improved
 - Suggestions for mentions get more real estate.
@@ -71,20 +71,20 @@ function renderInstaller(data) {
 }
 
 function renderPrompt(data) {
-  const {metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith} = data;
+  const {manifest, changelogUrl, isWebappBlacklisted, isWebappTamperedWith} = data;
 
   return (
     <Prompt
-      metadata={{
+      manifest={{
         author: ['Wire Swiss GmbH'],
-        changelog: text('Changelog', metadata.changelog),
-        expiresOn: text('Expiration of this update', metadata.expiresOn),
-        fileChecksum: metadata.fileChecksum,
-        fileChecksumCompressed: metadata.fileChecksumCompressed,
-        fileContentLength: Long.fromNumber(number('File length (in bytes)', metadata.fileContentLength)),
-        minimumClientVersion: metadata.minimumClientVersion,
-        minimumWebAppVersion: metadata.minimumWebAppVersion,
-        releaseDate: text('Release date of this version', metadata.releaseDate),
+        changelog: text('Changelog', manifest.changelog),
+        expiresOn: text('Expiration of this update', manifest.expiresOn),
+        fileChecksum: manifest.fileChecksum,
+        fileChecksumCompressed: manifest.fileChecksumCompressed,
+        fileContentLength: Long.fromNumber(number('File length (in bytes)', manifest.fileContentLength)),
+        minimumClientVersion: manifest.minimumClientVersion,
+        minimumWebAppVersion: manifest.minimumWebAppVersion,
+        releaseDate: text('Release date of this version', manifest.releaseDate),
         specVersion: 1,
         targetEnvironment: select(
           'Environment targeted',
@@ -95,9 +95,9 @@ function renderPrompt(data) {
             PRODUCTION: 'PRODUCTION',
             STAGING: 'STAGING',
           },
-          metadata.targetEnvironment
+          manifest.targetEnvironment
         ),
-        webappVersionNumber: text('Web app version', metadata.webappVersionNumber),
+        webappVersionNumber: text('Web app version', manifest.webappVersionNumber),
       }}
       changelogUrl={text('URL of the changelog page?', changelogUrl)}
       isWebappBlacklisted={boolean('Is the webapp version blacklisted?', isWebappBlacklisted)}
@@ -175,7 +175,7 @@ storiesOf('Prompt', module)
       changelogUrl: 'https://medium.com/@wireupdates',
       isWebappBlacklisted: false,
       isWebappTamperedWith: false,
-      metadata: GENERIC_METADATA,
+      manifest: GENERIC_MANIFEST,
     })
   )
   .add('Webapp version is blacklisted', () =>
@@ -183,7 +183,7 @@ storiesOf('Prompt', module)
       changelogUrl: 'https://medium.com/@wireupdates',
       isWebappBlacklisted: true,
       isWebappTamperedWith: false,
-      metadata: GENERIC_METADATA,
+      manifest: GENERIC_MANIFEST,
     })
   )
   .add('Bundle is damaged', () =>
@@ -191,7 +191,7 @@ storiesOf('Prompt', module)
       changelogUrl: 'https://medium.com/@wireupdates',
       isWebappBlacklisted: false,
       isWebappTamperedWith: true,
-      metadata: GENERIC_METADATA,
+      manifest: GENERIC_MANIFEST,
     })
   );
 

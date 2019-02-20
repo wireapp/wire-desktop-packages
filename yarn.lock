@@ -2342,6 +2342,13 @@
   dependencies:
     jsrsasign "8.0.12"
 
+"@wireapp/desktop-updater-spec@file:packages/desktop-updater-spec":
+  version "0.0.0"
+  dependencies:
+    "@types/long" "4.0.0"
+    "@types/node" "11.9.4"
+    long "4.0.0"
+
 "@wireapp/react-ui-kit@4.3.42":
   version "4.3.42"
   resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.42.tgz#cb6b09ad984409ed3b2e03bc550918e44bb37fd6"
