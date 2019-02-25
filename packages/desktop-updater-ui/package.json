@@ -10,7 +10,7 @@
     "long": "4.0.0",
     "luxon": "1.11.3",
     "react": "16.8.3",
-    "react-dom": "16.8.2",
+    "react-dom": "16.8.3",
     "react-markdown": "4.0.6",
     "styled-components": "4.1.3"
   },
