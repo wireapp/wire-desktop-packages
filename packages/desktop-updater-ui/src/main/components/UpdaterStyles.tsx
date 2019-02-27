@@ -55,9 +55,9 @@ const SelectableParagraph = styled(Paragraph)`
 `;
 
 const MainHeading: StyledComponentClass<React.ClassAttributes<HTMLHeadingElement>, any, any> = styled(H2)`
-  margin-top: 20px;
+  margin-top: 10px;
   @media (max-width: 480px) {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 `;
 

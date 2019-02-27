@@ -40,7 +40,8 @@ class WrapperOutdated extends React.Component<Props, State> {
     EventDispatcher.send(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {showDetails: true});
   };
 
-  private renderButtonText(os?: NodeJS.Platform): string {
+  private renderButtonText(type?: NodeJS.Platform): string {
+    const os = type ? type.toLowerCase() : undefined;
     switch (os) {
       case WrapperOutdated.OS_FAMILY.DARWIN:
         return 'Open the Mac App Store';

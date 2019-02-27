@@ -24,7 +24,6 @@ import {DateTime} from 'luxon';
 import * as React from 'react';
 import * as Markdown from 'react-markdown';
 import styled from 'styled-components';
-//import {EventDispatcher} from '../libs/EventDispatcher';
 import {Modal} from './ModalBack';
 import {MainHeading, SelectableParagraph} from './UpdaterStyles';
 

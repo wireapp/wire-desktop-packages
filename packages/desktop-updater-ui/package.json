@@ -1,10 +1,11 @@
 {
   "dependencies": {
-    "@wireapp/desktop-updater-spec": "file:/Users/sabri/Desktop/Repositories/wire-desktop-packages/packages/desktop-updater-spec",
+    "@babel/plugin-proposal-object-rest-spread": "7.3.4",
     "@types/luxon": "1.11.1",
     "@types/node": "11.9.4",
     "@types/react": "16.8.3",
     "@types/react-dom": "16.8.2",
+    "@wireapp/desktop-updater-spec": "file:/Users/sabri/Desktop/Repositories/wire-desktop-packages/packages/desktop-updater-spec",
     "@wireapp/react-ui-kit": "4.3.42",
     "electron": "4.0.5",
     "long": "4.0.0",
@@ -16,9 +17,10 @@
   },
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
-    "@babel/core": "7.3.3",
+    "@babel/core": "7.3.4",
     "@babel/plugin-proposal-class-properties": "7.3.3",
-    "@babel/preset-env": "7.3.1",
+    "@babel/plugin-proposal-object-rest-spread": "7.3.4",
+    "@babel/preset-env": "7.3.4",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.3.3",
     "@storybook/addon-actions": "4.1.12",
@@ -29,7 +31,9 @@
     "css-loader": "2.1.0",
     "react-hot-loader": "4.7.0",
     "rimraf": "2.6.3",
-    "style-loader": "0.23.1"
+    "style-loader": "0.23.1",
+    "webpack": "4.29.5",
+    "webpack-cli": "3.2.3"
   },
   "files": [
     "dist/es6",
@@ -41,8 +45,10 @@
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-ui",
   "scripts": {
     "build": "tsc",
+    "bundle:dev": "webpack",
+    "bundle": "webpack --env.production",
     "clean": "rimraf dist",
-    "dist": "yarn clean && yarn build",
+    "dist": "yarn clean && yarn build && yarn bundle:dev",
     "start": "start-storybook -p 9001 -c .storybook",
     "test": "exit 0"
   },
