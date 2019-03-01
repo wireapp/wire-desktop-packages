@@ -2,7 +2,7 @@
   "dependencies": {
     "@types/luxon": "1.11.1",
     "@types/node": "11.9.6",
-    "@types/react": "16.8.5",
+    "@types/react": "16.8.6",
     "@types/react-dom": "16.8.2",
     "@wireapp/desktop-updater-spec": "0.0.0",
     "@wireapp/react-ui-kit": "4.3.42",
