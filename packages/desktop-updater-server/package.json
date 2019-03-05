@@ -40,7 +40,7 @@
     ]
   },
   "main": "./dist/commonjs/index.js",
-  "name": "@wireapp/desktop-server",
+  "name": "@wireapp/desktop-updater-server",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wireapp/wire-desktop-server.git"
