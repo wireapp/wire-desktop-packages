@@ -40,7 +40,7 @@ export class CookieManager {
         Buffer.byteLength(cookieData.name, 'utf8') > CookieManager.MAX_COOKIE_LENGTH ||
         Buffer.byteLength(cookieData.value, 'utf8') > CookieManager.MAX_COOKIE_LENGTH;
       if (isMaximumBytesReached) {
-        return reject('Maximum bytes of a cookie exceeded');
+        return reject('Maximum bytes for a cookie exceeded');
       }
 
       session.cookies.set(cookieData, error => {

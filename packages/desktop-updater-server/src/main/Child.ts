@@ -59,7 +59,6 @@ export namespace Updater {
         (req: http.IncomingMessage, res: http.ServerResponse) => this.onRequest(req, res)
       );
 
-      // Listen and attach the server to the new protocol
       try {
         await this.listen();
       } catch (error) {
@@ -80,14 +79,14 @@ export namespace Updater {
       // Don't accept requests if accessToken or Authorization header is not a string
       if (typeof AccessToken !== 'string' || typeof authorizationHeader !== 'string') {
         // tslint:disable-next-line:no-console
-        console.log('Cancelled a request because accessToken and/or authorization header was empty');
+        console.log('Cancelled a request because the access token and/or authorization header was empty');
         return Updater.Child.endRequest(res);
       }
 
       // Check the token
       if (AccessToken !== authorizationHeader.substr(Updater.Child.WEB_SERVER_TOKEN_NAME.length + 1)) {
         // tslint:disable-next-line:no-console
-        console.log('Cancelled a request because Authorization header was invalid');
+        console.log('Cancelled a request because the access token is invalid');
         return Updater.Child.endRequest(res);
       }
 
@@ -119,8 +118,9 @@ export namespace Updater {
     public async stop(): Promise<void> {
       if (this.server) {
         this.server.close();
+
         // tslint:disable-next-line:no-console
-        console.log('Server has been closed.');
+        console.log('Server has been shutdown.');
       }
 
       this.server = this.internalHost = undefined;
@@ -132,12 +132,12 @@ export namespace Updater {
       return new Promise((resolve, reject) => {
         // Ensure we do not reach the max retry limit
         if (retry >= Updater.Child.MAX_RETRY_BEFORE_REJECT) {
-          return reject(new Error('Max. try reached, could not listen on a port, aborting.'));
+          return reject(new Error('Maximum attempts reached. Could not listen on a port, aborting.'));
         }
 
         // Ensure server is present
         if (!this.server) {
-          return reject(new Error('Server var was not present, aborting.'));
+          return reject(new Error('Server var is not present, aborting.'));
         }
 
         // Get a random port
