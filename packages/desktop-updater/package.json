@@ -1,7 +1,7 @@
 {
   "author": "Wire Swiss GmbH",
   "dependencies": {
-    "@wireapp/desktop-updater-ui": "file:/Users/sabri/Desktop/Repositories/wire-desktop-packages/packages/desktop-updater-ui",
+    "@wireapp/desktop-updater-ui": "0.0.0",
     "axios": "0.18.0",
     "compare-versions": "3.4.0",
     "debug": "4.1.1",
