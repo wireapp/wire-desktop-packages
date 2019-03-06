@@ -19,8 +19,12 @@
 
 import * as fs from 'fs-extra';
 
+import {
+  Decision as SpecDecision,
+  Envelope as SpecEnvelope,
+  Manifest as SpecManifest,
+} from '@wireapp/desktop-updater-spec';
 import debug from 'debug';
-import * as Long from 'long';
 
 import {app, ipcMain} from 'electron';
 import {Config} from './Config';
@@ -40,96 +44,9 @@ export class LogicalError extends BaseError {}
 export class NotFoundError extends BaseError {}
 
 export namespace Updater {
-  export interface Envelope {
-    data: Buffer;
-    publicKey: Buffer;
-    signature: Buffer;
-    raw: Buffer;
-  }
-
-  export interface Manifest {
-    /**
-     * Author of the update
-     */
-    author: string[];
-
-    /**
-     * Changelog data
-     */
-    changelog: string;
-
-    /**
-     * Date when the file is considered as expired (cannot be validated anymore).
-     *
-     * The manifest can be re-signed with a new expiration date (e.g. if no version
-     * is released in the meantime).
-     *
-     * If the latest available version has an expired `expiresOn` field the
-     * client should be warned of that (could be indefinite freeze attacks).
-     *
-     * `expiresOn` shall not stay for more than 1.5 weeks otherwise the same
-     * version must be resigned to make it valid up to 1.5 more weeks.
-     *
-     * Should be a ISO-8601 string in the signed JSON that will be converted to
-     * a `Date` object afterwards.
-     */
-    expiresOn: string;
-
-    /**
-     * Checksum of the file being downloaded
-     */
-    fileChecksum: Buffer;
-    fileChecksumCompressed: Buffer;
-
-    /**
-     * Size of the file.
-     *
-     * Do not download more than this and verify that the file exactly match this size
-     */
-    fileContentLength: Long;
-
-    /**
-     * Blacklisted clients (anything below cannot longer be used)
-     */
-    minimumClientVersion: string;
-
-    /**
-     * Blacklisted web app versions (anything below cannot longer be used)
-     */
-    minimumWebAppVersion: string;
-
-    /**
-     * Only valid from
-     *
-     * Should be a `ISO-8601` string in the signed JSON that will be
-     * converted to a Date object afterwards.
-     */
-    releaseDate: string;
-
-    /**
-     * Should be 1
-     */
-    specVersion: number;
-
-    /**
-     * Targeted environment
-     */
-    targetEnvironment: string;
-
-    /**
-     * Current version number is invalid ("2017-08-24-10-57-prod") and
-     * we should use digits alone instead.
-     *
-     * Will be matched against current version to prevent Rollback attacks.
-     */
-    webappVersionNumber: string;
-  }
-
-  export interface Decision {
-    allow: boolean;
-    installAutomatically: boolean;
-    skipThisUpdate: boolean;
-  }
+  export interface Envelope extends SpecEnvelope {}
+  export interface Manifest extends SpecManifest {}
+  export interface Decision extends SpecDecision {}
 
   export interface ContinueUpdateInterface {
     forced: boolean;
@@ -315,14 +232,12 @@ export namespace Updater {
           decision = {
             allow: true,
             installAutomatically: true,
-            skipThisUpdate: false,
           };
         } else if (localEnvironmentMismatch === true) {
           this.debug('Environment switching detected, immediately reinstalling the update after restarting the app...');
           decision = {
             allow: true,
             installAutomatically: true,
-            skipThisUpdate: false,
           };
         } else {
           this.debug('Prompt the user about the update');
@@ -347,7 +262,6 @@ export namespace Updater {
 
         // Save settings related to the popup
         await Main.persist.set('installAutomatically', decision.installAutomatically);
-        await Main.persist.set('skipThisUpdate', decision.skipThisUpdate);
         await Main.persist.saveChangesOnDisk();
 
         // Show download window

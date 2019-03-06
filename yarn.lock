@@ -2292,6 +2292,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.4.tgz#3f5fc4f0f322805f009e00ab35a2ff3d6b778e42"
   integrity sha512-wa09itaLE8L705aXd8F80jnFpxz3Y1/KRHfKsYL2bPc0XF+wEWu8sR9n5bmeu8Ba1N9z2GRNzm/YdHcghLkLKg==
 
+"@types/node@11.10.5":
+  version "11.10.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.5.tgz#fbaca34086bdc118011e1f05c47688d432f2d571"
+  integrity sha512-DuIRlQbX4K+d5I+GMnv+UfnGh+ist0RdlvOp+JZ7ePJ6KQONCFQv/gKYSU1ZzbVdFSUCKZOltjmpFAGGv5MdYA==
+
 "@types/node@^10.1.0":
   version "10.12.30"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.30.tgz#4c2b4f0015f214f8158a347350481322b3b29b2f"
@@ -2651,6 +2656,13 @@
   dependencies:
     jsrsasign "8.0.12"
 
+"@wireapp/desktop-updater-spec@file:packages/desktop-updater-spec":
+  version "0.0.0"
+  dependencies:
+    "@types/long" "4.0.0"
+    "@types/node" "11.10.5"
+    long "4.0.0"
+
 "@wireapp/desktop-updater-ui@file:packages/desktop-updater-ui":
   version "0.0.0"
   dependencies:
@@ -2672,7 +2684,8 @@
 "@wireapp/desktop-updater@file:packages/desktop-updater":
   version "0.2.1"
   dependencies:
-    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-0.2.1-fcff7c03-7fc4-459a-ace1-3503b457d136-1551906084612/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-0.2.1-11b8d821-c1d5-493d-9c26-593d969056f6-1551908904079/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-0.2.1-11b8d821-c1d5-493d-9c26-593d969056f6-1551908904079/node_modules/@wireapp/desktop-updater-ui"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"

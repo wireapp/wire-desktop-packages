@@ -65,7 +65,6 @@ class Prompt extends React.Component<Props, State> {
   onUpdateClick = (event: React.MouseEvent<HTMLElement>): void => {
     this.onDecisionTaken({
       allow: true,
-      skipThisUpdate: false,
     });
   };
 
@@ -73,7 +72,6 @@ class Prompt extends React.Component<Props, State> {
     this.onDecisionTaken({
       allow: false,
       installAutomatically: false,
-      skipThisUpdate: false,
     });
   };
 

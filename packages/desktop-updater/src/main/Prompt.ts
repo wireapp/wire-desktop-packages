@@ -88,7 +88,6 @@ export class Prompt extends WindowManager {
         resolve({
           allow: false,
           installAutomatically: false,
-          skipThisUpdate: false,
         });
       });
     });
