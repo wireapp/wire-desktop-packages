@@ -80,7 +80,7 @@ export class Server {
     await Environment.set(this.currentEnvironment);
 
     // Ensure the updater folder exist
-    UpdaterUtils.ensureUpdaterFolderExists();
+    await UpdaterUtils.ensureUpdaterFolderExists();
 
     if (this.isServerAvailable()) {
       throw new Error('Server is already active, you must stop it before.');
@@ -202,7 +202,7 @@ export class Server {
     Server.debug('Running Updater checks...');
     Updater.Main.currentWebappVersion = manifest.webappVersionNumber;
     Updater.Main.currentWebappEnvironment = manifest.targetEnvironment;
-    Updater.Main.runPeriodic();
+    await Updater.Main.runPeriodic();
 
     // If originally the window was shown by default, show it now
     if (this.browserWindowOptions.show === true) {

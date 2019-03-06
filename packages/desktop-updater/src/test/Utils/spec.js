@@ -48,14 +48,14 @@ describe('Utils', () => {
     expect(Utils.isValidVersion('1.2.9')).toBe(true);
     expect(Utils.isValidVersion('1.6.89')).toBe(true);
     expect(Utils.isValidVersion('1.6.899')).toBe(true);
+    expect(Utils.isValidVersion('1.689')).toBe(true);
+    expect(Utils.isValidVersion('2.1')).toBe(true);
+    expect(Utils.isValidVersion('0.0')).toBe(true);
 
     expect(Utils.isValidVersion('1689')).toBe(false);
-    expect(Utils.isValidVersion('1.689')).toBe(false);
-    expect(Utils.isValidVersion('2.1')).toBe(false);
     expect(Utils.isValidVersion('2')).toBe(false);
     expect(Utils.isValidVersion('2,1')).toBe(false);
     expect(Utils.isValidVersion('aaaaaa')).toBe(false);
-    expect(Utils.isValidVersion('0.0')).toBe(false);
     expect(Utils.isValidVersion('0')).toBe(false);
     expect(Utils.isValidVersion('000000.000000.000000')).toBe(false);
   });

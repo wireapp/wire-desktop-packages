@@ -26,19 +26,11 @@
     "karma-jasmine": "2.0.1",
     "karma-jasmine-diff-reporter": "2.0.0",
     "karma-sourcemap-loader": "0.3.7",
-    "lint-staged": "8.1.5",
-    "prettier": "1.16.4",
     "rimraf": "2.6.3",
     "typescript": "3.3.3333"
   },
   "description": "",
   "license": "GPL-3.0",
-  "lint-staged": {
-    "*.ts": [
-      "yarn lint",
-      "git add"
-    ]
-  },
   "main": "./dist/commonjs/index.js",
   "name": "@wireapp/desktop-updater-server",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-server",
@@ -46,13 +38,10 @@
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc",
     "start": "electron demo.js",
-    "lint": "prettier --single-quote --trailing-comma all --no-bracket-spacing --print-width 120 --write \"src/**/*.ts\"",
     "postversion": "git push && git push --tags",
-    "precommit": "lint-staged",
     "preversion": "yarn && yarn dist && yarn test",
-    "test:browser": "true",
-    "test:node": "cross-env JASMINE_CONFIG_PATH=src/test/jasmine.json jasmine",
-    "test": "yarn lint && yarn dist && yarn test:node && yarn test:browser",
+    "test:node": "true",
+    "test": "yarn dist && yarn test:node",
     "version": "yarn dist"
   },
   "types": "./dist/commonjs/index.d.ts",
