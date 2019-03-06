@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "dist/commonjs",
+    "rootDir": "src/main",
+
+    // Fix for Electron double definitions
+    "baseUrl": ".",
+    "paths": {
+      "electron": ["./node_modules/electron/electron.d.ts"]
+    }
+  },
+  "exclude": ["dist/commonjs", "node_modules", "src/test"],
+  "extends": "../../tsconfig.json"
+}
