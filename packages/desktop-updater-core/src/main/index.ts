@@ -17,9 +17,10 @@
  *
  */
 
-export {Updater} from './Updater';
-export {Installer} from './Installer';
 export {Config} from './Config';
 export {Downloader} from './Downloader';
-export {Verifier} from './Verifier';
+export {Environment} from './Environment';
+export {Installer} from './Installer';
+export {NotFoundError, Updater} from './Updater';
 export {Utils} from './Utils';
+export {Verifier, VerifyMismatchEnvironment} from './Verifier';

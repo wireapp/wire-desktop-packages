@@ -26,9 +26,13 @@ import debug from 'debug';
 import {BrowserWindow, app, session, webContents} from 'electron';
 import {NodeVM as VirtualMachine} from 'vm2';
 
-import {NotFoundError, Updater} from '@wireapp/desktop-updater-core/dist/commonjs/Updater';
-import {Utils as UpdaterUtils} from '@wireapp/desktop-updater-core/dist/commonjs/Utils';
-import {VerifyMismatchEnvironment} from '@wireapp/desktop-updater-core/dist/commonjs/Verifier';
+import {
+  Environment,
+  NotFoundError,
+  Updater,
+  Utils as UpdaterUtils,
+  VerifyMismatchEnvironment,
+} from '@wireapp/desktop-updater-core';
 
 import {Updater as UpdaterChild} from './Child';
 import {InterceptProtocol as proxifyProtocol} from './InterceptProtocol';
@@ -37,8 +41,6 @@ import {Config, Utils} from './index';
 
 import {BaseError} from 'make-error-cause';
 export class NotExistingError extends BaseError {}
-
-import {Environment} from '@wireapp/desktop-updater-core/dist/commonjs/Environment';
 
 export interface ServerConstructorInterface {
   browserWindowOptions: Electron.BrowserWindowConstructorOptions;
