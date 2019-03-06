@@ -2,7 +2,7 @@
   "author": "Wire",
   "dependencies": {
     "@wireapp/certificate-check": "0.0.4",
-    "@wireapp/desktop-updater": "file:../desktop-updater",
+    "@wireapp/desktop-updater-core": "file:../desktop-updater-core",
     "axios": "^0.18.0",
     "electron": "4.0.6",
     "finalhandler": "1.1.1",
@@ -32,8 +32,8 @@
   "description": "",
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",
-  "name": "@wireapp/desktop-updater-server",
-  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-server",
+  "name": "@wireapp/desktop-updater",
+  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater",
   "scripts": {
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc",
