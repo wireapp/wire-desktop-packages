@@ -5,7 +5,3 @@ This repository is part of the source code of Wire. You can find more informatio
 You can find the published source code at [github.com/wireapp](https://github.com/wireapp).
 
 For licensing information, see the attached LICENSE file and the list of third-party licenses at [wire.com/legal/licenses/](https://wire.com/legal/licenses/).
-
-### Wire Desktop Server
-
-More to come...
