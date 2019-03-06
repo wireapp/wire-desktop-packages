@@ -1,0 +1,23 @@
+package updater;
+syntax = "proto3";
+
+message UpdateData {
+  repeated string author = 1;
+  optional string changelog = 2;
+  optional string expiresOn = 3;
+  optional bytes fileChecksum = 4;
+  optional bytes fileChecksumCompressed = 5;
+  optional fixed64 fileContentLength = 6;
+  optional string minimumClientVersion = 7;
+  optional string minimumWebAppVersion = 8;
+  optional string releaseDate = 9;
+  optional fixed32 specVersion = 10;
+  optional string targetEnvironment = 11;
+  optional string webappVersionNumber = 12;
+}
+
+message UpdateMessage {
+  required bytes data = 1;
+  required bytes publicKey = 2;
+  required bytes signature = 3;
+}
