@@ -2656,6 +2656,28 @@
   dependencies:
     jsrsasign "8.0.12"
 
+"@wireapp/desktop-updater-core@file:packages/desktop-updater-core":
+  version "0.2.1"
+  dependencies:
+    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.2.1-715ad0da-9018-44b6-9ac2-ae5779695383-1551911148972/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.2.1-715ad0da-9018-44b6-9ac2-ae5779695383-1551911148972/node_modules/@wireapp/desktop-updater-ui"
+    axios "0.18.0"
+    compare-versions "3.4.0"
+    debug "4.1.1"
+    electron "4.0.6"
+    jasmine "3.3.1"
+    jasmine-console-reporter "3.1.0"
+    jasmine-ts "0.3.0"
+    long "4.0.0"
+    luxon "1.11.4"
+    make-error-cause "2.2.0"
+    protobufjs "6.8.8"
+    raygun "0.10.0"
+    react "16.8.3"
+    react-dom "16.8.3"
+    sodium-native "2.3.0"
+    vm2 "3.6.10"
+
 "@wireapp/desktop-updater-spec@file:packages/desktop-updater-spec":
   version "0.0.0"
   dependencies:
@@ -2680,28 +2702,6 @@
     react-dom "16.8.4"
     react-markdown "4.0.6"
     styled-components "4.1.3"
-
-"@wireapp/desktop-updater@file:packages/desktop-updater":
-  version "0.2.1"
-  dependencies:
-    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-0.2.1-11b8d821-c1d5-493d-9c26-593d969056f6-1551908904079/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-0.2.1-11b8d821-c1d5-493d-9c26-593d969056f6-1551908904079/node_modules/@wireapp/desktop-updater-ui"
-    axios "0.18.0"
-    compare-versions "3.4.0"
-    debug "4.1.1"
-    electron "4.0.6"
-    jasmine "3.3.1"
-    jasmine-console-reporter "3.1.0"
-    jasmine-ts "0.3.0"
-    long "4.0.0"
-    luxon "1.11.4"
-    make-error-cause "2.2.0"
-    protobufjs "6.8.8"
-    raygun "0.10.0"
-    react "16.8.3"
-    react-dom "16.8.3"
-    sodium-native "2.3.0"
-    vm2 "3.6.10"
 
 "@wireapp/react-ui-kit@4.3.42":
   version "4.3.42"

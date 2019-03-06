@@ -20,4 +20,4 @@
 export {Config} from './Config';
 export {Utils} from './Utils';
 export {Server} from './Server';
-export {Environment} from '@wireapp/desktop-updater/dist/commonjs/Environment';
+export {Environment} from '@wireapp/desktop-updater-core/dist/commonjs/Environment';
