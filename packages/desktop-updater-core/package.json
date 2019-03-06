@@ -29,15 +29,14 @@
     "electron-rebuild": "1.8.4",
     "husky": "1.3.1",
     "karma": "4.0.1",
-    "karma-chrome-launcher": "2.2.0",
     "rimraf": "2.6.3",
     "typescript": "3.3.3333"
   },
   "description": "Secure updater for Electron",
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",
-  "name": "@wireapp/desktop-updater",
-  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater",
+  "name": "@wireapp/desktop-updater-core",
+  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core",
   "scripts": {
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc --project tsconfig.json",
