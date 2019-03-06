@@ -2322,25 +2322,10 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.1.tgz#48fd98c1561fe718b61733daed46ff115b496e18"
   integrity sha512-eqz8c/0kwNi/OEHQfvIuJVLTst3in0e7uTKeuY+WL/zfKn0xVujOTp42bS/vUUokhK5P2BppLd9JXMOMHcgbjA==
 
-"@types/react-dom@16.8.2":
-  version "16.8.2"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.8.2.tgz#9bd7d33f908b243ff0692846ef36c81d4941ad12"
-  integrity sha512-MX7n1wq3G/De15RGAAqnmidzhr2Y9O/ClxPxyqaNg96pGyeXUYPSvujgzEVpLo9oIP4Wn1UETl+rxTN02KEpBw==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react@*":
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.6.tgz#fa1de3fe56cc9b6afeddc73d093d7f30fd5e31cc"
   integrity sha512-bN9qDjEMltmHrl0PZRI4IF2AbB7V5UlRfG+OOduckVnRQ4VzXVSzy/1eLAh778IEqhTnW0mmgL9yShfinNverA==
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
-
-"@types/react@16.8.7":
-  version "16.8.7"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.7.tgz#7b1c0223dd5494f9b4501ad2a69aa6acb350a29b"
-  integrity sha512-0xbkIyrDNKUn4IJVf8JaCn+ucao/cq6ZB8O6kSzhrJub1cVSqgTArtG0qCfdERWKMEIvUbrwLXeQMqWEsyr9dA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -2521,8 +2506,8 @@
 "@wireapp/desktop-updater-core@file:packages/desktop-updater-core":
   version "0.0.1"
   dependencies:
-    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-efe2d07c-d028-4fd6-b981-bf1f087feaa6-1551915521837/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-efe2d07c-d028-4fd6-b981-bf1f087feaa6-1551915521837/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-94e6e250-afc5-4a8c-a609-dadca1c2bc6d-1551916444175/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-94e6e250-afc5-4a8c-a609-dadca1c2bc6d-1551916444175/node_modules/@wireapp/desktop-updater-ui"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"
@@ -2553,9 +2538,7 @@
     "@babel/plugin-proposal-object-rest-spread" "7.3.4"
     "@types/luxon" "1.11.1"
     "@types/node" "11.10.5"
-    "@types/react" "16.8.7"
-    "@types/react-dom" "16.8.2"
-    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-ui-0.0.1-c452f7ea-2635-4590-8207-b05544a15bb3-1551915521834/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-ui-0.0.1-25fc404b-f50f-475b-a8eb-eca9c6c4856c-1551916444177/node_modules/@wireapp/desktop-updater-spec"
     "@wireapp/react-ui-kit" "4.3.42"
     electron "4.0.7"
     long "4.0.0"
