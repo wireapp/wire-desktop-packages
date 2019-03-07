@@ -343,13 +343,15 @@ export namespace Updater {
         }
       });
 
-      // Run for the first time
-      await this.runOnce(true, false, true);
-
       Main.PERIODIC_TIMER = setInterval(async () => {
         this.debug('Checking updates...');
         await this.runOnce();
       }, Main.PERIODIC_INTERVAL);
+
+      // Run for the first time
+      setImmediate(async () => {
+        await this.runOnce(true, false, true);
+      });
     }
 
     private static async continueUpdate(data: Updater.ContinueUpdateInterface): Promise<boolean> {
