@@ -134,11 +134,11 @@ export namespace Updater {
         this.debug('Webapp version: %s', this.currentWebappVersion);
 
         // Ensure there is internet, attempt to reach a random endpoint of the backend
-        const BACKEND_URLS = ['prod-nginz-https.wire.com', 'prod-assets.wire.com', 'prod-nginz-https.wire.com'];
+        const BACKEND_URLS = ['https://prod-nginz-https.wire.com', 'https://prod-assets.wire.com'];
         const randomHost = Random.pick(Random.nodeCrypto, BACKEND_URLS);
         this.debug('Checking if "%s" is online...', randomHost);
-        if (!(await isReachable(randomHost))) {
-          this.debug('Internet is offline, silently fail this check');
+        if ((await isReachable(randomHost)) === false) {
+          this.debug('Could not check for updates as internet is offline, silently fail');
           return undefined;
         }
 
