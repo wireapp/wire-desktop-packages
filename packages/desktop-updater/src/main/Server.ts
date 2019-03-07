@@ -285,7 +285,7 @@ export class Sandbox {
         require: {
           builtin: ['path', 'https'],
           context: 'host',
-          external: ['finalhandler', 'serve-static'],
+          external: ['finalhandler', 'serve-static', 'random-js'],
           mock: {
             fs: {
               /**

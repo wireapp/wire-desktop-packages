@@ -27,6 +27,8 @@ import * as https from 'https';
 import * as finalhandler from 'finalhandler';
 import * as serveStatic from 'serve-static';
 
+import * as Random from 'random-js';
+
 export namespace Updater {
   export class Child {
     private internalHost: string | undefined;
@@ -34,12 +36,14 @@ export namespace Updater {
     private serve: typeof serveStatic;
 
     private static readonly MAX_RETRY_BEFORE_REJECT = Config.MAX_RETRY_BEFORE_REJECT;
-    public static readonly WEB_SERVER_CSP = Config.WEB_SERVER_CSP;
-    private static readonly WEB_SERVER_LISTEN = Config.WEB_SERVER_LISTEN;
-    private static readonly WEB_SERVER_HOST_LOCAL = Config.WEB_SERVER_HOST_LOCAL;
-    private static readonly WEB_SERVER_TOKEN_NAME = Config.WEB_SERVER_TOKEN_NAME;
     private static readonly WEB_SERVER_HOST_CERTIFICATE = Config.WEB_SERVER_HOST_CERTIFICATE;
+    private static readonly WEB_SERVER_HOST_LOCAL = Config.WEB_SERVER_HOST_LOCAL;
     private static readonly WEB_SERVER_HOST_PRIVATE_KEY = Config.WEB_SERVER_HOST_PRIVATE_KEY;
+    private static readonly WEB_SERVER_LISTEN = Config.WEB_SERVER_LISTEN;
+    private static readonly WEB_SERVER_LISTEN_PORT_MAX = Config.WEB_SERVER_LISTEN_PORT_MAX;
+    private static readonly WEB_SERVER_LISTEN_PORT_MIN = Config.WEB_SERVER_LISTEN_PORT_MIN;
+    private static readonly WEB_SERVER_TOKEN_NAME = Config.WEB_SERVER_TOKEN_NAME;
+    private static readonly WEB_SERVER_CSP = Config.WEB_SERVER_CSP;
 
     constructor() {}
 
@@ -141,8 +145,10 @@ export namespace Updater {
         }
 
         // Get a random port
-        const MAX_PORT = 65534;
-        const portToUse: number = Math.round(Math.random() * (MAX_PORT - 10000) + 10000) - 1;
+        const portToUse: number = Random.integer(
+          Updater.Child.WEB_SERVER_LISTEN_PORT_MIN,
+          Updater.Child.WEB_SERVER_LISTEN_PORT_MAX
+        )(Random.nodeCrypto);
 
         // Listen on the port
         return this.server
@@ -151,7 +157,7 @@ export namespace Updater {
             this.internalHost = `https://${Updater.Child.WEB_SERVER_HOST_LOCAL}:${portToUse}`;
 
             // tslint:disable-next-line:no-console
-            console.log(`Listening on ${Updater.Child.WEB_SERVER_LISTEN}:${portToUse}, path: ${DocumentRoot}`);
+            console.log(`Listening on ${Updater.Child.WEB_SERVER_LISTEN}:${portToUse} v2, path: ${DocumentRoot}`);
             return resolve();
           })
           .once('error', (error: Error) => {

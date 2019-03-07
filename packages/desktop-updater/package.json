@@ -10,6 +10,7 @@
     "jsrsasign": "8.0.12",
     "mime-types": "^2.1.22",
     "minimist": "1.2.0",
+    "random-js": "2.0.0-rc2",
     "serve-static": "1.13.2",
     "set-cookie-parser": "^2.3.5",
     "sodium-native": "2.3.0",
