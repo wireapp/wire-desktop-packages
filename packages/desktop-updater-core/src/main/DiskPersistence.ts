@@ -26,7 +26,7 @@ export class DiskPersistence {
 
   public constructor(private readonly file: string) {}
 
-  public async set(name: string, value: any): Promise<any> {
+  public async set<T>(name: string, value: T): Promise<T> {
     if (typeof DiskPersistence.data[this.file] === 'undefined') {
       await this.readFromFile();
     }
@@ -64,6 +64,7 @@ export class DiskPersistence {
       }
     }
   }
+
   public async saveChangesOnDisk(): Promise<void> {
     const data = DiskPersistence.data[this.file];
 

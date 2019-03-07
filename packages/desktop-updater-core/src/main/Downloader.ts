@@ -168,9 +168,8 @@ export class Downloader {
   public static async getLatestEnvelope(): Promise<Updater.Envelope> {
     let envelope: Buffer;
     try {
-      envelope = (await this.doRequest({
-        url: Downloader.MANIFEST_FILE,
-      })).data;
+      const response = await this.doRequest({url: Downloader.MANIFEST_FILE});
+      envelope = response.data;
     } catch (error) {
       throw new DownloadError(error.message, error);
     }
@@ -187,10 +186,9 @@ export class Downloader {
   }
 
   public static async extractManifestFrom(envelope: Updater.Envelope) {
-    const {data}: Updater.Envelope = envelope;
     const root = await Protobuf.loadRoot(path.join(__dirname, '..', '..', 'specs', 'update.proto'));
 
     // Unserialize manifest
-    return Protobuf.decodeBuffer(root, 'UpdateData', data);
+    return Protobuf.decodeBuffer(root, 'UpdateData', envelope.data);
   }
 }

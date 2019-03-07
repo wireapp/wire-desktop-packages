@@ -46,6 +46,5 @@
     "test": "yarn dist && yarn test:node",
     "version": "yarn dist"
   },
-  "types": "./dist/commonjs/index.d.ts",
   "version": "0.0.1"
 }
