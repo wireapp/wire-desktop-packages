@@ -197,14 +197,14 @@ export class Server {
       }
     };
 
-    // Link Updater to the main window
-    Updater.Main.browserWindow = this.browserWindow;
-
     // Set webapp version / environment
     Server.debug('Running Updater checks...');
     Updater.Main.currentWebappVersion = manifest.webappVersionNumber;
     Updater.Main.currentWebappEnvironment = manifest.targetEnvironment;
     await Updater.Main.runPeriodic();
+
+    // Link Updater to the main window
+    Updater.Main.browserWindow = this.browserWindow;
 
     // If originally the window was shown by default, show it now
     if (this.browserWindowOptions.show === true) {

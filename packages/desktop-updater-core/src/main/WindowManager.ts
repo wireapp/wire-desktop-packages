@@ -19,6 +19,7 @@
 
 import debug from 'debug';
 import {BrowserWindow, ipcMain, session, shell} from 'electron';
+import * as os from 'os';
 import * as path from 'path';
 import {URL, fileURLToPath} from 'url';
 
@@ -29,10 +30,10 @@ export interface WindowSizeInterface {
 
 export abstract class WindowManager {
   private readonly WINDOW_TYPE = this.constructor.name;
-  protected static readonly STATUS_BAR_HEIGHT: number = 22;
+  protected static readonly STATUS_BAR_HEIGHT: number = os.type() === 'Darwin' ? 22 : 0;
   protected static readonly SESSION_NAME: string = 'zupdater';
 
-  protected readonly debug: any = debug(`wire:updater:${this.constructor.name.toLowerCase()}`);
+  protected readonly debug = debug(`wire:updater:${this.constructor.name.toLowerCase()}`);
 
   constructor(protected mainWindow?: Electron.BrowserWindow) {}
 
@@ -188,10 +189,16 @@ export abstract class WindowManager {
       // Fix height
       newSize.height -= WindowManager.STATUS_BAR_HEIGHT;
 
-      const currentSize = this.browserWindow.getSize();
-      this.browserWindow.setSize(
-        typeof newSize.width === 'number' ? newSize.width : currentSize[0],
-        typeof newSize.height === 'number' ? newSize.height : currentSize[1],
+      const currentBounds = this.browserWindow.getBounds();
+      const width = newSize.width || currentBounds.width;
+      const height = newSize.height || currentBounds.height;
+      this.browserWindow.setBounds(
+        {
+          height,
+          width,
+          x: currentBounds.x,
+          y: currentBounds.y,
+        },
         this.mainWindow ? true : false
       );
 
