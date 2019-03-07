@@ -1,12 +1,13 @@
 {
   "author": "Wire Swiss GmbH",
   "dependencies": {
-    "@wireapp/desktop-updater-ui": "file:../desktop-updater-ui",
     "@wireapp/desktop-updater-spec": "file:../desktop-updater-spec",
+    "@wireapp/desktop-updater-ui": "file:../desktop-updater-ui",
     "axios": "0.18.0",
     "compare-versions": "3.4.0",
     "debug": "4.1.1",
     "electron": "4.0.6",
+    "is-reachable": "3.0.0",
     "jasmine": "3.3.1",
     "jasmine-console-reporter": "3.1.0",
     "jasmine-ts": "0.3.0",
@@ -14,6 +15,7 @@
     "luxon": "1.11.4",
     "make-error-cause": "2.2.0",
     "protobufjs": "6.8.8",
+    "random-js": "2.0.0-rc2",
     "raygun": "0.10.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",

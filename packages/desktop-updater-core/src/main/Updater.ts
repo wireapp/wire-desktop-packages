@@ -25,6 +25,8 @@ import {
   Manifest as SpecManifest,
 } from '@wireapp/desktop-updater-spec';
 import debug from 'debug';
+import * as isReachable from 'is-reachable';
+import * as Random from 'random-js';
 
 import {app, ipcMain} from 'electron';
 import {Config} from './Config';
@@ -130,6 +132,15 @@ export namespace Updater {
         // ...
         this.debug('Client version: %s', this.currentClientVersion);
         this.debug('Webapp version: %s', this.currentWebappVersion);
+
+        // Ensure there is internet, attempt to reach a random endpoint of the backend
+        const BACKEND_URLS = ['prod-nginz-https.wire.com', 'prod-assets.wire.com', 'prod-nginz-https.wire.com'];
+        const randomHost = Random.pick(Random.nodeCrypto, BACKEND_URLS);
+        this.debug('Checking if "%s" is online...', randomHost);
+        if (!(await isReachable(randomHost))) {
+          this.debug('Internet is offline, silently fail this check');
+          return undefined;
+        }
 
         // Get remote manifest
         this.debug('Getting latest manifest...');
