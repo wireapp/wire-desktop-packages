@@ -20,7 +20,7 @@
 import debug from 'debug';
 import {BrowserWindow, ipcMain, session, shell} from 'electron';
 import * as path from 'path';
-import {URL} from 'url';
+import {URL, fileURLToPath} from 'url';
 
 export interface WindowSizeInterface {
   height: number;
@@ -32,15 +32,14 @@ export abstract class WindowManager {
   protected static readonly STATUS_BAR_HEIGHT: number = 22;
   protected static readonly SESSION_NAME: string = 'zupdater';
 
-  protected readonly debug: typeof debug = debug(`wire:updater:${this.constructor.name.toLowerCase()}`);
+  protected readonly debug: any = debug(`wire:updater:${this.constructor.name.toLowerCase()}`);
 
   constructor(protected mainWindow?: Electron.BrowserWindow) {}
 
   protected browserWindow?: Electron.BrowserWindow;
 
-  // ToDo: Add Windows
   private readonly attachedMode: boolean = typeof this.mainWindow !== 'undefined';
-  private readonly RENDERER_DOCUMENT_ROOT: string = path.resolve(
+  private readonly RENDERER_DOCUMENT_ROOT: string = path.join(
     __dirname,
     '..',
     '..',
@@ -48,8 +47,8 @@ export abstract class WindowManager {
     '@wireapp',
     'desktop-updater-ui'
   );
-  protected readonly RENDERER_HTML: string = path.resolve(this.RENDERER_DOCUMENT_ROOT, '.renderer', 'index.html');
-  protected readonly RENDERER_PRELOAD: string = path.resolve(__dirname, 'Preloads', `${this.WINDOW_TYPE}.js`);
+  protected readonly RENDERER_HTML: string = path.join(this.RENDERER_DOCUMENT_ROOT, '.renderer', 'index.html');
+  protected readonly RENDERER_PRELOAD: string = path.join(__dirname, 'Preloads', `${this.WINDOW_TYPE}.js`);
   private readonly BROWSER_WINDOW_DEFAULTS: Electron.BrowserWindowConstructorOptions = {
     backgroundColor: this.attachedMode ? undefined : '#f7f8fa',
     center: true,
@@ -152,21 +151,28 @@ export abstract class WindowManager {
         const {url} = details;
         const {pathname, protocol, host} = new URL(url);
 
-        // Allow web tools if debug is enabled
-        if (this.debug.enabled && protocol === 'chrome-devtools:' && host === 'devtools') {
-          return callback({cancel: false});
-        }
+        // ToDo: Make it permanent once Electron version have Node.JS 11.X
+        if (fileURLToPath) {
+          // Allow web tools if debug is enabled
+          if (this.debug.enabled && protocol === 'chrome-devtools:' && host === 'devtools') {
+            return callback({cancel: false});
+          }
 
-        // Allow pages within the document root
-        if (path.normalize(pathname).startsWith(this.RENDERER_DOCUMENT_ROOT)) {
-          return callback({cancel: false});
-        }
+          // Allow pages within the document root
+          this.debug(path.resolve(fileURLToPath(url)));
+          this.debug(this.RENDERER_DOCUMENT_ROOT);
+          if (path.resolve(fileURLToPath(url)).startsWith(this.RENDERER_DOCUMENT_ROOT)) {
+            return callback({cancel: false});
+          }
 
-        // Anything below will close the window with
-        callback({cancel: true});
-        if (this.browserWindow) {
-          this.debug('Forbidden URL requested: %s, closing window.', pathname);
-          this.browserWindow.close();
+          // Anything below will close the window with
+          callback({cancel: true});
+          if (this.browserWindow) {
+            this.debug('Forbidden URL requested: %s, closing window.', pathname);
+            this.browserWindow.close();
+          }
+        } else {
+          return callback({cancel: false});
         }
       }
     );
