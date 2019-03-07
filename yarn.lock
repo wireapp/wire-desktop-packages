@@ -2508,8 +2508,8 @@
 "@wireapp/desktop-updater-core@file:packages/desktop-updater-core":
   version "0.0.1"
   dependencies:
-    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-4fc5650c-0d01-4e62-95ed-4d694ab4cc47-1551983352863/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-4fc5650c-0d01-4e62-95ed-4d694ab4cc47-1551983352863/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-997f6ca4-f723-424e-9cb6-16c255c056a9-1551987946059/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-997f6ca4-f723-424e-9cb6-16c255c056a9-1551987946059/node_modules/@wireapp/desktop-updater-ui"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"
@@ -2522,6 +2522,7 @@
     luxon "1.11.4"
     make-error-cause "2.2.0"
     protobufjs "6.8.8"
+    random-js "2.0.0-rc2"
     raygun "0.10.0"
     react "16.8.3"
     react-dom "16.8.3"
