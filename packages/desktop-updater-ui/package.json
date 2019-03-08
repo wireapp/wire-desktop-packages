@@ -27,7 +27,7 @@
     "@storybook/react": "5.0.0",
     "babel-loader": "8.0.5",
     "css-loader": "2.1.0",
-    "react-hot-loader": "4.7.2",
+    "react-hot-loader": "4.8.0",
     "rimraf": "2.6.3",
     "style-loader": "0.23.1"
   },
