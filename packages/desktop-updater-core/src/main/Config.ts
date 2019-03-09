@@ -26,7 +26,7 @@ export namespace Config {
     public static readonly SPEC_VERSION: number = 1;
 
     public static readonly BROADCAST_RENDERER_TIMEOUT: number = 3000; // 3 seconds
-    public static readonly CONNECTIVITY_INTERNAL: number = 2000; // 5 seconds
+    public static readonly CONNECTIVITY_INTERNAL: number = 2000; // 2 seconds
     public static readonly PERIODIC_INTERVAL: number = 60000; // 1 minute
 
     public static readonly CHANGELOG_URL: string = 'https://medium.com/wire-news/desktop-updates/home';

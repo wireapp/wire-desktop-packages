@@ -44,6 +44,7 @@ export class NotExistingError extends BaseError {}
 
 export interface ServerConstructorInterface {
   browserWindowOptions: Electron.BrowserWindowConstructorOptions;
+  connectivityCheckEndpoints: string[];
   currentClientVersion: string;
   currentEnvironment: string;
   currentEnvironmentBaseUrl: string;
