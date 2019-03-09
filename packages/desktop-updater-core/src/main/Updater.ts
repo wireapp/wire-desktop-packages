@@ -25,7 +25,6 @@ import {
   Manifest as SpecManifest,
 } from '@wireapp/desktop-updater-spec';
 import debug from 'debug';
-import * as isReachable from 'is-reachable';
 import * as Random from 'random-js';
 
 import {app, ipcMain} from 'electron';
@@ -56,11 +55,13 @@ export namespace Updater {
 
   export class Main {
     private static readonly PERIODIC_INTERVAL: number = Config.Updater.PERIODIC_INTERVAL;
+    private static readonly CONNECTIVITY_INTERNAL: number = Config.Updater.CONNECTIVITY_INTERNAL;
     private static readonly BROADCAST_RENDERER_TIMEOUT: number = Config.Updater.BROADCAST_RENDERER_TIMEOUT;
     private static readonly FALLBACK_WEB_VERSION: string = Config.Updater.FALLBACK_WEB_VERSION;
     private static readonly IPC_UPDATE_DISPLAY_NAME: string = Config.Updater.IPC_UPDATE_DISPLAY_NAME;
 
     public static reload?: (filename: string) => {};
+    public static isInternetAvailable?: (url: string) => Promise<boolean>;
     public static browserWindow?: Electron.BrowserWindow = undefined;
 
     private static _continueUpdate?: Function = undefined;
@@ -71,12 +72,13 @@ export namespace Updater {
     private static PERIODIC_TIMER?: NodeJS.Timer;
     private static isBusy: boolean = false;
 
-    public static currentWebappVersion?: string;
+    public static connectivityCheckEndpoints: string[];
     public static currentClientVersion: string;
     public static currentEnvironment: string;
+    public static currentWebappEnvironment: string;
+    public static currentWebappVersion?: string;
     public static trustStore: string[];
     public static updatesEndpoint: string;
-    public static currentWebappEnvironment: string;
 
     public static async runOnce(
       skipNotification: boolean = false, // Means we want the prompt asap (no notifications)
@@ -134,12 +136,17 @@ export namespace Updater {
         this.debug('Webapp version: %s', this.currentWebappVersion);
 
         // Ensure there is internet, attempt to reach a random endpoint of the backend
-        const BACKEND_URLS = ['https://prod-nginz-https.wire.com', 'https://prod-assets.wire.com'];
-        const randomHost = Random.pick(Random.nodeCrypto, BACKEND_URLS);
-        this.debug('Checking if "%s" is online...', randomHost);
-        if ((await isReachable(randomHost)) === false) {
-          this.debug('Could not check for updates as internet is offline, silently fail');
-          return undefined;
+        if (typeof this.isInternetAvailable === 'undefined') {
+          throw new LogicalError('Internet connectivity function must be set.');
+        }
+
+        this.debug('Checking if internet is available...');
+        while (true) {
+          if (await this.isInternetAvailable(Random.pick(Random.nodeCrypto, this.connectivityCheckEndpoints))) {
+            break;
+          }
+          this.debug('Internet seems offline, retrying...');
+          await Utils.sleep(Updater.Main.CONNECTIVITY_INTERNAL);
         }
 
         // Get remote manifest

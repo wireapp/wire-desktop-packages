@@ -25,21 +25,17 @@ import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import debug from 'debug';
 
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
+import {session} from 'electron';
 import {CookieManager} from './CookieManager';
 import {Config} from './index';
 import {UploadData} from './Utils';
 
-interface AxiosRequestConfigWithTransport extends AxiosRequestConfig {
-  transport?:
-    | typeof https
-    | {
-        request: (
-          optionsOrUrl: string | https.RequestOptions | URL,
-          callback?: ((res: http.IncomingMessage) => void) | undefined
-        ) => http.ClientRequest;
-      };
-}
+const globalAxiosConfig: AxiosRequestConfig = {
+  responseType: 'stream',
+  timeout: 30000,
+};
 
+// Certificate pinning
 const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
 const httpsCertificatePinningMock = {
   ...https,
@@ -85,6 +81,7 @@ const httpsCertificatePinningMock = {
 class AgentManager {
   public static readonly httpsAgentsDefaults: Partial<https.AgentOptions> = {
     keepAlive: true,
+    secureProtocol: 'TLSv1_2_method',
   };
   public static readonly httpsAgents: {
     local: https.Agent;
@@ -95,13 +92,57 @@ class AgentManager {
       cert: Config.Server.WEB_SERVER_HOST_CERTIFICATE,
       ciphers: Config.Server.WEB_SERVER_CIPHERS,
       rejectUnauthorized: false,
-      secureProtocol: 'TLSv1_2_method',
     }),
     remote: new https.Agent({
       ...AgentManager.httpsAgentsDefaults,
     }),
   };
 }
+
+class Request {
+  public static async doRemote(
+    config: AxiosRequestConfig,
+    headers?: Electron.Headers,
+    cookies?: string
+  ): Promise<AxiosResponse<any>> {
+    const options: AxiosRequestConfig & {transport: typeof httpsCertificatePinningMock} = {
+      ...globalAxiosConfig,
+      ...config,
+      headers: {
+        ...(headers ? headers : {}),
+        ...(cookies ? {Cookie: cookies} : {}),
+      },
+      httpsAgent: AgentManager.httpsAgents.remote,
+      transport: httpsCertificatePinningMock,
+    };
+    return axios(options);
+  }
+}
+
+const debugIsInternetAvailable: typeof debug = debug('wire:server:isinternetavailable');
+
+export const isInternetAvailable = async (url: string) => {
+  debugIsInternetAvailable('Checking if "%s" is online...', url);
+  try {
+    await Request.doRemote(
+      {
+        ...globalAxiosConfig,
+        method: 'HEAD',
+        url,
+      },
+      {
+        'User-Agent': session.defaultSession ? session.defaultSession.getUserAgent() : '',
+      }
+    );
+  } catch (error) {
+    if (!error.response) {
+      debugIsInternetAvailable('Error while checking for internet connection');
+      debugIsInternetAvailable(error);
+      return false;
+    }
+  }
+  return true;
+};
 
 const debugInterceptProtocol: typeof debug = debug('wire:server:interceptprotocol');
 
@@ -129,13 +170,13 @@ export const InterceptProtocol = (
 
       let response: AxiosResponse;
       try {
-        const defaultConfig: AxiosRequestConfigWithTransport = {
-          data:
-            typeof request.uploadData !== 'undefined' ? await UploadData.getData(request.uploadData, ses) : undefined,
+        const uploadData =
+          typeof request.uploadData !== 'undefined' ? await UploadData.getData(request.uploadData, ses) : undefined;
+        const defaultConfig: AxiosRequestConfig = {
+          ...globalAxiosConfig,
+          data: uploadData,
           headers,
           method,
-          responseType: 'stream',
-          timeout: 30000,
           url,
         };
 
@@ -169,16 +210,7 @@ export const InterceptProtocol = (
           // Anything else
           // Only get cookie outside the local server, we don't need it within
           const cookies = await CookieManager.get(url, ses);
-          const options: AxiosRequestConfig & {transport: typeof httpsCertificatePinningMock} = {
-            ...defaultConfig,
-            headers: {
-              ...headers,
-              ...(cookies ? {Cookie: cookies} : {}),
-            },
-            httpsAgent: AgentManager.httpsAgents.remote,
-            transport: httpsCertificatePinningMock,
-          };
-          response = await axios(options);
+          response = await Request.doRemote(defaultConfig, headers, cookies);
         }
       } catch (error) {
         if (error.response) {

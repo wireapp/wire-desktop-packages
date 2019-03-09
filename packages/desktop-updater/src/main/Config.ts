@@ -41,10 +41,5 @@ export namespace Config {
     public static readonly WEB_SERVER_LISTEN_PORT_MAX: number = 65534;
     public static readonly WEB_SERVER_LISTEN_PORT_MIN: number = 49152;
     public static readonly WEB_SERVER_TOKEN_NAME: string = 'Local';
-
-    public static readonly BACKEND_URLS: string[] = [
-      'https://prod-nginz-https.wire.com/*',
-      'https://staging-nginz-https.zinfra.io/*',
-    ];
   }
 }

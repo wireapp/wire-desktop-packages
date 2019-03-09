@@ -25,9 +25,9 @@ export namespace Config {
   export class Updater {
     public static readonly SPEC_VERSION: number = 1;
 
-    // Interval when using runPeriodic
-    public static readonly PERIODIC_INTERVAL: number = 60000; // 1 minute in ms
     public static readonly BROADCAST_RENDERER_TIMEOUT: number = 3000; // 3 seconds
+    public static readonly CONNECTIVITY_INTERNAL: number = 2000; // 5 seconds
+    public static readonly PERIODIC_INTERVAL: number = 60000; // 1 minute
 
     public static readonly CHANGELOG_URL: string = 'https://medium.com/wire-news/desktop-updates/home';
 

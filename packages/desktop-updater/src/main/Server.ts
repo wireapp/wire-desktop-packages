@@ -35,7 +35,7 @@ import {
 } from '@wireapp/desktop-updater-core';
 
 import {Updater as UpdaterChild} from './Child';
-import {InterceptProtocol as proxifyProtocol} from './InterceptProtocol';
+import {InterceptProtocol as proxifyProtocol, isInternetAvailable} from './Networking';
 
 import {Config, Utils} from './index';
 
@@ -58,18 +58,20 @@ export class Server {
 
   private accessToken: string | undefined;
   private browserWindow: Electron.BrowserWindow | undefined;
+  private currentEnvironmentHostname: string | undefined;
+  private internalHost: URL | undefined;
   private readonly browserWindowOptions: Electron.BrowserWindowConstructorOptions;
+  private readonly connectivityCheckEndpoints: string[];
   private readonly currentClientVersion: string;
   private readonly currentEnvironment: string;
   private readonly currentEnvironmentBaseUrl: URL;
   private readonly currentEnvironmentBaseUrlPlain: string;
-  private currentEnvironmentHostname: string | undefined;
-  private internalHost: URL | undefined;
   private readonly trustStore: string[];
   private readonly updatesEndpoint: string;
 
   constructor(options: ServerConstructorInterface) {
     this.browserWindowOptions = options.browserWindowOptions;
+    this.connectivityCheckEndpoints = options.connectivityCheckEndpoints;
     this.currentClientVersion = options.currentClientVersion;
     this.currentEnvironment = options.currentEnvironment;
     this.currentEnvironmentBaseUrl = new URL(options.currentEnvironmentBaseUrl);
@@ -97,6 +99,7 @@ export class Server {
     Updater.Main.currentEnvironment = this.currentEnvironment;
     Updater.Main.trustStore = this.trustStore;
     Updater.Main.updatesEndpoint = this.updatesEndpoint;
+    Updater.Main.connectivityCheckEndpoints = this.connectivityCheckEndpoints;
 
     // Ensure WEB_SERVER_TOKEN_NAME is alphanumeric only
     if (!Server.WEB_SERVER_TOKEN_NAME.match(/^[a-zA-Z0-9]*$/)) {
@@ -168,7 +171,8 @@ export class Server {
       }
     });
 
-    // Bind reload function from updater to this class
+    // Make internet connectivity checks and reload function available to the core
+    Updater.Main.isInternetAvailable = isInternetAvailable;
     Updater.Main.reload = async (filename: string): Promise<void> => {
       const documentRoot = UpdaterUtils.resolvePath(filename);
       Server.debug('Change of the document root requested, new one is %s', documentRoot);

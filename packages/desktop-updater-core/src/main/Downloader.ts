@@ -102,7 +102,7 @@ export class Downloader {
       throw new Error('Endpoint has not been set, aborting');
     }
     const baseURL = Downloader.updatesEndpoint;
-    this.debug('Downloading content at: %s', `${baseURL}${options.url}`);
+    this.debug('Downloading content at: %s', `${baseURL}/${options.url}`);
     return new Sandbox('Request').run(
       {
         Options: {
