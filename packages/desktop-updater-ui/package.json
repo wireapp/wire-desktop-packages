@@ -6,7 +6,7 @@
     "@types/react-dom": "16.8.2",
     "@wireapp/desktop-updater-spec": "0.0.0",
     "@wireapp/react-ui-kit": "4.3.42",
-    "electron": "4.0.7",
+    "electron": "4.0.8",
     "long": "4.0.0",
     "luxon": "1.11.4",
     "react": "16.8.4",
