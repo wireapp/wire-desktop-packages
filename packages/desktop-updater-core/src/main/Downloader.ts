@@ -177,18 +177,18 @@ export class Downloader {
     return this.extractEnvelopeFrom(envelope);
   }
 
-  public static async extractEnvelopeFrom(raw: Buffer) {
+  public static async extractEnvelopeFrom(raw: Buffer): Promise<Updater.Envelope> {
     // Decode envelope
-    const root = await Protobuf.loadRoot(path.join(__dirname, '..', '..', 'specs', 'update.proto'));
-    const {data, publicKey, signature}: Updater.Envelope = await Protobuf.decodeBuffer(root, 'UpdateMessage', raw);
+    const root = await Protobuf.loadRoot(path.join(__dirname, '../../specs/update.proto'));
+    const {data, publicKey, signature} = <Updater.Envelope>await Protobuf.decodeBuffer(root, 'UpdateMessage', raw);
 
     return {data, publicKey, signature, raw};
   }
 
-  public static async extractManifestFrom(envelope: Updater.Envelope) {
-    const root = await Protobuf.loadRoot(path.join(__dirname, '..', '..', 'specs', 'update.proto'));
+  public static async extractManifestFrom(envelope: Updater.Envelope): Promise<Updater.Manifest> {
+    const root = await Protobuf.loadRoot(path.join(__dirname, '../../specs/update.proto'));
 
     // Unserialize manifest
-    return Protobuf.decodeBuffer(root, 'UpdateData', envelope.data);
+    return <Updater.Manifest>(<unknown>Protobuf.decodeBuffer(root, 'UpdateData', envelope.data));
   }
 }

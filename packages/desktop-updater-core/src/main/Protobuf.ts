@@ -31,15 +31,16 @@ export class Protobuf {
     return root.lookupType(`updater.${type}`);
   }
 
-  public static async decodeBuffer(root: protobuf.Root, type: string, buffer: Buffer): Promise<protobuf.Message> {
+  public static async decodeBuffer(root: protobuf.Root, type: string, buffer: Buffer): Promise<{[k: string]: any}> {
     try {
-      return this.lookupType(type, root).decode(buffer);
+      const decodeMessage = this.lookupType(type, root);
+      return decodeMessage.toObject(decodeMessage.decode(buffer));
     } catch (error) {
       throw new ProtobufError(error.message, error);
     }
   }
 
-  public static async encodeBuffer(root: any, type: string, data: {}): Promise<any> {
+  public static async encodeBuffer(root: any, type: string, data: {}): Promise<Uint8Array> {
     try {
       const updateMessage = this.lookupType(type, root);
       return updateMessage.encode(updateMessage.create(data)).finish();
