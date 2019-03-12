@@ -48,6 +48,7 @@ export interface ServerConstructorInterface {
   currentClientVersion: string;
   currentEnvironment: string;
   currentEnvironmentBaseUrl: string;
+  enableSecureUpdater: boolean;
   trustStore: string[];
   updatesEndpoint: string;
 }
@@ -67,6 +68,7 @@ export class Server {
   private readonly currentEnvironment: string;
   private readonly currentEnvironmentBaseUrl: URL;
   private readonly currentEnvironmentBaseUrlPlain: string;
+  private readonly enableSecureUpdater: boolean;
   private readonly trustStore: string[];
   private readonly updatesEndpoint: string;
 
@@ -77,6 +79,7 @@ export class Server {
     this.currentEnvironment = options.currentEnvironment;
     this.currentEnvironmentBaseUrl = new URL(options.currentEnvironmentBaseUrl);
     this.currentEnvironmentBaseUrlPlain = options.currentEnvironmentBaseUrl;
+    this.enableSecureUpdater = options.enableSecureUpdater;
     this.trustStore = options.trustStore;
     this.updatesEndpoint = options.updatesEndpoint;
   }
@@ -116,8 +119,8 @@ export class Server {
     Server.debug('Webapp url is %s', this.currentEnvironmentBaseUrl.toString());
     Server.debug('Webapp hostname is %s', this.currentEnvironmentHostname);
 
-    // Note: Use --bypassSecureUpdater to bypass the server
-    if (Environment.bypassSecureUpdater) {
+    // Note: Use --enableSecureUpdater to bypass the server
+    if (!this.enableSecureUpdater) {
       return new BrowserWindow({...this.browserWindowOptions});
     }
 
@@ -134,6 +137,8 @@ export class Server {
     } catch (error) {
       Server.debug('Error happened while getting local version, checking for update so the user can fix this...');
       Server.debug(error);
+
+      // ToDo: Add check for bundled webapp
 
       const skipNotification = true;
       const isWebappTamperedWith = error instanceof NotFoundError ? false : true;
@@ -175,8 +180,7 @@ export class Server {
       }
     });
 
-    // Make internet connectivity checks and reload function available to the core
-    Updater.Main.isInternetAvailable = isInternetAvailable;
+    // Make the reload function available to the core
     Updater.Main.reload = async (filename: string): Promise<void> => {
       const documentRoot = UpdaterUtils.resolvePath(filename);
       Server.debug('Change of the document root requested, new one is %s', documentRoot);

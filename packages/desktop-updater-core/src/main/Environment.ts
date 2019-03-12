@@ -17,18 +17,10 @@
  *
  */
 
-import * as minimist from 'minimist';
-const argv = minimist(process.argv.slice(1));
-
 export class Environment {
-  public static readonly bypassSecureUpdater: boolean = typeof argv.bypassSecureUpdater !== 'undefined';
-  public static readonly forcedEnvironment?: string =
-    typeof argv.env === 'string' ? <string>argv.env.toUpperCase() : undefined;
-  public static readonly isDevelopment: boolean = false;
   public static currentEnvironment: string = 'PRODUCTION';
 
   public static async get(): Promise<string> {
-    // Attempt to use the default environment, if none, fallback to production
     return this.currentEnvironment;
   }
   public static async set(environment: string): Promise<void> {
