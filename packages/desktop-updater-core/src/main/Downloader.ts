@@ -74,6 +74,10 @@ export class Downloader {
 
   private static readonly debug: typeof debug = debug('wire:updater:downloader');
 
+  private static readonly updateSpec: string = path.join(
+    __dirname,
+    '../../node_modules/@wireapp/desktop-updater-spec/update.proto'
+  );
   public static updatesEndpoint?: string;
 
   /**
@@ -179,14 +183,14 @@ export class Downloader {
 
   public static async extractEnvelopeFrom(raw: Buffer): Promise<Updater.Envelope> {
     // Decode envelope
-    const root = await Protobuf.loadRoot(path.join(__dirname, '../../specs/update.proto'));
+    const root = await Protobuf.loadRoot(this.updateSpec);
     const {data, publicKey, signature} = <Updater.Envelope>await Protobuf.decodeBuffer(root, 'UpdateMessage', raw);
 
     return {data, publicKey, signature, raw};
   }
 
   public static async extractManifestFrom(envelope: Updater.Envelope): Promise<Updater.Manifest> {
-    const root = await Protobuf.loadRoot(path.join(__dirname, '../../specs/update.proto'));
+    const root = await Protobuf.loadRoot(this.updateSpec);
 
     // Unserialize manifest
     return <Updater.Manifest>(<unknown>Protobuf.decodeBuffer(root, 'UpdateData', envelope.data));
