@@ -22,8 +22,8 @@ import * as Long from 'long';
 export interface Envelope {
   data: Buffer;
   publicKey: Buffer;
-  signature: Buffer;
   raw: Buffer;
+  signature: Buffer;
 }
 
 export interface Manifest {

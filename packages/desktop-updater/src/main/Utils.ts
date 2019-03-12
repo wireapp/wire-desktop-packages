@@ -28,11 +28,6 @@ export class Utils {
   public static async readFileAsString(path: string): Promise<string> {
     return fs.readFileSync(path, {encoding: 'utf8'});
   }
-
-  public static async ensureDocumentRootExist(path: string): Promise<boolean> {
-    await fs.ensureDir(path);
-    return true;
-  }
 }
 
 export class UploadData {

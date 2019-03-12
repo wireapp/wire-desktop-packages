@@ -42,14 +42,10 @@ export abstract class WindowManager {
   private readonly attachedMode: boolean = typeof this.mainWindow !== 'undefined';
   private readonly RENDERER_DOCUMENT_ROOT: string = path.join(
     __dirname,
-    '..',
-    '..',
-    'node_modules',
-    '@wireapp',
-    'desktop-updater-ui'
+    '../../node_modules/@wireapp/desktop-updater-ui'
   );
-  protected readonly RENDERER_HTML: string = path.join(this.RENDERER_DOCUMENT_ROOT, '.renderer', 'index.html');
-  protected readonly RENDERER_PRELOAD: string = path.join(__dirname, 'Preloads', `${this.WINDOW_TYPE}.js`);
+  protected readonly RENDERER_HTML: string = path.join(this.RENDERER_DOCUMENT_ROOT, '.renderer/index.html');
+  protected readonly RENDERER_PRELOAD: string = path.join(__dirname, `Preloads/${this.WINDOW_TYPE}.js`);
   private readonly BROWSER_WINDOW_DEFAULTS: Electron.BrowserWindowConstructorOptions = {
     backgroundColor: this.attachedMode ? undefined : '#f7f8fa',
     center: true,
