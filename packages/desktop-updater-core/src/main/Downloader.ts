@@ -35,33 +35,33 @@ import {BaseError} from 'make-error-cause';
 export class DownloadError extends BaseError {}
 
 /**
- * Protected against:
+ * The downloader is protected against:
  *
- * [x] Arbitrary installation attacks (manifest is signed).
+ * [X] Arbitrary installation attacks (manifest is signed).
  *
- * [x] Endless data attacks (via `fileContentLength`).
+ * [X] Endless data attacks (via `fileContentLength`).
  *
- * [x] Extraneous dependencies attacks (asar is one read-only file).
+ * [X] Extraneous dependencies attacks (asar is one read-only file).
  *
- * [ ] Fast-forward attacks (unsure, should not be applicable as manifest is signed).
+ * [X] Fast-forward attacks (manifest is checked upon launch).
  *
- * [x] Indefinite freeze attacks (via expiresOn)
+ * [X] Indefinite freeze attacks (via expiresOn)
  *
- * [x] Malicious mirrors preventing updates (file can be retrieved directly from the
+ * [X] Malicious mirrors preventing updates (file can be retrieved directly from the
  * server if it fails).
  *
- * [x] Mix-and-match attacks (not applicable)
+ * [X] Mix-and-match attacks (not applicable)
  *
- * [x] Rollback attacks (via `versionNumber`)
+ * [X] Rollback attacks (via `versionNumber`)
  *
- * [x] Slow retrieval attacks (timeout will be set in `download()` and will inform the
+ * [X] Slow retrieval attacks (timeout will be set in `download()` and will inform the
  * UI in case it fails or times out to download).
  *
  * [X] Vulnerability to key compromises (via deploying new wrapper updates)
  *
- * [x] Wrong software installation
+ * [X] Wrong software installation
  *
- * @see https://github.com/theupdateframework/tuf/blob/develop/SECURITY.md
+ * @see https://github.com/theupdateframework/tuf/blob/40289f0b5501631d35fc6e05c5233ee91d58e8a7/docs/SECURITY.md
  */
 
 export class Downloader {
