@@ -174,7 +174,7 @@ export class ErrorDispatcher {
   }
 
   public static dispatch(): Promise<ErrorDispatcherResponseInterface> {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       // ToDo: Localization
       this.debug('%o', this.error);
 

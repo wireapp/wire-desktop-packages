@@ -159,7 +159,8 @@ export class Server {
         localEnvironmentMismatch
       );
       if (typeof manifest === 'undefined') {
-        return Promise.reject(new Error('Required update denied, server cannot be started. Exiting.'));
+        Server.debug('Required update denied, server cannot be started. Exiting.');
+        return process.exit(0);
       }
     }
 
@@ -227,28 +228,24 @@ export class Server {
   }
 
   private async createWebInstance(documentRoot: string): Promise<UpdaterChild.Child> {
-    try {
-      // Generate the credentials that will be used to validate HTTPS requests
-      this.accessToken = await this.generateToken();
-      if (typeof this.accessToken === 'undefined') {
-        throw new Error('Access token not available');
-      }
-      Server.debug('Running VM...');
-      const sandbox = new Sandbox(path.resolve(__dirname, 'Child.js'), {
-        AccessToken: this.accessToken,
-        Config: Config.Server,
-        DocumentRoot: documentRoot,
-      });
-      const {internalHost, server} = await sandbox.run();
-
-      // Set internal host
-      this.internalHost = new URL(internalHost);
-      Server.debug('Internal host is: %o', this.internalHost);
-
-      return server;
-    } catch (error) {
-      return Promise.reject(error);
+    // Generate the credentials that will be used to validate HTTPS requests
+    this.accessToken = await this.generateToken();
+    if (typeof this.accessToken === 'undefined') {
+      throw new Error('Access token not available');
     }
+    Server.debug('Running VM...');
+    const sandbox = new Sandbox(path.resolve(__dirname, 'Child.js'), {
+      AccessToken: this.accessToken,
+      Config: Config.Server,
+      DocumentRoot: documentRoot,
+    });
+    const {internalHost, server} = await sandbox.run();
+
+    // Set internal host
+    this.internalHost = new URL(internalHost);
+    Server.debug('Internal host is: %o', this.internalHost);
+
+    return server;
   }
 
   private hookSessionSettingsToElectron(ses: Electron.Session) {
