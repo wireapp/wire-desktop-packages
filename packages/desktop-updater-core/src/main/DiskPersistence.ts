@@ -35,7 +35,7 @@ export class DiskPersistence {
     return value;
   }
 
-  public async get(name: string, defaultValue: any = undefined): Promise<any> {
+  public async get<T>(name: string, defaultValue?: T): Promise<T> {
     if (typeof DiskPersistence.data[this.file] === 'undefined') {
       await this.readFromFile();
     }

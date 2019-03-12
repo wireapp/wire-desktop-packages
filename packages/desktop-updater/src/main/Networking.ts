@@ -100,11 +100,11 @@ class AgentManager {
 }
 
 class Request {
-  public static async doRemote(
+  public static async doRemote<T>(
     config: AxiosRequestConfig,
     headers?: Electron.Headers,
     cookies?: string
-  ): Promise<AxiosResponse<any>> {
+  ): Promise<AxiosResponse<T>> {
     const options: AxiosRequestConfig & {transport: typeof httpsCertificatePinningMock} = {
       ...globalAxiosConfig,
       ...config,

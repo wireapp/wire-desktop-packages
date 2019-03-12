@@ -44,7 +44,7 @@ class Request {
     transferred: 0,
   };
 
-  public static async do(): Promise<any> {
+  public static async do(): Promise<AxiosResponse<any> | Error> {
     const buffers: Buffer[] = [];
 
     let response: AxiosResponse;

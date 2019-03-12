@@ -63,11 +63,7 @@ export namespace Updater {
         (req: http.IncomingMessage, res: http.ServerResponse) => this.onRequest(req, res)
       );
 
-      try {
-        await this.listen();
-      } catch (error) {
-        return Promise.reject(error);
-      }
+      await this.listen();
 
       return {internalHost: this.internalHost};
     }

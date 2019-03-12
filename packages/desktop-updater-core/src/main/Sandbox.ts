@@ -60,7 +60,7 @@ export class Sandbox {
     this.debug('Lauching VM...');
     return new Promise((resolve, reject) => {
       try {
-        return vm.run(<string>this.script, this.path)(data => {
+        return vm.run(this.script!, this.path)(data => {
           this.debug('Callback received');
           if (data instanceof Error) {
             this.debug('Fatal error inside sandbox detected');

@@ -31,7 +31,7 @@ export class Protobuf {
     return root.lookupType(`updater.${type}`);
   }
 
-  public static async decodeBuffer(root: protobuf.Root, type: string, buffer: Buffer): Promise<any> {
+  public static async decodeBuffer(root: protobuf.Root, type: string, buffer: Buffer): Promise<protobuf.Message> {
     try {
       return this.lookupType(type, root).decode(buffer);
     } catch (error) {
