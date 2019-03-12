@@ -124,6 +124,9 @@ export class Server {
     // Create main window here
     this.browserWindow = new BrowserWindow({...this.browserWindowOptions, show: false});
 
+    // Assign internet connectivity checks to the core
+    Updater.Main.isInternetAvailable = isInternetAvailable;
+
     // Attempt to use local version
     let manifest;
     try {
