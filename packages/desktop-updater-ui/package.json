@@ -1,8 +1,5 @@
 {
   "dependencies": {
-    "i18next": "15.0.7",
-    "i18next-browser-languagedetector": "3.0.1",
-    "react-i18next": "10.5.1"
   },
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
@@ -23,11 +20,14 @@
     "babel-loader": "8.0.5",
     "css-loader": "2.1.0",
     "electron": "4.0.8",
+    "i18next": "15.0.7",
+    "i18next-browser-languagedetector": "3.0.1",
     "long": "4.0.0",
     "luxon": "1.11.4",
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "react-hot-loader": "4.7.2",
+    "react-i18next": "10.5.1",
     "react-markdown": "4.0.6",
     "rimraf": "2.6.3",
     "style-loader": "0.23.1",
