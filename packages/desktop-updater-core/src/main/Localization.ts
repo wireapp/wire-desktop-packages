@@ -28,7 +28,7 @@ const CONFIG = {
   },
   debug: true,
   fallbackLng: ['en'],
-  ns: ['downloader', 'error-dispatcher', 'installer', 'prompt', 'wrapper-outdated'],
+  ns: ['downloader', 'error-dispatcher', 'installer', 'prompt', 'updater', 'wrapper-outdated'],
 };
 
 export type i18nLanguageIdentifier =
@@ -43,6 +43,9 @@ export type i18nLanguageIdentifier =
   | 'error-dispatcher:tryAgain'
   | 'installer:title'
   | 'prompt:title'
+  | 'updater:newUpdateAvailableBody'
+  | 'updater:newUpdateAvailableDetails'
+  | 'updater:newUpdateAvailableTitle'
   | 'wrapper-outdated:title';
 
 export async function getLocales(

@@ -34,6 +34,7 @@ import {Downloader} from './Downloader';
 import {Environment} from './Environment';
 import {ErrorDispatcher, ErrorDispatcherResponseInterface} from './ErrorDispatcher';
 import {Installer} from './Installer';
+import {getLocales} from './Localization';
 import {Prompt} from './Prompt';
 import {Utils} from './Utils';
 import {BlacklistedVersionError, Verifier, VerifyExpirationError, VerifyMismatchEnvironment} from './Verifier';
@@ -211,12 +212,12 @@ export namespace Updater {
             {
               actions: [
                 {
-                  text: 'Details',
+                  text: await getLocales('updater:newUpdateAvailableDetails'),
                   type: 'button',
                 },
               ],
-              body: 'A new update for Wire is available, click to install.',
-              title: 'A new update is available',
+              body: await getLocales('updater:newUpdateAvailableBody'),
+              title: await getLocales('updater:newUpdateAvailableTitle'),
             },
             async (type: string, event: Event, index?: number) => {
               // Focus on the window
