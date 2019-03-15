@@ -75,7 +75,7 @@ export abstract class WindowManager {
     },
   };
 
-  abstract BROWSER_WINDOW_OPTIONS: Electron.BrowserWindowConstructorOptions;
+  abstract BROWSER_WINDOW_OPTIONS: () => Promise<Electron.BrowserWindowConstructorOptions>;
 
   protected whenClosed(): void {
     this.debug('whenClosed called');
@@ -93,21 +93,23 @@ export abstract class WindowManager {
     }
   }
 
-  public prepare(): void {
+  public async prepare(): Promise<void> {
     if (typeof this.browserWindow !== 'undefined') {
       this.browserWindow.close();
       this.browserWindow.destroy();
     }
 
+    const BROWSER_WINDOW_OPTIONS = await this.BROWSER_WINDOW_OPTIONS();
+
     // Fix height
-    let height = <number>this.BROWSER_WINDOW_OPTIONS.height;
+    let height = <number>BROWSER_WINDOW_OPTIONS.height;
     if (this.attachedMode === false) {
       height -= WindowManager.STATUS_BAR_HEIGHT;
     }
 
     this.browserWindow = new BrowserWindow({
       ...this.BROWSER_WINDOW_DEFAULTS,
-      ...this.BROWSER_WINDOW_OPTIONS,
+      ...BROWSER_WINDOW_OPTIONS,
       height,
     });
     this.browserWindow.setMenuBarVisibility(false);
@@ -219,6 +221,10 @@ export abstract class WindowManager {
     if (typeof this.browserWindow === 'undefined') {
       throw new Error(`Cannot dispatch data to browser window if it's destroyed`);
     }
-    this.browserWindow.webContents.send('onDataReceived', {component: this.constructor.name, props: data});
+    // Add translation here as well
+    this.browserWindow.webContents.send('onDataReceived', {
+      component: this.constructor.name,
+      props: data,
+    });
   }
 }

@@ -19,6 +19,8 @@
 
 import {Loading, Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
+import {Trans, WithTranslation, withTranslation} from 'react-i18next';
+
 import {InstallerContainerState} from './Installer';
 import {
   GlobalStyle,
@@ -33,34 +35,38 @@ import {
 
 interface Props extends InstallerContainerState {}
 
-interface State {}
-
-class Installer extends React.Component<Props, State> {
+class Installer extends React.Component<Props & WithTranslation> {
   render() {
     const {installing, progress} = this.props;
+    const remaining = progress.remaining ? Math.round(progress.remaining) : undefined;
+    const transferred = (progress.transferred / 1000000).toFixed(1);
+    const total = (progress.total / 1000000).toFixed(1);
+    const speed = (progress.speed / 1000000).toFixed(1);
     return (
       <UpdaterContainer>
         <MainContent>
-          <MainHeading>{`${installing ? 'Installing' : 'Downloading'} the update`}</MainHeading>
+          <MainHeading>
+            {installing ? <Trans>Installing the update</Trans> : <Trans>Downloading the update</Trans>}
+          </MainHeading>
           <ProgressContainer>
             <ProgressBlockLoader>
               <Loading progress={progress.percent} />
             </ProgressBlockLoader>
             <ProgressBlockStats>
               <Paragraph>
-                {installing
-                  ? `Installing...`
-                  : `${
-                      progress.startedAt === 0
-                        ? `Download is starting...`
-                        : progress.remaining
-                        ? `${Math.round(progress.remaining)} seconds remaining`
-                        : `Download has started...`
-                    }`}
+                {installing ? (
+                  <Trans>Installing...</Trans>
+                ) : progress.startedAt === 0 ? (
+                  <Trans>Download is starting...</Trans>
+                ) : progress.remaining ? (
+                  <Trans count={remaining}>{{remaining}} second remaining</Trans>
+                ) : (
+                  <Trans>Download has started...</Trans>
+                )}
                 <SmallBlock>
-                  {`${(progress.transferred / 1000000).toFixed(1)} of `}
-                  {`${(progress.total / 1000000).toFixed(1)} MB at `}
-                  {`${(progress.speed / 1000000).toFixed(1)}  Mb/s`}
+                  <Trans>
+                    {{transferred}} of {{total}} MB at {{speed}} Mb/s
+                  </Trans>
                 </SmallBlock>
               </Paragraph>
             </ProgressBlockStats>
@@ -72,4 +78,6 @@ class Installer extends React.Component<Props, State> {
   }
 }
 
-export {Installer};
+const TranslatedInstaller = withTranslation()(Installer);
+
+export {TranslatedInstaller};

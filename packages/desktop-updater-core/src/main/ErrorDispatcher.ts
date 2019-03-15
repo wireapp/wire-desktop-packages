@@ -24,6 +24,7 @@ import {BaseError} from 'make-error-cause';
 import {Config} from './Config';
 import {DownloadError} from './Downloader';
 import {InstallerError} from './Installer';
+import {getLocales} from './Localization';
 import {ProtobufError} from './Protobuf';
 import {Sandbox} from './Sandbox';
 import {LogicalError} from './Updater';
@@ -174,15 +175,14 @@ export class ErrorDispatcher {
   }
 
   public static dispatch(): Promise<ErrorDispatcherResponseInterface> {
-    return new Promise(resolve => {
-      // ToDo: Localization
+    return new Promise(async resolve => {
       this.debug('%o', this.error);
 
       // Build buttons
       const buttons: string[] = [];
-      buttons[Response.CANCEL] = 'Cancel';
-      buttons[Response.TRY_AGAIN] = 'Try again';
-      buttons[Response.CONTACT_US] = 'Contact us';
+      buttons[Response.CANCEL] = await getLocales('error-dispatcher:cancel');
+      buttons[Response.TRY_AGAIN] = await getLocales('error-dispatcher:tryAgain');
+      buttons[Response.CONTACT_US] = await getLocales('error-dispatcher:contactUs');
 
       const errorCode: number = this.getErrorCode();
 
@@ -190,26 +190,26 @@ export class ErrorDispatcher {
       // Assume that if installerWindow is available then we are already trying to download and install the update
       let message: string;
       if (errorCode === ErrorCodes.UNKNOWN) {
-        message = 'An unknown error happened while trying to check for updates.';
+        message = await getLocales('error-dispatcher:errorUnknown');
       } else if (this.promptWindow) {
-        message = `An error happened while processing the update (${errorCode})`;
+        message = await getLocales('error-dispatcher:errorWhileProcessingUpdate', {errorCode});
       } else if (this.installerWindow) {
-        message = `An error happened while installing the update (${errorCode})`;
+        message = await getLocales('error-dispatcher:errorWhileInstallingUpdate', {errorCode});
       } else {
-        message = `An error happened while trying to check for updates (${errorCode})`;
+        message = await getLocales('error-dispatcher:errorWhileCheckingForUpdates', {errorCode});
       }
 
       // Options for the dialog
       const options: Electron.MessageBoxOptions = {
         buttons,
         message,
-        title: 'Wire Updater',
+        title: await getLocales('error-dispatcher:title'),
         type: 'error',
       };
 
       if (this.RAYGUN_ENABLED && this.RAYGUN_TOKEN) {
         options.checkboxChecked = true;
-        options.checkboxLabel = 'Report this incident to Wire';
+        options.checkboxLabel = await getLocales('error-dispatcher:reportThisIncident');
       }
 
       this.debug('Showing errorDispatcher prompt');

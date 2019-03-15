@@ -26,17 +26,20 @@ import {Utils} from './Utils';
 import {WindowManager} from './WindowManager';
 
 import {BaseError} from 'make-error-cause';
+import {getLocales} from './Localization';
 export class InstallerError extends BaseError {}
 
 export class Installer extends WindowManager {
   // Static
   private static readonly debug: typeof debug = debug(`wire:updater:installer`);
 
-  public readonly BROWSER_WINDOW_OPTIONS: Electron.BrowserWindowConstructorOptions = {
-    closable: false,
-    height: 183,
-    title: 'Installing the update...',
-    width: 480,
+  public BROWSER_WINDOW_OPTIONS = async () => {
+    return {
+      closable: false,
+      height: 183,
+      title: await getLocales('installer:title'),
+      width: 480,
+    };
   };
 
   constructor(public mainWindow?: Electron.BrowserWindow) {
@@ -47,7 +50,7 @@ export class Installer extends WindowManager {
    * Show the update prompt
    */
   public async show(): Promise<void> {
-    super.prepare();
+    await super.prepare();
     super.show();
 
     await this.freezeBrowserWindow();

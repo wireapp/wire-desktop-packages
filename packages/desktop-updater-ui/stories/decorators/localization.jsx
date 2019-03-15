@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2018 Wire Swiss GmbH
+ * Copyright (C) 2019 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,15 @@
  *
  */
 
-import * as Updater from '@wireapp/desktop-updater-spec';
-import * as React from 'react';
-import {TranslatedPrompt} from './PromptView';
+import i18n, {resourcesName} from '../../src/main/libs/Localization';
+import {makeDecorator} from '@storybook/addons';
+import {select} from '@storybook/addon-knobs';
 
-export interface PromptContainerState {
-  manifest?: Updater.Manifest;
-  changelogUrl: string;
-  isWebappBlacklisted: boolean;
-  isWebappTamperedWith: boolean;
-}
-
-interface Props {}
-
-class PromptContainer extends React.Component<Props, PromptContainerState> {
-  constructor(props) {
-    super(props);
-    this.state = props;
-  }
-
-  render() {
-    return <TranslatedPrompt {...this.state} />;
-  }
-}
-
-export {PromptContainer};
+export const withLocalization = makeDecorator({
+  name: 'withLocalization',
+  wrapper: (getStory, context, {parameters}) => {
+    const language = select('Language', resourcesName, 'en');
+    i18n.changeLanguage(language);
+    return getStory(context);
+  },
+});

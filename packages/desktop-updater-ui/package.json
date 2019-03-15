@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "i18next": "15.0.7",
+    "i18next-browser-languagedetector": "3.0.1",
+    "react-i18next": "10.5.1"
   },
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
@@ -19,7 +22,7 @@
     "@wireapp/react-ui-kit": "4.3.42",
     "babel-loader": "8.0.5",
     "css-loader": "2.1.0",
-    "electron": "4.0.7",
+    "electron": "4.0.8",
     "long": "4.0.0",
     "luxon": "1.11.4",
     "react": "16.8.4",

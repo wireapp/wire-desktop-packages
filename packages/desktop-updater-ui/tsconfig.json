@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "dist/es6",
     "module": "es6",
+    "outDir": "dist/es6",
+    "resolveJsonModule": true,
     "rootDir": "src/main"
   },
   "exclude": ["dist", "node_modules"],

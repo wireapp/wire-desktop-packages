@@ -18,7 +18,7 @@
  */
 
 import * as React from 'react';
-import {WrapperOutdated} from './WrapperOutdatedView';
+import {TranslatedWrapperOutdated} from './WrapperOutdatedView';
 
 export interface WrapperOutdatedState {
   environment?: NodeJS.Platform;
@@ -33,7 +33,7 @@ class WrapperOutdatedContainer extends React.Component<Props, WrapperOutdatedSta
   }
 
   render() {
-    return <WrapperOutdated {...this.state} />;
+    return <TranslatedWrapperOutdated {...this.state} />;
   }
 }
 

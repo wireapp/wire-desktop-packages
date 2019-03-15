@@ -22,6 +22,6 @@ export {Downloader} from './Downloader';
 export {Environment} from './Environment';
 export {Installer} from './Installer';
 export {NotFoundError, Updater} from './Updater';
+export {Protobuf} from './Protobuf';
 export {Utils, WebappVersionInterface} from './Utils';
 export {Verifier, VerifyMismatchEnvironment} from './Verifier';
-export {Protobuf} from './Protobuf';

@@ -20,6 +20,7 @@
 import {ipcMain} from 'electron';
 
 import {Config} from './Config';
+import {getLocales} from './Localization';
 import {Updater} from './Updater';
 import {WindowManager} from './WindowManager';
 
@@ -29,10 +30,12 @@ export class PromptError extends BaseError {}
 export class Prompt extends WindowManager {
   private static readonly IPC_DECISION_NAME: string = Config.Prompt.IPC_DECISION_NAME;
 
-  public readonly BROWSER_WINDOW_OPTIONS: Electron.BrowserWindowConstructorOptions = {
-    height: 287,
-    title: 'An update is available for Wire',
-    width: 480,
+  public BROWSER_WINDOW_OPTIONS = async () => {
+    return {
+      height: 287,
+      title: await getLocales('prompt:title'),
+      width: 480,
+    };
   };
 
   constructor(
@@ -49,8 +52,8 @@ export class Prompt extends WindowManager {
   /**
    * Show the update prompt
    */
-  public show(): Promise<Updater.Decision> {
-    super.prepare();
+  public async show(): Promise<Updater.Decision> {
+    await super.prepare();
 
     return new Promise(async resolve => {
       if (typeof this.browserWindow === 'undefined') {

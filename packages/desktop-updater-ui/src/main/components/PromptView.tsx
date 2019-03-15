@@ -20,12 +20,11 @@
 import * as Updater from '@wireapp/desktop-updater-spec';
 import {COLOR, Checkbox, CheckboxLabel, Container, Link, Opacity, Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
+import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import {EventDispatcher} from '../libs/EventDispatcher';
 import {PromptContainerState} from './Prompt';
-import {PromptChangelogModal} from './PromptChangelogModal';
+import {PromptChangelogModal, TranslatedPromptChangelogModal} from './PromptChangelogModal';
 import {DecisionButton, GlobalStyle, MainContent, MainHeading, UpdaterContainer} from './UpdaterStyles';
-
-interface Props extends PromptContainerState {}
 
 interface State {
   decision: Updater.Decision;
@@ -33,15 +32,19 @@ interface State {
   showChangelog: boolean;
 }
 
-class Prompt extends React.Component<Props, State> {
-  state = {
-    decision: {
-      allow: false,
-      installAutomatically: false,
-    },
-    isUpdatesInstallAutomatically: false,
-    showChangelog: false,
-  };
+class Prompt extends React.Component<PromptContainerState & WithTranslation, State> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...this.state,
+      decision: {
+        allow: false,
+        installAutomatically: false,
+      },
+      isUpdatesInstallAutomatically: false,
+      showChangelog: false,
+    };
+  }
 
   public static TOPIC = {
     SEND_DECISION: 'Prompt.TOPIC.SEND_DECISION',
@@ -92,24 +95,26 @@ class Prompt extends React.Component<Props, State> {
   };
 
   render() {
+    const {t} = this.props;
     const {isWebappTamperedWith, isWebappBlacklisted, manifest, changelogUrl} = this.props;
     let title: string;
     let description: string;
     if (isWebappTamperedWith) {
-      title = 'Wire needs to be reinstalled';
-      description =
-        'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your data.';
+      title = t('Wire needs to be reinstalled');
+      description = t(
+        'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your data.'
+      );
     } else if (isWebappBlacklisted) {
-      title = 'Your version of Wire is outdated';
-      description = 'To continue using Wire, please update to the latest version.';
+      title = t('Your version of Wire is outdated');
+      description = t('To continue using Wire, please update to the latest version.');
     } else {
-      title = 'A new version of Wire is available';
-      description = 'Update to latest version for the best Wire Desktop experience.';
+      title = t('A new version of Wire is available');
+      description = t('Update to latest version for the best Wire Desktop experience.');
     }
     return (
       <UpdaterContainer>
         <Opacity in={manifest && this.state.showChangelog} mountOnEnter={false} unmountOnExit={true}>
-          <PromptChangelogModal
+          <TranslatedPromptChangelogModal
             onClose={() => this.toggleChangelog()}
             manifest={manifest}
             changelogUrl={changelogUrl}
@@ -119,7 +124,7 @@ class Prompt extends React.Component<Props, State> {
           <MainContent style={{width: '480px'}}>
             <MainHeading>{title}</MainHeading>
             <Paragraph>
-              {description}
+              {description}{' '}
               <Link
                 fontSize="16px"
                 textTransform="normal"
@@ -127,22 +132,24 @@ class Prompt extends React.Component<Props, State> {
                 onClick={this.toggleChangelog}
                 color={COLOR.BLUE}
               >
-                {' Learn more about this update'}
+                <Trans>Learn more about this update</Trans>
               </Link>
             </Paragraph>
             {!isWebappTamperedWith && (
               <Paragraph>
                 <Checkbox checked={this.state.isUpdatesInstallAutomatically} onChange={this.toggleCheckbox}>
-                  <CheckboxLabel>{'Install Wire updates automatically in the future'}</CheckboxLabel>
+                  <CheckboxLabel>
+                    <Trans>Install Wire updates automatically in the future</Trans>
+                  </CheckboxLabel>
                 </Checkbox>
               </Paragraph>
             )}
             <Container>
               <DecisionButton backgroundColor={COLOR.WHITE} color={COLOR.GRAY_DARKEN_72} onClick={this.onLaterClick}>
-                {isWebappBlacklisted || isWebappTamperedWith ? 'Quit' : 'Later'}
+                {isWebappBlacklisted || isWebappTamperedWith ? t('Quit') : t('Later')}
               </DecisionButton>
               <DecisionButton backgroundColor={COLOR.BLUE} onClick={this.onUpdateClick}>
-                {isWebappTamperedWith ? 'Reinstall' : 'Update'}
+                {isWebappTamperedWith ? t('Reinstall') : t('Update')}
               </DecisionButton>
             </Container>
           </MainContent>
@@ -153,4 +160,6 @@ class Prompt extends React.Component<Props, State> {
   }
 }
 
-export {Prompt};
+const TranslatedPrompt = withTranslation()(Prompt);
+
+export {TranslatedPrompt};

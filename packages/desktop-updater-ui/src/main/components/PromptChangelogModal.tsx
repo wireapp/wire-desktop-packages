@@ -22,6 +22,7 @@ import {COLOR, H1, H2, H3, H4, Link, Paragraph, Small, Text} from '@wireapp/reac
 import * as Long from 'long';
 import {DateTime} from 'luxon';
 import * as React from 'react';
+import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import * as Markdown from 'react-markdown';
 import styled from 'styled-components';
 import {Modal} from './ModalBack';
@@ -47,7 +48,7 @@ interface State {
   isUpdatesInstallAutomatically: boolean;
 }
 
-class PromptChangelogModal extends React.Component<Props, State> {
+class PromptChangelogModal extends React.Component<Props & WithTranslation, State> {
   public static readonly PROMPT_WINDOW_SIZE = {height: 287, width: 480};
   public static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(289 * 1.4), width: Math.round(480 * 1.3)};
 
@@ -72,24 +73,31 @@ class PromptChangelogModal extends React.Component<Props, State> {
     const paragraph: React.SFC = props => {
       return <Paragraph>{props.children}</Paragraph>;
     };
+    const targetEnvironment =
+      typeof manifest.targetEnvironment === 'string' ? manifest.targetEnvironment.toLowerCase() : '';
     return (
       <Modal fullscreen onClose={this.hideChangelog} style={{backgroundColor: 'white'}}>
-        <MainHeading>{"What's new"}</MainHeading>
+        <MainHeading>
+          <Trans>What's new</Trans>
+        </MainHeading>
         {manifest.targetEnvironment !== 'PRODUCTION' && (
           <Paragraph style={{marginBottom: 10}}>
             <Text fontSize="12px" bold style={{backgroundColor: COLOR.RED, padding: 5}} color={COLOR.WHITE}>
-              {'WARNING'}
+              <Trans>WARNING</Trans>
             </Text>
             <BoldText color={COLOR.RED}>
-              {` This release is intended for ${manifest.targetEnvironment.toLowerCase()} environment only.`}
+              {' '}
+              <Trans>This release is intended for {{targetEnvironment}} environment only.</Trans>
             </BoldText>
           </Paragraph>
         )}
         <Paragraph>
-          {typeof manifest.changelog === 'string' ? (
+          {typeof manifest.changelog === 'string' && manifest.changelog !== '' ? (
             <Markdown escapeHtml={true} skipHtml={true} source={manifest.changelog} renderers={{heading, paragraph}} />
           ) : (
-            <Small>{'No changelog is available for this update'}</Small>
+            <Small>
+              <Trans>No changelog is available for this update</Trans>
+            </Small>
           )}
         </Paragraph>
         {changelogUrl && (
@@ -103,23 +111,29 @@ class PromptChangelogModal extends React.Component<Props, State> {
               rel="noopener noreferrer"
               color={COLOR.BLUE}
             >
-              {'See changelog for older versions'}
+              <Trans>See changelog for older versions</Trans>
             </Link>
           </Paragraph>
         )}
         <SelectableParagraph>
           <NormalText block>
-            <BoldText>{'Version: '}</BoldText>
+            <BoldText>
+              <Trans>Version:</Trans>
+            </BoldText>{' '}
             {manifest.webappVersionNumber}
           </NormalText>
           <NormalText block>
-            <BoldText>{'Released on: '}</BoldText>
+            <BoldText>
+              <Trans>Released on:</Trans>
+            </BoldText>{' '}
             {DateTime.fromISO(manifest.releaseDate, {zone: 'utc'})
               .setLocale('en-US')
               .toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}
           </NormalText>
           <NormalText block>
-            <BoldText>{'Size of the update: '}</BoldText>
+            <BoldText>
+              <Trans>Size of the update:</Trans>
+            </BoldText>{' '}
             {`${(
               new Long(
                 manifest.fileContentLength.low,
@@ -129,14 +143,20 @@ class PromptChangelogModal extends React.Component<Props, State> {
             ).toFixed(2)} MB`}
           </NormalText>
           <NormalText block>
-            <BoldText>{'Checksum of the update: '}</BoldText>
+            <BoldText>
+              <Trans>Checksum of the update:</Trans>
+            </BoldText>
             {manifest.fileChecksum.toString('hex')}
           </NormalText>
-          <BoldText>{'This update is digitally signed.'}</BoldText>
+          <BoldText>
+            <Trans>This update is digitally signed.</Trans>
+          </BoldText>
         </SelectableParagraph>
       </Modal>
     );
   }
 }
 
-export {PromptChangelogModal};
+const TranslatedPromptChangelogModal = withTranslation()(PromptChangelogModal);
+
+export {PromptChangelogModal, TranslatedPromptChangelogModal};

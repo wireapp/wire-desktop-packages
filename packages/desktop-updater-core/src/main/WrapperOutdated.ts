@@ -26,6 +26,7 @@ import {Utils} from './Utils';
 import {WindowManager} from './WindowManager';
 
 import {BaseError} from 'make-error-cause';
+import {getLocales} from './Localization';
 export class WrapperOutdatedError extends BaseError {}
 
 export interface WrapperOutdatedInterface {
@@ -36,10 +37,12 @@ export class WrapperOutdated extends WindowManager {
   private static readonly ENVIRONMENT: string = os.type();
   private static readonly IS_MACOS: boolean = WrapperOutdated.ENVIRONMENT === 'Darwin';
 
-  public readonly BROWSER_WINDOW_OPTIONS: Electron.BrowserWindowConstructorOptions = {
-    height: 233,
-    title: 'Wire must be updated',
-    width: 480,
+  public BROWSER_WINDOW_OPTIONS = async () => {
+    return {
+      height: 233,
+      title: await getLocales('wrapper-outdated:title'),
+      width: 480,
+    };
   };
 
   constructor(public mainWindow?: Electron.BrowserWindow) {
@@ -49,8 +52,8 @@ export class WrapperOutdated extends WindowManager {
   /**
    * Show the update prompt
    */
-  public show(): void {
-    super.prepare();
+  public async show(): Promise<void> {
+    await super.prepare();
     super.show();
   }
 

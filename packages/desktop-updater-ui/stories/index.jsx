@@ -20,10 +20,11 @@
 import * as Long from 'long';
 import {addDecorator, storiesOf} from '@storybook/react';
 import {boolean, number, select, text, withKnobs} from '@storybook/addon-knobs';
-import {Installer} from '../src/main/components/InstallerView';
-import {Prompt} from '../src/main/components/PromptView';
 import React from 'react';
-import {WrapperOutdated} from '../src/main/components/WrapperOutdatedView';
+import {TranslatedInstaller} from '../src/main/components/InstallerView';
+import {TranslatedPrompt} from '../src/main/components/PromptView';
+import {TranslatedWrapperOutdated} from '../src/main/components/WrapperOutdatedView';
+import {withLocalization} from './decorators/localization';
 
 const GENERIC_MANIFEST = {
   author: ['Wire Swiss GmbH'],
@@ -55,7 +56,7 @@ function renderInstaller(data) {
   const percent = number('Percentage (0-100)', progress.percent);
 
   return (
-    <Installer
+    <TranslatedInstaller
       installing={boolean('Are we installing?', installing)}
       progress={{
         elapsed: number('Elapsed time (seconds)', progress.elapsed),
@@ -74,7 +75,7 @@ function renderPrompt(data) {
   const {manifest, changelogUrl, isWebappBlacklisted, isWebappTamperedWith} = data;
 
   return (
-    <Prompt
+    <TranslatedPrompt
       manifest={{
         author: ['Wire Swiss GmbH'],
         changelog: text('Changelog', manifest.changelog),
@@ -110,12 +111,12 @@ function renderWrapperOutdated(data) {
   const {environment} = data;
 
   return (
-    <WrapperOutdated
+    <TranslatedWrapperOutdated
       environment={select(
         'Platform',
         {
           Others: null,
-          macOS: WrapperOutdated.OS_FAMILY.DARWIN,
+          macOS: 'darwin',
         },
         environment
       )}
@@ -124,6 +125,7 @@ function renderWrapperOutdated(data) {
 }
 
 addDecorator(withKnobs);
+addDecorator(withLocalization);
 
 storiesOf('Installer', module)
   .add('Starting', () =>
