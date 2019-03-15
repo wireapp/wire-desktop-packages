@@ -18,13 +18,14 @@
  */
 
 import i18n, {resourcesName} from '../../src/main/libs/Localization';
+import {fallbackLanguage} from '../../src/main/libs/Localization';
 import {makeDecorator} from '@storybook/addons';
 import {select} from '@storybook/addon-knobs';
 
 export const withLocalization = makeDecorator({
   name: 'withLocalization',
   wrapper: (getStory, context, {parameters}) => {
-    const language = select('Language', resourcesName, 'en');
+    const language = select('Language', resourcesName, fallbackLanguage);
     i18n.changeLanguage(language);
     return getStory(context);
   },

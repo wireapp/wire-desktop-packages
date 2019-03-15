@@ -1,6 +1,5 @@
 {
-  "dependencies": {
-  },
+  "dependencies": {},
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
     "@babel/core": "7.3.4",
@@ -21,7 +20,6 @@
     "css-loader": "2.1.1",
     "electron": "4.1.0",
     "i18next": "15.0.7",
-    "i18next-browser-languagedetector": "3.0.1",
     "long": "4.0.0",
     "luxon": "1.11.4",
     "react": "16.8.4",

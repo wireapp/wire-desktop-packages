@@ -20,7 +20,7 @@
 import * as React from 'react';
 import {render} from 'react-dom';
 import {InstallerContainer, PromptContainer, WrapperOutdatedContainer} from './index';
-import './libs/Localization';
+import i18n from './libs/Localization';
 
 const components = {
   Prompt: data => {
@@ -39,9 +39,15 @@ const components = {
 const SIGNAL_EVENT_NAME = 'onDataReceived';
 window.addEventListener(
   SIGNAL_EVENT_NAME,
-  event => {
-    const {component, props} = (event as CustomEvent).detail;
+  async event => {
+    const {component, props, locale} = (event as CustomEvent).detail;
     if (typeof components[component] === 'function') {
+      // Change the language by Electron's locale
+      try {
+        await i18n.changeLanguage(locale);
+      } catch (error) {}
+
+      // Render the component
       render(components[component](props), document.getElementById('root'));
     }
   },

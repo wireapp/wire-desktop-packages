@@ -18,7 +18,7 @@
  */
 
 import debug from 'debug';
-import {BrowserWindow, ipcMain, session, shell} from 'electron';
+import {BrowserWindow, app, ipcMain, session, shell} from 'electron';
 import * as os from 'os';
 import * as path from 'path';
 import {URL, fileURLToPath} from 'url';
@@ -125,6 +125,11 @@ export abstract class WindowManager {
     // On ready behavior
     this.browserWindow.webContents.once('did-finish-load', () => this.didFinishLoad());
 
+    // Debug
+    this.browserWindow.webContents.on('console-message', (event, level, message) =>
+      this.debug(`From WebContents: ${message}`)
+    );
+
     // Close behavior
     this.browserWindow.once('closed', () => this.whenClosed());
 
@@ -224,6 +229,7 @@ export abstract class WindowManager {
     // Add translation here as well
     this.browserWindow.webContents.send('onDataReceived', {
       component: this.constructor.name,
+      locale: app.getLocale(),
       props: data,
     });
   }

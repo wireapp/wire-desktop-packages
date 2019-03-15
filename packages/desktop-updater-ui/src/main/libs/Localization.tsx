@@ -18,7 +18,6 @@
  */
 
 import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import {initReactI18next} from 'react-i18next';
 
 export const fallbackLanguage = 'en';
@@ -31,20 +30,15 @@ export const resourcesName = {
 const resources = require('../../../locales/translation.json');
 
 // tslint:disable-next-line:no-floating-promises
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    debug: false,
-    defaultNS: 'translations',
-    fallbackLng: fallbackLanguage,
-    interpolation: {escapeValue: false},
-    // Set on false as we use content as keys
-    keySeparator: false,
-    ns: ['translations'],
-    // Set on false as we use content as namespaces
-    nsSeparator: false,
-    resources: resources,
-  });
+i18n.use(initReactI18next).init({
+  defaultNS: 'translations',
+  fallbackLng: fallbackLanguage,
+  interpolation: {escapeValue: false},
+  keySeparator: false,
+  lng: fallbackLanguage,
+  ns: ['translations'],
+  nsSeparator: false,
+  resources,
+});
 
 export default i18n;
