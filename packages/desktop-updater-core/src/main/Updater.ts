@@ -238,7 +238,7 @@ export namespace Updater {
 
         // Handle client blacklist message
         if (isClientBlacklisted) {
-          this.showWrapperOutdatedWindow();
+          await this.showWrapperOutdatedWindow();
           return undefined;
         }
 
@@ -403,7 +403,7 @@ export namespace Updater {
       });
     }
 
-    private static showWrapperOutdatedWindow(): void {
+    private static async showWrapperOutdatedWindow(): Promise<void> {
       // Wrapper blacklist logic
       this.debug('Wrapper is blacklisted, showing window');
       const wrapperOutdated = new WrapperOutdated(this.browserWindow);
@@ -413,7 +413,7 @@ export namespace Updater {
         this.clearPeriodicTimer();
       }
 
-      wrapperOutdated.show();
+      await wrapperOutdated.show();
     }
 
     public static async getLocalVersion(
