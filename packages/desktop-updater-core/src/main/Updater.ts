@@ -38,7 +38,7 @@ import {Installer} from './Installer';
 import {getLocales} from './Localization';
 import {Prompt} from './Prompt';
 import {Utils} from './Utils';
-import {BlacklistedVersionError, Verifier, VerifyExpirationError, VerifyMismatchEnvironment} from './Verifier';
+import {BlacklistedVersionError, Verifier, VerifyExpirationError} from './Verifier';
 import {WrapperOutdated} from './WrapperOutdated';
 
 import {BaseError} from 'make-error-cause';
@@ -186,10 +186,6 @@ export namespace Updater {
                 isWebappBlacklisted = true;
                 break;
             }
-          } else if (error instanceof VerifyMismatchEnvironment && localEnvironmentMismatch === true) {
-            this.debug(
-              'Ignoring mismatch version error as we know this is a local environment mismatch (local web app !== local environment)'
-            );
           } else {
             throw error;
           }
