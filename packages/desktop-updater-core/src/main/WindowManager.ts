@@ -61,7 +61,7 @@ export abstract class WindowManager {
     titleBarStyle: this.attachedMode ? undefined : 'hidden',
     webPreferences: {
       allowRunningInsecureContent: false,
-      contextIsolation: false,
+      contextIsolation: true,
       enableRemoteModule: false,
       javascript: true,
       nativeWindowOpen: false,
