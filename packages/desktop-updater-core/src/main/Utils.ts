@@ -59,8 +59,8 @@ export class Utils {
     return fs.readFileSync(path, {encoding: 'utf8'});
   }
 
-  public static async writeFileAsBuffer(path: string, data: Buffer): Promise<void> {
-    return fs.writeFileSync(path, data);
+  public static async writeFileAsBuffer(path: string, data: Uint8Array | Buffer): Promise<void> {
+    return fs.writeFileSync(path, Buffer.from(data));
   }
 
   public static async deleteFile(path: string): Promise<void> {
