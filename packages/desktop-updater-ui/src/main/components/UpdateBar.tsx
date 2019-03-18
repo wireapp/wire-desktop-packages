@@ -22,6 +22,7 @@ import * as React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import styled from 'styled-components';
 
+import {BridgeIPC} from '@wireapp/desktop-updater-spec';
 import {EventDispatcher} from '../libs/EventDispatcher';
 import i18n from '../libs/Localization';
 
@@ -123,10 +124,10 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
   }
 
   public componentDidMount() {
-    window.addEventListener('update-available', this._onUpdateAvailable);
-    window.addEventListener('update-start-install', this._onUpdateStartInstall);
-    window.addEventListener('update-end-install', this._onUpdateEndInstall);
-    window.addEventListener('update-installed', this._onUpdateInstalled);
+    window.addEventListener(BridgeIPC.UPDATE_AVAILABLE, this._onUpdateAvailable);
+    window.addEventListener(BridgeIPC.UPDATE_START_INSTALL, this._onUpdateStartInstall);
+    window.addEventListener(BridgeIPC.UPDATE_END_INSTALL, this._onUpdateEndInstall);
+    window.addEventListener(BridgeIPC.UPDATE_INSTALLED, this._onUpdateInstalled);
   }
 
   private readonly _onUpdateStartInstall = event => {
@@ -162,7 +163,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
     this.setState({
       isUpdateAvailable: true,
     });
-    EventDispatcher.send('update-available-ack');
+    EventDispatcher.send(BridgeIPC.UPDATE_AVAILABLE_ACK);
   };
 
   private readonly _onUpdateInstalled = event => {
@@ -173,7 +174,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
 
   private readonly _onClickOnDetails = event => {
     event.preventDefault();
-    EventDispatcher.send('update-available-display');
+    EventDispatcher.send(BridgeIPC.UPDATE_AVAILABLE_DISPLAY);
   };
 
   render() {

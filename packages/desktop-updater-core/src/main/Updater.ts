@@ -20,6 +20,7 @@
 import * as fs from 'fs-extra';
 
 import {
+  BridgeIPC,
   Decision as SpecDecision,
   Envelope as SpecEnvelope,
   Manifest as SpecManifest,
@@ -59,7 +60,6 @@ export namespace Updater {
     private static readonly CONNECTIVITY_INTERNAL: number = Config.Updater.CONNECTIVITY_INTERNAL;
     private static readonly BROADCAST_RENDERER_TIMEOUT: number = Config.Updater.BROADCAST_RENDERER_TIMEOUT;
     private static readonly FALLBACK_WEB_VERSION: string = Config.Updater.FALLBACK_WEB_VERSION;
-    private static readonly IPC_UPDATE_DISPLAY_NAME: string = Config.Updater.IPC_UPDATE_DISPLAY_NAME;
 
     public static reload?: (filename: string) => {};
     public static isInternetAvailable?: (url: string) => Promise<boolean>;
@@ -352,8 +352,8 @@ export namespace Updater {
         this.clearPeriodicTimer();
       }
 
-      // Listen on update bar event (click)
-      ipcMain.on(Updater.Main.IPC_UPDATE_DISPLAY_NAME, async channel => {
+      // Listen for clicks on the update bar
+      ipcMain.on(BridgeIPC.UPDATE_AVAILABLE_DISPLAY, async channel => {
         this.debug('User clicked on the update bar, showing the window.');
         if ((await this.continueUpdate({forced: false})) === false) {
           this.debug('Unable to show the window, running a skipNotification check instead...');
@@ -395,11 +395,11 @@ export namespace Updater {
 
         // Dispatch event to renderer
         if (this.browserWindow) {
-          ipcMain.once('update-available-ack', channel => {
+          ipcMain.once(BridgeIPC.UPDATE_AVAILABLE_ACK, channel => {
             clearTimeout(timeoutBeforeShowingPrompt);
             this.debug('Renderer acknowledged receiving data, cancelling the timeout.');
           });
-          this.browserWindow.webContents.send('update-available');
+          this.browserWindow.webContents.send(BridgeIPC.UPDATE_AVAILABLE);
         }
       });
     }

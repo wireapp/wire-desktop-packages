@@ -42,8 +42,6 @@ export namespace Config {
     public static readonly SETTINGS_FILE: string = 'settings.dat';
 
     public static readonly FILENAME_CHECKSUM_LENGTH: number = 32;
-
-    public static readonly IPC_UPDATE_DISPLAY_NAME: string = 'update-available-display';
   }
 
   export class Prompt {

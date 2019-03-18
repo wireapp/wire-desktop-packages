@@ -19,6 +19,15 @@
 
 import * as Long from 'long';
 
+export enum BridgeIPC {
+  UPDATE_AVAILABLE = 'BridgeIPC.UPDATE_AVAILABLE',
+  UPDATE_INSTALLED = 'BridgeIPC.UPDATE_INSTALLED',
+  UPDATE_START_INSTALL = 'BridgeIPC.UPDATE_START_INSTALL',
+  UPDATE_END_INSTALL = 'BridgeIPC.UPDATE_END_INSTALL',
+  UPDATE_AVAILABLE_ACK = 'BridgeIPC.UPDATE_AVAILABLE_ACK',
+  UPDATE_AVAILABLE_DISPLAY = 'BridgeIPC.UPDATE_AVAILABLE_DISPLAY',
+}
+
 export interface Envelope {
   data: Buffer;
   publicKey: Buffer;

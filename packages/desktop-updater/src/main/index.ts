@@ -18,6 +18,7 @@
  */
 
 export {Config} from './Config';
-export {Utils} from './Utils';
-export {Server} from './Server';
 export {Environment} from '@wireapp/desktop-updater-core';
+export {Server} from './Server';
+export {UpdaterBridgeIPC} from './WrapperBridge';
+export {Utils} from './Utils';

@@ -25,6 +25,7 @@ import {ProgressInterface} from './Sandboxed/Request';
 import {Utils} from './Utils';
 import {WindowManager} from './WindowManager';
 
+import {BridgeIPC} from '@wireapp/desktop-updater-spec';
 import {BaseError} from 'make-error-cause';
 
 export class InstallerError extends BaseError {}
@@ -62,7 +63,7 @@ export class Installer extends WindowManager {
       // Send a signal to the renderer when update is installed
       // Unfreeze the window
       if (this.mainWindow) {
-        this.mainWindow.webContents.send('update-installed');
+        this.mainWindow.webContents.send(BridgeIPC.UPDATE_INSTALLED);
         await this.freezeBrowserWindow(false);
       }
 
@@ -100,9 +101,9 @@ export class Installer extends WindowManager {
         this.mainWindow.setResizable(false);
         const screenshot = await this.screenshotMainWindow();
         this.debug('Sent screenshot to webapp');
-        this.mainWindow.webContents.send('update-start-install', {freeze: true, screenshot});
+        this.mainWindow.webContents.send(BridgeIPC.UPDATE_START_INSTALL, {freeze: true, screenshot});
       } else {
-        this.mainWindow.webContents.send('update-end-install');
+        this.mainWindow.webContents.send(BridgeIPC.UPDATE_END_INSTALL);
         this.mainWindow.setResizable(true);
         await Utils.sleep(4500);
       }
