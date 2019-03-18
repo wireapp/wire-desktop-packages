@@ -20,23 +20,95 @@
 import anime from 'animejs';
 import * as React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
+import styled from 'styled-components';
+
 import {EventDispatcher} from '../libs/EventDispatcher';
 import i18n from '../libs/Localization';
-
-// replace with styled component
-import '../../../src/main/components/legacy_UpdaterBar.css';
 
 interface UpdateBarState {
   isUpdateAvailable: boolean;
   screenshot?: string;
 }
+interface UpdaterAppContainerProps {
+  resize: boolean;
+}
+interface UpdaterScreenshotContainerProps {
+  freeze?: boolean;
+}
+
+const UpdaterContainer = styled.section`
+  height: 100%;
+  width: 100%;
+`;
+
+const UpdaterBar = styled.div`
+  background-color: #18191b;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+
+  box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.2);
+
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 400;
+  height: 38.5px;
+  justify-content: center;
+`;
+
+const UpdaterBarDetails = styled.a`
+  color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover,
+  &:active {
+    color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+  }
+`;
+
+const UpdaterBarMessage = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const UpdaterAppContainer = styled.div`
+  height: ${(props: UpdaterAppContainerProps) => (props.resize ? 'calc(100% - 38.5px)' : '100%')};
+`;
+
+const UpdaterScreenshotContainer = styled.div`
+  display: ${(props: UpdaterScreenshotContainerProps) => (props.freeze ? 'block' : 'none')};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  opacity: 0;
+  background: #000;
+`;
+
+const UpdaterScreenshot = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: grayscale(100%) blur(2px) opacity(0.7);
+  filter: grayscale(100%) blur(2px) opacity(0.7);
+`;
 
 class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
   private readonly ANIMATION_DURATION = 2500;
   private readonly defaultAnimationSettings = {
     easing: 'easeInOutSine',
   };
-  private screenshot: HTMLDivElement | null = null;
+  private screenshotElement: HTMLDivElement | null = null;
 
   constructor(props) {
     super(props);
@@ -67,7 +139,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
       ...this.defaultAnimationSettings,
       duration: this.ANIMATION_DURATION,
       opacity: [0, 1],
-      targets: this.screenshot,
+      targets: this.screenshotElement,
     });
   };
 
@@ -82,7 +154,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
       delay: this.ANIMATION_DURATION * 2,
       duration: this.ANIMATION_DURATION / 2,
       opacity: [1, 0],
-      targets: this.screenshot,
+      targets: this.screenshotElement,
     });
   };
 
@@ -106,38 +178,36 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
 
   render() {
     return (
-      <div className="UpdaterContainer">
-        <div
-          ref={elem => (this.screenshot = elem)}
-          className={this.state.screenshot ? 'updater-freeze' : 'updater-freeze-hidden'}
+      <UpdaterContainer>
+        <UpdaterScreenshotContainer
+          ref={elem => (this.screenshotElement = elem)}
+          freeze={this.state.screenshot ? true : false}
         >
-          <img
+          <UpdaterScreenshot
             src={
               typeof this.state.screenshot === 'string'
                 ? this.state.screenshot
                 : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII='
             }
           />
-        </div>
+        </UpdaterScreenshotContainer>
         {this.state.isUpdateAvailable ? (
-          <div className="updater-bar updater-bar-connection">
-            <div className="updater-bar-message">
+          <UpdaterBar>
+            <UpdaterBarMessage>
               <span>
                 <Trans>A new version of Wire is available</Trans>
               </span>
               &nbsp;
-              <a className="updater-bar-click" href="javascript://" onClick={this._onClickOnDetails}>
+              <UpdaterBarDetails href="javascript://" onClick={this._onClickOnDetails}>
                 <Trans>Learn more</Trans>
-              </a>
-            </div>
-          </div>
+              </UpdaterBarDetails>
+            </UpdaterBarMessage>
+          </UpdaterBar>
         ) : (
           ''
         )}
-        <div className={this.state.isUpdateAvailable ? 'updater-bar-resize' : 'updater-bar-no-resize'}>
-          {this.props.children}
-        </div>
-      </div>
+        <UpdaterAppContainer resize={this.state.isUpdateAvailable}>{this.props.children}</UpdaterAppContainer>
+      </UpdaterContainer>
     );
   }
 }
