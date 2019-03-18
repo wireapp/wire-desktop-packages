@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "es6",
-    "outDir": "dist/es6",
+    "module": "commonjs",
+    "outDir": "dist/commonjs",
     "resolveJsonModule": true,
     "rootDir": "src/main"
   },

@@ -20,13 +20,13 @@
 import * as debug from 'debug';
 
 import {Config} from './Config';
+import {getLocales} from './Localization';
 import {ProgressInterface} from './Sandboxed/Request';
 import {Utils} from './Utils';
-
 import {WindowManager} from './WindowManager';
 
 import {BaseError} from 'make-error-cause';
-import {getLocales} from './Localization';
+
 export class InstallerError extends BaseError {}
 
 export class Installer extends WindowManager {

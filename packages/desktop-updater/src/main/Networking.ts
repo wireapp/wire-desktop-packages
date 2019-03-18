@@ -148,6 +148,7 @@ export const isInternetAvailable = async (url: string) => {
 
 const debugInterceptProtocol: typeof debug = debug('wire:server:interceptprotocol');
 
+// ToDo: Return promise with interceptStreamProtocol completion and verify
 export const InterceptProtocol = (
   ses: Electron.Session,
   internalHost: URL | undefined,

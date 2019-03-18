@@ -284,12 +284,12 @@ export namespace Updater {
         await Main.persist.saveChangesOnDisk();
 
         // Show download window
-        this.debug('Launch installer window');
+        this.debug('Launching installer window');
         installerWindow = new Installer(this.browserWindow);
         await installerWindow.show();
 
         // Download and verify bundle
-        this.debug('Download/decompressing file');
+        this.debug('Downloading/decompressing file');
         const file: Buffer = await Downloader.getBinary(
           manifest.fileChecksum,
           manifest.fileChecksumCompressed,
@@ -297,7 +297,7 @@ export namespace Updater {
           progressEvent => (installerWindow ? installerWindow.onDownloadProgress(progressEvent) : undefined)
         );
 
-        this.debug('Install updated bundle and manifest');
+        this.debug('Installing updated bundle and manifest');
         await Installer.save(fileName, file, envelope.raw);
 
         // Reload the web server

@@ -1,5 +1,7 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "animejs": "3.0.1"
+  },
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
     "@babel/core": "7.3.4",
@@ -34,11 +36,11 @@
     "webpack-cli": "3.2.3"
   },
   "files": [
-    "dist/es6",
+    "dist/commonjs",
     "src"
   ],
   "license": "GPL-3.0",
-  "main": "./dist/es6/index.js",
+  "main": "./dist/commonjs/index.js",
   "name": "@wireapp/desktop-updater-ui",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-ui",
   "scripts": {

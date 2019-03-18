@@ -22,7 +22,7 @@ const webpack = require('webpack');
 
 module.exports = (env = {}) => ({
   devtool: env.production ? undefined : 'cheap-eval-source-map',
-  entry: path.resolve(__dirname, 'dist/es6/renderer.js'),
+  entry: path.resolve(__dirname, 'dist/commonjs/renderer.js'),
   externals: {
     'fs-extra': '{}',
   },

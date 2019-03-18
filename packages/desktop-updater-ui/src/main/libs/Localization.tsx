@@ -21,12 +21,7 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
 export const fallbackLanguage = 'en';
-
-export const resourcesName = {
-  English: 'en',
-  Français: 'fr',
-};
-
+export const resourcesName = require('../../../locales/names.json');
 const resources = require('../../../locales/translation.json');
 
 // tslint:disable-next-line:no-floating-promises

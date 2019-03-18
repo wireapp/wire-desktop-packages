@@ -59,12 +59,12 @@ export abstract class WindowManager {
     resizable: false,
     show: false,
     titleBarStyle: this.attachedMode ? undefined : 'hidden',
-    vibrancy: this.attachedMode ? 'light' : undefined,
     webPreferences: {
       allowRunningInsecureContent: false,
       contextIsolation: false,
       enableRemoteModule: false,
       javascript: true,
+      nativeWindowOpen: false,
       nodeIntegration: false,
       plugins: false,
       preload: this.RENDERER_PRELOAD,

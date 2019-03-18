@@ -18,20 +18,20 @@
  */
 
 import * as https from 'https';
-import * as path from 'path';
 import * as zlib from 'zlib';
 
 import debug from 'debug';
+import {BaseError} from 'make-error-cause';
+import {throttle} from 'throttle-debounce';
 
+import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {Config} from './Config';
 import {Protobuf} from './Protobuf';
+import {Sandbox} from './Sandbox';
+import {ProgressInterface} from './Sandboxed/Request';
 import {Updater} from './Updater';
 import {Verifier} from './Verifier';
 
-import {AxiosRequestConfig, AxiosResponse} from 'axios';
-import {Sandbox} from './Sandbox';
-
-import {BaseError} from 'make-error-cause';
 export class DownloadError extends BaseError {}
 
 /**
@@ -65,19 +65,16 @@ export class DownloadError extends BaseError {}
  */
 
 export class Downloader {
-  private static readonly TIMEOUT: number = Config.Downloader.TIMEOUT;
-  private static readonly MAX_CONTENT_LENGTH: number = Config.Downloader.MAX_CONTENT_LENGTH;
-  private static readonly MANIFEST_FILE: string = Config.Updater.MANIFEST_FILE;
-  private static readonly USER_AGENT: string = Config.Downloader.USER_AGENT;
-  private static readonly PINNING_CERTIFICATE: string = Config.Downloader.PINNING_CERTIFICATE;
   private static readonly CIPHERS: string = Config.Downloader.CIPHERS;
+  private static readonly MANIFEST_FILE: string = Config.Updater.MANIFEST_FILE;
+  private static readonly MAX_CONTENT_LENGTH: number = Config.Downloader.MAX_CONTENT_LENGTH;
+  private static readonly PINNING_CERTIFICATE: string = Config.Downloader.PINNING_CERTIFICATE;
+  private static readonly TIMEOUT: number = Config.Downloader.TIMEOUT;
+  private static readonly UPDATE_SPEC: string = Config.Downloader.UPDATE_SPEC;
+  private static readonly USER_AGENT: string = Config.Downloader.USER_AGENT;
 
   private static readonly debug: typeof debug = debug('wire:updater:downloader');
 
-  private static readonly updateSpec: string = path.join(
-    __dirname,
-    '../../node_modules/@wireapp/desktop-updater-spec/update.proto'
-  );
   public static updatesEndpoint?: string;
 
   /**
@@ -141,13 +138,25 @@ export class Downloader {
     checksum: Buffer,
     checksumCompressed: Buffer,
     fileName: string,
-    onDownloadProgress: Function = () => {}
+    onDownloadProgress: Function = (progressEvent: ProgressInterface) => {}
   ): Promise<Buffer> {
     try {
+      const throttledOnDownloadProgress = throttle(50, (progressEvent: ProgressInterface) => {
+        this.debug('onDownloadProgress called');
+        onDownloadProgress(progressEvent);
+      });
       const {data} = await this.doRequest({
-        onDownloadProgress: progressEvent => onDownloadProgress(progressEvent),
+        onDownloadProgress: (progressEvent: ProgressInterface) => {
+          if (progressEvent.percent === 1 && progressEvent.remaining === 0) {
+            // Signal when installation is finished regardless of the throttling
+            return onDownloadProgress(progressEvent);
+          }
+          throttledOnDownloadProgress(progressEvent);
+        },
         url: fileName,
       });
+      this.debug('onDownloadProgress finished and cancelled');
+      throttledOnDownloadProgress.cancel();
 
       // Verify file integrity of the compressed file
       await Verifier.verifyFileIntegrity(data, checksumCompressed);
@@ -183,14 +192,14 @@ export class Downloader {
 
   public static async extractEnvelopeFrom(raw: Buffer): Promise<Updater.Envelope> {
     // Decode envelope
-    const root = await Protobuf.loadRoot(this.updateSpec);
+    const root = await Protobuf.loadRoot(Downloader.UPDATE_SPEC);
     const {data, publicKey, signature} = <Updater.Envelope>await Protobuf.decodeBuffer(root, 'UpdateMessage', raw);
 
     return {data, publicKey, signature, raw};
   }
 
   public static async extractManifestFrom(envelope: Updater.Envelope): Promise<Updater.Manifest> {
-    const root = await Protobuf.loadRoot(this.updateSpec);
+    const root = await Protobuf.loadRoot(Downloader.UPDATE_SPEC);
 
     // Unserialize manifest
     return <Updater.Manifest>(<unknown>Protobuf.decodeBuffer(root, 'UpdateData', envelope.data));

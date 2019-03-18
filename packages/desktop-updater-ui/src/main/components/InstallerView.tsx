@@ -65,7 +65,7 @@ class Installer extends React.Component<Props & WithTranslation> {
                 )}
                 <SmallBlock>
                   <Trans>
-                    {{transferred}} of {{total}} MB at {{speed}} Mb/s
+                    {installing ? total : transferred} of {{total}} MB at {{speed}} Mb/s
                   </Trans>
                 </SmallBlock>
               </Paragraph>

@@ -22,6 +22,7 @@
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "sodium-native": "2.3.0",
+    "throttle-debounce": "2.1.0",
     "vm2": "3.6.10"
   },
   "devDependencies": {

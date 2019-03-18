@@ -145,7 +145,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
           <NormalText block>
             <BoldText>
               <Trans>Checksum of the update:</Trans>
-            </BoldText>
+            </BoldText>{' '}
             {manifest.fileChecksum.toString('hex')}
           </NormalText>
           <BoldText>

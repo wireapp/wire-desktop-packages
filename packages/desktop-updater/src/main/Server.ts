@@ -191,7 +191,7 @@ export class Server {
         await server.stop();
       }
 
-      // Overwrite  the old web server instance with a new one
+      // Overwrite the old web server instance with a new one
       server = await this.createWebInstance(documentRoot);
 
       // Refresh webviews with new settings
