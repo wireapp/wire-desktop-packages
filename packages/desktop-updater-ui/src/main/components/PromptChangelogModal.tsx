@@ -146,7 +146,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
             <BoldText>
               <Trans>Checksum of the update:</Trans>
             </BoldText>{' '}
-            {manifest.fileChecksum.toString('hex')}
+            {manifest.fileChecksum}
           </NormalText>
           <BoldText>
             <Trans>This update is digitally signed.</Trans>

@@ -103,7 +103,11 @@ export class Prompt extends WindowManager {
       isUpdatesInstallAutomatically: this.isUpdatesInstallAutomatically,
       isWebappBlacklisted: this.isWebappBlacklisted,
       isWebappTamperedWith: this.isWebappTamperedWith,
-      manifest: this.Manifest,
+      manifest: {
+        ...this.Manifest,
+        fileChecksum: Buffer.from(this.Manifest.fileChecksum).toString('hex'),
+        fileChecksumCompressed: Buffer.from(this.Manifest.fileChecksumCompressed).toString('hex'),
+      },
     });
   }
 
