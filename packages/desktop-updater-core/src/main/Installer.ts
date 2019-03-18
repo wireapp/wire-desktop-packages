@@ -37,7 +37,7 @@ export class Installer extends WindowManager {
   public BROWSER_WINDOW_OPTIONS = async () => {
     return {
       closable: false,
-      height: 183,
+      height: 153,
       title: await getLocales('installer:title'),
       width: 480,
     };

@@ -39,7 +39,7 @@ export class WrapperOutdated extends WindowManager {
 
   public BROWSER_WINDOW_OPTIONS = async () => {
     return {
-      height: 233,
+      height: 203,
       title: await getLocales('wrapper-outdated:title'),
       width: 480,
     };

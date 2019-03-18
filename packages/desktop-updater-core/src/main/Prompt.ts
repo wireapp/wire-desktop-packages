@@ -32,7 +32,7 @@ export class Prompt extends WindowManager {
 
   public BROWSER_WINDOW_OPTIONS = async () => {
     return {
-      height: 287,
+      height: 250,
       title: await getLocales('prompt:title'),
       width: 480,
     };

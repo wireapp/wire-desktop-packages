@@ -19,7 +19,6 @@
 
 import debug from 'debug';
 import {BrowserWindow, app, ipcMain, session, shell} from 'electron';
-import * as os from 'os';
 import * as path from 'path';
 import {URL, fileURLToPath} from 'url';
 
@@ -30,7 +29,6 @@ export interface WindowSizeInterface {
 
 export abstract class WindowManager {
   private readonly WINDOW_TYPE = this.constructor.name;
-  protected static readonly STATUS_BAR_HEIGHT: number = os.type() === 'Darwin' ? 22 : 0;
   protected static readonly SESSION_NAME: string = 'zupdater';
 
   protected readonly debug = debug(`wire:updater:${this.constructor.name.toLowerCase()}`);
@@ -59,6 +57,7 @@ export abstract class WindowManager {
     resizable: false,
     show: false,
     titleBarStyle: this.attachedMode ? undefined : 'hidden',
+    useContentSize: true,
     webPreferences: {
       allowRunningInsecureContent: false,
       contextIsolation: true,
@@ -69,6 +68,7 @@ export abstract class WindowManager {
       plugins: false,
       preload: this.RENDERER_PRELOAD,
       sandbox: true,
+      scrollBounce: true,
       session: session.fromPartition(WindowManager.SESSION_NAME),
       webSecurity: true,
       webviewTag: false,
@@ -101,16 +101,9 @@ export abstract class WindowManager {
 
     const BROWSER_WINDOW_OPTIONS = await this.BROWSER_WINDOW_OPTIONS();
 
-    // Fix height
-    let height = <number>BROWSER_WINDOW_OPTIONS.height;
-    if (this.attachedMode === false) {
-      height -= WindowManager.STATUS_BAR_HEIGHT;
-    }
-
     this.browserWindow = new BrowserWindow({
       ...this.BROWSER_WINDOW_DEFAULTS,
       ...BROWSER_WINDOW_OPTIONS,
-      height,
     });
     this.browserWindow.setMenuBarVisibility(false);
 
@@ -189,21 +182,10 @@ export abstract class WindowManager {
         return;
       }
 
-      // Fix height
-      newSize.height -= WindowManager.STATUS_BAR_HEIGHT;
-
-      const currentBounds = this.browserWindow.getBounds();
-      const width = newSize.width || currentBounds.width;
-      const height = newSize.height || currentBounds.height;
-      this.browserWindow.setBounds(
-        {
-          height,
-          width,
-          x: currentBounds.x,
-          y: currentBounds.y,
-        },
-        this.mainWindow ? true : false
-      );
+      const currentContentSize = this.browserWindow.getContentSize();
+      const width = newSize.width || currentContentSize[0];
+      const height = newSize.height || currentContentSize[1];
+      this.browserWindow.setContentSize(width, height, this.mainWindow ? true : false);
 
       if (typeof this.mainWindow === 'undefined') {
         this.browserWindow.center();

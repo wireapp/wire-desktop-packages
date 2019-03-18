@@ -49,8 +49,8 @@ interface State {
 }
 
 class PromptChangelogModal extends React.Component<Props & WithTranslation, State> {
-  public static readonly PROMPT_WINDOW_SIZE = {height: 287, width: 480};
-  public static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(289 * 1.4), width: Math.round(480 * 1.3)};
+  public static readonly PROMPT_WINDOW_SIZE = {height: 250, width: 480};
+  public static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(259 * 1.4), width: Math.round(480 * 1.3)};
 
   hideChangelog = (): void => {
     this.props.onClose();
