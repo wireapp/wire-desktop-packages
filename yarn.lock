@@ -1802,15 +1802,15 @@
   dependencies:
     global "^4.3.2"
 
-"@storybook/addon-knobs@5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-5.0.1.tgz#c7a3449691d07485d3e31681db47655749ccaa16"
-  integrity sha512-ELEjUF9n8aSMkszBzik6PpGgYp5eOPROeXaW815gZqFuZlu8MaYTkCSDbx2obQc8YsGSJ5G4Vbupmtg7IuQR1Q==
+"@storybook/addon-knobs@5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-5.0.2.tgz#9a7c206004c0bc56600ac48622db2ee600dd4bc6"
+  integrity sha512-oKtLtgqWVP21JOS+a2uVnWOnqV4U4nUlH9H38I3t0vgqntKe/Vp1cZoWDgeQRduZiMWdrWgHpGtZJCLI0V4qlA==
   dependencies:
-    "@storybook/addons" "5.0.1"
-    "@storybook/components" "5.0.1"
-    "@storybook/core-events" "5.0.1"
-    "@storybook/theming" "5.0.1"
+    "@storybook/addons" "5.0.2"
+    "@storybook/components" "5.0.2"
+    "@storybook/core-events" "5.0.2"
+    "@storybook/theming" "5.0.2"
     copy-to-clipboard "^3.0.8"
     core-js "^2.6.5"
     escape-html "^1.0.3"
