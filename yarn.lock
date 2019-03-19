@@ -2285,10 +2285,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/jasmine@3.3.9":
-  version "3.3.9"
-  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.9.tgz#ee886a9113db567e722a8a0c37f0e6283f2cefa3"
-  integrity sha512-vw3VyFPa9mlba6NZPBZC3q2Zrnkgy5xuCVI43/tTLX6umdYrYvcFtQUKi2zH3PjFZQ9XCxNM/NMrM9uk8TPOzg==
+"@types/jasmine@3.3.11":
+  version "3.3.11"
+  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.11.tgz#6af60e9ec841e4112f043fea45638e99a4cb009d"
+  integrity sha512-k2r3qM2e3BIOnbuOP8yV89nhcV4U+UFvjLccWF3T9oTkOSWpMQjjTh4TJ2PqC4nCzmLRMaeMyApd3qAzezQFsQ==
 
 "@types/long@4.0.0", "@types/long@^4.0.0":
   version "4.0.0"
@@ -2510,8 +2510,8 @@
   version "0.0.1"
   dependencies:
     "@types/luxon" "1.11.1"
-    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-bacf52c4-40ef-44bd-bf9b-ac98e9e1d489-1552873456793/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-bacf52c4-40ef-44bd-bf9b-ac98e9e1d489-1552873456793/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-f1495581-0602-4bec-a719-b2504fe247f4-1552992770619/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-f1495581-0602-4bec-a719-b2504fe247f4-1552992770619/node_modules/@wireapp/desktop-updater-ui"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"
@@ -2530,6 +2530,7 @@
     react "16.8.4"
     react-dom "16.8.4"
     sodium-native "2.3.0"
+    throttle-debounce "2.1.0"
     vm2 "3.6.10"
 
 "@wireapp/desktop-updater-spec@file:packages/desktop-updater-spec":
@@ -2542,7 +2543,11 @@
 "@wireapp/desktop-updater-ui@file:packages/desktop-updater-ui":
   version "0.0.1"
   dependencies:
+    "@wireapp/react-ui-kit" "4.3.42"
     animejs "3.0.1"
+    react-i18next "10.5.1"
+    react-markdown "4.0.6"
+    styled-components "4.1.3"
 
 "@wireapp/react-ui-kit@4.3.42":
   version "4.3.42"
