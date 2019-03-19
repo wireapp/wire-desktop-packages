@@ -58,7 +58,7 @@ export class WrapperOutdated extends WindowManager {
     super.whenClosed();
 
     // Quit the app when window is closed
-    process.exit(0);
+    process.exitCode = 0;
   }
 
   public close(event: Event, options: WrapperOutdatedInterface): void {

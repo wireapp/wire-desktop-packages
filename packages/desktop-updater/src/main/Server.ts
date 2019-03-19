@@ -154,8 +154,7 @@ export class Server {
         localEnvironmentMismatch
       );
       if (typeof manifest === 'undefined') {
-        Server.debug('Required update denied, server cannot be started. Exiting.');
-        return process.exit(0);
+        throw new Error('Required update denied, server cannot be started. Exiting.');
       }
     }
 
