@@ -164,10 +164,7 @@ export const InterceptProtocol = async (
   ses.webRequest.onBeforeRequest({urls: [`${INTERCEPTED_PROTOCOL}://*`]}, <any>null);
 
   return new Promise((resolve, reject) =>
-    ses.protocol.uninterceptProtocol(INTERCEPTED_PROTOCOL, error => {
-      if (error) {
-        return reject(error);
-      }
+    ses.protocol.uninterceptProtocol(INTERCEPTED_PROTOCOL, () =>
       ses.protocol.interceptStreamProtocol(
         INTERCEPTED_PROTOCOL,
         async (request: Electron.InterceptStreamProtocolRequest, callback: Function) => {
@@ -248,11 +245,12 @@ export const InterceptProtocol = async (
         },
         error => {
           if (error) {
+            debugInterceptProtocol('An error happened while intercepting the protocol');
             return reject(error);
           }
           resolve(error);
         }
-      );
-    })
+      )
+    )
   );
 };

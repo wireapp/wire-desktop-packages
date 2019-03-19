@@ -253,7 +253,7 @@ export class Server {
         this.currentEnvironmentBaseUrl
       );
     } catch (error) {
-      Server.debug('Unable to intercept protocol of a session, exiting the app.');
+      Server.debug('Unable to intercept protocol of a session, exiting the app. Error: %s', error);
       process.exit(1);
     }
   }

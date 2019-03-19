@@ -136,7 +136,7 @@ export abstract class WindowManager {
       }
     });
 
-    // Sec: Prevent any kind of navigation
+    // Prevent any kind of navigation
     // will-navigate is broken with sandboxed env, intercepting requests instead
     // see https://github.com/electron/electron/issues/8841
     this.browserWindow.webContents.session.webRequest.onBeforeRequest(
@@ -148,7 +148,7 @@ export abstract class WindowManager {
         const {url} = details;
         const {pathname, protocol, host} = new URL(url);
 
-        // ToDo: Make it permanent once Electron version have Node.JS 11.X
+        // ToDo: Make it permanent once it will be ported to Electron
         if (fileURLToPath) {
           // Allow web tools if debug is enabled
           if (this.debug.enabled && protocol === 'chrome-devtools:' && host === 'devtools') {
