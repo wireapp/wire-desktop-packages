@@ -148,102 +148,111 @@ export const isInternetAvailable = async (url: string) => {
 
 const debugInterceptProtocol: typeof debug = debug('wire:server:interceptprotocol');
 
-// ToDo: Return promise with interceptStreamProtocol completion and verify
-export const InterceptProtocol = (
+export const InterceptProtocol = async (
   ses: Electron.Session,
   internalHost: URL | undefined,
   accessToken: string | undefined,
   currentEnvironmentBaseUrlPlain: string,
   currentEnvironmentBaseUrl: URL
-): void => {
+): Promise<void> => {
   if (!internalHost || !accessToken) {
-    // Internal host or access token is not defined, aborting.
-    debugInterceptProtocol('Internal host or access token is not defined, aborting.');
-    return process.exit(0);
+    debugInterceptProtocol('Internal host or access token is not defined');
+    throw new Error('Internal host or access token is not defined');
   }
 
   // Make sure we don't block requests on this webview
   ses.webRequest.onBeforeRequest({urls: [`${INTERCEPTED_PROTOCOL}://*`]}, <any>null);
 
-  ses.protocol.uninterceptProtocol(INTERCEPTED_PROTOCOL, () => {
-    ses.protocol.interceptStreamProtocol(
-      INTERCEPTED_PROTOCOL,
-      async (request: Electron.InterceptStreamProtocolRequest, callback: Function) => {
-        const {headers, method, url} = request;
-        const isLocalServer = url.startsWith(currentEnvironmentBaseUrlPlain);
-
-        let response: AxiosResponse;
-        try {
-          const uploadData =
-            typeof request.uploadData !== 'undefined' ? await UploadData.getData(request.uploadData, ses) : undefined;
-          const defaultConfig: AxiosRequestConfig = {
-            ...globalAxiosConfig,
-            data: uploadData,
-            headers,
-            method,
-            url,
-          };
-
-          if (isLocalServer) {
-            const parsedUrl = new URL(url);
-
-            // Extra check for the origin
-            if (parsedUrl.origin !== currentEnvironmentBaseUrl.origin) {
-              throw new Error('Origin does not match');
-            }
-
-            // Prepare the URL to proxy to the local server
-            const proxiedRequest = parsedUrl;
-            proxiedRequest.protocol = internalHost.protocol;
-            proxiedRequest.host = internalHost.host;
-
-            debugInterceptProtocol('Forwarding "%s" request to "%s"', url, proxiedRequest.toString());
-
-            const options: AxiosRequestConfig & {transport: typeof https} = {
-              ...defaultConfig,
-              headers: {
-                ...headers,
-                Authorization: `${Config.Server.WEB_SERVER_TOKEN_NAME} ${accessToken}`,
-              },
-              httpsAgent: AgentManager.httpsAgents.local,
-              transport: https,
-              url: proxiedRequest.toString(),
-            };
-            response = await axios(options);
-          } else {
-            // Anything else
-            // Only get cookie outside the local server, we don't need it within
-            const cookies = await CookieManager.get(url, ses);
-            response = await Request.doRemote(defaultConfig, headers, cookies);
-          }
-        } catch (error) {
-          if (error.response) {
-            response = error.response;
-          } else if (error.request) {
-            debugInterceptProtocol('Error during the request. Aborting.');
-            debugInterceptProtocol(error.request);
-            return callback();
-          } else {
-            debugInterceptProtocol('Unknown error during the request. Aborting.');
-            debugInterceptProtocol(error);
-            return callback();
-          }
-        }
-
-        // Workaround for https://github.com/electron/electron/issues/13228
-        // Save the cookie to the session, if any
-        await CookieManager.set(response.headers['set-cookie'], url, ses);
-
-        // Call the callback within a setImmediate function
-        // Otherwise it gets stuck for unknown reasons after setting the cookie
-        setImmediate(() => {
-          callback({
-            data: response.data,
-            headers: response.headers,
-            statusCode: response.status,
-          });
-        });
+  return new Promise((resolve, reject) =>
+    ses.protocol.uninterceptProtocol(INTERCEPTED_PROTOCOL, error => {
+      if (error) {
+        return reject(error);
       }
-    );
-  });
+      ses.protocol.interceptStreamProtocol(
+        INTERCEPTED_PROTOCOL,
+        async (request: Electron.InterceptStreamProtocolRequest, callback: Function) => {
+          const {headers, method, url} = request;
+          const isLocalServer = url.startsWith(currentEnvironmentBaseUrlPlain);
+
+          let response: AxiosResponse;
+          try {
+            const uploadData =
+              typeof request.uploadData !== 'undefined' ? await UploadData.getData(request.uploadData, ses) : undefined;
+            const defaultConfig: AxiosRequestConfig = {
+              ...globalAxiosConfig,
+              data: uploadData,
+              headers,
+              method,
+              url,
+            };
+
+            if (isLocalServer) {
+              const parsedUrl = new URL(url);
+
+              // Extra check for the origin
+              if (parsedUrl.origin !== currentEnvironmentBaseUrl.origin) {
+                throw new Error('Origin does not match');
+              }
+
+              // Prepare the URL to proxy to the local server
+              const proxiedRequest = parsedUrl;
+              proxiedRequest.protocol = internalHost.protocol;
+              proxiedRequest.host = internalHost.host;
+
+              debugInterceptProtocol('Forwarding "%s" request to "%s"', url, proxiedRequest.toString());
+
+              const options: AxiosRequestConfig & {transport: typeof https} = {
+                ...defaultConfig,
+                headers: {
+                  ...headers,
+                  Authorization: `${Config.Server.WEB_SERVER_TOKEN_NAME} ${accessToken}`,
+                },
+                httpsAgent: AgentManager.httpsAgents.local,
+                transport: https,
+                url: proxiedRequest.toString(),
+              };
+              response = await axios(options);
+            } else {
+              // Anything else
+              // Only get cookie outside the local server, we don't need it within
+              const cookies = await CookieManager.get(url, ses);
+              response = await Request.doRemote(defaultConfig, headers, cookies);
+            }
+          } catch (error) {
+            if (error.response) {
+              response = error.response;
+            } else if (error.request) {
+              debugInterceptProtocol('Error during the request. Aborting.');
+              debugInterceptProtocol(error.request);
+              return callback();
+            } else {
+              debugInterceptProtocol('Unknown error during the request. Aborting.');
+              debugInterceptProtocol(error);
+              return callback();
+            }
+          }
+
+          // Workaround for https://github.com/electron/electron/issues/13228
+          // Save the cookie to the session, if any
+          await CookieManager.set(response.headers['set-cookie'], url, ses);
+
+          // Call the callback within a setImmediate function
+          // Otherwise it gets stuck for unknown reasons after setting the cookie
+          setImmediate(() => {
+            callback({
+              data: response.data,
+              headers: response.headers,
+              statusCode: response.status,
+            });
+          });
+        },
+        error => {
+          if (error) {
+            return reject(error);
+          }
+          resolve(error);
+        }
+      );
+    })
+  );
 };

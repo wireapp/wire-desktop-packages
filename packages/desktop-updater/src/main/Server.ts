@@ -171,7 +171,7 @@ export class Server {
         Server.debug('New webapp webview detected, allowing Electron to perform normally inside...');
         const ses = session.fromPartition(params.partition);
 
-        this.hookSessionSettingsToElectron(ses);
+        await this.hookSessionSettingsToElectron(ses);
         webPreferences.session = ses;
       }
     });
@@ -197,7 +197,7 @@ export class Server {
             const historyLastItem = (<any>wc).history[0];
             if (historyLastItem.startsWith(`${this.currentEnvironmentHostname}/`)) {
               // Reinject session settings and reload the webview
-              this.hookSessionSettingsToElectron(wc.session);
+              await this.hookSessionSettingsToElectron(wc.session);
               wc.reload();
             }
           }
@@ -243,14 +243,19 @@ export class Server {
     return server;
   }
 
-  private hookSessionSettingsToElectron(ses: Electron.Session) {
-    proxifyProtocol(
-      ses,
-      this.internalHost,
-      this.accessToken,
-      this.currentEnvironmentBaseUrlPlain,
-      this.currentEnvironmentBaseUrl
-    );
+  private async hookSessionSettingsToElectron(ses: Electron.Session) {
+    try {
+      await proxifyProtocol(
+        ses,
+        this.internalHost,
+        this.accessToken,
+        this.currentEnvironmentBaseUrlPlain,
+        this.currentEnvironmentBaseUrl
+      );
+    } catch (error) {
+      Server.debug('Unable to intercept protocol of a session, exiting the app.');
+      process.exit(1);
+    }
   }
 
   private isServerAvailable(): boolean {
