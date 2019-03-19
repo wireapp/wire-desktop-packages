@@ -33,4 +33,4 @@ class VerifyFileIntegrity {
   }
 }
 
-module.exports = async (callback: Function) => callback(await VerifyFileIntegrity.do());
+export = async (callback: Function) => callback(await VerifyFileIntegrity.do());

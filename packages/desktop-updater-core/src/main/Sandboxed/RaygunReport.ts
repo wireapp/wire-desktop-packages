@@ -46,4 +46,4 @@ class RaygunReport {
   }
 }
 
-module.exports = async (callback: Function) => callback(await RaygunReport.send());
+export = async (callback: Function) => callback(await RaygunReport.send());

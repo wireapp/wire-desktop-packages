@@ -108,7 +108,6 @@ export class Server {
       throw new Error('Token name must be alphanumeric');
     }
 
-    // Wait for Electron to be ready
     await app.whenReady();
 
     // Note: We must wait the app to be ready first

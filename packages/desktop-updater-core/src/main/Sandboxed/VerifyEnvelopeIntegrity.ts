@@ -33,4 +33,4 @@ class VerifyEnvelopeIntegrity {
   }
 }
 
-module.exports = async (callback: Function) => callback(await VerifyEnvelopeIntegrity.do());
+export = async (callback: Function) => callback(await VerifyEnvelopeIntegrity.do());

@@ -17,21 +17,12 @@
  *
  */
 
+import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 declare const Options: AxiosRequestConfig;
 
 // Using streams as workaround https://github.com/axios/axios/issues/928
-
-export interface ProgressInterface {
-  elapsed: number;
-  percent: number;
-  remaining: number;
-  speed: number; // bytes
-  startedAt: number;
-  total?: number;
-  transferred: number;
-}
 
 class Request {
   private static readonly progress: ProgressInterface = {
@@ -106,4 +97,4 @@ class Request {
   }
 }
 
-module.exports = async (callback: Function) => callback(await Request.do());
+export = async (callback: Function) => callback(await Request.do());

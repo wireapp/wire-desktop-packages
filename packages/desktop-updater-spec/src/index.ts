@@ -28,6 +28,16 @@ export enum BridgeIPC {
   UPDATE_AVAILABLE_DISPLAY = 'BridgeIPC.UPDATE_AVAILABLE_DISPLAY',
 }
 
+export interface ProgressInterface {
+  elapsed: number;
+  percent: number;
+  remaining: number;
+  speed: number; // in bytes
+  startedAt: number;
+  total?: number;
+  transferred: number;
+}
+
 export interface Envelope {
   data: Buffer;
   publicKey: Buffer;

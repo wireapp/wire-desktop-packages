@@ -24,8 +24,8 @@ export = 0;
 // @ts-ignore: 'module' is declared but its value is never read.
 const module = <any>{export: 0};
 
+import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {ipcRenderer} from 'electron';
-import {ProgressInterface} from '../Sandboxed/Request';
 
 ipcRenderer.on('progress', (event, detail: ProgressInterface) =>
   window.dispatchEvent(new CustomEvent('Installer.TOPIC.ON_PROGRESS', {detail}))

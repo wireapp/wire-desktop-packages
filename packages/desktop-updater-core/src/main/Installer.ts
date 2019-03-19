@@ -21,11 +21,10 @@ import * as debug from 'debug';
 
 import {Config} from './Config';
 import {getLocales} from './Localization';
-import {ProgressInterface} from './Sandboxed/Request';
 import {Utils} from './Utils';
 import {WindowManager} from './WindowManager';
 
-import {BridgeIPC} from '@wireapp/desktop-updater-spec';
+import {BridgeIPC, ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {BaseError} from 'make-error-cause';
 
 export class InstallerError extends BaseError {}

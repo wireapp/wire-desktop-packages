@@ -24,11 +24,11 @@ import debug from 'debug';
 import {BaseError} from 'make-error-cause';
 import {throttle} from 'throttle-debounce';
 
+import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {Config} from './Config';
 import {Protobuf} from './Protobuf';
 import {Sandbox} from './Sandbox';
-import {ProgressInterface} from './Sandboxed/Request';
 import {Updater} from './Updater';
 import {Verifier} from './Verifier';
 
