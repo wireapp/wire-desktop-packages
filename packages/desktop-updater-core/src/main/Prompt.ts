@@ -30,13 +30,13 @@ export class PromptError extends BaseError {}
 export class Prompt extends WindowManager {
   private static readonly IPC_DECISION_NAME: string = Config.Prompt.IPC_DECISION_NAME;
 
-  public BROWSER_WINDOW_OPTIONS = async () => {
-    return {
+  public get BROWSER_WINDOW_OPTIONS() {
+    return async () => ({
       height: 250,
       title: await getLocales('prompt:title'),
       width: 480,
-    };
-  };
+    });
+  }
 
   constructor(
     public mainWindow: Electron.BrowserWindow | undefined,

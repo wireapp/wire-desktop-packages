@@ -37,13 +37,13 @@ export class WrapperOutdated extends WindowManager {
   private static readonly ENVIRONMENT: string = os.type();
   private static readonly IS_MACOS: boolean = WrapperOutdated.ENVIRONMENT === 'Darwin';
 
-  public BROWSER_WINDOW_OPTIONS = async () => {
-    return {
+  public get BROWSER_WINDOW_OPTIONS() {
+    return async () => ({
       height: 203,
       title: await getLocales('wrapper-outdated:title'),
       width: 480,
-    };
-  };
+    });
+  }
 
   constructor(public mainWindow?: Electron.BrowserWindow) {
     super(mainWindow);
