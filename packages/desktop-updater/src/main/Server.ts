@@ -86,12 +86,10 @@ export class Server {
 
   public async start(): Promise<Electron.BrowserWindow> {
     await Environment.set(this.currentEnvironment);
-
-    // Ensure the updater folder exist
     await UpdaterUtils.ensureUpdaterFolderExists();
 
     if (this.isServerAvailable()) {
-      throw new Error('Server is already active, you must stop it before.');
+      throw new Error('Server is already active');
     }
 
     if (typeof this.currentEnvironmentBaseUrl === 'undefined') {
@@ -107,13 +105,12 @@ export class Server {
 
     // Ensure WEB_SERVER_TOKEN_NAME is alphanumeric only
     if (!Server.WEB_SERVER_TOKEN_NAME.match(/^[a-zA-Z0-9]*$/)) {
-      throw new Error('Token name must be alphanumeric, aborting.');
+      throw new Error('Token name must be alphanumeric');
     }
 
     // Wait for Electron to be ready
     await app.whenReady();
 
-    // Retrieve current environment
     // Note: We must wait the app to be ready first
     this.currentEnvironmentHostname = Environment.convertUrlToHostname(this.currentEnvironmentBaseUrl.toString());
     Server.debug('Webapp url is %s', this.currentEnvironmentBaseUrl.toString());
@@ -124,7 +121,6 @@ export class Server {
       return new BrowserWindow({...this.browserWindowOptions});
     }
 
-    // Create main window here
     this.browserWindow = new BrowserWindow({...this.browserWindowOptions, show: false});
 
     // Assign internet connectivity checks to the core
@@ -197,7 +193,7 @@ export class Server {
       // Refresh webviews with new settings
       if (this.browserWindow) {
         for (const wc of webContents.getAllWebContents()) {
-          // Check if the webcontent we got belong one of our webviews in the browser window
+          // Check if the webcontent we got belongs to one of our webviews in the browser window
           if (wc.hostWebContents && wc.hostWebContents.id === this.browserWindow.webContents.id) {
             const historyLastItem = (<any>wc).history[0];
             if (historyLastItem.startsWith(`${this.currentEnvironmentHostname}/`)) {

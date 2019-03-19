@@ -31,7 +31,6 @@ import {BaseError} from 'make-error-cause';
 export class InstallerError extends BaseError {}
 
 export class Installer extends WindowManager {
-  // Static
   private static readonly debug: typeof debug = debug(`wire:updater:installer`);
 
   public BROWSER_WINDOW_OPTIONS = async () => {
@@ -47,9 +46,6 @@ export class Installer extends WindowManager {
     super(mainWindow);
   }
 
-  /**
-   * Show the update prompt
-   */
   public async show(): Promise<void> {
     await super.prepare();
     super.show();
@@ -72,7 +68,7 @@ export class Installer extends WindowManager {
         this.browserWindow.close();
       }
     } else {
-      // Throw an error in the main process
+      // Note: The error will be thrown in the main process
       throw new InstallerError(
         'Unexpected state. Installer window was closed before webapp finish from being updated.'
       );
@@ -121,7 +117,6 @@ export class Installer extends WindowManager {
   }
 
   /**
-   * Track download progress (called from within the sandbox)
    *
    * @param progressEvent Progress interface
    */

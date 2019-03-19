@@ -120,7 +120,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
   }
 
   public async componentWillMount() {
-    await i18n.changeLanguage('fr');
+    await i18n.changeLanguage('en');
   }
 
   public componentDidMount() {
@@ -196,9 +196,8 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
           <UpdaterBar>
             <UpdaterBarMessage>
               <span>
-                <Trans>A new version of Wire is available</Trans>
+                <Trans>A new version of Wire is available</Trans>&nbsp;
               </span>
-              &nbsp;
               <UpdaterBarDetails href="javascript://" onClick={this._onClickOnDetails}>
                 <Trans>Learn more</Trans>
               </UpdaterBarDetails>

@@ -17,7 +17,6 @@
   "devDependencies": {
     "@types/fs-extra": "5.0.5",
     "@types/set-cookie-parser": "0.0.3",
-    "cross-env": "5.2.0",
     "electron": "4.1.0",
     "husky": "1.3.1",
     "jasmine": "3.3.1",
@@ -38,7 +37,6 @@
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc",
     "start": "electron demo.js",
-    "postversion": "git push && git push --tags",
     "preversion": "yarn && yarn dist && yarn test",
     "test:node": "true",
     "test": "yarn dist && yarn test:node",

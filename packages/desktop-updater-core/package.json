@@ -27,8 +27,6 @@
   },
   "devDependencies": {
     "@types/jasmine": "3.3.11",
-    "cross-env": "5.2.0",
-    "cross-spawn": "6.0.5",
     "electron": "4.1.0",
     "electron-build-env": "0.2.0",
     "electron-rebuild": "1.8.4",
@@ -45,7 +43,6 @@
   "scripts": {
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc --project tsconfig.json",
-    "postversion": "git push && git push --tags",
     "preversion": "yarn && yarn dist && yarn test",
     "test:node": "node src/test/jasmine.js",
     "test": "yarn dist && yarn test:node",

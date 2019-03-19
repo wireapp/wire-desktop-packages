@@ -49,9 +49,6 @@ export class WrapperOutdated extends WindowManager {
     super(mainWindow);
   }
 
-  /**
-   * Show the update prompt
-   */
   public async show(): Promise<void> {
     await super.prepare();
     super.show();

@@ -32,7 +32,7 @@ export namespace Config {
 
     public static readonly CHANGELOG_URL: string = 'https://medium.com/wire-news/desktop-updates/home';
 
-    // Used version when none is found (must be long enough so it trigger the blacklist)
+    // Used version when none is found (must be old enough so it trigger the blacklist)
     public static readonly FALLBACK_WEB_VERSION = '2017-05-15-09-00-prod';
 
     // Storage informations

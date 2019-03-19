@@ -199,7 +199,6 @@ export class ErrorDispatcher {
         message = await getLocales('error-dispatcher:errorWhileCheckingForUpdates', {errorCode});
       }
 
-      // Options for the dialog
       const options: Electron.MessageBoxOptions = {
         buttons,
         message,

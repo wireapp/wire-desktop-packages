@@ -23,6 +23,7 @@ export class Environment {
   public static async get(): Promise<string> {
     return this.currentEnvironment;
   }
+
   public static async set(environment: string): Promise<void> {
     this.currentEnvironment = environment;
   }

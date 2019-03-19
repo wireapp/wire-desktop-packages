@@ -84,7 +84,7 @@ export namespace Updater {
     public static async runOnce(
       skipNotification: boolean = false, // Means we want the prompt asap (no notifications)
       isWebappTamperedWith: boolean = false, // Pass the value from the server
-      firstLaunch: boolean = false, // On true when the app has just been launched
+      firstLaunch: boolean = false,
       // Is there an environment mismatch between local settings and local webapp?
       // If yes it's likely because we just changed our environment
       localEnvironmentMismatch: boolean = false
@@ -125,7 +125,6 @@ export namespace Updater {
         }
         Downloader.updatesEndpoint = this.updatesEndpoint;
 
-        // Get webapp version
         if (typeof this.currentWebappVersion === 'undefined') {
           // Version was never set (bundle missing?), use old date to trigger blacklisting
           this.currentWebappVersion = Main.FALLBACK_WEB_VERSION;
@@ -216,7 +215,6 @@ export namespace Updater {
               title: await getLocales('updater:newUpdateAvailableTitle'),
             },
             async (type: string, event: Event, index?: number) => {
-              // Focus on the window
               if (this.browserWindow) {
                 this.browserWindow.focus();
               }
@@ -267,7 +265,6 @@ export namespace Updater {
           decision = await promptWindow.show();
           if (decision.allow === false) {
             this.debug('User declined the update');
-            // If the webapp is blacklisted then we quit the app
             if (isWebappBlacklisted) {
               app.quit();
             }
@@ -279,7 +276,6 @@ export namespace Updater {
         await Main.persist.set('installAutomatically', decision.installAutomatically);
         await Main.persist.saveChangesOnDisk();
 
-        // Show download window
         this.debug('Launching installer window');
         installerWindow = new Installer(this.browserWindow);
         await installerWindow.show();
@@ -306,7 +302,6 @@ export namespace Updater {
         this.currentWebappVersion = manifest.webappVersionNumber;
         this.currentWebappEnvironment = manifest.targetEnvironment;
 
-        // Close installer window
         await installerWindow.close();
 
         return manifest;

@@ -49,9 +49,6 @@ export class Prompt extends WindowManager {
     super(mainWindow);
   }
 
-  /**
-   * Show the update prompt
-   */
   public async show(): Promise<Updater.Decision> {
     await super.prepare();
 
@@ -87,7 +84,7 @@ export class Prompt extends WindowManager {
       this.browserWindow.once('closed', () => {
         ipcMain.removeAllListeners(Prompt.IPC_DECISION_NAME);
 
-        // Resolve don't update (will be ignored if already resolved from ipc main)
+        // Resolve but don't update (will be ignored if already resolved from `ipcMain`)
         resolve({
           allow: false,
           installAutomatically: false,
@@ -119,9 +116,9 @@ export class Prompt extends WindowManager {
       throw new PromptError('Prompt was not available');
     }
 
-    // Sec: Ensure the decision dialog come indeed from the Prompt window
+    // Ensure the decision dialog indeed comes from the prompt window
     if (event.sender.id !== this.browserWindow.webContents.id) {
-      throw new PromptError('The decision did not came from the Prompt window');
+      throw new PromptError('The decision did not come from the prompt window');
     }
 
     return options;

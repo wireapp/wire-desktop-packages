@@ -100,7 +100,7 @@ export class Downloader {
   private static async doRequest(options: AxiosRequestConfig): Promise<AxiosResponse> {
     // Get the right endpoint according to the current environment
     if (!Downloader.updatesEndpoint) {
-      throw new Error('Endpoint has not been set, aborting');
+      throw new Error('Endpoint has not been set');
     }
     const baseURL = Downloader.updatesEndpoint;
     this.debug('Downloading content at: %s', `${baseURL}/${options.url}`);

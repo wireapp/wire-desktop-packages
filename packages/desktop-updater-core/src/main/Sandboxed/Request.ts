@@ -86,20 +86,16 @@ class Request {
     this.progress.transferred += bufferLength;
     this.progress.elapsed = (Date.now() - this.progress.startedAt) / 1000;
 
-    // Calculate speed
     if (this.progress.elapsed >= 1) {
       this.progress.speed = this.progress.transferred / this.progress.elapsed;
     }
 
     if (typeof this.progress.total !== 'undefined') {
-      // Calculate percentage
       this.progress.percent = Math.min(this.progress.transferred, this.progress.total) / this.progress.total;
 
       if (this.progress.speed != null) {
         const remaining =
           this.progress.percent !== 1 ? this.progress.total / this.progress.speed - this.progress.elapsed : 0;
-
-        // Round to 4 decimals
         this.progress.remaining = Math.round(remaining * 1000) / 1000;
       }
     }
