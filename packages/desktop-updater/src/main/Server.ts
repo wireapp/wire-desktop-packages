@@ -351,7 +351,8 @@ export class Sandbox {
               },
             },
           },
-          root: './',
+          // ToDo: Until folder where the node_modules is known, disable root folder restrictions
+          //root: path.resolve(__dirname, './'),
         },
       });
 

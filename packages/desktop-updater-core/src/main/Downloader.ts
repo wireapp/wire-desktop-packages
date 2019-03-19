@@ -102,8 +102,10 @@ export class Downloader {
     if (!Downloader.updatesEndpoint) {
       throw new Error('Endpoint has not been set');
     }
+
     const baseURL = Downloader.updatesEndpoint;
     this.debug('Downloading content at: %s', `${baseURL}/${options.url}`);
+
     return new Sandbox('Request').run(
       {
         Options: {
@@ -117,7 +119,8 @@ export class Downloader {
           // Full sandbox cannot be enabled with Axios
           context: 'host',
           external: ['axios'],
-          root: '../',
+          // ToDo: Until folder where the node_modules is known, disable root folder restrictions
+          //root: path.resolve(__dirname,  '../'),
         },
       }
     );

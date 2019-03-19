@@ -19,14 +19,13 @@
 
 import * as Long from 'long';
 import {DateTime} from 'luxon';
+import {NodeVMOptions} from 'vm2';
 
 import {Config} from './Config';
 import {Environment} from './Environment';
+import {Sandbox} from './Sandbox';
 import {Updater} from './Updater';
 import {Utils} from './Utils';
-
-import {NodeVMOptions} from 'vm2';
-import {Sandbox} from './Sandbox';
 
 import {BaseError} from 'make-error-cause';
 
@@ -41,7 +40,8 @@ export class Verifier {
     require: {
       context: 'host',
       external: ['sodium-native'],
-      root: '../',
+      // ToDo: Until folder where the node_modules is known, disable root folder restrictions
+      //root: path.resolve(__dirname,  '../'),
     },
   };
 
