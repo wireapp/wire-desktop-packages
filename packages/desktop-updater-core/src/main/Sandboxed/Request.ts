@@ -64,7 +64,7 @@ class Request {
       try {
         response.data.on('data', onDataReceived).once('end', () => {
           const buffer = Buffer.concat(buffers);
-          if (response.status !== (200 | 201)) {
+          if (response.status !== 200 && response.status !== 201) {
             throw new Error(`Request: An unknown error happened. Error status: ${response.status}.`);
           }
           resolve({...response, data: buffer});
