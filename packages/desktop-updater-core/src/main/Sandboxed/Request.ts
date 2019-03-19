@@ -48,25 +48,27 @@ class Request {
     this.progress.startedAt = Date.now();
     this.progress.total = Number(response.headers['content-length']) || undefined;
 
+    let onDataReceived: (buffer: Buffer) => void;
+    if (typeof Options.onDownloadProgress !== 'undefined') {
+      onDataReceived = (buffer: Buffer) => {
+        buffers.push(buffer);
+        this.calculateProgress(buffer.length);
+      };
+    } else {
+      onDataReceived = (buffer: Buffer) => {
+        buffers.push(buffer);
+      };
+    }
+
     return new Promise(resolve => {
       try {
-        response.data
-          .on(
-            'data',
-            typeof Options.onDownloadProgress === 'undefined'
-              ? buffer => buffers.push(buffer)
-              : buffer => {
-                  buffers.push(buffer);
-                  this.calculateProgress(buffer.length);
-                }
-          )
-          .once('end', () => {
-            const buffer = Buffer.concat(buffers);
-            if (response.status !== 200) {
-              throw new Error(`Request: An unknown error happened. Error status: ${response.status}.`);
-            }
-            resolve({...response, data: buffer});
-          });
+        response.data.on('data', onDataReceived).once('end', () => {
+          const buffer = Buffer.concat(buffers);
+          if (response.status !== (200 | 201)) {
+            throw new Error(`Request: An unknown error happened. Error status: ${response.status}.`);
+          }
+          resolve({...response, data: buffer});
+        });
       } catch (stack) {
         resolve(new Error(stack));
       }
