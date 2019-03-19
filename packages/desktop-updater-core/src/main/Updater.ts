@@ -449,7 +449,7 @@ export namespace Updater {
       } catch (error) {
         if (error instanceof VerifyExpirationError) {
           // Accept expired manifest since we already installed it
-          // Blacklisting will take care of expiring this version
+          // The blacklisting mechanism will take care of expiring this version
           this.debug(`Update is expired but continuing since it's stored locally`);
         } else {
           throw error;
@@ -460,7 +460,7 @@ export namespace Updater {
       const documentRoot = Utils.resolvePath(Utils.getFilenameFromChecksum(manifest.fileChecksum));
 
       // Verify file integrity
-      await Verifier.verifyFileIntegrity(await Utils.readFileAsBuffer(documentRoot), manifest.fileChecksum);
+      await Verifier.verifyFileIntegrity(await Utils.readFileAsBuffer(documentRoot, true), manifest.fileChecksum);
 
       return manifest;
     }

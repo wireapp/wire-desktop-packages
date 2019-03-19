@@ -20,7 +20,8 @@
 import * as compareVersions from 'compare-versions';
 import * as debug from 'debug';
 import {Notification, app, shell} from 'electron';
-import * as fsExtra from 'fs-extra';
+// fsExtra will use the patched fs from Electron
+import * as fs from 'fs-extra';
 import {DateTime} from 'luxon';
 import * as path from 'path';
 import {Config} from './Config';
@@ -30,9 +31,8 @@ export interface WebappVersionInterface {
   environment?: string;
 }
 
-// If available, use the unpatched fs module by Electron
-// (It allows us to write ASAR files)
-const fs = (() => {
+// If available, use the unpatched fs module by Electron as it allows us to write ASAR files
+const originalFs = (() => {
   let fs: any;
   try {
     fs = require('original-fs');
@@ -51,20 +51,27 @@ export class Utils {
   private static readonly USER_DATA_FOLDER: string = typeof app !== 'undefined' ? app.getPath('userData') : '';
   private static readonly WEBAPP_VERSION_FORMAT: string = 'yyyy-MM-dd-HH-mm';
 
-  public static async readFileAsBuffer(path: string): Promise<Buffer> {
-    return fs.readFileSync(path);
+  public static async readFileAsBuffer(path: string, withoutASAR: boolean = false): Promise<Buffer> {
+    if (withoutASAR) {
+      return originalFs.readFileSync(path);
+    }
+    return fs.readFile(path);
   }
 
-  public static async readFileAsString(path: string): Promise<string> {
-    return fs.readFileSync(path, {encoding: 'utf8'});
+  public static async readFileAsString(path: string, withoutASAR: boolean = false): Promise<string> {
+    const options = {encoding: 'utf8'};
+    if (withoutASAR) {
+      return originalFs.readFileSync(path, options);
+    }
+    return fs.readFile(path, options);
   }
 
   public static async writeFileAsBuffer(path: string, data: Uint8Array | Buffer): Promise<void> {
-    return fs.writeFileSync(path, Buffer.from(data));
+    return originalFs.writeFileSync(path, Buffer.from(data));
   }
 
   public static async deleteFile(path: string): Promise<void> {
-    return fsExtra.remove(path);
+    return fs.remove(path);
   }
 
   public static async displayNotification(
@@ -124,7 +131,7 @@ export class Utils {
   }
 
   public static async ensureUpdaterFolderExists(): Promise<void> {
-    await fsExtra.ensureDir(Utils.resolveRootPath());
+    await fs.ensureDir(Utils.resolveRootPath());
   }
 
   public static resolvePath(filename: string = ''): string {

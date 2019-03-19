@@ -1,6 +1,10 @@
 {
   "dependencies": {
-    "animejs": "3.0.1"
+    "animejs": "3.0.1",
+    "styled-components": "4.1.3",
+    "react-markdown": "4.0.6",
+    "react-i18next": "10.5.1",
+    "@wireapp/react-ui-kit": "4.3.42"
   },
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
@@ -17,7 +21,6 @@
     "@types/luxon": "1.11.1",
     "@types/node": "11.11.3",
     "@wireapp/desktop-updater-spec": "file:../desktop-updater-spec",
-    "@wireapp/react-ui-kit": "4.3.42",
     "babel-loader": "8.0.5",
     "css-loader": "2.1.1",
     "electron": "4.1.0",
@@ -27,11 +30,8 @@
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "react-hot-loader": "4.8.0",
-    "react-i18next": "10.5.1",
-    "react-markdown": "4.0.6",
     "rimraf": "2.6.3",
     "style-loader": "0.23.1",
-    "styled-components": "4.1.3",
     "webpack": "4.29.6",
     "webpack-cli": "3.2.3"
   },
