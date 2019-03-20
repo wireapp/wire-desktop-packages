@@ -83,6 +83,7 @@ const httpsCertificatePinningMock = {
 class AgentManager {
   public static readonly httpsAgentsDefaults: Partial<https.AgentOptions> = {
     keepAlive: true,
+    maxSockets: 6, // 6 max sockets per origin, from Chromium
     secureProtocol: 'TLSv1_2_method',
   };
   public static readonly httpsAgents: {

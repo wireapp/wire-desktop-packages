@@ -87,6 +87,7 @@ export class Downloader {
     httpsAgent: new https.Agent({
       cert: Downloader.PINNING_CERTIFICATE,
       ciphers: Downloader.CIPHERS,
+      maxSockets: 6, // 6 max sockets per origin, from Chromium
       rejectUnauthorized: true,
       secureProtocol: 'TLSv1_2_method',
     }),
