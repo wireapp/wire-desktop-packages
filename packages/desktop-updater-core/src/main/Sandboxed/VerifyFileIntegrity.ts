@@ -25,7 +25,7 @@ class VerifyFileIntegrity {
   public static async do(): Promise<Buffer | Error> {
     await sodium.ready;
     try {
-      const fileChecksum = sodium.crypto_generichash(sodium.crypto_generichash_BYTES_MAX, new Uint8Array(FileAsBuffer));
+      const fileChecksum = sodium.crypto_generichash(sodium.crypto_generichash_BYTES_MAX, FileAsBuffer);
       return Buffer.from(fileChecksum);
     } catch (stack) {
       return new Error(stack);

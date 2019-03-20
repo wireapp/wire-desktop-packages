@@ -27,11 +27,7 @@ class VerifyEnvelopeIntegrity {
   public static async do(): Promise<boolean | Error> {
     await sodium.ready;
     try {
-      return sodium.crypto_sign_verify_detached(
-        new Uint8Array(Signature),
-        new Uint8Array(Data),
-        new Uint8Array(PublicKey)
-      );
+      return sodium.crypto_sign_verify_detached(Signature, Data, PublicKey);
     } catch (stack) {
       return new Error(stack);
     }
