@@ -138,14 +138,17 @@ export class ErrorDispatcher {
     } else if (this.error instanceof DownloadError) {
       this.debug('Download error detected.');
 
-      if ((<any>this.error).cause.code === 'ECONNRESET') {
-        this.debug('Connection reset');
+      if (this.error.cause) {
+        const code: string | undefined = this.error.cause['code'];
+        if (code === 'ECONNRESET') {
+          this.debug('Connection reset');
 
-        return ErrorCodes.DOWNLOADER_ECONNRESET;
-      } else if ((<any>this.error).cause.code === 'ECONNABORTED') {
-        this.debug('Connection aborted');
+          return ErrorCodes.DOWNLOADER_ECONNRESET;
+        } else if (code === 'ECONNABORTED') {
+          this.debug('Connection aborted');
 
-        return ErrorCodes.DOWNLOADER_ECONNABORTED;
+          return ErrorCodes.DOWNLOADER_ECONNABORTED;
+        }
       }
 
       return ErrorCodes.DOWNLOADER;

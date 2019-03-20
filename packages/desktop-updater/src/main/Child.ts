@@ -158,7 +158,7 @@ export namespace Updater {
           })
           .once('error', (error: Error) => {
             // tslint:disable-next-line:no-console
-            console.log(`Unable to listen on port ${portToUse} (${(<any>error).code}), retrying with another port...`);
+            console.log(`Unable to listen on port ${portToUse} (${error['code']}), retrying with another port...`);
             return this.listen(++retry);
           });
       });

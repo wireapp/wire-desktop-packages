@@ -60,7 +60,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     }
   }
 
-  onDecisionTaken = (userDecision: Partial<any>): void => {
+  onDecisionTaken = (userDecision: Partial<Updater.Decision>): void => {
     const decision = {...this.state.decision, ...userDecision};
     EventDispatcher.send(Prompt.TOPIC.SEND_DECISION, decision);
   };
