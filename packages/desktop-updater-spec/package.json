@@ -10,7 +10,7 @@
   },
   "description": "Types shared by Wire Desktop Updater components.",
   "files": [
-    "dist/commonjs"
+    "dist"
   ],
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",

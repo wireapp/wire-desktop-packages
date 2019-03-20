@@ -13,6 +13,7 @@
     "jasmine": "3.3.1",
     "jasmine-console-reporter": "3.1.0",
     "jasmine-ts": "0.3.0",
+    "libsodium-wrappers": "0.7.4",
     "long": "4.0.0",
     "luxon": "1.11.4",
     "make-error-cause": "2.2.0",
@@ -21,12 +22,12 @@
     "raygun": "0.10.1",
     "react": "16.8.4",
     "react-dom": "16.8.4",
-    "sodium-native": "2.3.0",
     "throttle-debounce": "2.1.0",
     "vm2": "3.6.10"
   },
   "devDependencies": {
     "@types/jasmine": "3.3.11",
+    "@types/libsodium-wrappers": "0.7.5",
     "electron": "4.1.0",
     "electron-build-env": "0.2.0",
     "electron-rebuild": "1.8.4",
@@ -36,6 +37,9 @@
     "typescript": "3.3.3333"
   },
   "description": "Secure updater for Electron",
+  "files": [
+    "dist"
+  ],
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",
   "name": "@wireapp/desktop-updater-core",

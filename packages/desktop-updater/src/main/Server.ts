@@ -18,8 +18,8 @@
  */
 
 import * as fs from 'fs-extra';
+import * as sodium from 'libsodium-wrappers';
 import * as path from 'path';
-import * as sodium from 'sodium-native';
 import {URL} from 'url';
 
 import debug from 'debug';
@@ -262,9 +262,8 @@ export class Server {
   }
 
   private async generateToken(): Promise<string> {
-    const token = Buffer.alloc(128);
-    sodium.randombytes_buf(token);
-    return token.toString('base64');
+    await sodium.ready;
+    return sodium.randombytes_buf(128, 'base64');
   }
 
   public static isPathAllowed(providedPath: fs.PathLike, allowedPath: string) {

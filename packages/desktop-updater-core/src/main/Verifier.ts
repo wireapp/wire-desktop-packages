@@ -39,7 +39,7 @@ export class Verifier {
   private static readonly sandboxOptions: NodeVMOptions = {
     require: {
       context: 'host',
-      external: ['sodium-native'],
+      external: ['libsodium-wrappers'],
       // ToDo: Until folder where the node_modules is known, disable root folder restrictions
       //root: path.resolve(__dirname,  '../'),
     },

@@ -17,7 +17,7 @@
  *
  */
 
-import * as sodium from 'sodium-native';
+import * as sodium from 'libsodium-wrappers';
 
 declare const Data: Buffer;
 declare const Signature: Buffer;
@@ -25,8 +25,13 @@ declare const PublicKey: Buffer;
 
 class VerifyEnvelopeIntegrity {
   public static async do(): Promise<boolean | Error> {
+    await sodium.ready;
     try {
-      return sodium.crypto_sign_verify_detached(Signature, Data, PublicKey);
+      return sodium.crypto_sign_verify_detached(
+        new Uint8Array(Signature),
+        new Uint8Array(Data),
+        new Uint8Array(PublicKey)
+      );
     } catch (stack) {
       return new Error(stack);
     }

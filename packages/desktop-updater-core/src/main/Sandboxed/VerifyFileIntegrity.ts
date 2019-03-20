@@ -17,16 +17,16 @@
  *
  */
 
-import * as sodium from 'sodium-native';
+import * as sodium from 'libsodium-wrappers';
 
 declare const FileAsBuffer: Buffer;
 
 class VerifyFileIntegrity {
   public static async do(): Promise<Buffer | Error> {
+    await sodium.ready;
     try {
-      const fileChecksum = sodium.sodium_malloc(sodium.crypto_generichash_BYTES_MAX);
-      sodium.crypto_generichash(fileChecksum, FileAsBuffer);
-      return fileChecksum;
+      const fileChecksum = sodium.crypto_generichash(sodium.crypto_generichash_BYTES_MAX, new Uint8Array(FileAsBuffer));
+      return Buffer.from(fileChecksum);
     } catch (stack) {
       return new Error(stack);
     }
