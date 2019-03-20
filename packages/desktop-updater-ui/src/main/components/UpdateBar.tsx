@@ -67,13 +67,13 @@ const UpdaterBarDetails = styled.a`
   text-decoration: underline;
   cursor: pointer;
   font-weight: 500;
+  margin-left: 5px;
 
   &:hover,
   &:active {
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
-    font-weight: 500;
   }
 `;
 
@@ -195,9 +195,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
         {this.state.isUpdateAvailable ? (
           <UpdaterBar>
             <UpdaterBarMessage>
-              <span>
-                <Trans>A new version of Wire is available</Trans>&nbsp;
-              </span>
+              <Trans>A new version of Wire is available</Trans>
               <UpdaterBarDetails href="javascript://" onClick={this._onClickOnDetails}>
                 <Trans>Learn more</Trans>
               </UpdaterBarDetails>
