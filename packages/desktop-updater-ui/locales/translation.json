@@ -13,6 +13,7 @@
       "Later": "Later",
       "Learn more about this update": "Learn more about this update",
       "Learn more": "Learn more",
+      "MB": "MB",
       "No changelog is available for this update": "No changelog is available for this update",
       "Open the Mac App Store": "Open the Mac App Store",
       "Quit": "Quit",
@@ -52,6 +53,7 @@
       "Later": "Plus tard",
       "Learn more about this update": "En savoir plus",
       "Learn more": "En savoir plus",
+      "MB": "Mo",
       "No changelog is available for this update": "Pas de note de mise à jour disponible",
       "Open the Mac App Store": "Ouvrir le Mac App Store",
       "Quit": "Quitter",
@@ -74,7 +76,7 @@
       "Your version of Wire is outdated": "Wire doit être mis à jour",
       "{{remaining}} second remaining": "{{remaining}} seconde restante",
       "{{remaining}} second remaining_plural": "{{remaining}} secondes restantes",
-      "{{transferred}} of {{total}} MB at {{speed}} Mb/s": "{{transferred}} sur {{total}} Mb à {{speed}} Mbit/s"
+      "{{transferred}} of {{total}} MB at {{speed}} Mb/s": "{{transferred}} sur {{total}} Mo à {{speed}} Mbit/s"
     }
   }
 }

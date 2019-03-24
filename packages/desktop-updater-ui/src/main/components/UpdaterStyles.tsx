@@ -34,12 +34,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   *::selection {
-    background: #171717;
-    color: #fff;
+    background: #fff;
+    color: #171717;
   }
   *::-webkit-selection {
-    background: #171717;
-    color: #fff;
+    background: #fff;
+    color: #171717;
   }
 
   button, input, label {

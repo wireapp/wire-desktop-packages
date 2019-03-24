@@ -96,7 +96,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
 
   render() {
     const {t} = this.props;
-    const {isWebappTamperedWith, isWebappBlacklisted, manifest, changelogUrl} = this.props;
+    const {changelogUrl, envelope, isWebappBlacklisted, isWebappTamperedWith, manifest} = this.props;
     let title: string;
     let description: string;
     if (isWebappTamperedWith) {
@@ -117,6 +117,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
           <TranslatedPromptChangelogModal
             onClose={() => this.toggleChangelog()}
             manifest={manifest}
+            envelope={envelope}
             changelogUrl={changelogUrl}
           />
         </Opacity>

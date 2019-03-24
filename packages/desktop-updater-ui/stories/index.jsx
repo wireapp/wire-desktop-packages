@@ -26,6 +26,9 @@ import {TranslatedPrompt} from '../src/main/components/PromptView';
 import {TranslatedWrapperOutdated} from '../src/main/components/WrapperOutdatedView';
 import {withLocalization} from './decorators/localization';
 
+const GENERIC_ENVELOPE = {
+  publicKey: '3942e683bb97a2d84beb6df14bbe25ee5e327a3fc4b05723ff835cd6d6e8d96b',
+};
 const GENERIC_MANIFEST = {
   author: ['Wire Swiss GmbH'],
   changelog: `### Improved
@@ -36,8 +39,10 @@ const GENERIC_MANIFEST = {
 - Decreasing the window size could cause the input area to not display correctly.
 - The manage services button in the add participants list will open team settings.`,
   expiresOn: '2018-10-31T00:00:00+00:00',
-  fileChecksum: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
-  fileChecksumCompressed: Buffer.from('ac56e02f1e8c0af5645bec81740b91bb3773ba371560a12838190cbf3a5979be', 'hex'),
+  fileChecksum:
+    '37bff3a84c1b4a3cb2db5ef1edefa7a370c68d6a192c28b613fa85c05f13026161d1c8c65c46a3ec5a3b72c336ed0e58a2bd104227ff736fd7544831aa758f87',
+  fileChecksumCompressed:
+    '37bff3a84c1b4a3cb2db5ef1edefa7a370c68d6a192c28b613fa85c05f13026161d1c8c65c46a3ec5a3b72c336ed0e58a2bd104227ff736fd7544831aa758f87',
   /* eslint-disable no-magic-numbers */
   fileContentLength: 9498238,
   /* eslint-enable no-magic-numbers */
@@ -72,10 +77,16 @@ function renderInstaller(data) {
 }
 
 function renderPrompt(data) {
-  const {manifest, changelogUrl, isWebappBlacklisted, isWebappTamperedWith} = data;
+  const {changelogUrl, envelope, isWebappBlacklisted, isWebappTamperedWith, manifest} = data;
 
   return (
     <TranslatedPrompt
+      changelogUrl={text('URL of the changelog page?', changelogUrl)}
+      envelope={{
+        publicKey: envelope.publicKey,
+      }}
+      isWebappBlacklisted={boolean('Is the webapp version blacklisted?', isWebappBlacklisted)}
+      isWebappTamperedWith={boolean('Is the webapp data corrupted?', isWebappTamperedWith)}
       manifest={{
         author: ['Wire Swiss GmbH'],
         changelog: text('Changelog', manifest.changelog),
@@ -100,9 +111,6 @@ function renderPrompt(data) {
         ),
         webappVersionNumber: text('Web app version', manifest.webappVersionNumber),
       }}
-      changelogUrl={text('URL of the changelog page?', changelogUrl)}
-      isWebappBlacklisted={boolean('Is the webapp version blacklisted?', isWebappBlacklisted)}
-      isWebappTamperedWith={boolean('Is the webapp data corrupted?', isWebappTamperedWith)}
     />
   );
 }
@@ -175,6 +183,7 @@ storiesOf('Prompt', module)
   .add('New update is available', () =>
     renderPrompt({
       changelogUrl: 'https://medium.com/@wireupdates',
+      envelope: GENERIC_ENVELOPE,
       isWebappBlacklisted: false,
       isWebappTamperedWith: false,
       manifest: GENERIC_MANIFEST,
@@ -183,6 +192,7 @@ storiesOf('Prompt', module)
   .add('Webapp version is blacklisted', () =>
     renderPrompt({
       changelogUrl: 'https://medium.com/@wireupdates',
+      envelope: GENERIC_ENVELOPE,
       isWebappBlacklisted: true,
       isWebappTamperedWith: false,
       manifest: GENERIC_MANIFEST,
@@ -191,6 +201,7 @@ storiesOf('Prompt', module)
   .add('Bundle is damaged', () =>
     renderPrompt({
       changelogUrl: 'https://medium.com/@wireupdates',
+      envelope: GENERIC_ENVELOPE,
       isWebappBlacklisted: false,
       isWebappTamperedWith: true,
       manifest: GENERIC_MANIFEST,

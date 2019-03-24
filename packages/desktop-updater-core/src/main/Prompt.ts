@@ -41,6 +41,7 @@ export class Prompt extends WindowManager {
   constructor(
     public mainWindow: Electron.BrowserWindow | undefined,
     private readonly Manifest: Updater.Manifest,
+    private readonly Envelope: Updater.Envelope,
     protected currentWebappVersion: string,
     private readonly isWebappBlacklisted: boolean,
     private readonly isWebappTamperedWith: boolean,
@@ -97,6 +98,9 @@ export class Prompt extends WindowManager {
     super.didFinishLoad();
     this.signalRenderer({
       changelogUrl: Config.Updater.CHANGELOG_URL,
+      envelope: {
+        publicKey: Buffer.from(this.Envelope.publicKey).toString('hex'),
+      },
       isUpdatesInstallAutomatically: this.isUpdatesInstallAutomatically,
       isWebappBlacklisted: this.isWebappBlacklisted,
       isWebappTamperedWith: this.isWebappTamperedWith,

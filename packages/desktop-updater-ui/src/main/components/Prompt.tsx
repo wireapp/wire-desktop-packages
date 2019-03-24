@@ -23,6 +23,7 @@ import {TranslatedPrompt} from './PromptView';
 
 export interface PromptContainerState {
   manifest?: Updater.Manifest;
+  envelope: {publicKey: string};
   changelogUrl: string;
   isWebappBlacklisted: boolean;
   isWebappTamperedWith: boolean;
