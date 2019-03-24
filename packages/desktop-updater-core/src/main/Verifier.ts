@@ -58,6 +58,7 @@ export class Verifier {
     const {
       changelog,
       fileChecksum,
+      fileChecksumCompressed,
       fileContentLength,
       specVersion,
       minimumClientVersion,
@@ -152,9 +153,17 @@ export class Verifier {
       throw new VerifyError('File checksum is not a buffer');
     }
 
+    // Check if checksum is present and is a buffer
+    try {
+      fileChecksum.toString('hex');
+      fileChecksumCompressed.toString('hex');
+    } catch (error) {
+      throw new VerifyError('Could not convert the checksum to a hexdecimal value', error);
+    }
+
     // Check if content length is not more than 100MB (or the maximum allowed settings)
     if (Long.isLong(fileContentLength) === false) {
-      throw new VerifyError('File content length is not a long');
+      throw new VerifyError('File content length is not a Long value');
     }
 
     // PART 4: Check other data
@@ -178,7 +187,7 @@ export class Verifier {
 
     // Ensure this update target our environment
     if (isSameEnvironment === false) {
-      throw new VerifyMismatchEnvironment('Local environment mismatch remote one');
+      throw new VerifyMismatchEnvironment('Local environment mismatch the remote one');
     }
 
     // Throw an error if environment mismatch the remote one
