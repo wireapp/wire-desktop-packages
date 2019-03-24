@@ -135,18 +135,13 @@ export class Server {
 
       try {
         if (error instanceof NotFoundError === false) {
-          throw new Error('The reason does not meet the requirement to install the bundle');
+          throw new Error('The reason does not meet the requirement to install the LCB');
         }
 
-        Server.debug('Installing a local snapshot of the webapp');
-
-        // Install the existing bundle
+        Server.debug('Installing the LCB for the current environment');
         await UpdaterUtils.copyFiles(await UpdaterUtils.getLocalBundlePath(), UpdaterUtils.resolveRootPath());
-
-        // Validate the installed bundle
         manifest = await Updater.Main.getLocalVersion(this.currentClientVersion, this.trustStore);
-
-        Server.debug('Successfully installed the snapshot');
+        Server.debug('Successfully installed the LCB');
       } catch (error) {
         Server.debug(error);
         Server.debug('Installing the bundle did not succeed, checking remotely if there is any update available.');

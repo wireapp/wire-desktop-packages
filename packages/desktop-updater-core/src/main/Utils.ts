@@ -159,7 +159,7 @@ export class Utils {
           return resolve(true);
         }
 
-        // Note: Add here any other file that can be copied here
+        // Note: Add any other file that can be copied here
 
         // Deny anything else
         resolve(false);
