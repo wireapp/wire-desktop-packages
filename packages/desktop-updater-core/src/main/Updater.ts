@@ -257,6 +257,7 @@ export namespace Updater {
           promptWindow = new Prompt(
             this.browserWindow,
             manifest,
+            envelope,
             this.currentWebappVersion,
             isWebappBlacklisted,
             isWebappTamperedWith,
