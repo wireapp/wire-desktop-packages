@@ -139,7 +139,7 @@ export class Server {
         }
 
         Server.debug('Installing the LCB for the current environment');
-        await UpdaterUtils.copyFiles(await UpdaterUtils.getLocalBundlePath(), UpdaterUtils.resolveRootPath());
+        await UpdaterUtils.copyFiles(await UpdaterUtils.getLCBPath(), UpdaterUtils.resolveRootPath());
         manifest = await Updater.Main.getLocalVersion(this.currentClientVersion, this.trustStore);
         Server.debug('Successfully installed the LCB');
       } catch (error) {

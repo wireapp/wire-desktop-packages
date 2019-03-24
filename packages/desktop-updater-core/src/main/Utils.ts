@@ -143,6 +143,15 @@ export class Utils {
     const filter = (src, dest): Promise<boolean> => {
       return new Promise((resolve, reject) => {
         const filename = path.basename(src);
+        this.debug('Src is: %s', src);
+        this.debug('Dest is: %s', dest);
+        this.debug('File to copy: %s', filename);
+
+        // The filter seems to receive the folder path before the file path, allow it
+        if (src === from) {
+          return resolve(true);
+        }
+
         // We can't copy a asar file using the patched fs from Electron,
         // using originalFs instead
         if (filename.endsWith(`.${Config.Updater.DEFAULT_FILE_EXTENSION}`)) {
@@ -159,9 +168,10 @@ export class Utils {
           return resolve(true);
         }
 
-        // Note: Add any other file that can be copied here
+        // Note: Add any other file that needs to be copied here
 
         // Deny anything else
+        this.debug('"%s" has been skipped', src);
         resolve(false);
       });
     };
@@ -176,13 +186,14 @@ export class Utils {
     });
   }
 
-  public static async getLocalBundlePath() {
-    const localPath = path.join(
+  public static async getLCBPath() {
+    const localPath = path.resolve(
       __dirname,
       '../../',
       Config.Updater.LOCAL_BUNDLE_FOLDER_NAME,
-      Environment.currentEnvironment.toLowerCase()
+      `${Environment.currentEnvironment.toLowerCase()}/`
     );
+    this.debug('LCB path is %s', localPath);
     await fs.pathExists(localPath);
     return localPath;
   }
