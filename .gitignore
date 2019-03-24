@@ -1,9 +1,7 @@
-!.bundle/.keep
 **/src/**/*.d.ts
 *.env
 *hot-update.js*
 .DS_Store
-.bundle/*
 .cache
 .idea
 .vscode

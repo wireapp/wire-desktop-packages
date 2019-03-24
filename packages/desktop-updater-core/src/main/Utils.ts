@@ -135,7 +135,9 @@ export class Utils {
 
   public static async getDocumentRoot(checksum: Buffer): Promise<string> {
     const documentRoot = Utils.resolvePath(Utils.getFilenameFromChecksum(checksum));
-    await fs.pathExists(documentRoot);
+    if (await !fs.pathExists(documentRoot)) {
+      throw Error('Document root does not exist');
+    }
     return documentRoot;
   }
 
@@ -186,15 +188,19 @@ export class Utils {
     });
   }
 
-  public static async getLCBPath() {
+  public static async getLCBPath(): Promise<string> {
     const localPath = path.resolve(
-      __dirname,
-      '../../../', // /Applications/Wire.app/Contents/Resources/
+      app.getAppPath(),
+      // If the app is packaged, use /Applications/Wire.app/Contents/Resources/,
+      // otherwise use ./wire-desktop/.bundle/internal, both are one directory up
+      '../',
       Config.Updater.LOCAL_BUNDLE_FOLDER_NAME,
       `${Environment.currentEnvironment.toLowerCase()}/`
     );
     this.debug('LCB path is %s', localPath);
-    await fs.pathExists(localPath);
+    if (await !fs.pathExists(localPath)) {
+      throw Error('LCB path does not exist');
+    }
     return localPath;
   }
 
