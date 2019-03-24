@@ -32,18 +32,16 @@ export interface WebappVersionInterface {
 }
 
 // If available, use the unpatched fs module by Electron as it allows us to write ASAR files
-const originalFs = (() => {
-  let fs: any;
+export const originalFs = (() => {
   try {
-    fs = require('original-fs');
+    return require('original-fs');
   } catch (error) {
     if (error.code === 'MODULE_NOT_FOUND') {
-      fs = require('fs');
+      return require('fs');
     } else {
       throw error;
     }
   }
-  return fs;
 })();
 
 export class Utils {
@@ -132,6 +130,12 @@ export class Utils {
 
   public static async ensureUpdaterFolderExists(): Promise<void> {
     await fs.ensureDir(Utils.resolveRootPath());
+  }
+
+  public static async getDocumentRoot(checksum: Buffer): Promise<string> {
+    const documentRoot = Utils.resolvePath(Utils.getFilenameFromChecksum(checksum));
+    await fs.pathExists(documentRoot);
+    return documentRoot;
   }
 
   public static resolvePath(filename: string = ''): string {

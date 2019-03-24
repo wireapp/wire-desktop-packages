@@ -61,7 +61,7 @@ export namespace Updater {
     private static readonly BROADCAST_RENDERER_TIMEOUT: number = Config.Updater.BROADCAST_RENDERER_TIMEOUT;
     private static readonly FALLBACK_WEB_VERSION: string = Config.Updater.FALLBACK_WEB_VERSION;
 
-    public static reload?: (filename: string) => {};
+    public static reload?: (documentRoot: string) => {};
     public static isInternetAvailable?: (url: string) => Promise<boolean>;
     public static browserWindow?: Electron.BrowserWindow = undefined;
 
@@ -295,7 +295,7 @@ export namespace Updater {
         // Reload the web server
         // If reload is not set then no web server was running
         if (typeof this.reload !== 'undefined') {
-          await this.reload(Utils.getFilenameFromChecksum(manifest.fileChecksum));
+          await this.reload(await Utils.getDocumentRoot(manifest.fileChecksum));
         }
 
         // Set new webapp version
@@ -451,8 +451,13 @@ export namespace Updater {
         }
       }
 
-      // Create document root
-      const documentRoot = Utils.resolvePath(Utils.getFilenameFromChecksum(manifest.fileChecksum));
+      // Build document root path
+      let documentRoot: string;
+      try {
+        documentRoot = await Utils.getDocumentRoot(manifest.fileChecksum);
+      } catch (error) {
+        throw new NotFoundError('Could not find the bundle', error);
+      }
 
       // Verify file integrity
       await Verifier.verifyFileIntegrity(await Utils.readFileAsBuffer(documentRoot, true), manifest.fileChecksum);

@@ -159,7 +159,7 @@ export class Server {
     }
 
     // Build document root
-    const documentRoot = UpdaterUtils.resolvePath(UpdaterUtils.getFilenameFromChecksum(manifest.fileChecksum));
+    const documentRoot = await UpdaterUtils.getDocumentRoot(manifest.fileChecksum);
 
     // Start the server inside a VM
     let server: UpdaterChild.Child = await this.createWebInstance(documentRoot);
@@ -176,8 +176,7 @@ export class Server {
     });
 
     // Make the reload function available to the core
-    Updater.Main.reload = async (filename: string): Promise<void> => {
-      const documentRoot = UpdaterUtils.resolvePath(filename);
+    Updater.Main.reload = async (documentRoot: string): Promise<void> => {
       Server.debug('Change of the document root requested, new one is %s', documentRoot);
 
       // Stop the server
