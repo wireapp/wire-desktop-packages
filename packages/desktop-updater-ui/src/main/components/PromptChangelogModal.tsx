@@ -27,7 +27,11 @@ import * as Markdown from 'react-markdown';
 import styled from 'styled-components';
 import i18n from '../libs/Localization';
 import {Modal} from './ModalBack';
-import {MainHeading} from './UpdaterStyles';
+import {MainHeading as UpdaterStylesMainHeading} from './UpdaterStyles';
+
+const MainHeading = styled(UpdaterStylesMainHeading)`
+  margin-top: 0;
+`;
 
 const BoldText = styled(Text)`
   font-size: 14px;
