@@ -189,7 +189,7 @@ export class Utils {
   public static async getLCBPath() {
     const localPath = path.resolve(
       __dirname,
-      '../../',
+      '../../../', // /Applications/Wire.app/Contents/Resources/
       Config.Updater.LOCAL_BUNDLE_FOLDER_NAME,
       `${Environment.currentEnvironment.toLowerCase()}/`
     );

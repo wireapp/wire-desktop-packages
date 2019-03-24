@@ -1,7 +1,9 @@
+!.bundle/.keep
+**/src/**/*.d.ts
+*.env
 *hot-update.js*
 .DS_Store
-*.env
-**/src/**/*.d.ts
+.bundle/*
 .cache
 .idea
 .vscode
@@ -11,7 +13,5 @@ lerna-debug.log
 node_modules
 npm-debug.log*
 package-lock.json
-yarn-error.log
 packages/desktop-updater-ui/.renderer/bundle.js
-packages/desktop-updater-core/.bundle/*
-!packages/desktop-updater-core/.bundle/.keep
+yarn-error.log
