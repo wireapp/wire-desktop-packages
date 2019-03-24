@@ -39,7 +39,7 @@ export namespace Config {
     public static readonly DEFAULT_FILE_EXTENSION: string = 'asar';
     public static readonly UPDATER_DATA_FOLDER_NAME: string = 'WireResources';
     public static readonly MANIFEST_FILE: string = 'manifest.dat';
-    public static readonly SETTINGS_FILE: string = 'settings.dat';
+    public static readonly SETTINGS_FILE: string = 'settings.json';
 
     public static readonly FILENAME_CHECKSUM_LENGTH: number = 32;
   }
