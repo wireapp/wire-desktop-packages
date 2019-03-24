@@ -25,6 +25,7 @@ import * as React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import * as Markdown from 'react-markdown';
 import styled from 'styled-components';
+import i18n from '../libs/Localization';
 import {Modal} from './ModalBack';
 import {MainHeading, SelectableParagraph} from './UpdaterStyles';
 
@@ -126,9 +127,9 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
             <BoldText>
               <Trans>Released on:</Trans>
             </BoldText>{' '}
-            {DateTime.fromISO(manifest.releaseDate, {zone: 'utc'})
-              .setLocale('en-US')
-              .toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}
+            {DateTime.fromISO(manifest.releaseDate, {locale: i18n.language}).toLocaleString(
+              DateTime.DATETIME_HUGE_WITH_SECONDS
+            )}
           </NormalText>
           <NormalText block>
             <BoldText>

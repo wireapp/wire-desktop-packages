@@ -146,10 +146,10 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
             )}
             <Container>
               <DecisionButton backgroundColor={COLOR.WHITE} color={COLOR.GRAY_DARKEN_72} onClick={this.onLaterClick}>
-                {isWebappBlacklisted || isWebappTamperedWith ? t('Quit') : t('Later')}
+                {isWebappBlacklisted || isWebappTamperedWith ? <Trans>Quit</Trans> : <Trans>Later</Trans>}
               </DecisionButton>
               <DecisionButton backgroundColor={COLOR.BLUE} onClick={this.onUpdateClick}>
-                {isWebappTamperedWith ? t('Reinstall') : t('Update')}
+                {isWebappTamperedWith ? <Trans>Reinstall</Trans> : <Trans>Update</Trans>}
               </DecisionButton>
             </Container>
           </MainContent>
