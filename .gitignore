@@ -13,3 +13,5 @@ npm-debug.log*
 package-lock.json
 yarn-error.log
 packages/desktop-updater-ui/.renderer/bundle.js
+packages/desktop-updater-core/.bundle/*
+!packages/desktop-updater-core/.bundle/.keep

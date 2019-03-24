@@ -25,6 +25,7 @@ import * as fs from 'fs-extra';
 import {DateTime} from 'luxon';
 import * as path from 'path';
 import {Config} from './Config';
+import {Environment} from './Environment';
 
 export interface WebappVersionInterface {
   buildDate: DateTime;
@@ -136,6 +137,54 @@ export class Utils {
     const documentRoot = Utils.resolvePath(Utils.getFilenameFromChecksum(checksum));
     await fs.pathExists(documentRoot);
     return documentRoot;
+  }
+
+  public static copyFiles(from: string, to: string): Promise<boolean> {
+    const filter = (src, dest): Promise<boolean> => {
+      return new Promise((resolve, reject) => {
+        const filename = path.basename(src);
+        // We can't copy a asar file using the patched fs from Electron,
+        // using originalFs instead
+        if (filename.endsWith(`.${Config.Updater.DEFAULT_FILE_EXTENSION}`)) {
+          return originalFs.copyFile(src, dest, error => {
+            if (error) {
+              return reject(error);
+            }
+            resolve(false);
+          });
+        }
+
+        // Copy manifest file
+        if (filename === Config.Updater.MANIFEST_FILE) {
+          return resolve(true);
+        }
+
+        // Note: Add here any other file that can be copied here
+
+        // Deny anything else
+        resolve(false);
+      });
+    };
+
+    return new Promise((resolve, reject) => {
+      fs.copy(from, to, {overwrite: true, errorOnExist: false, filter}, error => {
+        if (error) {
+          return reject(error);
+        }
+        resolve();
+      });
+    });
+  }
+
+  public static async getLocalBundlePath() {
+    const localPath = path.join(
+      __dirname,
+      '../../',
+      Config.Updater.LOCAL_BUNDLE_FOLDER_NAME,
+      Environment.currentEnvironment.toLowerCase()
+    );
+    await fs.pathExists(localPath);
+    return localPath;
   }
 
   public static resolvePath(filename: string = ''): string {

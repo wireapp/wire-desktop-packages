@@ -88,7 +88,7 @@ export class Server {
     await Environment.set(this.currentEnvironment);
     await UpdaterUtils.ensureUpdaterFolderExists();
 
-    if (this.isServerAvailable()) {
+    if (this.isServerEnabled()) {
       throw new Error('Server is already active');
     }
 
@@ -133,28 +133,45 @@ export class Server {
       Server.debug('Error happened while getting local version, checking for update so the user can fix this...');
       Server.debug(error);
 
-      // ToDo: Add check for bundled webapp
+      try {
+        if (error instanceof NotFoundError === false) {
+          throw new Error('The reason does not meet the requirement to install the bundle');
+        }
 
-      const skipNotification = true;
-      const isWebappTamperedWith = error instanceof NotFoundError ? false : true;
-      const firstLaunch = true;
-      let localEnvironmentMismatch: boolean = false;
-      if (error instanceof VerifyMismatchEnvironment) {
-        // Environment has been changed
-        // Reinstall the web app with the correct environment
-        Server.debug(`Local mismatch environment detected, continuing...`);
-        localEnvironmentMismatch = true;
-      }
-      Server.debug('Is webapp tampered with: %s', isWebappTamperedWith);
+        Server.debug('Installing a local snapshot of the webapp');
 
-      manifest = await Updater.Main.runOnce(
-        skipNotification,
-        isWebappTamperedWith,
-        firstLaunch,
-        localEnvironmentMismatch
-      );
-      if (typeof manifest === 'undefined') {
-        throw new Error('Required update denied, server cannot be started. Exiting.');
+        // Install the existing bundle
+        await UpdaterUtils.copyFiles(await UpdaterUtils.getLocalBundlePath(), UpdaterUtils.resolveRootPath());
+
+        // Validate the installed bundle
+        manifest = await Updater.Main.getLocalVersion(this.currentClientVersion, this.trustStore);
+
+        Server.debug('Successfully installed the snapshot');
+      } catch (error) {
+        Server.debug(error);
+        Server.debug('Installing the bundle did not succeed, checking remotely if there is any update available.');
+
+        const skipNotification = true;
+        const isWebappTamperedWith = error instanceof NotFoundError ? false : true;
+        const firstLaunch = true;
+        let localEnvironmentMismatch: boolean = false;
+        if (error instanceof VerifyMismatchEnvironment) {
+          // Environment has been changed
+          // Reinstall the web app with the correct environment
+          Server.debug(`Local mismatch environment detected, continuing...`);
+          localEnvironmentMismatch = true;
+        }
+        Server.debug('Is webapp tampered with: %s', isWebappTamperedWith);
+
+        manifest = await Updater.Main.runOnce(
+          skipNotification,
+          isWebappTamperedWith,
+          firstLaunch,
+          localEnvironmentMismatch
+        );
+        if (typeof manifest === 'undefined') {
+          throw new Error('Required update denied, server cannot be started. Exiting.');
+        }
       }
     }
 
@@ -256,7 +273,7 @@ export class Server {
     }
   }
 
-  private isServerAvailable(): boolean {
+  private isServerEnabled(): boolean {
     return typeof this.accessToken !== 'undefined' && typeof this.internalHost !== 'undefined';
   }
 

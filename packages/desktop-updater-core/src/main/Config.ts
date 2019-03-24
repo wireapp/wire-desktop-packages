@@ -36,6 +36,7 @@ export namespace Config {
     public static readonly FALLBACK_WEB_VERSION = '2017-05-15-09-00-prod';
 
     // Storage informations
+    public static readonly LOCAL_BUNDLE_FOLDER_NAME: string = '.bundle/';
     public static readonly DEFAULT_FILE_EXTENSION: string = 'asar';
     public static readonly UPDATER_DATA_FOLDER_NAME: string = 'WireResources';
     public static readonly MANIFEST_FILE: string = 'manifest.dat';

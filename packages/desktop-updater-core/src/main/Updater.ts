@@ -131,20 +131,18 @@ export namespace Updater {
           this.currentWebappEnvironment = await Environment.get();
         }
 
-        // ...
         this.debug('Client version: %s', this.currentClientVersion);
         this.debug('Webapp version: %s', this.currentWebappVersion);
 
-        // Ensure there is internet, attempt to reach a random endpoint of the backend
+        this.debug('Checking if internet is available...');
         if (typeof this.isInternetAvailable === 'undefined') {
           throw new LogicalError('Internet connectivity function must be set.');
         }
-
-        this.debug('Checking if internet is available...');
         while (true) {
           if (await this.isInternetAvailable(Random.pick(Random.nodeCrypto, this.connectivityCheckEndpoints))) {
             break;
           }
+
           this.debug('Internet seems offline, retrying...');
           await Utils.sleep(Updater.Main.CONNECTIVITY_INTERNAL);
         }
