@@ -28,6 +28,7 @@ import {NodeVM as VirtualMachine} from 'vm2';
 
 import {
   Environment,
+  ManifestNotFoundError,
   NotFoundError,
   Updater,
   Utils as UpdaterUtils,
@@ -134,7 +135,7 @@ export class Server {
       Server.debug(error);
 
       try {
-        if (error instanceof NotFoundError === false) {
+        if (error instanceof ManifestNotFoundError === false) {
           throw new Error('The reason does not meet the requirement to install the LCB');
         }
 

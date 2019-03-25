@@ -45,6 +45,7 @@ import {BaseError} from 'make-error-cause';
 
 export class LogicalError extends BaseError {}
 export class NotFoundError extends BaseError {}
+export class ManifestNotFoundError extends BaseError {}
 
 export namespace Updater {
   export interface Envelope extends SpecEnvelope {}
@@ -414,7 +415,7 @@ export namespace Updater {
       // Check if manifest file exist locally
       const manifestFile = Utils.resolvePath(Config.Updater.MANIFEST_FILE);
       if ((await fs.pathExists(manifestFile)) === false) {
-        throw new NotFoundError('Could not find manifest file');
+        throw new ManifestNotFoundError('Could not find manifest file');
       }
 
       // Read manifest file
@@ -452,14 +453,16 @@ export namespace Updater {
 
       // Build document root path
       let documentRoot: string;
+      let bundle: Buffer;
       try {
         documentRoot = await Utils.getDocumentRoot(manifest.fileChecksum);
+        bundle = await Utils.readFileAsBuffer(documentRoot, true);
       } catch (error) {
         throw new NotFoundError('Could not find the bundle', error);
       }
 
       // Verify file integrity
-      await Verifier.verifyFileIntegrity(await Utils.readFileAsBuffer(documentRoot, true), manifest.fileChecksum);
+      await Verifier.verifyFileIntegrity(bundle, manifest.fileChecksum);
 
       return manifest;
     }

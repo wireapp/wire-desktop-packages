@@ -135,7 +135,8 @@ export class Utils {
 
   public static async getDocumentRoot(checksum: Buffer): Promise<string> {
     const documentRoot = Utils.resolvePath(Utils.getFilenameFromChecksum(checksum));
-    if (await !fs.pathExists(documentRoot)) {
+    // Use original filesystem as the document root is a asar file
+    if (!originalFs.existsSync(documentRoot)) {
       throw Error('Document root does not exist');
     }
     return documentRoot;
