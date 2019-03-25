@@ -17,7 +17,6 @@
  *
  */
 
-import {crypto_generichash_BYTES_MAX} from 'libsodium-wrappers';
 import * as path from 'path';
 
 export class Config {}
@@ -52,7 +51,7 @@ export namespace Config {
   export class Installer {}
 
   export class Verifier {
-    public static readonly BLAKE2B_HASH_BYTES: number = crypto_generichash_BYTES_MAX;
+    public static readonly BLAKE2B_HASH_BYTES: number = 64; // crypto_generichash_BYTES_MAX
     public static readonly MAX_EXPIRES_TIME: number = 1814400000; // Maximal distance in time between release and expiration time in ms (3 weeks)
   }
 
