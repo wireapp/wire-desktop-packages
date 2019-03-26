@@ -142,51 +142,42 @@ export class Utils {
     return documentRoot;
   }
 
-  public static copyFiles(from: string, to: string): Promise<boolean> {
-    const filter = (src, dest): Promise<boolean> => {
-      return new Promise((resolve, reject) => {
-        const filename = path.basename(src);
-        this.debug('Src is: %s', src);
-        this.debug('Dest is: %s', dest);
-        this.debug('File to copy: %s', filename);
-
-        // The filter seems to receive the folder path before the file path, allow it
-        if (src === from) {
-          return resolve(true);
-        }
-
-        // We can't copy a asar file using the patched fs from Electron,
-        // using originalFs instead
-        if (filename.endsWith(`.${Config.Updater.DEFAULT_FILE_EXTENSION}`)) {
-          return originalFs.copyFile(src, dest, error => {
-            if (error) {
-              return reject(error);
-            }
-            resolve(false);
-          });
-        }
-
-        // Copy manifest file
-        if (filename === Config.Updater.MANIFEST_FILE) {
-          return resolve(true);
-        }
-
-        // Note: Add any other file that needs to be copied here
-
-        // Deny anything else
-        this.debug('"%s" has been skipped', src);
-        resolve(false);
-      });
-    };
-
+  private static readDirectory(source: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      fs.copy(from, to, {overwrite: true, errorOnExist: false, filter}, error => {
+      originalFs.readdir(source, (error, files) => {
         if (error) {
           return reject(error);
         }
+        resolve(files);
+      });
+    });
+  }
+
+  private static copyFile(from: string, to: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      originalFs.copyFile(from, to, error => {
+        if (error) {
+          return reject(error);
+        }
+
+        this.debug('"%s" has been successfully copied to "%s', from, to);
         resolve();
       });
     });
+  }
+
+  public static async copyFiles(from: string, to: string): Promise<void> {
+    for (const filename of await this.readDirectory(from)) {
+      this.debug('Filename is: %s', filename);
+
+      const shouldCopy =
+        filename.endsWith(`.${Config.Updater.DEFAULT_FILE_EXTENSION}`) || filename === Config.Updater.MANIFEST_FILE;
+      if (shouldCopy) {
+        await this.copyFile(path.resolve(from, filename), path.resolve(to, filename));
+      } else {
+        this.debug('"%s" has been skipped', filename);
+      }
+    }
   }
 
   public static async getLCBPath(): Promise<string> {
