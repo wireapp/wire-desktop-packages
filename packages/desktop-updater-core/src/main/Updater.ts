@@ -249,7 +249,7 @@ export namespace Updater {
           this.debug('Environment switching detected, immediately reinstalling the update after restarting the app...');
           decision = {
             allow: true,
-            installAutomatically: true,
+            installAutomatically: isUpdatesInstallAutomatically,
           };
         } else {
           this.debug('Prompt the user about the update');
