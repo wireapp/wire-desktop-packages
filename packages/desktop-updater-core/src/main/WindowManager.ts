@@ -174,8 +174,6 @@ export abstract class WindowManager {
           if (filePath.startsWith(this.RENDERER_DOCUMENT_ROOT)) {
             this.debug('Allowed file URL "%s"', url);
             return callback({cancel: false});
-          } else {
-            this.debug('Denied file URL "%s"', url);
           }
         }
 
