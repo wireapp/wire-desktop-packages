@@ -216,7 +216,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
             </SmallNormalText>
             <SmallNormalText block>
               <SmallBoldText>
-                <Trans>Public key used to sign the update:</Trans>{' '}
+                <Trans>Fingerprint of the signing key:</Trans>{' '}
               </SmallBoldText>
               <Selectable>{envelope.publicKey}</Selectable>
             </SmallNormalText>
