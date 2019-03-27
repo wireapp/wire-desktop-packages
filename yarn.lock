@@ -2820,8 +2820,8 @@
   version "0.0.1"
   dependencies:
     "@types/luxon" "1.11.1"
-    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-79f87cab-9d72-4840-8788-917180efbaf2-1553558497323/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-79f87cab-9d72-4840-8788-917180efbaf2-1553558497323/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-0cad1aa4-247a-455b-8fc0-084c665f8f7c-1553687386983/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-0cad1aa4-247a-455b-8fc0-084c665f8f7c-1553687386983/node_modules/@wireapp/desktop-updater-ui"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"
@@ -5787,10 +5787,10 @@ electron@4.1.0:
     electron-download "^4.1.0"
     extract-zip "^1.0.3"
 
-electron@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-4.1.1.tgz#dc9343ba829cabbf01364761e72796f766704184"
-  integrity sha512-ABIEXTw55eiCW30a6F8fWLHL0QeH+yK3JgZpvTZZWLnkO5/SmG38avMxRhKOUQstRpYb+EEpE8IAM2DVOaTvtw==
+electron@5.0.0-beta.6:
+  version "5.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-5.0.0-beta.6.tgz#8a7443a3f5f572d87302c7933be0cb96f4b4c997"
+  integrity sha512-tqjCa7EnUqkZQ0uazzhQczcHlBTxV0RBbYdOd5ieIz9wvqctSqHJ7RbbAuE5pfxZRs1QHBKQD58oGBXK1T34Dg==
   dependencies:
     "@types/node" "^10.12.18"
     electron-download "^4.1.0"
