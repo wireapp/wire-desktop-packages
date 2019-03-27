@@ -54,14 +54,14 @@ const httpsMock = {
     // and we're still connecting, kill the socket
     request.once('socket', socket => {
       socket.setTimeout(TIMEOUT_SOCKET, () => {
-        debugInterceptProtocol('Is socket connecting?', socket.connecting);
         if (socket.connecting || socket.destroyed) {
           const error = 'Socket timed out';
           debugInterceptProtocol(error);
+          // Pass the error to https://github.com/axios/axios/blob/master/lib/adapters/http.js#L242
           request.emit('error', new Error(error));
           // Note: Maybe we should also abort the request as well?
-          // Issue is that the promise won't be rejected here: https://github.com/axios/axios/blob/master/lib/adapters/http.js#L242
-          // And since there no way to know if Axios received the error, we would need our own adapter
+          // Issue is that the promise won't be rejected and since there no way to know if
+          // Axios received the error, we would need our own adapter
           //setTimeout(() => request.abort(), 1000);
           if (!socket.destroyed) {
             socket.destroy();
