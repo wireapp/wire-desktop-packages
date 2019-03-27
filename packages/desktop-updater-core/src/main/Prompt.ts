@@ -79,7 +79,7 @@ export class Prompt extends WindowManager {
         });
       }
 
-      super.show();
+      await super.show();
 
       // Unregister the window and the IPC event then cancel the update when window is closed
       this.browserWindow.once('closed', () => {

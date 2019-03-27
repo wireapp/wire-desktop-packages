@@ -18,9 +18,10 @@
  */
 
 import debug from 'debug';
-import {BrowserWindow, app, ipcMain, session, shell} from 'electron';
+import {BrowserWindow, app, ipcMain, session} from 'electron';
 import * as path from 'path';
 import {URL, fileURLToPath} from 'url';
+import {Utils} from './Utils';
 
 export interface WindowSizeInterface {
   height: number;
@@ -130,14 +131,12 @@ export abstract class WindowManager {
     // Close behavior
     this.browserWindow.once('closed', () => this.whenClosed());
 
-    // Sec: Open links in browser
-    this.browserWindow.webContents.on('new-window', (event, _url) => {
+    // Open links in browser
+    this.browserWindow.webContents.on('new-window', async (event, _url) => {
       event.preventDefault();
 
       // Only allow HTTPS URLs to be opened in the browser
-      if (_url.startsWith('https://')) {
-        shell.openExternal(_url);
-      }
+      await Utils.openExternalLink(_url, true);
     });
 
     // Prevent any kind of navigation
@@ -179,7 +178,7 @@ export abstract class WindowManager {
     );
   }
 
-  public show(): void {
+  public async show(): Promise<any> {
     // Inject resize event for this window only
     ipcMain.on('resize', (event, newSize: WindowSizeInterface) => {
       if (typeof this.browserWindow === 'undefined' || typeof newSize !== 'object') {
@@ -201,7 +200,7 @@ export abstract class WindowManager {
       this.debug(`Cannot show browser window if it's destroyed`);
       return;
     }
-    this.browserWindow.loadURL(`file://${this.RENDERER_HTML}`);
+    await this.browserWindow.loadURL(`file://${this.RENDERER_HTML}`);
   }
 
   public getPromptWindow(): Electron.BrowserWindow | undefined {

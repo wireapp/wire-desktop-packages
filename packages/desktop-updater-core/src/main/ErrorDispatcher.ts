@@ -101,7 +101,7 @@ export class ErrorDispatcher {
         return resolve({tryAgain: true});
 
       case Response.CONTACT_US:
-        Utils.openExternalLink(this.LINK_BUGREPORT);
+        await Utils.openExternalLink(this.LINK_BUGREPORT);
         break;
     }
 

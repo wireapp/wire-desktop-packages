@@ -204,14 +204,14 @@ export class Utils {
     return Utils.resolvePath();
   }
 
-  public static openExternalLink(url: string, secure: boolean = true): void {
+  public static async openExternalLink(url: string, secure: boolean = true): Promise<void> {
     if (url.startsWith('https://') === false && secure === true) {
       this.debug('Denied to open external URL: %s', url);
       return;
     }
 
     this.debug('Opening external URL: %s', url);
-    shell.openExternal(url);
+    await shell.openExternal(url);
   }
 
   public static sleep(ms: number): Promise<void> {

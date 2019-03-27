@@ -198,9 +198,6 @@ export const InterceptProtocol = async (
     throw new Error('Internal host or access token is not defined');
   }
 
-  // Make sure we don't block requests on this webview
-  ses.webRequest.onBeforeRequest({urls: [`${INTERCEPTED_PROTOCOL}://*`]}, <any>null);
-
   return new Promise((resolve, reject) =>
     ses.protocol.uninterceptProtocol(INTERCEPTED_PROTOCOL, () =>
       ses.protocol.interceptStreamProtocol(

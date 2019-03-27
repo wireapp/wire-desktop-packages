@@ -47,7 +47,7 @@ export class Installer extends WindowManager {
 
   public async show(): Promise<void> {
     await super.prepare();
-    super.show();
+    await super.show();
 
     await this.freezeBrowserWindow();
     await this.windowToBeShown();

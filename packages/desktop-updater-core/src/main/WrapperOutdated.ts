@@ -51,7 +51,7 @@ export class WrapperOutdated extends WindowManager {
 
   public async show(): Promise<void> {
     await super.prepare();
-    super.show();
+    await super.show();
   }
 
   public whenClosed(): void {
@@ -61,13 +61,13 @@ export class WrapperOutdated extends WindowManager {
     process.exitCode = 0;
   }
 
-  public close(event: Event, options: WrapperOutdatedInterface): void {
+  public async close(event: Event, options: WrapperOutdatedInterface): Promise<void> {
     const {showDetails} = options;
     if (showDetails === true) {
       if (WrapperOutdated.IS_MACOS) {
-        Utils.openExternalLink(Config.WrapperOutdated.WRAPPER_UPDATE_LINK_MACOS, false);
+        await Utils.openExternalLink(Config.WrapperOutdated.WRAPPER_UPDATE_LINK_MACOS, false);
       } else {
-        Utils.openExternalLink(Config.WrapperOutdated.WRAPPER_UPDATE_LINK_OTHERS);
+        await Utils.openExternalLink(Config.WrapperOutdated.WRAPPER_UPDATE_LINK_OTHERS);
       }
     }
 

@@ -30,40 +30,22 @@ export class CookieManager {
   private static readonly translateExpirationDate = (expires: Date | undefined) =>
     expires ? Math.round(expires.getTime() / 1000) : undefined;
 
-  private static _set(cookieData: Electron.Details, session: Electron.Session): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (!cookieData.name || !cookieData.value) {
-        return reject('Cookie name and value must be set');
-      }
+  private static async _set(cookieData: Electron.Details, session: Electron.Session): Promise<void> {
+    if (!cookieData.name || !cookieData.value) {
+      throw new Error('Cookie name and value must be set');
+    }
 
-      CookieManager.debug('Setting cookie "%s"', cookieData.name);
+    CookieManager.debug('Setting cookie "%s"', cookieData.name);
 
-      const isMaximumBytesReached =
-        Buffer.byteLength(cookieData.name, 'utf8') > CookieManager.MAX_COOKIE_LENGTH ||
-        Buffer.byteLength(cookieData.value, 'utf8') > CookieManager.MAX_COOKIE_LENGTH;
-      if (isMaximumBytesReached) {
-        return reject('Maximum bytes for a cookie exceeded');
-      }
+    const isMaximumBytesReached =
+      Buffer.byteLength(cookieData.name, 'utf8') > CookieManager.MAX_COOKIE_LENGTH ||
+      Buffer.byteLength(cookieData.value, 'utf8') > CookieManager.MAX_COOKIE_LENGTH;
+    if (isMaximumBytesReached) {
+      throw new Error('Maximum bytes for a cookie exceeded');
+    }
 
-      session.cookies.set(cookieData, error => {
-        if (error) {
-          return reject(error);
-        }
-        CookieManager.debug('Successfully set cookie "%s"', cookieData.name);
-        resolve();
-      });
-    });
-  }
-  private static _get(url: string, session: Electron.Session): Promise<Electron.Cookie[]> {
-    return new Promise((resolve, reject) => {
-      session.cookies.get({url}, (error, cookies) => {
-        if (error) {
-          return reject(error);
-        }
-        CookieManager.debug('Getting a cookie', url, cookies);
-        return resolve(cookies);
-      });
-    });
+    await session.cookies.set(cookieData);
+    CookieManager.debug('Successfully set cookie "%s"', cookieData.name);
   }
 
   public static async set(cookiesRaw: string[], urlRaw: string, ses: Electron.Session): Promise<void> {
@@ -92,7 +74,7 @@ export class CookieManager {
     let serializedCookie = '';
 
     // Get all cookies related to this url
-    const cookiesRaw: Electron.Cookie[] = await this._get(url, session);
+    const cookiesRaw: Electron.Cookie[] = ((await session.cookies.get({url})) as unknown) as Electron.Cookie[];
     if (cookiesRaw !== undefined && cookiesRaw.length > 0) {
       for (const cookie of cookiesRaw) {
         if (cookie.name && cookie.value) {
