@@ -28,6 +28,8 @@ import {DecisionButton, GlobalStyle, MainContent, MainHeading, UpdaterContainer}
 
 interface State {
   decision: Updater.Decision;
+  enteringChangelog: boolean;
+  exitedChangelog: boolean;
   isUpdatesInstallAutomatically: boolean;
   showChangelog: boolean;
 }
@@ -41,15 +43,19 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
         allow: false,
         installAutomatically: false,
       },
+      enteringChangelog: false,
+      exitedChangelog: true,
       isUpdatesInstallAutomatically: false,
       showChangelog: false,
     };
   }
 
-  public static TOPIC = {
+  public static readonly TOPIC = {
     SEND_DECISION: 'Prompt.TOPIC.SEND_DECISION',
     SEND_RESIZE_BROWSER_WINDOW: 'Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
   };
+
+  public static readonly TRANSITION_DELAY: number = 600;
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.showChangelog !== prevState.showChangelog) {
@@ -88,10 +94,21 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     });
   };
 
+  setChangelogVisibility = (toggleChangelog: boolean) => {
+    this.setState(state => {
+      const showChangelog = !state.showChangelog;
+      return {
+        enteringChangelog: showChangelog ? false : true,
+        exitedChangelog: showChangelog ? true : false,
+        showChangelog: toggleChangelog ? showChangelog : state.showChangelog,
+      };
+    });
+  };
+
   toggleChangelog = (event?: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState(state => ({
-      showChangelog: !state.showChangelog,
-    }));
+    this.setChangelogVisibility(true);
+    // Note: setTimeout is needed since we cannot know when macOS resized the window
+    setTimeout(() => this.setChangelogVisibility(false), Prompt.TRANSITION_DELAY);
   };
 
   render() {
@@ -113,7 +130,11 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     }
     return (
       <UpdaterContainer>
-        <Opacity in={manifest && this.state.showChangelog} mountOnEnter={false} unmountOnExit={true}>
+        <Opacity
+          in={manifest && this.state.showChangelog && this.state.enteringChangelog}
+          mountOnEnter={false}
+          unmountOnExit={true}
+        >
           <TranslatedPromptChangelogModal
             onClose={() => this.toggleChangelog()}
             manifest={manifest}
@@ -121,7 +142,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
             changelogUrl={changelogUrl}
           />
         </Opacity>
-        <Opacity in={!this.state.showChangelog}>
+        <Opacity in={!this.state.showChangelog && this.state.exitedChangelog}>
           <MainContent style={{width: '480px'}}>
             <MainHeading>{title}</MainHeading>
             <Paragraph>

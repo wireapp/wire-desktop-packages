@@ -34,11 +34,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   *::selection {
-    background: #fff;
+    background: transparent;
     color: #171717;
   }
   *::-webkit-selection {
-    background: #fff;
+    background: transparent;
     color: #171717;
   }
 
