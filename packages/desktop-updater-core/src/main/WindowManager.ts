@@ -93,8 +93,17 @@ export abstract class WindowManager {
 
   public onReadyToShow(): void {
     this.debug('onReadyToShow called');
-    if (this.browserWindow) {
-      this.browserWindow.show();
+    const show = () => (this.browserWindow ? this.browserWindow.show() : null);
+    if (this.attachedMode && this.mainWindow) {
+      if (this.mainWindow.isVisible()) {
+        this.debug('mainWindow is visible');
+        show();
+      } else {
+        this.debug('Wait for the mainWindow to be ready');
+        this.mainWindow.once('show', () => show());
+      }
+    } else {
+      show();
     }
   }
 
@@ -124,9 +133,11 @@ export abstract class WindowManager {
     this.browserWindow.webContents.once('did-finish-load', () => this.didFinishLoad());
 
     // Debug
-    this.browserWindow.webContents.on('console-message', (event, level, message) =>
-      this.debug(`From WebContents: ${message}`)
-    );
+    if (this.debug.enabled) {
+      this.browserWindow.webContents.on('console-message', (event, level, message) =>
+        this.debug(`From WebContents: ${message}`)
+      );
+    }
 
     // Close behavior
     this.browserWindow.once('closed', () => this.whenClosed());
@@ -136,6 +147,7 @@ export abstract class WindowManager {
       event.preventDefault();
 
       // Only allow HTTPS URLs to be opened in the browser
+      this.debug('New window detected, opening as external link: "%s"', _url);
       await Utils.openExternalLink(_url, true);
     });
 
@@ -146,34 +158,30 @@ export abstract class WindowManager {
       {
         urls: ['*'],
       },
-      (details, callback) => {
+      async (details, callback) => {
         // Only allow renderer document root
         const {url} = details;
-        const {pathname, protocol, host} = new URL(url);
+        const {protocol, host} = new URL(url);
 
-        // ToDo: Make it permanent once it will be ported to Electron
-        if (fileURLToPath) {
-          // Allow web tools if debug is enabled
-          if (this.debug.enabled && protocol === 'chrome-devtools:' && host === 'devtools') {
-            return callback({cancel: false});
-          }
-
-          // Allow pages within the document root
-          this.debug(path.resolve(fileURLToPath(url)));
-          this.debug(this.RENDERER_DOCUMENT_ROOT);
-          if (path.resolve(fileURLToPath(url)).startsWith(this.RENDERER_DOCUMENT_ROOT)) {
-            return callback({cancel: false});
-          }
-
-          // Anything below will close the window with
-          callback({cancel: true});
-          if (this.browserWindow) {
-            this.debug('Forbidden URL requested: %s, closing window.', pathname);
-            this.browserWindow.close();
-          }
-        } else {
+        // Allow web tools if debug is enabled
+        if (this.debug.enabled && protocol === 'chrome-devtools:' && host === 'devtools') {
           return callback({cancel: false});
         }
+
+        // Allow pages within the document root
+        if (protocol === 'file:') {
+          const filePath = path.resolve(fileURLToPath(url));
+          if (filePath.startsWith(this.RENDERER_DOCUMENT_ROOT)) {
+            this.debug('Allowed file URL "%s"', url);
+            return callback({cancel: false});
+          } else {
+            this.debug('Denied file URL "%s"', url);
+          }
+        }
+
+        // Anything below will close the window with
+        this.debug('Forbidden URL requested: "%s"', url);
+        return callback({cancel: true});
       }
     );
   }

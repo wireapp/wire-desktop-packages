@@ -48,9 +48,7 @@ export class Installer extends WindowManager {
   public async show(): Promise<void> {
     await super.prepare();
     await super.show();
-
     await this.freezeBrowserWindow();
-    await this.windowToBeShown();
   }
 
   public async close(): Promise<void> {
@@ -79,19 +77,9 @@ export class Installer extends WindowManager {
     this.signalRenderer();
   }
 
-  private windowToBeShown(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (this.browserWindow) {
-        this.browserWindow.once('ready-to-show', () => resolve());
-      } else {
-        reject();
-      }
-    });
-  }
-
   private async freezeBrowserWindow(freeze: boolean = true): Promise<void> {
     if (this.mainWindow) {
-      if (freeze === true) {
+      if (freeze) {
         this.debug('Resize off');
         this.mainWindow.setResizable(false);
         const screenshot = await this.screenshotMainWindow();
@@ -105,14 +93,13 @@ export class Installer extends WindowManager {
     }
   }
 
-  private screenshotMainWindow(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      if (this.mainWindow) {
-        this.mainWindow.capturePage(img => resolve(img.toDataURL()));
-      } else {
-        reject();
-      }
-    });
+  private async screenshotMainWindow(): Promise<string> {
+    if (!this.mainWindow) {
+      throw new Error('Main window is not available');
+    }
+    const img = await this.mainWindow.webContents.capturePage();
+    // https://github.com/electron/electron/blob/master/docs/api/web-contents.md#contentscapturepagerect
+    return (img as any).toDataURL();
   }
 
   /**
