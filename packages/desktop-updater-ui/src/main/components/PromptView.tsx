@@ -32,6 +32,7 @@ interface State {
   exitedChangelog: boolean;
   isUpdatesInstallAutomatically: boolean;
   showChangelog: boolean;
+  activateChangelog: boolean;
 }
 
 class Prompt extends React.Component<PromptContainerState & WithTranslation, State> {
@@ -39,6 +40,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     super(props);
     this.state = {
       ...this.state,
+      activateChangelog: false,
       decision: {
         allow: false,
         installAutomatically: false,
@@ -55,14 +57,23 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     SEND_RESIZE_BROWSER_WINDOW: 'Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
   };
 
-  public static readonly TRANSITION_DELAY: number = 600;
+  public static readonly OPACITY_TRANSITION_DELAY: number = 1000;
+  public static readonly OPACITY_TRANSITION_SPEED: number = 150;
+  public static sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if (this.state.showChangelog !== prevState.showChangelog) {
+      this.toggleChangelogVisibility(prevState.showChangelog);
+      await Prompt.sleep(Prompt.OPACITY_TRANSITION_SPEED);
       EventDispatcher.send(
         Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
         this.state.showChangelog ? PromptChangelogModal.CHANGELOG_WINDOW_SIZE : PromptChangelogModal.PROMPT_WINDOW_SIZE
       );
+      // Note: setTimeout is needed since we cannot know when macOS resized the window
+      await Prompt.sleep(Prompt.OPACITY_TRANSITION_DELAY);
+      this.toggleChangelogVisibility(this.state.showChangelog);
     }
   }
 
@@ -94,21 +105,14 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     });
   };
 
-  setChangelogVisibility = (toggleChangelog: boolean) => {
-    this.setState(state => {
-      const showChangelog = !state.showChangelog;
-      return {
-        enteringChangelog: showChangelog ? false : true,
-        exitedChangelog: showChangelog ? true : false,
-        showChangelog: toggleChangelog ? showChangelog : state.showChangelog,
-      };
-    });
+  toggleChangelogVisibility = (activateChangelog: boolean) => {
+    this.setState(state => ({activateChangelog}));
   };
 
   toggleChangelog = (event?: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setChangelogVisibility(true);
-    // Note: setTimeout is needed since we cannot know when macOS resized the window
-    setTimeout(() => this.setChangelogVisibility(false), Prompt.TRANSITION_DELAY);
+    this.setState(state => ({
+      showChangelog: !state.showChangelog,
+    }));
   };
 
   render() {
@@ -131,9 +135,10 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     return (
       <UpdaterContainer>
         <Opacity
-          in={manifest && this.state.showChangelog && this.state.enteringChangelog}
+          in={manifest && this.state.showChangelog && this.state.activateChangelog}
           mountOnEnter={false}
           unmountOnExit={true}
+          timeout={Prompt.OPACITY_TRANSITION_SPEED}
         >
           <TranslatedPromptChangelogModal
             onClose={() => this.toggleChangelog()}
@@ -142,7 +147,12 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
             changelogUrl={changelogUrl}
           />
         </Opacity>
-        <Opacity in={!this.state.showChangelog && this.state.exitedChangelog}>
+        <Opacity
+          in={!this.state.showChangelog && !this.state.activateChangelog}
+          mountOnEnter={false}
+          unmountOnExit={true}
+          timeout={Prompt.OPACITY_TRANSITION_SPEED}
+        >
           <MainContent style={{width: '480px'}}>
             <MainHeading>{title}</MainHeading>
             <Paragraph>

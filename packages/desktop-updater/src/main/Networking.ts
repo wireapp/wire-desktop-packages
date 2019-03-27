@@ -62,7 +62,6 @@ const httpsMock = {
           // Note: Maybe we should also abort the request as well?
           // Issue is that the promise won't be rejected and since there no way to know if
           // Axios received the error, we would need our own adapter
-          //setTimeout(() => request.abort(), 1000);
           if (!socket.destroyed) {
             socket.destroy();
           }
