@@ -57,7 +57,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     SEND_RESIZE_BROWSER_WINDOW: 'Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
   };
 
-  public static readonly OPACITY_TRANSITION_DELAY: number = 1000;
+  public static readonly OPACITY_TRANSITION_DELAY: number = 350;
   public static readonly OPACITY_TRANSITION_SPEED: number = 150;
   public static sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
