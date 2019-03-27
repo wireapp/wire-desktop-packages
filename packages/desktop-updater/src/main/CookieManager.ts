@@ -19,6 +19,7 @@
 
 import debug from 'debug';
 import * as SetCookieParser from 'set-cookie-parser';
+import {URL} from 'url';
 
 export class CookieManager {
   private static readonly debug: typeof debug = debug('wire:server:cookiemanager');
@@ -30,11 +31,12 @@ export class CookieManager {
     expires ? Math.round(expires.getTime() / 1000) : undefined;
 
   private static _set(cookieData: Electron.Details, session: Electron.Session): Promise<void> {
-    CookieManager.debug('Setting a cookie', cookieData);
     return new Promise((resolve, reject) => {
       if (!cookieData.name || !cookieData.value) {
         return reject('Cookie name and value must be set');
       }
+
+      CookieManager.debug('Setting cookie "%s"', cookieData.name);
 
       const isMaximumBytesReached =
         Buffer.byteLength(cookieData.name, 'utf8') > CookieManager.MAX_COOKIE_LENGTH ||
@@ -47,6 +49,7 @@ export class CookieManager {
         if (error) {
           return reject(error);
         }
+        CookieManager.debug('Successfully set cookie "%s"', cookieData.name);
         resolve();
       });
     });
@@ -64,27 +67,24 @@ export class CookieManager {
   }
 
   public static async set(cookiesRaw: string[], urlRaw: string, ses: Electron.Session): Promise<void> {
-    if (cookiesRaw !== undefined && cookiesRaw.length > 0) {
-      CookieManager.debug('Cookies detected');
-      const url = new URL(urlRaw);
-      const cookies: SetCookieParser.Cookie[] = SetCookieParser.parse(cookiesRaw);
+    const origin = new URL(urlRaw).origin;
+    const cookies: SetCookieParser.Cookie[] = SetCookieParser.parse(cookiesRaw);
 
-      for (const cookie of cookies) {
-        const expirationDate = CookieManager.translateExpirationDate(cookie.expires);
-        await CookieManager._set(
-          {
-            domain: cookie.domain,
-            expirationDate,
-            httpOnly: cookie.httpOnly ? cookie.httpOnly : false,
-            name: cookie.name,
-            path: cookie.path ? cookie.path : '/',
-            secure: cookie.secure ? cookie.secure : false,
-            url: url.origin,
-            value: cookie.value,
-          },
-          ses
-        );
-      }
+    for (const cookie of cookies) {
+      const expirationDate = CookieManager.translateExpirationDate(cookie.expires);
+      await CookieManager._set(
+        {
+          domain: cookie.domain,
+          expirationDate,
+          httpOnly: cookie.httpOnly ? cookie.httpOnly : false,
+          name: cookie.name,
+          path: cookie.path ? cookie.path : '/',
+          secure: cookie.secure ? cookie.secure : false,
+          url: origin,
+          value: cookie.value,
+        },
+        ses
+      );
     }
   }
 

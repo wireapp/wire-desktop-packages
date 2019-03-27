@@ -30,53 +30,47 @@ import {CookieManager} from './CookieManager';
 import {Config} from './index';
 import {UploadData} from './Utils';
 
+export const INTERCEPTED_PROTOCOL = 'https';
+export const TIMEOUT_SOCKET = 5000; // 5 seconds
+export const TIMEOUT_REQUEST_RESPONSE_UPLOAD = 3600000; // 1 hour
+export const TIMEOUT_REQUEST_RESPONSE = 120000; // 2 minutes
+
 const globalAxiosConfig: AxiosRequestConfig = {
   responseType: 'stream',
-  timeout: 30000,
+  timeout: TIMEOUT_REQUEST_RESPONSE,
 };
 
-export const INTERCEPTED_PROTOCOL = 'https';
+const debugCheckServerIdentity: typeof debug = debug('wire:server:checkserveridentity');
 
 // Certificate pinning
 const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
-const httpsCertificatePinningMock = {
+
+const httpsMock = {
   ...https,
   request: (options: https.RequestOptions, callback?: (res: http.IncomingMessage) => void): http.ClientRequest => {
-    const optionsWithPinning: https.RequestOptions & {checkServerIdentity: Function} = {
-      ...options,
-      checkServerIdentity: (hostname: string, cert: tls.DetailedPeerCertificate) => {
-        // Make sure the certificate is issued to the host we are connected to
-        const isCheckServerIdentityFailed = tls.checkServerIdentity(hostname, cert);
-        if (isCheckServerIdentityFailed) {
-          return isCheckServerIdentityFailed;
-        }
+    const request = https.request(options, callback);
 
-        // Certificate pinning
-        if (hostnameShouldBePinned(hostname)) {
-          const certData = {
-            data: buildCert(cert),
-            issuerCert: {
-              data: buildCert(cert.issuerCertificate),
-            },
-          };
-
-          const pinningResults = verifyPinning(hostname, <any>certData);
-          for (const result of Object.values(pinningResults)) {
-            if (result === false) {
-              return new Error(
-                `Certificate verification failed for "${hostname}":\n${
-                  pinningResults.errorMessage
-                }, showing certificate pinning error dialog.`
-              );
-            }
+    // If the socket is inactive after X seconds
+    // and we're still connecting, kill the socket
+    request.once('socket', socket => {
+      socket.setTimeout(TIMEOUT_SOCKET, () => {
+        debugInterceptProtocol('Is socket connecting?', socket.connecting);
+        if (socket.connecting || socket.destroyed) {
+          const error = 'Socket timed out';
+          debugInterceptProtocol(error);
+          request.emit('error', new Error(error));
+          // Note: Maybe we should also abort the request as well?
+          // Issue is that the promise won't be rejected here: https://github.com/axios/axios/blob/master/lib/adapters/http.js#L242
+          // And since there no way to know if Axios received the error, we would need our own adapter
+          //setTimeout(() => request.abort(), 1000);
+          if (!socket.destroyed) {
+            socket.destroy();
           }
         }
+      });
+    });
 
-        return;
-      },
-    };
-
-    return https.request(optionsWithPinning, callback);
+    return request;
   },
 };
 
@@ -84,6 +78,8 @@ class AgentManager {
   public static readonly httpsAgentsDefaults: Partial<https.AgentOptions> = {
     keepAlive: true,
     maxSockets: 6, // 6 max sockets per origin, from Chromium
+    minDHSize: 2048,
+    rejectUnauthorized: true,
     secureProtocol: 'TLSv1_2_method',
   };
   public static readonly httpsAgents: {
@@ -92,12 +88,53 @@ class AgentManager {
   } = {
     local: new https.Agent({
       ...AgentManager.httpsAgentsDefaults,
-      cert: Config.Server.WEB_SERVER_HOST_CERTIFICATE,
+      ca: Config.Server.WEB_SERVER_HOST_CERTIFICATE,
+      checkServerIdentity: (hostname: string, cert: tls.PeerCertificate) => {
+        if (hostname !== Config.Server.WEB_SERVER_HOST_LOCAL) {
+          return new Error('This agent can only be used for the local web server');
+        }
+        return undefined;
+      },
       ciphers: Config.Server.WEB_SERVER_CIPHERS,
-      rejectUnauthorized: false,
     }),
     remote: new https.Agent({
       ...AgentManager.httpsAgentsDefaults,
+      checkServerIdentity: (hostname: string, cert: tls.PeerCertificate) => {
+        // Make sure the certificate is issued to the host we are connected to
+        const isCheckServerIdentityFailed = tls.checkServerIdentity(hostname, cert);
+        if (isCheckServerIdentityFailed) {
+          debugCheckServerIdentity('Check failed for "%s"', hostname);
+          return isCheckServerIdentityFailed;
+        }
+
+        // Certificate pinning
+        if (hostnameShouldBePinned(hostname)) {
+          debugCheckServerIdentity('Verifying pinning for "%s"', hostname);
+          const certData = {
+            data: buildCert(cert),
+            issuerCert: {
+              data: buildCert((cert as tls.DetailedPeerCertificate).issuerCertificate),
+            },
+          };
+
+          const pinningResults = verifyPinning(hostname, <any>certData);
+          for (const result of Object.values(pinningResults)) {
+            if (result === false) {
+              const error = `Certificate verification failed for "${hostname}":\n${
+                pinningResults.errorMessage
+              }, showing certificate pinning error dialog.`;
+
+              debugCheckServerIdentity(error);
+              return new Error(error);
+            }
+          }
+          debugCheckServerIdentity('Pinning valid for "%s"', hostname);
+        } else {
+          debugCheckServerIdentity('Skipping certificate pinning check for "%s"', hostname);
+        }
+
+        return undefined;
+      },
     }),
   };
 }
@@ -108,7 +145,7 @@ class Request {
     headers?: Electron.Headers,
     cookies?: string
   ): Promise<AxiosResponse<T>> {
-    const options: AxiosRequestConfig & {transport: typeof httpsCertificatePinningMock} = {
+    const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
       ...globalAxiosConfig,
       ...config,
       headers: {
@@ -116,7 +153,7 @@ class Request {
         ...(cookies ? {Cookie: cookies} : {}),
       },
       httpsAgent: AgentManager.httpsAgents.remote,
-      transport: httpsCertificatePinningMock,
+      transport: httpsMock,
     };
     return axios(options);
   }
@@ -181,6 +218,7 @@ export const InterceptProtocol = async (
               data: uploadData,
               headers,
               method,
+              timeout: uploadData ? TIMEOUT_REQUEST_RESPONSE_UPLOAD : TIMEOUT_REQUEST_RESPONSE,
               url,
             };
 
@@ -199,20 +237,20 @@ export const InterceptProtocol = async (
 
               debugInterceptProtocol('Forwarding "%s" request to "%s"', url, proxiedRequest.toString());
 
-              const options: AxiosRequestConfig & {transport: typeof https} = {
+              const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
                 ...defaultConfig,
                 headers: {
                   ...headers,
                   Authorization: `${Config.Server.WEB_SERVER_TOKEN_NAME} ${accessToken}`,
                 },
                 httpsAgent: AgentManager.httpsAgents.local,
-                transport: https,
+                transport: httpsMock,
                 url: proxiedRequest.toString(),
               };
               response = await axios(options);
             } else {
               // Anything else
-              // Only get cookie outside the local server, we don't need it within
+              // Only get cookie outside the local server, we don't need to support them within
               const cookies = await CookieManager.get(url, ses);
               response = await Request.doRemote(defaultConfig, headers, cookies);
             }
@@ -221,27 +259,34 @@ export const InterceptProtocol = async (
               response = error.response;
             } else if (error.request) {
               debugInterceptProtocol('Error during the request. Aborting.');
-              debugInterceptProtocol(error.request);
               return callback();
             } else {
               debugInterceptProtocol('Unknown error during the request. Aborting.');
-              debugInterceptProtocol(error);
               return callback();
             }
           }
 
           // Workaround for https://github.com/electron/electron/issues/13228
           // Save the cookie to the session, if any
-          await CookieManager.set(response.headers['set-cookie'], url, ses);
-
-          // Call the callback within a setImmediate function
-          // Otherwise it gets stuck for unknown reasons after setting the cookie
-          setImmediate(() => {
-            callback({
-              data: response.data,
-              headers: response.headers,
-              statusCode: response.status,
+          const cookies = response.headers['set-cookie'];
+          if (cookies !== undefined && cookies.length > 0) {
+            debugInterceptProtocol('Incoming cookies detected');
+            // Call it within a setImmediate function otherwise it gets stuck for unknown reasons
+            setImmediate(async () => {
+              try {
+                await CookieManager.set(cookies, url, ses);
+                debugInterceptProtocol('Successfully set the cookies');
+              } catch (error) {
+                debugInterceptProtocol('An error happened while setting the cookies:');
+                debugInterceptProtocol(error);
+              }
             });
+          }
+
+          return callback({
+            data: response.data,
+            headers: response.headers,
+            statusCode: response.status,
           });
         },
         error => {
@@ -249,7 +294,7 @@ export const InterceptProtocol = async (
             debugInterceptProtocol('An error happened while intercepting the protocol');
             return reject(error);
           }
-          resolve(error);
+          resolve();
         }
       )
     )
