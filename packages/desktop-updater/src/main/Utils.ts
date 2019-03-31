@@ -37,8 +37,11 @@ export class UploadData {
     return new Promise(resolve => ses.getBlobData(identifier, result => resolve(result)));
   }
 
-  public static async getData(uploadData: Electron.UploadData[], ses: Electron.Session): Promise<Buffer | undefined> {
-    const data = uploadData[0] || {};
+  public static async getData(
+    uploadData: Electron.UploadData[] | undefined,
+    ses: Electron.Session
+  ): Promise<Buffer | undefined> {
+    const data = uploadData ? uploadData[0] : {blobUUID: undefined, bytes: undefined};
 
     if (data.blobUUID) {
       UploadData.debug('Getting upload data Blob from UUID "%s"', data.blobUUID);

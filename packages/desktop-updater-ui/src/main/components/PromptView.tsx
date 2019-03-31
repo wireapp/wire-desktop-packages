@@ -30,7 +30,6 @@ interface State {
   decision: Updater.Decision;
   enteringChangelog: boolean;
   exitedChangelog: boolean;
-  isUpdatesInstallAutomatically: boolean;
   showChangelog: boolean;
   activateChangelog: boolean;
 }
@@ -47,7 +46,6 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
       },
       enteringChangelog: false,
       exitedChangelog: true,
-      isUpdatesInstallAutomatically: false,
       showChangelog: false,
     };
   }
@@ -91,7 +89,6 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
   onLaterClick = (): void => {
     this.onDecisionTaken({
       allow: false,
-      installAutomatically: false,
     });
   };
 
@@ -101,7 +98,6 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
         ...this.state.decision,
         installAutomatically: event.target.checked,
       },
-      isUpdatesInstallAutomatically: event.target.checked,
     });
   };
 
@@ -169,7 +165,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
             </Paragraph>
             {!isWebappTamperedWith && (
               <Paragraph>
-                <Checkbox checked={this.state.isUpdatesInstallAutomatically} onChange={this.toggleCheckbox}>
+                <Checkbox checked={this.state.decision.installAutomatically} onChange={this.toggleCheckbox}>
                   <CheckboxLabel>
                     <Trans>Install Wire updates automatically in the future</Trans>
                   </CheckboxLabel>

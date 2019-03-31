@@ -47,8 +47,10 @@ export class Installer extends WindowManager {
 
   public async show(): Promise<void> {
     await super.prepare();
-    await super.show();
-    await this.freezeBrowserWindow();
+    const freezeBrowserWindow = this.freezeBrowserWindow(true);
+    const show = super.show();
+    await freezeBrowserWindow;
+    await show;
   }
 
   public async close(): Promise<void> {
@@ -77,7 +79,7 @@ export class Installer extends WindowManager {
     this.signalRenderer();
   }
 
-  private async freezeBrowserWindow(freeze: boolean = true): Promise<void> {
+  private async freezeBrowserWindow(freeze: boolean): Promise<void> {
     if (this.mainWindow) {
       if (freeze) {
         this.debug('Resize off');
@@ -114,9 +116,9 @@ export class Installer extends WindowManager {
 
   public static async save(fileName: string, fileRaw: Buffer, envelopeRaw: Buffer): Promise<void> {
     this.debug('Saving bundle and manifest...');
-    await Promise.all([
-      Utils.writeFileAsBuffer(Utils.resolvePath(fileName), fileRaw), // Bundle
-      Utils.writeFileAsBuffer(Utils.resolvePath(Config.Updater.MANIFEST_FILE), envelopeRaw), // Manifest
-    ]);
+    const bundle = Utils.writeFileAsBuffer(Utils.resolvePath(fileName), fileRaw);
+    const manifest = Utils.writeFileAsBuffer(Utils.resolvePath(Config.Updater.MANIFEST_FILE), envelopeRaw);
+    await bundle;
+    await manifest;
   }
 }

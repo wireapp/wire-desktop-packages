@@ -139,19 +139,30 @@ class AgentManager {
 }
 
 class Request {
-  public static async doRemote<T>(
-    config: AxiosRequestConfig,
-    headers?: Electron.Headers,
-    cookies?: string
-  ): Promise<AxiosResponse<T>> {
+  public static async doRemote<T>(config: AxiosRequestConfig, cookies?: string): Promise<AxiosResponse<T>> {
     const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
       ...globalAxiosConfig,
       ...config,
       headers: {
-        ...(headers ? headers : {}),
+        ...(config.headers ? config.headers : {}),
         ...(cookies ? {Cookie: cookies} : {}),
       },
       httpsAgent: AgentManager.httpsAgents.remote,
+      transport: httpsMock,
+    };
+    return axios(options);
+  }
+
+  public static async doLocal<T>(config: AxiosRequestConfig, accessToken: string): Promise<AxiosResponse<T>> {
+    const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
+      ...globalAxiosConfig,
+      ...config,
+      headers: {
+        ...config.headers,
+        Authorization: `${Config.Server.WEB_SERVER_TOKEN_NAME} ${accessToken}`,
+      },
+      httpsAgent: AgentManager.httpsAgents.local,
+      method: 'GET',
       transport: httpsMock,
     };
     return axios(options);
@@ -163,16 +174,14 @@ const debugIsInternetAvailable: typeof debug = debug('wire:server:isinternetavai
 export const isInternetAvailable = async (url: string) => {
   debugIsInternetAvailable('Checking if "%s" is online...', url);
   try {
-    await Request.doRemote(
-      {
-        ...globalAxiosConfig,
-        method: 'HEAD',
-        url,
-      },
-      {
+    await Request.doRemote({
+      ...globalAxiosConfig,
+      headers: {
         'User-Agent': session.defaultSession ? session.defaultSession.getUserAgent() : '',
-      }
-    );
+      },
+      method: 'HEAD',
+      url,
+    });
   } catch (error) {
     if (!error.response) {
       debugIsInternetAvailable('Error while checking for internet connection');
@@ -207,48 +216,38 @@ export const InterceptProtocol = async (
 
           let response: AxiosResponse;
           try {
-            const uploadData =
-              typeof request.uploadData !== 'undefined' ? await UploadData.getData(request.uploadData, ses) : undefined;
-            const defaultConfig: AxiosRequestConfig = {
-              ...globalAxiosConfig,
-              data: uploadData,
-              headers,
-              method,
-              timeout: uploadData ? TIMEOUT_REQUEST_RESPONSE_UPLOAD : TIMEOUT_REQUEST_RESPONSE,
-              url,
-            };
-
             if (isLocalServer) {
+              // Prepare the URL to proxy to the local server
               const parsedUrl = new URL(url);
-
-              // Extra check for the origin
               if (parsedUrl.origin !== currentEnvironmentBaseUrl.origin) {
                 throw new Error('Origin does not match');
               }
-
-              // Prepare the URL to proxy to the local server
               const proxiedRequest = parsedUrl;
               proxiedRequest.protocol = internalHost.protocol;
               proxiedRequest.host = internalHost.host;
 
               debugInterceptProtocol('Forwarding "%s" request to "%s"', url, proxiedRequest.toString());
 
-              const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
-                ...defaultConfig,
-                headers: {
-                  ...headers,
-                  Authorization: `${Config.Server.WEB_SERVER_TOKEN_NAME} ${accessToken}`,
-                },
-                httpsAgent: AgentManager.httpsAgents.local,
-                transport: httpsMock,
+              const options: AxiosRequestConfig = {
+                ...globalAxiosConfig,
+                headers,
                 url: proxiedRequest.toString(),
               };
-              response = await axios(options);
+              response = await Request.doLocal(options, accessToken);
             } else {
               // Anything else
-              // Only get cookie outside the local server, we don't need to support them within
-              const cookies = await CookieManager.get(url, ses);
-              response = await Request.doRemote(defaultConfig, headers, cookies);
+              // Only get cookie / data outside the local server, we don't need to support them within
+              const cookies = CookieManager.get(url, ses);
+              const uploadData = UploadData.getData(request.uploadData, ses);
+              const options: AxiosRequestConfig = {
+                ...globalAxiosConfig,
+                data: await uploadData,
+                headers,
+                method,
+                timeout: (await uploadData) ? TIMEOUT_REQUEST_RESPONSE_UPLOAD : TIMEOUT_REQUEST_RESPONSE,
+                url,
+              };
+              response = await Request.doRemote(options, await cookies);
             }
           } catch (error) {
             if (error.response) {

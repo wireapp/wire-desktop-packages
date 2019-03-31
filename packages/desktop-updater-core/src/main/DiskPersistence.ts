@@ -20,13 +20,15 @@
 import debug from 'debug';
 import * as fs from 'fs-extra';
 
+type persistenceSettingIdentifier = 'installAutomatically';
+
 export class DiskPersistence {
   private static readonly data = {};
   private static readonly debug = debug('wire:updater:DiskPersistence');
 
   public constructor(private readonly file: string) {}
 
-  public async set<T>(name: string, value: T): Promise<T> {
+  public async set<T>(name: persistenceSettingIdentifier, value: T): Promise<T> {
     if (typeof DiskPersistence.data[this.file] === 'undefined') {
       await this.readFromFile();
     }
@@ -35,7 +37,7 @@ export class DiskPersistence {
     return value;
   }
 
-  public async get<T>(name: string, defaultValue?: T): Promise<T> {
+  public async get<T>(name: persistenceSettingIdentifier, defaultValue?: T): Promise<T> {
     if (typeof DiskPersistence.data[this.file] === 'undefined') {
       await this.readFromFile();
     }

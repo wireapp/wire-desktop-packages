@@ -159,17 +159,19 @@ export class Downloader {
         },
         url: fileName,
       });
-      this.debug('onDownloadProgress finished and cancelled');
-      throttledOnDownloadProgress.cancel();
 
-      // Verify file integrity of the compressed file
-      await Verifier.verifyFileIntegrity(data, checksumCompressed);
+      throttledOnDownloadProgress.cancel();
+      this.debug('onDownloadProgress finished and cancelled');
 
       // Decompress the file
       const dataDecompressed = await this.decompressBinary(data);
 
       // Verify file integrity of the file
-      await Verifier.verifyFileIntegrity(dataDecompressed, checksum);
+      const checksumCompressedVerification = Verifier.verifyFileIntegrity(data, checksumCompressed);
+      const checksumVerification = Verifier.verifyFileIntegrity(dataDecompressed, checksum);
+
+      await checksumCompressedVerification;
+      await checksumVerification;
 
       return dataDecompressed;
     } catch (error) {

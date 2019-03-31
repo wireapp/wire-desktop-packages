@@ -86,9 +86,6 @@ export class Server {
   }
 
   public async start(): Promise<Electron.BrowserWindow> {
-    await Environment.set(this.currentEnvironment);
-    await UpdaterUtils.ensureUpdaterFolderExists();
-
     if (this.isServerEnabled()) {
       throw new Error('Server is already active');
     }
@@ -97,6 +94,11 @@ export class Server {
       throw new Error('Environment URL must be available');
     }
 
+    const setEnvironment = Environment.set(this.currentEnvironment);
+    const ensureUpdaterFolderExists = UpdaterUtils.ensureUpdaterFolderExists();
+    await setEnvironment;
+    await ensureUpdaterFolderExists;
+
     // Pass data to the updater
     Updater.Main.currentClientVersion = this.currentClientVersion;
     Updater.Main.currentEnvironment = this.currentEnvironment;
@@ -104,7 +106,6 @@ export class Server {
     Updater.Main.updatesEndpoint = this.updatesEndpoint;
     Updater.Main.connectivityCheckEndpoints = this.connectivityCheckEndpoints;
 
-    // Ensure WEB_SERVER_TOKEN_NAME is alphanumeric only
     if (!Server.WEB_SERVER_TOKEN_NAME.match(/^[a-zA-Z0-9]*$/)) {
       throw new Error('Token name must be alphanumeric');
     }
@@ -141,8 +142,9 @@ export class Server {
 
         Server.debug('Installing the LCB for the current environment');
         await UpdaterUtils.copyFiles(await UpdaterUtils.getLCBPath(), UpdaterUtils.resolveRootPath());
-        manifest = await Updater.Main.getLocalVersion(this.currentClientVersion, this.trustStore);
         Server.debug('Successfully installed the LCB');
+
+        manifest = await Updater.Main.getLocalVersion(this.currentClientVersion, this.trustStore);
       } catch (error) {
         Server.debug(error);
         Server.debug('Installing the bundle did not succeed, checking remotely if there is any update available.');

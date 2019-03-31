@@ -62,7 +62,7 @@ export namespace Updater {
     private static readonly BROADCAST_RENDERER_TIMEOUT: number = Config.Updater.BROADCAST_RENDERER_TIMEOUT;
     private static readonly FALLBACK_WEB_VERSION: string = Config.Updater.FALLBACK_WEB_VERSION;
 
-    public static reload?: (documentRoot: string) => {};
+    public static reload?: (documentRoot: string) => Promise<void>;
     public static isInternetAvailable?: (url: string) => Promise<boolean>;
     public static browserWindow?: Electron.BrowserWindow = undefined;
 
@@ -129,7 +129,7 @@ export namespace Updater {
         if (typeof this.currentWebappVersion === 'undefined') {
           // Version was never set (bundle missing?), use old date to trigger blacklisting
           this.currentWebappVersion = Main.FALLBACK_WEB_VERSION;
-          this.currentWebappEnvironment = await Environment.get();
+          this.currentWebappEnvironment = this.currentEnvironment;
         }
 
         this.debug('Client version: %s', this.currentClientVersion);
@@ -153,8 +153,14 @@ export namespace Updater {
         const envelope: Updater.Envelope = await Downloader.getLatestEnvelope();
 
         // Check integrity
-        await Verifier.ensurePublicKeyIsTrusted(envelope.publicKey, this.trustStore);
-        await Verifier.verifyEnvelopeIntegrity(envelope.data, envelope.signature, envelope.publicKey);
+        const ensurePublicKeyIsTrusted = Verifier.ensurePublicKeyIsTrusted(envelope.publicKey, this.trustStore);
+        const verifyEnvelopeIntegrity = Verifier.verifyEnvelopeIntegrity(
+          envelope.data,
+          envelope.signature,
+          envelope.publicKey
+        );
+        await ensurePublicKeyIsTrusted;
+        await verifyEnvelopeIntegrity;
 
         // Extract manifest
         const manifest: Updater.Manifest = await Downloader.extractManifestFrom(envelope);
@@ -198,11 +204,11 @@ export namespace Updater {
 
         if (!skipNotification) {
           // Update has been deployed while the app is running
-          // Wait for user to click on update
+          // Wait for user to click on the update
 
           // Fire notification only if Wire is already launched
           this.debug('Display notification about the update...');
-          await Utils.displayNotification(
+          const displayNotification = Utils.displayNotification(
             {
               actions: [
                 {
@@ -227,7 +233,10 @@ export namespace Updater {
           // Get a reply to confirm that the renderer acknowledged to receive the message
           // Set a timeout, shows a prompt if it expires
           this.debug('This is not the first launch, assuming the webapp is running');
-          await this.broadcastUpdateToRenderer();
+          const broadcastUpdateToRenderer = this.broadcastUpdateToRenderer();
+
+          await displayNotification;
+          await broadcastUpdateToRenderer;
         }
 
         // Handle client blacklist message
@@ -273,8 +282,10 @@ export namespace Updater {
         }
 
         // Save settings related to the popup
-        await Main.persist.set('installAutomatically', decision.installAutomatically);
-        await Main.persist.saveChangesOnDisk();
+        if (isUpdatesInstallAutomatically !== decision.installAutomatically) {
+          await Main.persist.set('installAutomatically', decision.installAutomatically);
+          await Main.persist.saveChangesOnDisk();
+        }
 
         this.debug('Launching installer window');
         installerWindow = new Installer(this.browserWindow);
@@ -282,14 +293,14 @@ export namespace Updater {
 
         // Download and verify bundle
         this.debug('Downloading/decompressing file');
-        const file: Buffer = await Downloader.getBinary(
+        const file = await Downloader.getBinary(
           manifest.fileChecksum,
           manifest.fileChecksumCompressed,
           fileName,
           progressEvent => (installerWindow ? installerWindow.onDownloadProgress(progressEvent) : undefined)
         );
 
-        this.debug('Installing updated bundle and manifest');
+        this.debug('Installing new bundle and manifest');
         await Installer.save(fileName, file, envelope.raw);
 
         // Reload the web server
@@ -321,7 +332,7 @@ export namespace Updater {
 
           // Make the function free again so we can call it one more time
           this.isBusy = false;
-          return await this.runOnce(skipNotification, isWebappTamperedWith, firstLaunch);
+          return this.runOnce(skipNotification, isWebappTamperedWith, firstLaunch);
         } else {
           return undefined;
         }
@@ -354,14 +365,12 @@ export namespace Updater {
       });
 
       Main.PERIODIC_TIMER = setInterval(async () => {
-        this.debug('Checking updates...');
+        this.debug('Checking for updates...');
         await this.runOnce();
       }, Main.PERIODIC_INTERVAL);
 
       // Run for the first time
-      setImmediate(async () => {
-        await this.runOnce(true, false, true);
-      });
+      setImmediate(async () => this.runOnce(true, false, true));
     }
 
     private static async continueUpdate(data: Updater.ContinueUpdateInterface): Promise<boolean> {
@@ -430,17 +439,23 @@ export namespace Updater {
       this.debug('Extracted "%s" environment from local manifest', environment);
 
       // Check integrity of manifest
-      await Verifier.ensurePublicKeyIsTrusted(envelope.publicKey, trustStore, environment);
-      await Verifier.verifyEnvelopeIntegrity(envelope.data, envelope.signature, envelope.publicKey);
-
-      // Verify manifest
       try {
-        await Verifier.verifyManifest(
+        const ensurePublicKeyIsTrusted = Verifier.ensurePublicKeyIsTrusted(envelope.publicKey, trustStore, environment);
+        const verifyEnvelopeIntegrity = Verifier.verifyEnvelopeIntegrity(
+          envelope.data,
+          envelope.signature,
+          envelope.publicKey
+        );
+        const verifyManifest = Verifier.verifyManifest(
           manifest,
           manifest.webappVersionNumber,
           manifest.targetEnvironment,
           currentClientVersion
         );
+
+        await ensurePublicKeyIsTrusted;
+        await verifyEnvelopeIntegrity;
+        await verifyManifest;
       } catch (error) {
         if (error instanceof VerifyExpirationError) {
           // Accept expired manifest since we already installed it
