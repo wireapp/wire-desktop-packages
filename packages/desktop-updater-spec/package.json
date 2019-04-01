@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "rimraf": "2.6.3",
-    "typescript": "3.3.4000"
+    "typescript": "3.4.1"
   },
   "description": "Types shared by Wire Desktop Updater components.",
   "files": [
