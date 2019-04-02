@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@types/long": "4.0.0",
-    "@types/node": "11.12.2",
+    "@types/node": "11.13.0",
     "long": "4.0.0"
   },
   "devDependencies": {
