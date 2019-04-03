@@ -27,7 +27,6 @@ import {throttle} from 'throttle-debounce';
 import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {Config} from './Config';
-import {Protobuf} from './Protobuf';
 import {Sandbox} from './Sandbox';
 import {Updater} from './Updater';
 import {Verifier} from './Verifier';
@@ -70,7 +69,7 @@ export class Downloader {
   private static readonly MAX_CONTENT_LENGTH: number = Config.Downloader.MAX_CONTENT_LENGTH;
   private static readonly PINNING_CERTIFICATE: string = Config.Downloader.PINNING_CERTIFICATE;
   private static readonly TIMEOUT: number = Config.Downloader.TIMEOUT;
-  private static readonly UPDATE_SPEC: string = Config.Downloader.UPDATE_SPEC;
+  private static readonly UPDATE_SPEC = Config.Downloader.UPDATE_SPEC;
   private static readonly USER_AGENT: string = Config.Downloader.USER_AGENT;
 
   private static readonly debug: typeof debug = debug('wire:updater:downloader');
@@ -196,18 +195,24 @@ export class Downloader {
     return this.extractEnvelopeFrom(envelope);
   }
 
-  public static async extractEnvelopeFrom(raw: Buffer): Promise<Updater.Envelope> {
-    // Decode envelope
-    const root = await Protobuf.loadRoot(Downloader.UPDATE_SPEC);
-    const {data, publicKey, signature} = <Updater.Envelope>await Protobuf.decodeBuffer(root, 'UpdateMessage', raw);
-
-    return {data, publicKey, signature, raw};
+  private static convertBuffers<T, U>(data: T): U {
+    return Object.keys(data).reduce<U>(
+      (result, currentKey) => {
+        const entry = data[currentKey];
+        result[currentKey] = entry instanceof Uint8Array ? Buffer.from(entry) : entry;
+        return result;
+      },
+      {} as U
+    );
   }
 
-  public static async extractManifestFrom(envelope: Updater.Envelope): Promise<Updater.Manifest> {
-    const root = await Protobuf.loadRoot(Downloader.UPDATE_SPEC);
+  public static extractEnvelopeFrom(raw: Buffer): Updater.Envelope {
+    const data = Downloader.UPDATE_SPEC.UpdateMessage.decode(new Uint8Array(raw));
+    return this.convertBuffers(data);
+  }
 
-    // Unserialize manifest
-    return <Updater.Manifest>(<unknown>Protobuf.decodeBuffer(root, 'UpdateData', envelope.data));
+  public static extractManifestFrom(envelope: Updater.Envelope): Updater.Manifest {
+    const data = Downloader.UPDATE_SPEC.UpdateData.decode(envelope.data);
+    return this.convertBuffers(data);
   }
 }
