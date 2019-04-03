@@ -16,6 +16,7 @@
     "long": "4.0.0",
     "luxon": "1.11.4",
     "make-error-cause": "2.2.0",
+    "protobufjs": "6.8.8",
     "random-js": "2.0.0",
     "raygun": "0.10.1",
     "react": "16.8.4",
