@@ -2781,8 +2781,8 @@
   version "0.0.1"
   dependencies:
     "@types/luxon" "1.11.1"
-    "@wireapp/desktop-updater-spec" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-dfe97325-5b05-4ae1-8d3d-e27086c2e130-1554297908116/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-dfe97325-5b05-4ae1-8d3d-e27086c2e130-1554297908116/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-3f96c312-68d9-4dd3-8430-f14267ced2d3-1554298357382/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-3f96c312-68d9-4dd3-8430-f14267ced2d3-1554298357382/node_modules/@wireapp/desktop-updater-ui"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"
