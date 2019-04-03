@@ -10,7 +10,8 @@
     "typescript": "3.4.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "update.proto"
   ],
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",
