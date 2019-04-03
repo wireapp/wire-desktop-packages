@@ -1,9 +1,8 @@
 {
-  "author": "Wire Swiss GmbH",
   "dependencies": {
     "@types/luxon": "1.11.1",
-    "@wireapp/desktop-updater-spec": "file:../desktop-updater-spec",
-    "@wireapp/desktop-updater-ui": "file:../desktop-updater-ui",
+    "@wireapp/desktop-updater-spec": "0.0.1",
+    "@wireapp/desktop-updater-ui": "0.0.1",
     "axios": "0.18.0",
     "compare-versions": "3.4.0",
     "debug": "4.1.1",
@@ -38,7 +37,8 @@
     "typescript": "3.3.3333"
   },
   "files": [
-    "dist"
+    "dist",
+    "locales"
   ],
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",

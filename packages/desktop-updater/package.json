@@ -1,5 +1,4 @@
 {
-  "author": "Wire",
   "dependencies": {
     "@wireapp/certificate-check": "0.0.4",
     "@wireapp/desktop-updater-core": "file:../desktop-updater-core",

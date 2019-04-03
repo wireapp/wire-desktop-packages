@@ -2781,8 +2781,8 @@
   version "0.0.1"
   dependencies:
     "@types/luxon" "1.11.1"
-    "@wireapp/desktop-updater-spec" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-3f96c312-68d9-4dd3-8430-f14267ced2d3-1554298357382/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-3f96c312-68d9-4dd3-8430-f14267ced2d3-1554298357382/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "0.0.1"
+    "@wireapp/desktop-updater-ui" "0.0.1"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"
@@ -2803,22 +2803,6 @@
     react-dom "16.8.4"
     throttle-debounce "2.1.0"
     vm2 "3.6.10"
-
-"@wireapp/desktop-updater-spec@file:packages/desktop-updater-spec":
-  version "0.0.1"
-  dependencies:
-    "@types/long" "4.0.0"
-    "@types/node" "11.13.0"
-    long "4.0.0"
-
-"@wireapp/desktop-updater-ui@file:packages/desktop-updater-ui":
-  version "0.0.1"
-  dependencies:
-    "@wireapp/react-ui-kit" "4.3.42"
-    animejs "3.0.1"
-    react-i18next "10.5.3"
-    react-markdown "4.0.6"
-    styled-components "4.2.0"
 
 "@wireapp/react-ui-kit@4.3.42":
   version "4.3.42"
