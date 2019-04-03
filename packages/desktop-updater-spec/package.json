@@ -1,12 +1,12 @@
 {
   "dependencies": {
     "@types/long": "4.0.0",
-    "@types/node": "11.11.3",
+    "@types/node": "11.13.0",
     "long": "4.0.0"
   },
   "devDependencies": {
     "rimraf": "2.6.3",
-    "typescript": "3.3.3333"
+    "typescript": "3.4.1"
   },
   "description": "Types shared by Wire Desktop Updater components.",
   "files": [
