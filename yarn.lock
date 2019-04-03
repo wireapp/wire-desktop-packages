@@ -2777,33 +2777,6 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/desktop-updater-core@file:packages/desktop-updater-core":
-  version "0.0.1"
-  dependencies:
-    "@types/luxon" "1.11.1"
-    "@wireapp/desktop-updater-spec" "0.0.1"
-    "@wireapp/desktop-updater-ui" "0.0.1"
-    axios "0.18.0"
-    compare-versions "3.4.0"
-    debug "4.1.1"
-    i18next "15.0.7"
-    i18next-electron-language-detector "0.0.10"
-    i18next-node-fs-backend "2.1.1"
-    jasmine "3.3.1"
-    jasmine-console-reporter "3.1.0"
-    jasmine-ts "0.3.0"
-    libsodium-wrappers "0.7.4"
-    long "4.0.0"
-    luxon "1.11.4"
-    make-error-cause "2.2.0"
-    protobufjs "6.8.8"
-    random-js "2.0.0-rc3"
-    raygun "0.10.1"
-    react "16.8.4"
-    react-dom "16.8.4"
-    throttle-debounce "2.1.0"
-    vm2 "3.6.10"
-
 "@wireapp/react-ui-kit@4.3.42":
   version "4.3.42"
   resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-4.3.42.tgz#cb6b09ad984409ed3b2e03bc550918e44bb37fd6"
