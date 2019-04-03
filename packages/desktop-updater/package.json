@@ -14,6 +14,7 @@
     "set-cookie-parser": "2.3.5",
     "vm2": "3.6.10"
   },
+  "description": "",
   "devDependencies": {
     "@types/fs-extra": "5.0.5",
     "@types/libsodium-wrappers": "0.7.5",
@@ -32,7 +33,6 @@
   "files": [
     "dist"
   ],
-  "description": "",
   "license": "GPL-3.0",
   "main": "./dist/commonjs/index.js",
   "name": "@wireapp/desktop-updater",
@@ -40,10 +40,10 @@
   "scripts": {
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc",
-    "start": "electron demo.js",
     "preversion": "yarn && yarn dist && yarn test",
-    "test:node": "true",
+    "start": "electron demo.js",
     "test": "yarn dist && yarn test:node",
+    "test:node": "true",
     "version": "yarn dist"
   },
   "version": "0.0.1"

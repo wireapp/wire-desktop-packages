@@ -25,6 +25,7 @@
     "throttle-debounce": "2.1.0",
     "vm2": "3.6.10"
   },
+  "description": "Secure updater for Electron",
   "devDependencies": {
     "@types/jasmine": "3.3.11",
     "@types/libsodium-wrappers": "0.7.5",
@@ -36,7 +37,6 @@
     "rimraf": "2.6.3",
     "typescript": "3.3.3333"
   },
-  "description": "Secure updater for Electron",
   "files": [
     "dist"
   ],
@@ -48,8 +48,8 @@
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc --project tsconfig.json",
     "preversion": "yarn && yarn dist && yarn test",
-    "test:node": "node src/test/jasmine.js",
     "test": "yarn dist && yarn test:node",
+    "test:node": "node src/test/jasmine.js",
     "version": "yarn dist"
   },
   "version": "0.0.1"

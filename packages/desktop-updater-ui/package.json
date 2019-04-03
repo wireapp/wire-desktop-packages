@@ -1,10 +1,10 @@
 {
   "dependencies": {
+    "@wireapp/react-ui-kit": "4.3.42",
     "animejs": "3.0.1",
-    "styled-components": "4.2.0",
-    "react-markdown": "4.0.6",
     "react-i18next": "10.5.3",
-    "@wireapp/react-ui-kit": "4.3.42"
+    "react-markdown": "4.0.6",
+    "styled-components": "4.2.0"
   },
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
@@ -44,8 +44,8 @@
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-ui",
   "scripts": {
     "build": "tsc",
-    "bundle:dev": "webpack",
     "bundle": "webpack --env.production",
+    "bundle:dev": "webpack",
     "clean": "rimraf dist",
     "dist": "yarn clean && yarn build && yarn bundle:dev",
     "start": "start-storybook -p 9001 -c .storybook",
