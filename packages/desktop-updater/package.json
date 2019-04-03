@@ -39,7 +39,6 @@
   "scripts": {
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc",
-    "preversion": "yarn && yarn dist && yarn test",
     "start": "electron demo.js",
     "test": "yarn dist && yarn test:node",
     "test:node": "exit 0",
