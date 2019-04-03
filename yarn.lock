@@ -10350,10 +10350,10 @@ ramda@^0.26:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-random-js@2.0.0-rc3:
-  version "2.0.0-rc3"
-  resolved "https://registry.yarnpkg.com/random-js/-/random-js-2.0.0-rc3.tgz#eb4341f02fa9d5fb9efea253e4a43dc26833cd49"
-  integrity sha512-nMo6E19XcyRS6InGlKFk4QOA6BZ1QoeJIu6ZeLcbq8ri3HdyHczwvvQ4cVCSqqJrNJm0vivFSNKrBPfF5v7lSQ==
+random-js@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/random-js/-/random-js-2.0.0.tgz#c1f236517acc0f8fbec76c0199017ad470a85ecb"
+  integrity sha512-7+LxCZeEcI2/uVM1TCYVj834QupkIu9XygTnXaGOqNr5qbdpCOw8+3x8D4itOID0DmQAGLX5vtvlSnSvi+trGQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"
