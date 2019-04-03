@@ -167,17 +167,18 @@ export class Utils {
   }
 
   public static async copyFiles(from: string, to: string): Promise<void> {
-    for (const filename of await this.readDirectory(from)) {
-      this.debug('Filename is: %s', filename);
-
-      const shouldCopy =
-        filename.endsWith(`.${Config.Updater.DEFAULT_FILE_EXTENSION}`) || filename === Config.Updater.MANIFEST_FILE;
-      if (shouldCopy) {
-        await this.copyFile(path.resolve(from, filename), path.resolve(to, filename));
-      } else {
-        this.debug('"%s" has been skipped', filename);
-      }
-    }
+    await Promise.all(
+      (await this.readDirectory(from)).map(async filename => {
+        this.debug('Filename is: %s', filename);
+        const shouldCopy =
+          filename.endsWith(`.${Config.Updater.DEFAULT_FILE_EXTENSION}`) || filename === Config.Updater.MANIFEST_FILE;
+        if (shouldCopy) {
+          await this.copyFile(path.resolve(from, filename), path.resolve(to, filename));
+        } else {
+          this.debug('"%s" has been skipped', filename);
+        }
+      })
+    );
   }
 
   public static async getLCBPath(): Promise<string> {

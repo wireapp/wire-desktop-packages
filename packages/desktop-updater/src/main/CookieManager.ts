@@ -52,22 +52,24 @@ export class CookieManager {
     const origin = new URL(urlRaw).origin;
     const cookies: SetCookieParser.Cookie[] = SetCookieParser.parse(cookiesRaw);
 
-    for (const cookie of cookies) {
-      const expirationDate = CookieManager.translateExpirationDate(cookie.expires);
-      await CookieManager._set(
-        {
-          domain: cookie.domain,
-          expirationDate,
-          httpOnly: cookie.httpOnly ? cookie.httpOnly : false,
-          name: cookie.name,
-          path: cookie.path ? cookie.path : '/',
-          secure: cookie.secure ? cookie.secure : false,
-          url: origin,
-          value: cookie.value,
-        },
-        ses
-      );
-    }
+    await Promise.all(
+      cookies.map(async cookie => {
+        const expirationDate = CookieManager.translateExpirationDate(cookie.expires);
+        await CookieManager._set(
+          {
+            domain: cookie.domain,
+            expirationDate,
+            httpOnly: cookie.httpOnly ? cookie.httpOnly : false,
+            name: cookie.name,
+            path: cookie.path ? cookie.path : '/',
+            secure: cookie.secure ? cookie.secure : false,
+            url: origin,
+            value: cookie.value,
+          },
+          ses
+        );
+      })
+    );
   }
 
   public static async get(url: string, session: Electron.Session): Promise<string | undefined> {
