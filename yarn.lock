@@ -400,7 +400,7 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-object-rest-spread" "^7.2.0"
 
-"@babel/plugin-proposal-object-rest-spread@^7.3.1", "@babel/plugin-proposal-object-rest-spread@^7.3.2", "@babel/plugin-proposal-object-rest-spread@^7.4.3":
+"@babel/plugin-proposal-object-rest-spread@^7.3.1", "@babel/plugin-proposal-object-rest-spread@^7.3.2", "@babel/plugin-proposal-object-rest-spread@^7.3.4", "@babel/plugin-proposal-object-rest-spread@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.4.3.tgz#be27cd416eceeba84141305b93c282f5de23bbb4"
   integrity sha512-xC//6DNSSHVjq8O2ge0dyYlhshsH4T7XdCVoxbi5HzLYWfsC5ooFlJjrXk8RcAT+hjHAK9UjBXdylzSoDK3t4g==
@@ -502,7 +502,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-async-to-generator@^7.2.0", "@babel/plugin-transform-async-to-generator@^7.4.0":
+"@babel/plugin-transform-async-to-generator@^7.2.0", "@babel/plugin-transform-async-to-generator@^7.3.4", "@babel/plugin-transform-async-to-generator@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-async-to-generator/-/plugin-transform-async-to-generator-7.4.0.tgz#234fe3e458dce95865c0d152d256119b237834b0"
   integrity sha512-EeaFdCeUULM+GPFEsf7pFcNSxM7hYjoj5fiYbyuiXobW4JhFnjAv9OWzNwHyHcKoPNpAfeRDuW6VyaXEDUBa7g==
@@ -518,7 +518,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-block-scoping@^7.2.0", "@babel/plugin-transform-block-scoping@^7.4.0":
+"@babel/plugin-transform-block-scoping@^7.2.0", "@babel/plugin-transform-block-scoping@^7.3.4", "@babel/plugin-transform-block-scoping@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-block-scoping/-/plugin-transform-block-scoping-7.4.0.tgz#164df3bb41e3deb954c4ca32ffa9fcaa56d30bcb"
   integrity sha512-AWyt3k+fBXQqt2qb9r97tn3iBwFpiv9xdAiG+Gr2HpAZpuayvbL55yWrsV3MyHvXk/4vmSiedhDRl1YI2Iy5nQ==
@@ -540,7 +540,7 @@
     "@babel/helper-split-export-declaration" "^7.0.0"
     globals "^11.1.0"
 
-"@babel/plugin-transform-classes@^7.2.0", "@babel/plugin-transform-classes@^7.4.3":
+"@babel/plugin-transform-classes@^7.2.0", "@babel/plugin-transform-classes@^7.3.4", "@babel/plugin-transform-classes@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-classes/-/plugin-transform-classes-7.4.3.tgz#adc7a1137ab4287a555d429cc56ecde8f40c062c"
   integrity sha512-PUaIKyFUDtG6jF5DUJOfkBdwAS/kFFV3XFk7Nn0a6vR7ZT8jYw5cGtIlat77wcnd0C6ViGqo/wyNf4ZHytF/nQ==
@@ -698,7 +698,7 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/helper-simple-access" "^7.1.0"
 
-"@babel/plugin-transform-modules-systemjs@^7.2.0", "@babel/plugin-transform-modules-systemjs@^7.4.0":
+"@babel/plugin-transform-modules-systemjs@^7.2.0", "@babel/plugin-transform-modules-systemjs@^7.3.4", "@babel/plugin-transform-modules-systemjs@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-systemjs/-/plugin-transform-modules-systemjs-7.4.0.tgz#c2495e55528135797bc816f5d50f851698c586a1"
   integrity sha512-gjPdHmqiNhVoBqus5qK60mWPp1CmYWp/tkh11mvb0rrys01HycEGD7NvvSoKXlWEfSM9TcL36CpsK8ElsADptQ==
@@ -808,7 +808,7 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-jsx" "^7.0.0"
 
-"@babel/plugin-transform-regenerator@^7.0.0", "@babel/plugin-transform-regenerator@^7.4.3":
+"@babel/plugin-transform-regenerator@^7.0.0", "@babel/plugin-transform-regenerator@^7.3.4", "@babel/plugin-transform-regenerator@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.4.3.tgz#2a697af96887e2bbf5d303ab0221d139de5e739c"
   integrity sha512-kEzotPuOpv6/iSlHroCDydPkKYw7tiJGKlmYp6iJn4a6C/+b2FdttlJsLKYxolYHgotTJ5G5UY5h0qey5ka3+A==
@@ -2781,8 +2781,8 @@
   version "0.0.1"
   dependencies:
     "@types/luxon" "1.11.1"
-    "@wireapp/desktop-updater-spec" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-e6f69a55-b47e-4e2b-94b5-bae632313313-1554297198850/node_modules/@wireapp/desktop-updater-spec"
-    "@wireapp/desktop-updater-ui" "file:../../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-e6f69a55-b47e-4e2b-94b5-bae632313313-1554297198850/node_modules/@wireapp/desktop-updater-ui"
+    "@wireapp/desktop-updater-spec" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-dfe97325-5b05-4ae1-8d3d-e27086c2e130-1554297908116/node_modules/@wireapp/desktop-updater-spec"
+    "@wireapp/desktop-updater-ui" "file:../../Library/Caches/Yarn/v4/npm-@wireapp-desktop-updater-core-0.0.1-dfe97325-5b05-4ae1-8d3d-e27086c2e130-1554297908116/node_modules/@wireapp/desktop-updater-ui"
     axios "0.18.0"
     compare-versions "3.4.0"
     debug "4.1.1"
