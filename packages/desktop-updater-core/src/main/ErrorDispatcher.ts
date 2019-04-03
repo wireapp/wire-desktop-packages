@@ -25,6 +25,7 @@ import {Config} from './Config';
 import {DownloadError} from './Downloader';
 import {InstallerError} from './Installer';
 import {getLocales} from './Localization';
+import {ProtobufError} from './Protobuf';
 import {Sandbox} from './Sandbox';
 import {LogicalError} from './Updater';
 import {Utils} from './Utils';
@@ -39,6 +40,9 @@ enum Response {
 enum ErrorCodes {
   // Updater
   LOGICAL = 1,
+
+  // Protobuf (unable to read data)
+  PROTOBUF = 1001,
 
   // Downloader
   DOWNLOADER = 1100,
@@ -127,7 +131,11 @@ export class ErrorDispatcher {
   }
 
   private static getErrorCode(): number {
-    if (this.error instanceof DownloadError) {
+    if (this.error instanceof ProtobufError) {
+      this.debug('Protobuf decompression error detected');
+
+      return ErrorCodes.PROTOBUF;
+    } else if (this.error instanceof DownloadError) {
       this.debug('Download error detected.');
 
       if (this.error.cause) {

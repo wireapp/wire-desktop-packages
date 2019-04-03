@@ -27,6 +27,7 @@ import {throttle} from 'throttle-debounce';
 import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {Config} from './Config';
+import {ProtobufError} from './Protobuf';
 import {Sandbox} from './Sandbox';
 import {Updater} from './Updater';
 import {Verifier} from './Verifier';
@@ -207,12 +208,20 @@ export class Downloader {
   }
 
   public static extractEnvelopeFrom(raw: Buffer): Updater.Envelope {
-    const data = Downloader.UPDATE_SPEC.UpdateMessage.decode(new Uint8Array(raw));
-    return this.convertBuffers(data);
+    try {
+      const data = Downloader.UPDATE_SPEC.UpdateMessage.decode(new Uint8Array(raw));
+      return this.convertBuffers(data);
+    } catch (error) {
+      throw new ProtobufError(`Failed to decode protobuf: ${error.message}`, error);
+    }
   }
 
   public static extractManifestFrom(envelope: Updater.Envelope): Updater.Manifest {
-    const data = Downloader.UPDATE_SPEC.UpdateData.decode(envelope.data);
-    return this.convertBuffers(data);
+    try {
+      const data = Downloader.UPDATE_SPEC.UpdateData.decode(envelope.data);
+      return this.convertBuffers(data);
+    } catch (error) {
+      throw new ProtobufError(`Failed to decode protobuf: ${error.message}`, error);
+    }
   }
 }
