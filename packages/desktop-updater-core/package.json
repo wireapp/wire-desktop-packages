@@ -8,7 +8,7 @@
     "debug": "4.1.1",
     "i18next": "15.0.9",
     "i18next-electron-language-detector": "0.0.10",
-    "i18next-node-fs-backend": "2.1.1",
+    "i18next-node-fs-backend": "2.1.2",
     "jasmine": "3.3.1",
     "jasmine-console-reporter": "3.1.0",
     "jasmine-ts": "0.3.0",
