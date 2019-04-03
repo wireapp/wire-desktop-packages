@@ -22,57 +22,95 @@ import {COLOR, H1, H2, H3, H4, Link, Paragraph, Small, Text} from '@wireapp/reac
 import * as Long from 'long';
 import {DateTime} from 'luxon';
 import * as React from 'react';
+import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import * as Markdown from 'react-markdown';
 import styled from 'styled-components';
-import {EventDispatcher} from '../libs/EventDispatcher';
+import i18n from '../libs/Localization';
 import {Modal} from './ModalBack';
-import {MainHeading, SelectableParagraph} from './UpdaterStyles';
+import {MainHeading as UpdaterStylesMainHeading} from './UpdaterStyles';
+
+const MainHeading = styled(UpdaterStylesMainHeading)`
+  margin-top: 0;
+`;
 
 const BoldText = styled(Text)`
   font-size: 14px;
   font-weight: 600;
 `;
 
+const SmallBoldText = styled(BoldText)`
+  font-size: 11px;
+`;
+
 const NormalText = styled(Text)`
   font-size: 14px;
 `;
 
+const SmallNormalText = styled(NormalText)`
+  font-size: 11px;
+`;
+
+const Selectable = styled.span`
+  user-select: text;
+  cursor: text;
+  word-break: break-all;
+  margin-bottom: 0;
+
+  ::selection {
+    background: #171717;
+    color: #fff;
+  }
+  ::-webkit-selection {
+    background: #171717;
+    color: #fff;
+  }
+`;
+
 interface Props {
-  metadata: any;
   changelogUrl: string;
+  envelope: {publicKey: string};
+  manifest: any;
   onClose: () => void;
 }
 
 interface State {
   decision: Updater.Decision;
   isUpdatesInstallAutomatically: boolean;
+  showSigningDetails: boolean;
 }
 
-class PromptChangelogModal extends React.Component<Props, State> {
-  private static readonly PROMPT_WINDOW_SIZE = {height: 287, width: 480};
-  private static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(289 * 1.4), width: Math.round(480 * 1.3)};
+class PromptChangelogModal extends React.Component<Props & WithTranslation, State> {
+  public static readonly PROMPT_WINDOW_SIZE = {height: 250, width: 480};
+  public static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(259 * 1.4), width: Math.round(480 * 1.3)};
+  private signingDetails: HTMLParagraphElement | undefined;
 
-  public static TOPIC = {
-    SEND_RESIZE_BROWSER_WINDOW: 'PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW',
+  constructor(props) {
+    super(props);
+    this.state = {...props, showSigningDetails: false};
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.showSigningDetails !== this.state.showSigningDetails &&
+      this.state.showSigningDetails &&
+      this.signingDetails
+    ) {
+      this.signingDetails.scrollIntoView({behavior: 'smooth'});
+    }
+  }
+
+  toggleSigningDetails = () => {
+    this.setState(prevState => {
+      return {...prevState, showSigningDetails: !prevState.showSigningDetails};
+    });
   };
 
   hideChangelog = (): void => {
-    EventDispatcher.send(
-      PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
-      PromptChangelogModal.PROMPT_WINDOW_SIZE
-    );
     this.props.onClose();
   };
 
-  showChangelog = (): void => {
-    EventDispatcher.send(
-      PromptChangelogModal.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
-      PromptChangelogModal.CHANGELOG_WINDOW_SIZE
-    );
-  };
-
   render() {
-    const {metadata, changelogUrl} = this.props;
+    const {changelogUrl, envelope, manifest} = this.props;
     const heading: React.SFC<{level: number}> = props => {
       switch (props.level) {
         case 1:
@@ -85,29 +123,34 @@ class PromptChangelogModal extends React.Component<Props, State> {
           return <H4>{props.children}</H4>;
       }
     };
+    const paragraph: React.SFC = props => {
+      return <Paragraph>{props.children}</Paragraph>;
+    };
+    const targetEnvironment =
+      typeof manifest.targetEnvironment === 'string' ? manifest.targetEnvironment.toLowerCase() : '';
     return (
       <Modal fullscreen onClose={this.hideChangelog} style={{backgroundColor: 'white'}}>
-        <MainHeading>{"What's new"}</MainHeading>
-        {metadata.targetEnvironment !== 'PRODUCTION' && (
+        <MainHeading>
+          <Trans>What's new</Trans>
+        </MainHeading>
+        {manifest.targetEnvironment !== 'PRODUCTION' && (
           <Paragraph style={{marginBottom: 10}}>
             <Text fontSize="12px" bold style={{backgroundColor: COLOR.RED, padding: 5}} color={COLOR.WHITE}>
-              {'WARNING'}
+              <Trans>WARNING</Trans>
             </Text>
             <BoldText color={COLOR.RED}>
-              {` This release is intended for ${metadata.targetEnvironment.toLowerCase()} environment only.`}
+              {' '}
+              <Trans>This release is intended for {{targetEnvironment}} environment only.</Trans>
             </BoldText>
           </Paragraph>
         )}
         <Paragraph>
-          {metadata.changelog ? (
-            <Markdown
-              escapeHtml={true}
-              skipHtml={true}
-              source={metadata.changelog}
-              renderers={{heading, paragraph: Paragraph}}
-            />
+          {typeof manifest.changelog === 'string' && manifest.changelog !== '' ? (
+            <Markdown escapeHtml={true} skipHtml={true} source={manifest.changelog} renderers={{heading, paragraph}} />
           ) : (
-            <Small>{'No changelog is available for this update'}</Small>
+            <Small>
+              <Trans>No changelog is available for this update</Trans>
+            </Small>
           )}
         </Paragraph>
         {changelogUrl && (
@@ -121,40 +164,69 @@ class PromptChangelogModal extends React.Component<Props, State> {
               rel="noopener noreferrer"
               color={COLOR.BLUE}
             >
-              {'See changelog for older versions'}
+              <Trans>See changelog for older versions</Trans>
             </Link>
           </Paragraph>
         )}
-        <SelectableParagraph>
+        <Paragraph style={{marginBottom: 0}}>
           <NormalText block>
-            <BoldText>{'Version: '}</BoldText>
-            {metadata.webappVersionNumber}
+            <BoldText>
+              <Trans>Released on:</Trans>{' '}
+            </BoldText>
+            <Selectable>
+              {DateTime.fromISO(manifest.releaseDate, {locale: i18n.language}).toLocaleString(DateTime.DATETIME_FULL)}
+            </Selectable>
           </NormalText>
           <NormalText block>
-            <BoldText>{'Released on: '}</BoldText>
-            {DateTime.fromISO(metadata.releaseDate, {zone: 'utc'})
-              .setLocale('en-US')
-              .toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS)}
+            <BoldText>
+              <Trans>Size of the update:</Trans>{' '}
+            </BoldText>
+            <Selectable>
+              {`${(
+                new Long(
+                  manifest.fileContentLength.low,
+                  manifest.fileContentLength.high,
+                  manifest.fileContentLength.unsigned
+                ).toNumber() / 1000000
+              ).toFixed(2)}`}{' '}
+              <Trans>MB</Trans>
+            </Selectable>
           </NormalText>
           <NormalText block>
-            <BoldText>{'Size of the update: '}</BoldText>
-            {`${(
-              new Long(
-                metadata.fileContentLength.low,
-                metadata.fileContentLength.high,
-                metadata.fileContentLength.unsigned
-              ).toNumber() / 1000000
-            ).toFixed(2)} MB`}
+            <BoldText>
+              <Trans>Version:</Trans>{' '}
+            </BoldText>
+            <Selectable>{manifest.webappVersionNumber}</Selectable>
           </NormalText>
-          <NormalText block>
-            <BoldText>{'Checksum of the update: '}</BoldText>
-            {metadata.fileChecksum.toString('hex')}
-          </NormalText>
-          <BoldText>{'This update is digitally signed.'}</BoldText>
-        </SelectableParagraph>
+        </Paragraph>
+        <Link fontSize="14px" textTransform="normal" bold href="javascript://" onClick={this.toggleSigningDetails}>
+          <Trans>This update is digitally signed.</Trans>
+        </Link>
+        {this.state.showSigningDetails ? (
+          <Paragraph
+            ref={el => {
+              this.signingDetails = el;
+            }}
+          >
+            <SmallNormalText block>
+              <SmallBoldText>
+                <Trans>Checksum of the update:</Trans>{' '}
+              </SmallBoldText>
+              <Selectable>{manifest.fileChecksum}</Selectable>
+            </SmallNormalText>
+            <SmallNormalText block>
+              <SmallBoldText>
+                <Trans>Fingerprint of the signing key:</Trans>{' '}
+              </SmallBoldText>
+              <Selectable>{envelope.publicKey}</Selectable>
+            </SmallNormalText>
+          </Paragraph>
+        ) : null}
       </Modal>
     );
   }
 }
 
-export {PromptChangelogModal};
+const TranslatedPromptChangelogModal = withTranslation()(PromptChangelogModal);
+
+export {PromptChangelogModal, TranslatedPromptChangelogModal};

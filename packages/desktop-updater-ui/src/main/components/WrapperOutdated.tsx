@@ -18,7 +18,7 @@
  */
 
 import * as React from 'react';
-import {WrapperOutdated} from './WrapperOutdatedView';
+import {TranslatedWrapperOutdated} from './WrapperOutdatedView';
 
 export interface WrapperOutdatedState {
   environment?: NodeJS.Platform;
@@ -27,25 +27,13 @@ export interface WrapperOutdatedState {
 interface Props {}
 
 class WrapperOutdatedContainer extends React.Component<Props, WrapperOutdatedState> {
-  public static TOPIC = {
-    ON_DATA_RECEIVED: 'WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED',
-  };
-
-  componentDidMount(): void {
-    window.addEventListener(WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
+  constructor(props) {
+    super(props);
+    this.state = props;
   }
-
-  componentWillUnmount(): void {
-    window.removeEventListener(WrapperOutdatedContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
-  }
-
-  onDataReceived = (event: Event): void => {
-    const environment = (event as CustomEvent).detail;
-    this.setState({environment});
-  };
 
   render() {
-    return <WrapperOutdated {...this.state} />;
+    return <TranslatedWrapperOutdated {...this.state} />;
   }
 }
 

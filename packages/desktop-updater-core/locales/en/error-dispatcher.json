@@ -1,0 +1,14 @@
+{
+  "title": "Wire Updater",
+
+  "cancel": "Cancel",
+  "tryAgain": "Try again",
+  "contactUs": "Contact us",
+
+  "errorUnknown": "An unknown error happened while trying to check for updates.",
+  "errorWhileProcessingUpdate": "An error happened while processing the update ({{errorCode}})",
+  "errorWhileInstallingUpdate": "An error happened while installing the update ({{errorCode}})",
+  "errorWhileCheckingForUpdates": "An error happened while trying to check for updates ({{errorCode}})",
+
+  "reportThisIncident": "Report this incident to Wire"
+}

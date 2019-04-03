@@ -19,10 +19,11 @@
 
 import * as Updater from '@wireapp/desktop-updater-spec';
 import * as React from 'react';
-import {Prompt} from './PromptView';
+import {TranslatedPrompt} from './PromptView';
 
 export interface PromptContainerState {
-  metadata?: Updater.Metadata;
+  manifest?: Updater.Manifest;
+  envelope: {publicKey: string};
   changelogUrl: string;
   isWebappBlacklisted: boolean;
   isWebappTamperedWith: boolean;
@@ -31,30 +32,13 @@ export interface PromptContainerState {
 interface Props {}
 
 class PromptContainer extends React.Component<Props, PromptContainerState> {
-  public static TOPIC = {
-    ON_DATA_RECEIVED: 'PromptContainer.TOPIC.ON_DATA_RECEIVED',
-  };
-
-  componentDidMount() {
-    window.addEventListener(PromptContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived, false);
+  constructor(props) {
+    super(props);
+    this.state = props;
   }
-
-  componentWillUnmount(): void {
-    window.removeEventListener(PromptContainer.TOPIC.ON_DATA_RECEIVED, this.onDataReceived);
-  }
-
-  onDataReceived = (event: Event): void => {
-    const customEvent = event as CustomEvent;
-    const metadata: Updater.Metadata = customEvent.detail.metadata;
-    const changelogUrl: string = customEvent.detail.changelogUrl;
-    const isWebappBlacklisted: boolean = customEvent.detail.isWebappBlacklisted;
-    const isWebappTamperedWith: boolean = customEvent.detail.isWebappTamperedWith;
-
-    this.setState({metadata, changelogUrl, isWebappBlacklisted, isWebappTamperedWith});
-  };
 
   render() {
-    return <Prompt {...this.state} />;
+    return <TranslatedPrompt {...this.state} />;
   }
 }
 

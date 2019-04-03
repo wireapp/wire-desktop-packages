@@ -30,20 +30,20 @@ const GlobalStyle = createGlobalStyle`
     cursor: default;
     background-color: transparent;
     overflow: hidden;
-    -webkit-app-region: no-drag;
+    -webkit-app-region: drag;
   }
 
   *::selection {
-    background: #171717;
-    color: #fff;
+    background: transparent;
+    color: #171717;
   }
   *::-webkit-selection {
-    background: #171717;
-    color: #fff;
+    background: transparent;
+    color: #171717;
   }
 
-  button, input, label, form {
-    -webkit-app-region: drag;
+  button, input, label {
+    -webkit-app-region: no-drag;
   }
 `;
 
@@ -55,14 +55,25 @@ const SelectableParagraph = styled(Paragraph)`
 `;
 
 const MainHeading: StyledComponentClass<React.ClassAttributes<HTMLHeadingElement>, any, any> = styled(H2)`
-  margin-top: 0;
+  margin-top: 10px;
+  @media (max-width: 480px) {
+    margin-top: 10px;
+  }
 `;
 
 const MainContent = styled(Content)`
   padding: 24px 34px;
 `;
 
-const ProgressContainer = Columns;
+const ProgressContainer = styled(Columns)`
+  -webkit-flex-direction: row;
+  flex-direction: row;
+
+  @media (max-width: 480px) {
+    -webkit-flex-direction: row;
+    flex-direction: row;
+  }
+`;
 const ProgressBlock = Column;
 const ProgressBlockLoader = styled(ProgressBlock)`
   max-width: 43px;

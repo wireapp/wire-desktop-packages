@@ -19,15 +19,15 @@
 
 import {Paragraph} from '@wireapp/react-ui-kit';
 import * as React from 'react';
+import {Trans, WithTranslation, withTranslation} from 'react-i18next';
+
 import {EventDispatcher} from '../libs/EventDispatcher';
 import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
 import {WrapperOutdatedState} from './WrapperOutdated';
 
-interface State {}
-
 interface Props extends WrapperOutdatedState {}
 
-class WrapperOutdated extends React.Component<Props, State> {
+class WrapperOutdated extends React.Component<Props & WithTranslation> {
   public static OS_FAMILY: {[key: string]: NodeJS.Platform} = {
     DARWIN: 'darwin',
   };
@@ -40,12 +40,13 @@ class WrapperOutdated extends React.Component<Props, State> {
     EventDispatcher.send(WrapperOutdated.TOPIC.ON_BUTTON_CLICK, {showDetails: true});
   };
 
-  private renderButtonText(os?: NodeJS.Platform): string {
+  private renderButtonText(type?: NodeJS.Platform): string {
+    const os = type ? type.toLowerCase() : undefined;
     switch (os) {
       case WrapperOutdated.OS_FAMILY.DARWIN:
-        return 'Open the Mac App Store';
+        return this.props.t('Open the Mac App Store');
       default:
-        return 'Go on Wire.com';
+        return this.props.t('Go on Wire.com');
     }
   }
 
@@ -53,9 +54,11 @@ class WrapperOutdated extends React.Component<Props, State> {
     return (
       <UpdaterContainer>
         <MainContent>
-          <MainHeading>{'Wire must be updated'}</MainHeading>
+          <MainHeading>
+            <Trans>Wire must be updated</Trans>
+          </MainHeading>
           <Paragraph>
-            {'This version of Wire is no longer supported. To continue to use it, please update it.'}
+            <Trans>This version of Wire is no longer supported. To continue to use it, please update it.</Trans>
           </Paragraph>
           <RegularButton onClick={this.onCloseClick}>{this.renderButtonText(this.props.environment)}</RegularButton>
         </MainContent>
@@ -65,4 +68,6 @@ class WrapperOutdated extends React.Component<Props, State> {
   }
 }
 
-export {WrapperOutdated};
+const TranslatedWrapperOutdated = withTranslation()(WrapperOutdated);
+
+export {TranslatedWrapperOutdated};

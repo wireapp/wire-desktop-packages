@@ -18,7 +18,7 @@
  */
 
 import * as React from 'react';
-import {Installer} from './InstallerView';
+import {TranslatedInstaller} from './InstallerView';
 
 interface ProgressInterface {
   elapsed: number;
@@ -84,7 +84,7 @@ class InstallerContainer extends React.Component<Props, InstallerContainerState>
   };
 
   render() {
-    return <Installer {...this.state} />;
+    return <TranslatedInstaller {...this.state} />;
   }
 }
 

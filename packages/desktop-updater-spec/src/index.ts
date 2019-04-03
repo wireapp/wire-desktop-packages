@@ -19,7 +19,33 @@
 
 import * as Long from 'long';
 
-export interface Metadata {
+export enum BridgeIPC {
+  UPDATE_AVAILABLE = 'BridgeIPC.UPDATE_AVAILABLE',
+  UPDATE_INSTALLED = 'BridgeIPC.UPDATE_INSTALLED',
+  UPDATE_START_INSTALL = 'BridgeIPC.UPDATE_START_INSTALL',
+  UPDATE_END_INSTALL = 'BridgeIPC.UPDATE_END_INSTALL',
+  UPDATE_AVAILABLE_ACK = 'BridgeIPC.UPDATE_AVAILABLE_ACK',
+  UPDATE_AVAILABLE_DISPLAY = 'BridgeIPC.UPDATE_AVAILABLE_DISPLAY',
+}
+
+export interface ProgressInterface {
+  elapsed: number;
+  percent: number;
+  remaining: number;
+  speed: number; // in bytes
+  startedAt: number;
+  total?: number;
+  transferred: number;
+}
+
+export interface Envelope {
+  data: Buffer;
+  publicKey: Buffer;
+  raw: Buffer;
+  signature: Buffer;
+}
+
+export interface Manifest {
   /**
    * Author of the update.
    */
@@ -33,7 +59,7 @@ export interface Metadata {
   /**
    * Date when the file is considered as expired (cannot be validated anymore).
    *
-   * The metadata can be re-signed with a new expiration date (e.g. if no version
+   * The manifest can be re-signed with a new expiration date (e.g. if no version
    * is released in the meantime).
    *
    * If the latest available version has an expired `expiresOn` field the
@@ -78,7 +104,7 @@ export interface Metadata {
   releaseDate: string;
 
   /**
-   * Metadata version.
+   * Manifest version.
    */
   specVersion: number;
 
