@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.1.2...@wireapp/desktop-updater-core@0.1.3) (2019-04-04)
+
+
+### Bug Fixes
+
+* **desktop-updater-core:** Resolve full path in RENDERER_DOCUMENT_ROOT first ([#413](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/issues/413)) ([13314a7](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/commit/13314a7))
+
+
+
+
+
 ## [0.1.2](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.1.1...@wireapp/desktop-updater-core@0.1.2) (2019-04-04)
 
 
