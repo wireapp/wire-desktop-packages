@@ -20,7 +20,7 @@
     "@storybook/react": "5.0.3",
     "@types/luxon": "1.11.1",
     "@types/node": "11.11.6",
-    "@wireapp/desktop-updater-spec": "0.1.0",
+    "@wireapp/desktop-updater-spec": "0.1.1",
     "babel-loader": "8.0.5",
     "css-loader": "2.1.1",
     "electron": "5.0.0-beta.7",
@@ -53,5 +53,5 @@
     "start": "start-storybook -p 9001 -c .storybook",
     "test": "exit 0"
   },
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
