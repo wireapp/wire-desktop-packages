@@ -43,7 +43,7 @@
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater",
   "scripts": {
     "clear": "rimraf dist",
-    "coverage": "test:node && nyc report",
+    "coverage": "yarn test:node && nyc report",
     "dist": "yarn clear && tsc",
     "start": "electron demo.js",
     "test": "yarn dist && yarn test:node",

@@ -1,21 +1,7 @@
 import * as assert from 'assert';
 import {session} from 'electron';
-import * as fs from 'fs-extra';
-import * as path from 'path';
 import UUID from 'pure-uuid';
 import {CookieManager} from './CookieManager';
-
-const writeCoverageReport = (coverage: Object) => {
-  const outputFile = path.resolve(process.cwd(), `.nyc_output/coverage.${process.type}.json`);
-  fs.outputJsonSync(outputFile, coverage);
-};
-
-after(() => {
-  const coverageInfo = global['__coverage__'];
-  if (coverageInfo) {
-    writeCoverageReport(coverageInfo);
-  }
-});
 
 describe('CookieManager', () => {
   describe('constructor', () => {
