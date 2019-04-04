@@ -42,7 +42,7 @@
     "dist": "yarn clear && tsc",
     "start": "electron demo.js",
     "test": "yarn dist && yarn test:node",
-    "test:node": "electron-mocha ./src/test",
+    "test:node": "electron-mocha ./src/main/**/*.test.main.js",
     "version": "yarn dist"
   },
   "version": "0.1.1"
