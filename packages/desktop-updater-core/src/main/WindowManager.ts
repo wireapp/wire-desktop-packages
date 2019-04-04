@@ -40,10 +40,7 @@ export abstract class WindowManager {
 
   private readonly attachedMode: boolean = typeof this.mainWindow !== 'undefined';
   private readonly IS_MACOS: boolean = process.platform === 'darwin';
-  private readonly RENDERER_DOCUMENT_ROOT: string = path.join(
-    __dirname,
-    '../../node_modules/@wireapp/desktop-updater-ui'
-  );
+  private readonly RENDERER_DOCUMENT_ROOT: string = path.dirname(require.resolve('@wireapp/desktop-updater-ui'));
   protected readonly RENDERER_HTML: string = path.join(this.RENDERER_DOCUMENT_ROOT, '.renderer/index.html');
   protected readonly RENDERER_PRELOAD: string = path.join(__dirname, `Preloads/${this.WINDOW_TYPE}.js`);
   private readonly BROWSER_WINDOW_DEFAULTS: Electron.BrowserWindowConstructorOptions = {
