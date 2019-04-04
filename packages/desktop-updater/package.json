@@ -15,6 +15,11 @@
   },
   "description": "",
   "devDependencies": {
+    "@babel/core": "7.3.3",
+    "@babel/plugin-proposal-class-properties": "7.3.3",
+    "@babel/preset-env": "7.3.1",
+    "@babel/preset-typescript": "7.3.3",
+    "@babel/register": "7.0.0",
     "@types/fs-extra": "5.0.5",
     "@types/libsodium-wrappers": "0.7.5",
     "@types/set-cookie-parser": "0.0.4",
@@ -42,7 +47,7 @@
     "dist": "yarn clear && tsc",
     "start": "electron demo.js",
     "test": "yarn dist && yarn test:node",
-    "test:node": "electron-mocha ./src/main/**/*.test.main.js",
+    "test:node": "electron-mocha --require ./babel-register.js ./src/main/**/*.test.main.ts",
     "version": "yarn dist"
   },
   "version": "0.1.1"
