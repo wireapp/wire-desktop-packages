@@ -39,7 +39,7 @@
     "dist"
   ],
   "license": "GPL-3.0",
-  "main": "./dist/commonjs/index.js",
+  "main": "./dist/index.js",
   "name": "@wireapp/desktop-updater",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater",
   "scripts": {
@@ -47,7 +47,7 @@
     "dist": "yarn clear && tsc",
     "start": "electron demo.js",
     "test": "yarn dist && yarn test:node",
-    "test:node": "electron-mocha --require ./babel-register.js ./src/main/**/*.test.main.ts",
+    "test:node": "electron-mocha --require ./babel-register.js ./src/**/*.test.main.ts",
     "version": "yarn dist"
   },
   "version": "0.1.1"
