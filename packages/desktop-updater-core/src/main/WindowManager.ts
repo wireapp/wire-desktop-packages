@@ -40,8 +40,11 @@ export abstract class WindowManager {
 
   private readonly attachedMode = typeof this.mainWindow !== 'undefined';
   private readonly IS_MACOS = process.platform === 'darwin';
-  private readonly RENDERER_DOCUMENT_ROOT = path.dirname(require.resolve('@wireapp/desktop-updater-ui'));
-  protected readonly RENDERER_HTML = path.join(this.RENDERER_DOCUMENT_ROOT, '../../.renderer/index.html');
+  private readonly RENDERER_DOCUMENT_ROOT = path.join(
+    path.dirname(require.resolve('@wireapp/desktop-updater-ui')),
+    '../../'
+  );
+  protected readonly RENDERER_HTML = path.join(this.RENDERER_DOCUMENT_ROOT, '.renderer/index.html');
   protected readonly RENDERER_PRELOAD = path.join(__dirname, `Preloads/${this.WINDOW_TYPE}.js`);
   private readonly BROWSER_WINDOW_DEFAULTS: Electron.BrowserWindowConstructorOptions = {
     backgroundColor: this.IS_MACOS ? undefined : '#f7f8fa',
