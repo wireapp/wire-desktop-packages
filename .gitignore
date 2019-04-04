@@ -1,11 +1,13 @@
 **/src/**/*.d.ts
 *.env
 *hot-update.js*
-.DS_Store
 .cache
+.DS_Store
 .idea
+.nyc_output
 .vscode
 .yarnclean
+coverage
 dist
 lerna-debug.log
 node_modules

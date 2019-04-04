@@ -48,7 +48,7 @@ export class CookieManager {
     CookieManager.debug('Successfully set cookie "%s"', cookieData.name);
   }
 
-  public static async set(cookiesRaw: string[], urlRaw: string, ses: Electron.Session): Promise<void> {
+  public static async set(cookiesRaw: string[], urlRaw: string, session: Electron.Session): Promise<void> {
     const origin = new URL(urlRaw).origin;
     const cookies: SetCookieParser.Cookie[] = SetCookieParser.parse(cookiesRaw);
 
@@ -66,7 +66,7 @@ export class CookieManager {
             url: origin,
             value: cookie.value,
           },
-          ses
+          session
         );
       })
     );
