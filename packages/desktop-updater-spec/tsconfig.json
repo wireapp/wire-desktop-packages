@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist/commonjs",
-    "rootDir": "src"
+    "rootDir": "src/main"
   },
   "exclude": ["dist", "node_modules"],
   "extends": "../../tsconfig.json"

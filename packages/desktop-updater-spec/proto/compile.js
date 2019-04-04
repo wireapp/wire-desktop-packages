@@ -17,10 +17,18 @@
  *
  */
 
-export {Config} from './Config';
-export {Downloader} from './Downloader';
-export {Environment} from './Environment';
-export {Installer} from './Installer';
-export {ManifestNotFoundError, NotFoundError, Updater} from './Updater';
-export {Utils, WebappVersionInterface} from './Utils';
-export {Verifier, VerifyMismatchEnvironment} from './Verifier';
+const fs = require('fs');
+const path = require('path');
+const {pbjs, pbts} = require('protobufjs/cli');
+
+const dtsOutput = path.join(__dirname, 'Protobuf.d.ts');
+const jsOutput = path.join(__dirname, 'Protobuf.js');
+const protoBufferFile = path.join(__dirname, 'update.proto');
+
+pbjs.main(['--target', 'static-module', '--wrap', 'commonjs', protoBufferFile], (error, output) => {
+  if (error) {
+    throw error;
+  }
+  fs.writeFileSync(jsOutput, output, {encoding: 'utf8'});
+  pbts.main(['--out', dtsOutput, '--no-comments', jsOutput]);
+});
