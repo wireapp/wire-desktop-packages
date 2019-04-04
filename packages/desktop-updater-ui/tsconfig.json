@@ -3,7 +3,8 @@
     "module": "commonjs",
     "outDir": "dist/commonjs",
     "resolveJsonModule": true,
-    "rootDir": "src/main"
+    "rootDir": "src/main",
+    "types": ["luxon", "node"]
   },
   "exclude": ["dist", "node_modules"],
   "extends": "../../tsconfig.json"

@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 
 const writeCoverageReport = (coverage: Object) => {
-  const outputFile = path.resolve(process.cwd(), `.nyc_output/coverage.${process.type}.json`);
+  const outputFile = path.resolve(process.cwd(), `.nyc_output/coverage.${process['type']}.json`);
   fs.outputJsonSync(outputFile, coverage);
 };
 
