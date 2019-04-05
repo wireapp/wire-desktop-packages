@@ -22,5 +22,5 @@
     "test": "jasmine",
     "test:project": "yarn dist && yarn test"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }

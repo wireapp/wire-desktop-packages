@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.1.5...@wireapp/desktop-updater-core@0.1.6) (2019-04-05)
+
+
+### Bug Fixes
+
+* **desktop-updater-core,desktop-updater-ui:** Downgrade React and React-DOM to 16.7.0 ([#421](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/issues/421)) ([49dcd61](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/commit/49dcd61))
+
+
+
+
+
 ## [0.1.5](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.1.4...@wireapp/desktop-updater-core@0.1.5) (2019-04-05)
 
 
