@@ -30,7 +30,7 @@
   "license": "GPL-3.0",
   "main": "dist/index.js",
   "name": "@wireapp/build-tools",
-  "repository": "https://github.com/wireapp/wire-web-packages/tree/master/packages/build-tools",
+  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools",
   "scripts": {
     "build": "yarn build:node",
     "build:node": "tsc",

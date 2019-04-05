@@ -8,7 +8,7 @@ For licensing information, see the attached LICENSE file and the list of third-p
 
 ## build-tools
 
-Wire's internal wrapper build tools.
+Wire's internal wrapper build tools
 
 ### Installation
 
