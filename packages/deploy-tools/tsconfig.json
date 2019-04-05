@@ -2,7 +2,8 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["form-data", "fs-extra", "jszip", "node"]
   },
   "exclude": ["dist", "node_modules"],
   "extends": "../../tsconfig.json"
