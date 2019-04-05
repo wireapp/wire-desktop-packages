@@ -40,7 +40,7 @@ const globalAxiosConfig: AxiosRequestConfig = {
   timeout: TIMEOUT_REQUEST_RESPONSE,
 };
 
-const debugCheckServerIdentity: typeof debug = debug('wire:server:checkserveridentity');
+const debugCheckServerIdentity = debug('wire:server:checkserveridentity');
 
 // Certificate pinning
 const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
@@ -169,7 +169,7 @@ class Request {
   }
 }
 
-const debugIsInternetAvailable: typeof debug = debug('wire:server:isinternetavailable');
+const debugIsInternetAvailable = debug('wire:server:isinternetavailable');
 
 export const isInternetAvailable = async (url: string) => {
   debugIsInternetAvailable('Checking if "%s" is online...', url);
@@ -192,7 +192,7 @@ export const isInternetAvailable = async (url: string) => {
   return true;
 };
 
-const debugInterceptProtocol: typeof debug = debug('wire:server:interceptprotocol');
+const debugInterceptProtocol = debug('wire:server:interceptprotocol');
 
 export const InterceptProtocol = async (
   ses: Electron.Session,

@@ -30,7 +30,7 @@ import {BaseError} from 'make-error-cause';
 export class InstallerError extends BaseError {}
 
 export class Installer extends WindowManager {
-  private static readonly debug: typeof debug = debug(`wire:updater:installer`);
+  private static readonly debug = debug(`wire:updater:installer`);
 
   public get BROWSER_WINDOW_OPTIONS() {
     return async () => ({
