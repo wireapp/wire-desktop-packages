@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@wireapp/certificate-check": "0.1.1",
-    "@wireapp/desktop-updater-core": "0.1.4",
+    "@wireapp/desktop-updater-core": "0.1.5",
     "axios": "0.18.0",
     "debug": "4.1.1",
     "finalhandler": "1.1.1",
@@ -46,5 +46,5 @@
     "test:node": "exit 0",
     "version": "yarn dist"
   },
-  "version": "0.1.4"
+  "version": "0.1.5"
 }
