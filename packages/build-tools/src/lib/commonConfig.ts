@@ -36,10 +36,13 @@ export interface CommonConfigOptions {
 }
 
 const getCommonConfig = (options: CommonConfigOptions) => {
-  const {version}: {version: string} = require(options.wireJson);
-  const defaultConfig: CommonConfig = require(options.electronPackageJson);
+  const {electronPackageJson, envFile, wireJson} = options;
 
-  dotenv.config({path: path.resolve(options.envFile)});
+  const {version}: {version: string} = require(wireJson);
+  const defaultConfig: CommonConfig = require(electronPackageJson);
+  const envFileResolved = path.resolve(envFile);
+
+  dotenv.config({path: envFileResolved});
 
   const IS_PRODUCTION = process.env.APP_ENV !== 'internal';
 
@@ -83,7 +86,7 @@ const getCommonConfig = (options: CommonConfigOptions) => {
 };
 
 const logEntries = <T extends {}>(config: T, name: string): void => {
-  return Object.entries(config).forEach(([key, value]) => {
+  Object.entries(config).forEach(([key, value]) => {
     logger.info(`${name}.${key} set to "${value}". `);
   });
 };
