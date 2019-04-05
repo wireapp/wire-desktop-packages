@@ -79,10 +79,8 @@ export class CookieManager {
     const cookiesRaw: Electron.Cookie[] = ((await session.cookies.get({url})) as unknown) as Electron.Cookie[];
     if (cookiesRaw !== undefined && cookiesRaw.length > 0) {
       for (const cookie of cookiesRaw) {
-        if (cookie.name && cookie.value) {
-          const {name, value} = cookie;
-          serializedCookie += `${name}=${value}${CookieManager.COOKIE_SEPARATOR}`;
-        }
+        const {name, value} = cookie;
+        serializedCookie += `${name}=${value}${CookieManager.COOKIE_SEPARATOR}`;
       }
     }
 
