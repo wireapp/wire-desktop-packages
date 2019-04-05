@@ -17,12 +17,14 @@
  *
  */
 
-declare const Config: any;
+declare const Config: {[key: string]: any};
+declare const WebConfig: {[key: string]: any};
 declare const DocumentRoot: string;
 declare const AccessToken: string;
 
 import * as http from 'http';
 import * as https from 'https';
+import * as url from 'url';
 
 import * as finalhandler from 'finalhandler';
 import * as serveStatic from 'serve-static';
@@ -73,6 +75,16 @@ export namespace Updater {
       res.end();
     }
 
+    private static endWithWebConfig(res: http.ServerResponse) {
+      const body = `window.wire = window.wire || {}; window.wire.env = ${JSON.stringify(WebConfig)};`;
+      return res
+        .writeHead(200, {
+          'Content-Length': Buffer.byteLength(body),
+          'Content-Type': 'application/javascript',
+        })
+        .end(body, 'utf8');
+    }
+
     private onRequest(req: http.IncomingMessage, res: http.ServerResponse): void {
       const authorizationHeader = req.headers['authorization'];
 
@@ -88,6 +100,11 @@ export namespace Updater {
         // tslint:disable-next-line:no-console
         console.log('Cancelled a request because the access token is invalid');
         return Updater.Child.endRequest(res);
+      }
+
+      // Middleware for the config file
+      if (req.url && url.parse(req.url).pathname == '/config.js') {
+        return Updater.Child.endWithWebConfig(res);
       }
 
       // Serve the file

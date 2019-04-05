@@ -52,6 +52,7 @@ export interface ServerConstructorInterface {
   enableSecureUpdater: boolean;
   trustStore: string[];
   updatesEndpoint: string;
+  webConfig: {[key: string]: any};
 }
 
 export class Server {
@@ -72,6 +73,7 @@ export class Server {
   private readonly enableSecureUpdater: boolean;
   private readonly trustStore: string[];
   private readonly updatesEndpoint: string;
+  private readonly webConfig: {[key: string]: any};
 
   constructor(options: ServerConstructorInterface) {
     this.browserWindowOptions = options.browserWindowOptions;
@@ -83,6 +85,7 @@ export class Server {
     this.enableSecureUpdater = options.enableSecureUpdater;
     this.trustStore = options.trustStore;
     this.updatesEndpoint = options.updatesEndpoint;
+    this.webConfig = options.webConfig;
   }
 
   public async start(): Promise<Electron.BrowserWindow> {
@@ -246,6 +249,7 @@ export class Server {
       AccessToken: this.accessToken,
       Config: Config.Server,
       DocumentRoot: documentRoot,
+      WebConfig: this.webConfig,
     });
     const {internalHost, server} = await sandbox.run();
 
@@ -293,7 +297,8 @@ export class Sandbox {
     private readonly filename: string,
     private readonly options: {
       AccessToken: string;
-      Config: {};
+      Config: {[key: string]: any};
+      WebConfig: {[key: string]: any};
       DocumentRoot: string;
     }
   ) {}
