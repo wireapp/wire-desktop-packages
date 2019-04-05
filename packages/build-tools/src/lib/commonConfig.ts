@@ -41,15 +41,22 @@ const getCommonConfig = (options: CommonConfigOptions) => {
 
   dotenv.config({path: path.resolve(options.envFile)});
 
-  let commitId = 'unknown';
-
-  try {
-    commitId = execSync('git rev-parse HEAD')
-      .toString()
-      .trim();
-  } catch (error) {}
-
   const IS_PRODUCTION = process.env.APP_ENV !== 'internal';
+
+  const getProjectVersion = () => {
+    let commitId = 'unknown';
+
+    try {
+      const execBuffer = execSync('git rev-parse HEAD');
+      commitId = execBuffer.toString().trim();
+    } catch (error) {}
+
+    const versionWithoutZero = version.replace(/\.0$/, '');
+    const buildNumber = `${process.env.BUILD_NUMBER || `0-${commitId}`}`;
+    const maybeInternal = IS_PRODUCTION ? '' : '-internal';
+
+    return `${versionWithoutZero}.${buildNumber}${maybeInternal}`;
+  };
 
   const commonConfig: CommonConfig = {
     ...defaultConfig,
@@ -68,9 +75,7 @@ const getCommonConfig = (options: CommonConfigOptions) => {
     privacyUrl: process.env.URL_PRIVACY || defaultConfig.privacyUrl,
     raygunApiKey: process.env.RAYGUN_API_KEY || defaultConfig.raygunApiKey,
     supportUrl: process.env.URL_SUPPORT || defaultConfig.supportUrl,
-    version: `${version.replace(/\.0$/, '')}.${process.env.BUILD_NUMBER || `0-${commitId}`}${
-      IS_PRODUCTION ? '' : '-internal'
-    }`,
+    version: getProjectVersion(),
     websiteUrl: process.env.URL_WEBSITE || defaultConfig.websiteUrl,
   };
 
