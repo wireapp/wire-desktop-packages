@@ -29,7 +29,7 @@ export class SandboxError extends BaseError {}
 export class InternalSandboxError extends BaseError {}
 
 export class Sandbox {
-  private readonly debug: typeof debug = debug('wire:updater:sandbox');
+  private readonly debug = debug('wire:updater:sandbox');
   private script?: string;
   private readonly path: string;
 
