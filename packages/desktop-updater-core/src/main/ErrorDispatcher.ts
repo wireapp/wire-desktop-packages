@@ -65,7 +65,7 @@ export interface ErrorDispatcherResponseInterface {
 }
 
 export class ErrorDispatcher {
-  private static readonly debug: typeof debug = debug('wire:updater:errordispatcher');
+  private static readonly debug = debug('wire:updater:errordispatcher');
 
   private static readonly LINK_BUGREPORT: string = Config.ErrorDispatcher.LINK_BUGREPORT;
   private static readonly RAYGUN_ENABLED: boolean = Config.ErrorDispatcher.RAYGUN_ENABLED;

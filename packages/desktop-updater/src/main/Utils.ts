@@ -31,7 +31,7 @@ export class Utils {
 }
 
 export class UploadData {
-  private static readonly debug: typeof debug = debug('wire:uploaddata');
+  private static readonly debug = debug('wire:uploaddata');
 
   private static getBlobFromUUID(ses: Electron.Session, identifier: string): Promise<Buffer> {
     return new Promise(resolve => ses.getBlobData(identifier, result => resolve(result)));

@@ -73,7 +73,7 @@ export class Downloader {
   private static readonly UPDATE_SPEC = Config.Downloader.UPDATE_SPEC;
   private static readonly USER_AGENT: string = Config.Downloader.USER_AGENT;
 
-  private static readonly debug: typeof debug = debug('wire:updater:downloader');
+  private static readonly debug = debug('wire:updater:downloader');
 
   public static updatesEndpoint?: string;
 
