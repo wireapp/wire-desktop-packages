@@ -1,0 +1,43 @@
+{
+  "bin": {
+    "wire-build-linux": "dist/cli/build-linux-cli.js",
+    "wire-build-macos": "dist/cli/build-macos-cli.js",
+    "wire-build-win": "dist/cli/build-windows-cli.js",
+    "wire-build-win-installer": "dist/cli/build-windows-installer-cli.js"
+  },
+  "dependencies": {
+    "commander": "2.20.0",
+    "dotenv": "7.0.0",
+    "electron-builder": "20.39.0",
+    "electron-packager": "13.1.1",
+    "electron-winstaller": "2.7.0",
+    "fs-extra": "7.0.1",
+    "logdown": "3.2.8"
+  },
+  "description": "Wire's internal wrapper build tools",
+  "devDependencies": {
+    "@types/debug": "4.1.3",
+    "@types/electron-packager": "13.0.0",
+    "@types/electron-winstaller": "2.6.2",
+    "@types/fs-extra": "5.0.5",
+    "@types/node": "11.13.0",
+    "rimraf": "2.6.3",
+    "typescript": "3.4.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "GPL-3.0",
+  "main": "dist/index.js",
+  "name": "@wireapp/build-tools",
+  "repository": "https://github.com/wireapp/wire-web-packages/tree/master/packages/build-tools",
+  "scripts": {
+    "build": "yarn build:node",
+    "build:node": "tsc",
+    "clean": "rimraf dist",
+    "dist": "yarn clean && yarn build",
+    "test": "yarn test:node",
+    "test:node": "exit 0"
+  },
+  "version": "0.0.1"
+}
