@@ -68,7 +68,7 @@ export namespace Updater {
 
     private static _continueUpdate?: Function = undefined;
 
-    private static readonly debug: typeof debug = debug('wire:updater');
+    private static readonly debug = debug('wire:updater');
     private static readonly persist = new Persist(Utils.resolvePath(Config.Updater.SETTINGS_FILE));
 
     private static PERIODIC_TIMER?: NodeJS.Timer;

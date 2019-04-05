@@ -55,7 +55,7 @@ export interface ServerConstructorInterface {
 }
 
 export class Server {
-  private static readonly debug: typeof debug = debug('wire:server');
+  private static readonly debug = debug('wire:server');
 
   private static readonly WEB_SERVER_TOKEN_NAME = Config.Server.WEB_SERVER_TOKEN_NAME;
 
@@ -286,7 +286,7 @@ export class Server {
 }
 
 export class Sandbox {
-  private static readonly debug: typeof debug = debug('wire:server:sandbox');
+  private static readonly debug = debug('wire:server:sandbox');
   private vm: VirtualMachine | undefined;
 
   constructor(

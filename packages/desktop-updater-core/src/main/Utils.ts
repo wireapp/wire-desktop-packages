@@ -46,7 +46,7 @@ export const originalFs = (() => {
 })();
 
 export class Utils {
-  private static readonly debug: typeof debug = debug(`wire:updater:utils`);
+  private static readonly debug = debug(`wire:updater:utils`);
   private static readonly USER_DATA_FOLDER: string = typeof app !== 'undefined' ? app.getPath('userData') : '';
   private static readonly WEBAPP_VERSION_FORMAT: string = 'yyyy-MM-dd-HH-mm';
 

@@ -22,7 +22,7 @@ import * as SetCookieParser from 'set-cookie-parser';
 import {URL} from 'url';
 
 export class CookieManager {
-  private static readonly debug: typeof debug = debug('wire:server:cookiemanager');
+  private static readonly debug = debug('wire:server:cookiemanager');
 
   private static readonly COOKIE_SEPARATOR = '; ';
   private static readonly MAX_COOKIE_LENGTH = 4096;
