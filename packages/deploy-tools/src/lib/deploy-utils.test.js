@@ -16,7 +16,7 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-import {find} from './deploy-utils';
+const {find} = require('../../dist/');
 
 describe('deploy-utils', () => {
   it('safeguard prevents further code execution', async () => {
@@ -34,9 +34,9 @@ describe('deploy-utils', () => {
   });
 
   it('find finds files', async () => {
-    const result = await find('deploy-utils.test.ts', {cwd: __dirname, safeGuard: false});
+    const result = await find('deploy-utils.test.js', {cwd: __dirname, safeGuard: false});
     expect(result).not.toBe(null);
-    expect(result!.fileName).toEqual(jasmine.any(String));
-    expect(result!.filePath).toEqual(jasmine.any(String));
+    expect(result.fileName).toEqual(jasmine.any(String));
+    expect(result.filePath).toEqual(jasmine.any(String));
   });
 });
