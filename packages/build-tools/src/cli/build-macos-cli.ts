@@ -21,32 +21,24 @@
 
 import commander from 'commander';
 import electronPackager from 'electron-packager';
-import logdown from 'logdown';
-import path from 'path';
+import * as path from 'path';
 
-import {checkCommanderOptions, writeJson} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, writeJson} from '../lib/build-utils';
 import {getCommonConfig, logEntries} from '../lib/commonConfig';
 import {MacOSConfig} from '../lib/Config';
 
-const logger = logdown('@wireapp/deploy-tools/wire-build-macos', {
-  logger: console,
-  markdown: false,
-});
+const logger = getLogger('wire-build-macos');
 
 commander
   .name('wire-build-macos')
   .description('Build the Wire wrapper for Linux')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
-  .option('-p, --electron-package-json <path>', 'Specify the electron package.json path')
   .parse(process.argv);
 
-checkCommanderOptions(commander, ['wireJson', 'electronPackageJson']);
-const {electronPackageJson, wireJson} = commander;
-const {commonConfig, defaultConfig} = getCommonConfig({electronPackageJson, envFile: '.env.defaults', wireJson});
+checkCommanderOptions(commander, ['wireJson']);
 
-const wireJsonResolved = path.resolve(wireJson);
-const electronPackageJsonResolved = path.resolve(electronPackageJson);
-const originalElectronJson = require(electronPackageJsonResolved);
+const wireJsonResolved = path.resolve(commander.wireJson);
+const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
 
 const macOsDefaultConfig: MacOSConfig = {
   bundleId: 'com.wearezeta.zclient.mac',
@@ -102,25 +94,14 @@ if (macOsConfig.notarizeAppleId && macOsConfig.notarizeApplePassword) {
   };
 }
 
-const newElectronPackageJson = {
-  ...originalElectronJson,
-  version: commonConfig.version,
-};
+logEntries(commonConfig, 'commonConfig', 'build-macos-cli');
 
-logEntries(commonConfig, 'commonConfig');
+logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 
-logger.info(`Building ${commonConfig.name} for macOS v${commonConfig.version} ...`);
-
-writeJson(electronPackageJsonResolved, newElectronPackageJson)
-  .then(() => writeJson(wireJsonResolved, commonConfig))
+writeJson(wireJsonResolved, commonConfig)
   .then(() => electronPackager(packagerOptions))
   .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
-  .finally(() =>
-    Promise.all([
-      writeJson(wireJsonResolved, defaultConfig),
-      writeJson(electronPackageJsonResolved, originalElectronJson),
-    ])
-  )
+  .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
     logger.error(error);
     process.exit(1);

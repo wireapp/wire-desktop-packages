@@ -21,28 +21,23 @@
 
 import commander from 'commander';
 import electronWinstaller from 'electron-winstaller';
-import logdown from 'logdown';
-import path from 'path';
+import * as path from 'path';
 
-import {checkCommanderOptions} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger} from '../lib/build-utils';
 import {getCommonConfig} from '../lib/commonConfig';
 import {WindowsConfig} from '../lib/Config';
 
-const logger = logdown('@wireapp/deploy-tools/wire-build-windows-installer', {
-  logger: console,
-  markdown: false,
-});
+const logger = getLogger('wire-build-windows-installer');
 
 commander
   .name('wire-build-windows-installer')
   .description('Build the Wire wrapper for Linux')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
-  .option('-p, --electron-package-json <path>', 'Specify the electron package.json path')
   .parse(process.argv);
 
-checkCommanderOptions(commander, ['wireJson', 'electronPackageJson']);
-const {electronPackageJson, wireJson} = commander;
-const {commonConfig} = getCommonConfig({electronPackageJson, envFile: '.env.defaults', wireJson});
+checkCommanderOptions(commander, ['wireJson']);
+const wireJson = commander.wireJson;
+const {commonConfig} = getCommonConfig({envFile: '.env.defaults', wireJson});
 
 const windowsDefaultConfig: WindowsConfig = {
   installerIconUrl: 'https://wire-app.wire.com/win/internal/wire.internal.ico',
@@ -70,7 +65,7 @@ const wInstallerOptions: electronWinstaller.Options = {
   version: commonConfig.version.replace(/-.*$/, ''),
 };
 
-logger.info(`Building ${commonConfig.name} Installer for Windows ...`);
+logger.info(`Building ${commonConfig.name} ${commonConfig.version} Installer for Windows ...`);
 
 electronWinstaller
   .createWindowsInstaller(wInstallerOptions)
