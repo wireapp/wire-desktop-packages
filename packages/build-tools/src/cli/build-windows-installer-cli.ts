@@ -41,7 +41,7 @@ const {commonConfig} = getCommonConfig({envFile: '.env.defaults', wireJson});
 
 const windowsDefaultConfig: WindowsConfig = {
   installerIconUrl: 'https://wire-app.wire.com/win/internal/wire.internal.ico',
-  loadingGif: 'electron/img/logo.256.png',
+  loadingGif: `${commonConfig.electronDirectory}/img/logo.256.png`,
   updateUrl: 'https://wire-app.wire.com/win/internal/',
 };
 
@@ -56,11 +56,11 @@ const wInstallerOptions: electronWinstaller.Options = {
   authors: commonConfig.name,
   description: commonConfig.description,
   iconUrl: windowsConfig.installerIconUrl,
-  loadingGif: 'electron/img/logo.256.png',
+  loadingGif: `${commonConfig.electronDirectory}/img/logo.256.png`,
   noMsi: true,
   outputDirectory: 'wrap/dist',
   setupExe: `${commonConfig.name}-Setup.exe`,
-  setupIcon: 'electron/img/logo.ico',
+  setupIcon: `${commonConfig.electronDirectory}/img/logo.ico`,
   title: commonConfig.name,
   version: commonConfig.version.replace(/-.*$/, ''),
 };

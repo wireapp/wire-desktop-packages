@@ -45,9 +45,9 @@ const packagerOptions: electronPackager.Options = {
   arch: 'ia32',
   asar: true,
   buildVersion: commonConfig.buildNumber,
-  dir: 'electron',
-  icon: 'electron/img/logo.ico',
-  ignore: /electron\/renderer\/src/,
+  dir: commonConfig.electronDirectory,
+  icon: `${commonConfig.electronDirectory}/img/logo.ico`,
+  ignore: new RegExp(`${commonConfig.electronDirectory}/renderer/src`),
   name: commonConfig.name,
   out: 'wrap/build',
   overwrite: true,
@@ -67,9 +67,11 @@ logEntries(commonConfig, 'commonConfig', 'build-windows-cli');
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for Windows ...`);
 
-writeJson(wireJsonResolved, commonConfig)
-  .then(() => electronPackager(packagerOptions))
-  .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
+(async () => {
+  await writeJson(wireJsonResolved, commonConfig);
+  const [buildDir] = await electronPackager(packagerOptions);
+  logger.log(`Built package in "${buildDir}".`);
+})()
   .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
     logger.error(error);

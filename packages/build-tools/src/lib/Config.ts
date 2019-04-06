@@ -24,6 +24,7 @@ interface CommonConfig {
   copyright: string;
   customProtocolName: string;
   description: string;
+  electronDirectory: string;
   environment: 'internal' | 'production';
   legalUrl: string;
   licensesUrl: string;

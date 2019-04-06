@@ -63,6 +63,7 @@ const getCommonConfig = (options: CommonConfigOptions) => {
     copyright: process.env.APP_COPYRIGHT || defaultConfig.copyright,
     customProtocolName: process.env.APP_CUSTOM_PROTOCOL_NAME || defaultConfig.customProtocolName,
     description: process.env.APP_DESCRIPTION || defaultConfig.description,
+    electronDirectory: 'electron',
     environment: IS_PRODUCTION ? 'production' : defaultConfig.environment,
     legalUrl: process.env.URL_LEGAL || defaultConfig.legalUrl,
     licensesUrl: process.env.URL_LICENSES || defaultConfig.licensesUrl,

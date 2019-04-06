@@ -21,6 +21,7 @@
 
 import commander from 'commander';
 import * as electronBuilder from 'electron-builder';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 
 import {checkCommanderOptions, getLogger, writeJson} from '../lib/build-utils';
@@ -39,6 +40,8 @@ checkCommanderOptions(commander, ['wireJson']);
 
 const wireJsonResolved = path.resolve(commander.wireJson);
 const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
+const electronPackageJson = path.resolve(commonConfig.electronDirectory, 'package.json');
+const originalElectronJson = fs.readJsonSync(electronPackageJson);
 
 const linuxDefaultConfig: LinuxConfig = {
   /* tslint:disable:no-invalid-template-strings */
@@ -86,7 +89,7 @@ const builderConfig: electronBuilder.Configuration = {
     depends: debDepends,
   },
   directories: {
-    app: 'electron',
+    app: commonConfig.electronDirectory,
     buildResources: 'resources',
     output: 'wrap/dist',
   },
@@ -116,10 +119,15 @@ logger.info(
   `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`
 );
 
-writeJson(wireJsonResolved, commonConfig)
-  .then(() => electronBuilder.build({config: builderConfig, targets}))
-  .then(buildFiles => buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`)))
-  .finally(() => writeJson(wireJsonResolved, defaultConfig))
+(async () => {
+  await writeJson(electronPackageJson, {...originalElectronJson, version: commonConfig.version});
+  await writeJson(wireJsonResolved, commonConfig);
+  const buildFiles = await electronBuilder.build({config: builderConfig, targets});
+  await buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`));
+})()
+  .finally(() =>
+    Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
+  )
   .catch(error => {
     logger.error(error);
     process.exit(1);

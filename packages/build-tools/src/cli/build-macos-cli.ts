@@ -66,7 +66,7 @@ const packagerOptions: electronPackager.Options = {
   asar: true,
   buildVersion: commonConfig.buildNumber,
   darwinDarkModeSupport: true,
-  dir: 'electron',
+  dir: commonConfig.electronDirectory,
   extendInfo: 'resources/macos/custom.plist',
   helperBundleId: `${macOsConfig.bundleId}.helper`,
   icon: 'resources/macos/logo.icns',
@@ -98,9 +98,11 @@ logEntries(commonConfig, 'commonConfig', 'build-macos-cli');
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 
-writeJson(wireJsonResolved, commonConfig)
-  .then(() => electronPackager(packagerOptions))
-  .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
+(async () => {
+  await writeJson(wireJsonResolved, commonConfig);
+  const [buildDir] = await electronPackager(packagerOptions);
+  logger.log(`Built package in "${buildDir}".`);
+})()
   .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
     logger.error(error);
