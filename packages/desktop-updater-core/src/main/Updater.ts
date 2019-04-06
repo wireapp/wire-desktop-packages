@@ -26,7 +26,6 @@ import {
   Manifest as SpecManifest,
 } from '@wireapp/desktop-updater-spec';
 import debug from 'debug';
-import * as Random from 'random-js';
 
 import {app, ipcMain} from 'electron';
 import {Config} from './Config';
@@ -74,7 +73,7 @@ export namespace Updater {
     private static PERIODIC_TIMER?: NodeJS.Timer;
     private static isBusy: boolean = false;
 
-    public static connectivityCheckEndpoints: string[];
+    public static connectivityCheckEndpoints: string;
     public static currentClientVersion: string;
     public static currentEnvironment: string;
     public static currentWebappEnvironment: string;
@@ -140,7 +139,7 @@ export namespace Updater {
           throw new LogicalError('Internet connectivity function must be set.');
         }
         while (true) {
-          if (await this.isInternetAvailable(Random.pick(Random.nodeCrypto, this.connectivityCheckEndpoints))) {
+          if (await this.isInternetAvailable(this.connectivityCheckEndpoints)) {
             break;
           }
 
