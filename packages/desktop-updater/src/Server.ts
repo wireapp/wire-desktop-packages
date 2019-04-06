@@ -48,7 +48,6 @@ export interface ServerWebConfigInterface {
   APP_NAME: string;
   BACKEND_REST: string;
   BACKEND_WS: string;
-  ENVIRONMENT: string;
   FEATURE: {
     CHECK_CONSENT: boolean;
     ENABLE_ACCOUNT_REGISTRATION: boolean;
@@ -72,6 +71,7 @@ export interface ServerWebConfigInterface {
 
 interface ServerWebConfigInternalInterface extends ServerWebConfigInterface {
   APP_BASE: string;
+  ENVIRONMENT: string;
   VERSION: string;
 }
 
@@ -205,10 +205,11 @@ export class Server {
       }
     }
 
-    // Override some web config vars
+    // Override some of the web config vars
     this.webConfig = {
       ...this.webConfig,
       APP_BASE: this.currentEnvironmentBaseUrlPlain,
+      ENVIRONMENT: this.currentEnvironment.toLowerCase(),
       VERSION: manifest.webappVersionNumber,
     };
 
