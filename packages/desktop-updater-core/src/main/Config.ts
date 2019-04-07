@@ -17,7 +17,7 @@
  *
  */
 
-import {updateProto} from '@wireapp/desktop-updater-spec';
+import {updater as updateProto} from '@wireapp/desktop-updater-spec/proto/Protobuf';
 
 export class Config {}
 

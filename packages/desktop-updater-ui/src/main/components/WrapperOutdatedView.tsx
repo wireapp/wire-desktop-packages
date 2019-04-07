@@ -18,11 +18,11 @@
  */
 
 import {Paragraph} from '@wireapp/react-ui-kit';
-import * as React from 'react';
+import React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 
 import {EventDispatcher} from '../libs/EventDispatcher';
-import {GlobalStyle, MainContent, MainHeading, RegularButton, UpdaterContainer} from './UpdaterStyles';
+import {GlobalStyle, MainContent, MainHeadingTitle, RegularButton, UpdaterContainer} from './UpdaterStyles';
 import {WrapperOutdatedState} from './WrapperOutdated';
 
 interface Props extends WrapperOutdatedState {}
@@ -54,9 +54,9 @@ class WrapperOutdated extends React.Component<Props & WithTranslation> {
     return (
       <UpdaterContainer>
         <MainContent>
-          <MainHeading>
+          <MainHeadingTitle>
             <Trans>Wire must be updated</Trans>
-          </MainHeading>
+          </MainHeadingTitle>
           <Paragraph>
             <Trans>This version of Wire is no longer supported. To continue to use it, please update it.</Trans>
           </Paragraph>

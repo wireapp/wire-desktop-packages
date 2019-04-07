@@ -17,7 +17,7 @@
  *
  */
 
-import * as React from 'react';
+import React from 'react';
 import {render} from 'react-dom';
 import {InstallerContainer, PromptContainer, WrapperOutdatedContainer} from './index';
 import i18n from './libs/Localization';
