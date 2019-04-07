@@ -18,14 +18,14 @@
  */
 
 import {Loading, Paragraph} from '@wireapp/react-ui-kit';
-import * as React from 'react';
+import React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 
 import {InstallerContainerState} from './Installer';
 import {
   GlobalStyle,
   MainContent,
-  MainHeading,
+  MainHeadingTitle,
   ProgressBlockLoader,
   ProgressBlockStats,
   ProgressContainer,
@@ -45,9 +45,9 @@ class Installer extends React.Component<Props & WithTranslation> {
     return (
       <UpdaterContainer>
         <MainContent>
-          <MainHeading>
+          <MainHeadingTitle>
             {installing ? <Trans>Installing the update</Trans> : <Trans>Downloading the update</Trans>}
-          </MainHeading>
+          </MainHeadingTitle>
           <ProgressContainer>
             <ProgressBlockLoader>
               <Loading progress={progress.percent} />

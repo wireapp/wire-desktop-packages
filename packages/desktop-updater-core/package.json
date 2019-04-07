@@ -20,8 +20,8 @@
     "protobufjs": "6.8.8",
     "random-js": "2.0.0",
     "raygun": "0.10.1",
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "throttle-debounce": "2.1.0",
     "vm2": "3.6.10"
   },

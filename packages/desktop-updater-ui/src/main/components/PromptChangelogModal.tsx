@@ -17,19 +17,19 @@
  *
  */
 
+import styled from '@emotion/styled';
 import * as Updater from '@wireapp/desktop-updater-spec';
 import {COLOR, H1, H2, H3, H4, Link, Paragraph, Small, Text} from '@wireapp/react-ui-kit';
-import * as Long from 'long';
+import Long from 'long';
 import {DateTime} from 'luxon';
-import * as React from 'react';
+import React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
-import * as Markdown from 'react-markdown';
-import styled from 'styled-components';
+import ReactMarkdown from 'react-markdown';
 import i18n from '../libs/Localization';
 import {Modal} from './ModalBack';
-import {MainHeading as UpdaterStylesMainHeading} from './UpdaterStyles';
+import {MainHeadingTitle as UpdaterStylesMainHeadingTitle} from './UpdaterStyles';
 
-const MainHeading = styled(UpdaterStylesMainHeading)`
+const MainHeadingTitle = styled(UpdaterStylesMainHeadingTitle)`
   margin-top: 0;
 `;
 
@@ -69,7 +69,7 @@ const Selectable = styled.span`
 interface Props {
   changelogUrl: string;
   envelope: {publicKey: string};
-  manifest: any;
+  manifest: Updater.Manifest;
   onClose: () => void;
 }
 
@@ -82,7 +82,7 @@ interface State {
 class PromptChangelogModal extends React.Component<Props & WithTranslation, State> {
   public static readonly PROMPT_WINDOW_SIZE = {height: 250, width: 480};
   public static readonly CHANGELOG_WINDOW_SIZE = {height: Math.round(259 * 1.4), width: Math.round(480 * 1.3)};
-  private signingDetails: HTMLParagraphElement | undefined;
+  private signingDetails: HTMLParagraphElement | null = null;
 
   constructor(props) {
     super(props);
@@ -127,12 +127,17 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
       return <Paragraph>{props.children}</Paragraph>;
     };
     const targetEnvironment =
-      typeof manifest.targetEnvironment === 'string' ? manifest.targetEnvironment.toLowerCase() : '';
+      manifest && typeof manifest.targetEnvironment === 'string' ? manifest.targetEnvironment.toLowerCase() : '';
+    const updateSize = new Long(
+      manifest.fileContentLength.low,
+      manifest.fileContentLength.high,
+      manifest.fileContentLength.unsigned
+    );
     return (
       <Modal fullscreen onClose={this.hideChangelog} style={{backgroundColor: 'white'}}>
-        <MainHeading>
+        <MainHeadingTitle>
           <Trans>What's new</Trans>
-        </MainHeading>
+        </MainHeadingTitle>
         {manifest.targetEnvironment !== 'PRODUCTION' && (
           <Paragraph style={{marginBottom: 10}}>
             <Text fontSize="12px" bold style={{backgroundColor: COLOR.RED, padding: 5}} color={COLOR.WHITE}>
@@ -146,7 +151,12 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
         )}
         <Paragraph>
           {typeof manifest.changelog === 'string' && manifest.changelog !== '' ? (
-            <Markdown escapeHtml={true} skipHtml={true} source={manifest.changelog} renderers={{heading, paragraph}} />
+            <ReactMarkdown
+              escapeHtml={true}
+              skipHtml={true}
+              source={manifest.changelog}
+              renderers={{heading, paragraph}}
+            />
           ) : (
             <Small>
               <Trans>No changelog is available for this update</Trans>
@@ -157,7 +167,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
           <Paragraph>
             <Link
               fontSize="14px"
-              textTransform="normal"
+              textTransform="none"
               style={{fontWeight: 'normal'}}
               href={changelogUrl}
               target="_blank"
@@ -182,13 +192,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
               <Trans>Size of the update:</Trans>{' '}
             </BoldText>
             <Selectable>
-              {`${(
-                new Long(
-                  manifest.fileContentLength.low,
-                  manifest.fileContentLength.high,
-                  manifest.fileContentLength.unsigned
-                ).toNumber() / 1000000
-              ).toFixed(2)}`}{' '}
+              {`${(updateSize.toNumber() / 1000000).toFixed(2)} `}
               <Trans>MB</Trans>
             </Selectable>
           </NormalText>
@@ -199,7 +203,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
             <Selectable>{manifest.webappVersionNumber}</Selectable>
           </NormalText>
         </Paragraph>
-        <Link fontSize="14px" textTransform="normal" bold href="javascript://" onClick={this.toggleSigningDetails}>
+        <Link fontSize="14px" textTransform="none" bold href="javascript://" onClick={this.toggleSigningDetails}>
           <Trans>This update is digitally signed.</Trans>
         </Link>
         {this.state.showSigningDetails ? (

@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "module": "commonjs",
     "outDir": "dist/commonjs",
     "resolveJsonModule": true,
     "rootDir": "src/main",
-    "types": ["luxon", "node"]
+    "types": ["long", "luxon", "node", "react", "react-dom"]
   },
   "exclude": ["dist", "node_modules"],
   "extends": "../../tsconfig.json"
