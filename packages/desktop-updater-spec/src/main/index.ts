@@ -18,7 +18,6 @@
  */
 
 import * as Long from 'long';
-export {updater as updateProto} from '../../proto/Protobuf';
 
 export enum BridgeIPC {
   UPDATE_AVAILABLE = 'BridgeIPC.UPDATE_AVAILABLE',
