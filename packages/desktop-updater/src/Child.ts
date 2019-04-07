@@ -77,12 +77,11 @@ export namespace Updater {
 
     private static endWithWebConfig(res: http.ServerResponse) {
       const body = `window.wire = window.wire || {}; window.wire.env = ${JSON.stringify(WebConfig)};`;
-      return res
-        .writeHead(200, {
-          'Content-Length': Buffer.byteLength(body),
-          'Content-Type': 'application/javascript',
-        })
-        .end(body, 'utf8');
+      res.writeHead(200, {
+        'Content-Length': Buffer.byteLength(body),
+        'Content-Type': 'application/javascript',
+      });
+      return res.end(body, 'utf8');
     }
 
     private onRequest(req: http.IncomingMessage, res: http.ServerResponse): void {
