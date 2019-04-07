@@ -23,6 +23,9 @@ declare const RaygunToken: string;
 declare const RaygunDetails: {name: string; errorCode: number; category: string};
 declare const RaygunError: Error;
 
+// tslint:disable-next-line:no-console
+const log = console.log;
+
 class RaygunReport {
   public static async send(): Promise<void> {
     try {
@@ -32,16 +35,13 @@ class RaygunReport {
         })
         .send(RaygunError, RaygunDetails, response => {
           if (response) {
-            // tslint:disable-next-line:no-console
-            console.log('[VM] Incident reported');
+            log('[VM] Incident reported to Raygun');
           } else {
-            // tslint:disable-next-line:no-console
-            console.log('[VM] Incident failed to be reported');
+            log('[VM] Incident failed to be reported');
           }
         });
     } catch (error) {
-      // tslint:disable-next-line:no-console
-      console.log(`[VM] Error: ${error.message}`);
+      log(`[VM] Error: ${error.message}`);
     }
   }
 }
