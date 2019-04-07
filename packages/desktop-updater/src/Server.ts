@@ -43,15 +43,47 @@ import {Config, Utils} from './index';
 import {BaseError} from 'make-error-cause';
 export class NotExistingError extends BaseError {}
 
+export interface ServerWebConfigInterface {
+  ANALYTICS_API_KEY: string;
+  APP_NAME: string;
+  BACKEND_REST: string;
+  BACKEND_WS: string;
+  FEATURE: {
+    CHECK_CONSENT: boolean;
+    ENABLE_ACCOUNT_REGISTRATION: boolean;
+    ENABLE_DEBUG: boolean;
+    ENABLE_PHONE_LOGIN: boolean;
+    ENABLE_SSO: boolean;
+    SHOW_LOADING_INFORMATION: boolean;
+  };
+  RAYGUN_API_KEY: string;
+  URL: {
+    ACCOUNT_BASE: string;
+    MOBILE_BASE: string;
+    PRIVACY_POLICY: string;
+    SUPPORT_BASE: string;
+    TEAMS_BASE: string;
+    TERMS_OF_USE_PERSONAL: string;
+    TERMS_OF_USE_TEAMS: string;
+    WEBSITE_BASE: string;
+  };
+}
+
+interface ServerWebConfigInternalInterface extends ServerWebConfigInterface {
+  APP_BASE: string;
+  ENVIRONMENT: string;
+  VERSION: string;
+}
+
 export interface ServerConstructorInterface {
   browserWindowOptions: Electron.BrowserWindowConstructorOptions;
-  connectivityCheckEndpoints: string[];
   currentClientVersion: string;
   currentEnvironment: string;
   currentEnvironmentBaseUrl: string;
   enableSecureUpdater: boolean;
   trustStore: string[];
   updatesEndpoint: string;
+  webConfig: ServerWebConfigInterface;
 }
 
 export class Server {
@@ -63,8 +95,8 @@ export class Server {
   private browserWindow: Electron.BrowserWindow | undefined;
   private currentEnvironmentHostname: string | undefined;
   private internalHost: URL | undefined;
+  private webConfig: ServerWebConfigInterface | ServerWebConfigInternalInterface;
   private readonly browserWindowOptions: Electron.BrowserWindowConstructorOptions;
-  private readonly connectivityCheckEndpoints: string[];
   private readonly currentClientVersion: string;
   private readonly currentEnvironment: string;
   private readonly currentEnvironmentBaseUrl: URL;
@@ -75,7 +107,6 @@ export class Server {
 
   constructor(options: ServerConstructorInterface) {
     this.browserWindowOptions = options.browserWindowOptions;
-    this.connectivityCheckEndpoints = options.connectivityCheckEndpoints;
     this.currentClientVersion = options.currentClientVersion;
     this.currentEnvironment = options.currentEnvironment;
     this.currentEnvironmentBaseUrl = new URL(options.currentEnvironmentBaseUrl);
@@ -83,6 +114,7 @@ export class Server {
     this.enableSecureUpdater = options.enableSecureUpdater;
     this.trustStore = options.trustStore;
     this.updatesEndpoint = options.updatesEndpoint;
+    this.webConfig = options.webConfig;
   }
 
   public async start(): Promise<Electron.BrowserWindow> {
@@ -104,7 +136,7 @@ export class Server {
     Updater.Main.currentEnvironment = this.currentEnvironment;
     Updater.Main.trustStore = this.trustStore;
     Updater.Main.updatesEndpoint = this.updatesEndpoint;
-    Updater.Main.connectivityCheckEndpoints = this.connectivityCheckEndpoints;
+    Updater.Main.connectivityCheckEndpoints = this.webConfig.BACKEND_REST;
 
     if (!Server.WEB_SERVER_TOKEN_NAME.match(/^[a-zA-Z0-9]*$/)) {
       throw new Error('Token name must be alphanumeric');
@@ -172,6 +204,14 @@ export class Server {
         }
       }
     }
+
+    // Override some of the web config vars
+    this.webConfig = {
+      ...this.webConfig,
+      APP_BASE: this.currentEnvironmentBaseUrlPlain,
+      ENVIRONMENT: this.currentEnvironment.toLowerCase(),
+      VERSION: manifest.webappVersionNumber,
+    };
 
     // Build document root
     const documentRoot = await UpdaterUtils.getDocumentRoot(manifest.fileChecksum);
@@ -246,6 +286,7 @@ export class Server {
       AccessToken: this.accessToken,
       Config: Config.Server,
       DocumentRoot: documentRoot,
+      WebConfig: this.webConfig,
     });
     const {internalHost, server} = await sandbox.run();
 
@@ -293,7 +334,8 @@ export class Sandbox {
     private readonly filename: string,
     private readonly options: {
       AccessToken: string;
-      Config: {};
+      Config: {[key: string]: any};
+      WebConfig: {[key: string]: any};
       DocumentRoot: string;
     }
   ) {}
@@ -304,7 +346,7 @@ export class Sandbox {
 
       this.vm = new VirtualMachine({
         require: {
-          builtin: ['path', 'https'],
+          builtin: ['path', 'https', 'url'],
           context: 'host',
           external: ['finalhandler', 'serve-static', 'random-js'],
           mock: {
