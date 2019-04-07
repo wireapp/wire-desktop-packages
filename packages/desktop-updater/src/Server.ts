@@ -346,7 +346,7 @@ export class Sandbox {
 
       this.vm = new VirtualMachine({
         require: {
-          builtin: ['path', 'https'],
+          builtin: ['path', 'https', 'url'],
           context: 'host',
           external: ['finalhandler', 'serve-static', 'random-js'],
           mock: {
