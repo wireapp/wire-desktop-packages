@@ -18,7 +18,7 @@
  */
 
 import * as Updater from '@wireapp/desktop-updater-spec';
-import * as React from 'react';
+import React from 'react';
 import {TranslatedPrompt} from './PromptView';
 
 export interface PromptContainerState {

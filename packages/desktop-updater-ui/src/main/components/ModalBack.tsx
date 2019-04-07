@@ -17,9 +17,9 @@
  *
  */
 
+import styled from '@emotion/styled';
 import {ArrowIcon, QUERY} from '@wireapp/react-ui-kit';
-import * as React from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import {GlobalStyle} from './UpdaterStyles';
 
 interface ModalBodyProps {
