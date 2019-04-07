@@ -21,7 +21,6 @@ import debug from 'debug';
 import {dialog} from 'electron';
 import {BaseError} from 'make-error-cause';
 
-import {Config} from './Config';
 import {DownloadError} from './Downloader';
 import {InstallerError} from './Installer';
 import {getLocales} from './Localization';
@@ -67,12 +66,10 @@ export interface ErrorDispatcherResponseInterface {
 export class ErrorDispatcher {
   private static readonly debug = debug('wire:updater:errordispatcher');
 
-  private static readonly LINK_BUGREPORT: string = Config.ErrorDispatcher.LINK_BUGREPORT;
-  private static readonly RAYGUN_ENABLED: boolean = Config.ErrorDispatcher.RAYGUN_ENABLED;
-  private static readonly RAYGUN_TOKEN: string = Config.ErrorDispatcher.RAYGUN_TOKEN;
-
-  public static promptWindow?: Electron.BrowserWindow;
   public static installerWindow?: Electron.BrowserWindow;
+  public static promptWindow?: Electron.BrowserWindow;
+  public static raygunToken?: string;
+  public static supportLink?: string;
 
   public static error: BaseError;
 
@@ -101,7 +98,9 @@ export class ErrorDispatcher {
         return resolve({tryAgain: true});
 
       case Response.CONTACT_US:
-        await Utils.openExternalLink(this.LINK_BUGREPORT);
+        if (ErrorDispatcher.supportLink) {
+          await Utils.openExternalLink(ErrorDispatcher.supportLink);
+        }
         break;
     }
 
@@ -109,7 +108,7 @@ export class ErrorDispatcher {
   }
 
   private static async reportError(): Promise<void> {
-    if (!this.RAYGUN_ENABLED || !this.RAYGUN_TOKEN || !this.error) {
+    if (!ErrorDispatcher.raygunToken || !this.error) {
       return;
     }
 
@@ -117,7 +116,7 @@ export class ErrorDispatcher {
       {
         RaygunDetails: {name: this.error.name, errorCode: this.getErrorCode(), category: 'Updater'},
         RaygunError: this.error.cause instanceof Error ? this.error.cause : this.error,
-        RaygunToken: this.RAYGUN_TOKEN,
+        RaygunToken: ErrorDispatcher.raygunToken,
       },
       {
         require: {
@@ -186,7 +185,9 @@ export class ErrorDispatcher {
       const buttons: string[] = [];
       buttons[Response.CANCEL] = await getLocales('error-dispatcher:cancel');
       buttons[Response.TRY_AGAIN] = await getLocales('error-dispatcher:tryAgain');
-      buttons[Response.CONTACT_US] = await getLocales('error-dispatcher:contactUs');
+      if (ErrorDispatcher.supportLink) {
+        buttons[Response.CONTACT_US] = await getLocales('error-dispatcher:contactUs');
+      }
 
       const errorCode: number = this.getErrorCode();
 
@@ -210,7 +211,7 @@ export class ErrorDispatcher {
         type: 'error',
       };
 
-      if (this.RAYGUN_ENABLED && this.RAYGUN_TOKEN) {
+      if (ErrorDispatcher.raygunToken) {
         options.checkboxChecked = true;
         options.checkboxLabel = await getLocales('error-dispatcher:reportThisIncident');
       }
