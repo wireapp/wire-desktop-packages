@@ -193,7 +193,7 @@ export class Downloader {
       throw new DownloadError(error.message, error);
     }
 
-    return this.extractEnvelopeFrom(envelope);
+    return {...this.extractEnvelopeFrom(envelope), raw: envelope};
   }
 
   private static convertBuffers<T, U>(data: T): U {
