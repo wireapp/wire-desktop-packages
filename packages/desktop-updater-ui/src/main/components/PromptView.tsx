@@ -22,7 +22,7 @@ import {COLOR, Checkbox, CheckboxLabel, Container, Link, Opacity, Paragraph} fro
 import React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import {EventDispatcher} from '../libs/EventDispatcher';
-import {PromptContainerState} from './Prompt';
+import {PromptContainerProps} from './Prompt';
 import {PromptChangelogModal, TranslatedPromptChangelogModal} from './PromptChangelogModal';
 import {DecisionButton, GlobalStyle, MainContent, MainHeadingTitle, UpdaterContainer} from './UpdaterStyles';
 
@@ -34,7 +34,7 @@ interface State {
   activateChangelog: boolean;
 }
 
-class Prompt extends React.Component<PromptContainerState & WithTranslation, State> {
+class Prompt extends React.Component<PromptContainerProps & WithTranslation, State> {
   constructor(props) {
     super(props);
     this.state = {
