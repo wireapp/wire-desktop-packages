@@ -116,7 +116,6 @@ export class Installer extends WindowManager {
 
   public static async save(fileName: string, fileRaw: Buffer, envelopeRaw: Buffer): Promise<void> {
     this.debug('Saving bundle and manifest...');
-    this.debug(fileName, fileRaw, envelopeRaw);
     const bundle = Utils.writeFileAsBuffer(Utils.resolvePath(fileName), fileRaw);
     const manifest = Utils.writeFileAsBuffer(Utils.resolvePath(Config.Updater.MANIFEST_FILE), envelopeRaw);
     await bundle;
