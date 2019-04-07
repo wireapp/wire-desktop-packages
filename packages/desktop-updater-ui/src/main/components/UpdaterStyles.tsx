@@ -97,11 +97,11 @@ const RegularButton = styled(Button)`
 const DecisionButton = styled(RegularButton)`
   width: 47.5%;
 
-  &:first-child {
+  &:first-of-type {
     margin-right: 2.5%;
   }
 
-  &:last-child {
+  &:last-of-type {
     margin-left: 2.5%;
   }
 `;
