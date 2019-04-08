@@ -19,9 +19,9 @@
  *
  */
 
+import {make as createWindowsShortcut} from '@ffflorian/windows-shortcut-maker';
 import commander from 'commander';
 import * as path from 'path';
-const windowsShortcut = require('windows-shortcut-maker');
 
 import {checkCommanderOptions, getLogger, getToolName} from '../lib/build-utils';
 
@@ -47,11 +47,10 @@ const fullExePath = `"^%LocalAppData%^\\${appShortName}\\${exeFile}"`;
 const exeArgs = `--env ${backend}`;
 const linkFile = path.resolve('./', appName);
 
-windowsShortcut
-  .make({
-    filepath: fullExePath,
-    lnkArgs: exeArgs,
-    lnkName: appName,
-  })
+createWindowsShortcut({
+  filepath: fullExePath,
+  linkArgs: exeArgs,
+  linkName: appName,
+})
   .then(() => logger.info(`Built shortcut in "${linkFile}".`))
   .catch(error => logger.error(error));
