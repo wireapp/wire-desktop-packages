@@ -2423,6 +2423,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.0.tgz#b0df8d6ef9b5001b2be3a94d909ce3c29a80f9e1"
   integrity sha512-rx29MMkRdVmzunmiA4lzBYJNnXsW/PhG4kMBy2ATsYaDjGGR75dCFEVVROKpNwlVdcUX3xxlghKQOeDPBJobng==
 
+"@types/node@11.13.1":
+  version "11.13.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.1.tgz#f977a12e97695663040581034b483f34c8dd4f6f"
+  integrity sha512-MeatbbUsZ80BEsKPXby6pUZjUM9ZuHIpWElN0siopih3fvnlpX2O9L6D5+dzDIb36lf9tM/8U4PVdLQ+L4qr4A==
+
 "@types/node@^10.1.0", "@types/node@^10.12.18":
   version "10.14.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.4.tgz#1c586b991457cbb58fef51bc4e0cfcfa347714b5"
@@ -2445,10 +2450,18 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.8.12":
+"@types/react@*":
   version "16.8.12"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.12.tgz#ffbdd7bcd2b7037c3f78e26c708922a2befbb71f"
   integrity sha512-MZZiv11BQhsxFp5DHDmRKBi6Nv3jwOhRiFFDE7ZJ1+rb52gdOd9y/qY0+5wyV/PQVK9926wFMjpQj3BJ18pb4Q==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@16.8.13":
+  version "16.8.13"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.13.tgz#a82b15aad9ab91c40edca0d6889b7745ae24f053"
+  integrity sha512-otJ4ntMuHGrvm67CdDJMAls4WqotmAmW0g3HmWi9LCjSWXrxoXY/nHXrtmMfvPEEmGFNm6NdgMsJmnfH820Qaw==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -2635,14 +2648,14 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/react-ui-kit@5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.1.tgz#7b8a3e4d8024c200c70641d6f6bf52adad7e6b54"
-  integrity sha512-m+2+mDS/dEfdTJNCIKAfYgjF1IFMwrIscp46FeTAwFDq083n7NKDdQ5Y15SdR0tln/FhU3tZSxCA4KH0LxIx8Q==
+"@wireapp/react-ui-kit@5.3.3":
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.3.tgz#171a9c23bd7826115740d341ad058914156eba58"
+  integrity sha512-IYFSEMfeOktmgCuLebDyK0z8HB64AjpT2+x7IGgWynH5bADHoPB7COdQ6zSZslfCyok+c0hbFAfSAoOXEaCZWA==
   dependencies:
     "@emotion/core" "10.0.10"
     "@types/color" "3.0.0"
-    bazinga64 "5.3.55"
+    bazinga64 "5.3.56"
     color "3.1.0"
     emotion-normalize "10.0.0"
     react-transition-group "2.8.0"
@@ -3589,10 +3602,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.55:
-  version "5.3.55"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.55.tgz#54f694710b0baf95ce7f4a69dbcfa2a3960afe17"
-  integrity sha512-HU8q+wVr2cbTW7aIfcR6e62w1Crj6G4hPZjcieTn97ECWi2Asag96GkELDAuSKHiilOblfkiv/FAWbl/p8HZPQ==
+bazinga64@5.3.56:
+  version "5.3.56"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.56.tgz#9be1c08cf492d9f8f3f411198a81b369144816aa"
+  integrity sha512-PcKZFpLXGAH63+6X/nwKR6ZMO2slPymZV3Exde3/gIyXhNpmB0YRy8So7PzBApx0W37PIy0sfrncXH6yoZ4TUg==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -11040,10 +11053,10 @@ react-hotkeys@2.0.0-pre4:
   dependencies:
     prop-types "^15.6.1"
 
-react-i18next@10.6.1:
-  version "10.6.1"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-10.6.1.tgz#044c39fb463a8d96cc548509187a1bb316e660fa"
-  integrity sha512-uuLksWCYR0i9tRZyKsQpcbJ0kiXYVDcaFXPVapZe8mYXReXvKsBgaOb6EwtqdXqiidO+HJAbyLOq9g3yzuZDEQ==
+react-i18next@10.6.2:
+  version "10.6.2"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-10.6.2.tgz#1100b6f65453c021012b2e120a0754f7905b4de1"
+  integrity sha512-dXr5EGlzIWnGDVmMJzBi14PJUrcrWEedU4vSFLjuOYBU4fiZ1/jJIjnEE71713gGtYd254lcqeKjoQsYOGGKDg==
   dependencies:
     "@babel/runtime" "^7.3.1"
     html-parse-stringify2 "2.0.1"
