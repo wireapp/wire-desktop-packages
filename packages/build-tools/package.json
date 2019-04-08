@@ -14,7 +14,8 @@
     "electron-packager": "13.1.1",
     "electron-winstaller": "2.7.0",
     "fs-extra": "7.0.1",
-    "logdown": "3.2.8"
+    "logdown": "3.2.8",
+    "windows-shortcuts": "0.1.6"
   },
   "description": "Wire's internal wrapper build tools",
   "devDependencies": {

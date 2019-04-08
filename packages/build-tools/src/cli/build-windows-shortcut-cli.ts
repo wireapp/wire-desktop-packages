@@ -22,6 +22,7 @@
 import commander from 'commander';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as windowsShortcut from 'windows-shortcuts';
 
 import {checkCommanderOptions, getLogger, getToolName} from '../lib/build-utils';
 
@@ -43,9 +44,10 @@ const {appName, appShortName, backend, exeFile} = commander;
 
 logger.info(`Creating a shortcut for Windows ...`);
 
-const exeWithEnv = `%AppData%\\${appShortName}\\${exeFile} --env ${backend}`;
-const linkFile = path.resolve(`./${appName}.lnk`);
+const exeWithEnv = `"^%LocalAppData%^\\${appShortName}\\${exeFile}" --env ${backend}`;
+const linkFile = path.resolve('./', appName);
 
-fs.symlink(exeWithEnv, linkFile, 'file')
+windowsShortcut
+  .create(exeWithEnv, linkFile)
   .then(() => logger.info(`Built shortcut in "${linkFile}".`))
   .catch(error => logger.error(error));
