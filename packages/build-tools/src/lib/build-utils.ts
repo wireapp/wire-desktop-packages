@@ -41,7 +41,7 @@ function getLogger(postfix: string): logdown.Logger {
 }
 
 function getToolName(fullFilename: string): string {
-  const fileName = path.basename(fullFilename).replace('-cli.js', '');
+  const fileName = path.basename(fullFilename).replace(/-cli.[tj]s/, '');
   return `wire-${fileName}`;
 }
 
@@ -51,12 +51,12 @@ async function writeJson<T extends Object>(fileName: string, data: T): Promise<v
 
 function getMacOSShortcutScript(bundleId: string, backend: string): string {
   return `#!/usr/bin/env bash
-WIRE_PATH="$(mdfind kMDItemCFBundleIdentifier="${bundleId}")"
-if [ -z "\${WIRE_PATH}" ]; then
+APP_PATH="$(mdfind kMDItemCFBundleIdentifier="${bundleId}")"
+if [ -z "\${APP_PATH}" ]; then
   osascript -e 'display alert "Could not find local Wire app installation." as critical'
   exit
 fi
-open -a "\${WIRE_PATH}" --args --env "${backend}"`;
+open -a "\${APP_PATH}" --args --env "${backend}"`;
 }
 
 export {checkCommanderOptions, getLogger, getMacOSShortcutScript, getToolName, writeJson};

@@ -48,4 +48,4 @@ fs.mkdir(outputDir)
   .then(() => fs.writeFile(scriptFile, shortcutScript, 'utf8'))
   .then(() => fs.chmod(scriptFile, '755'))
   .then(() => logger.info(`Built shortcut in "${outputDir}".`))
-  .catch(logger.error);
+  .catch(error => logger.error(error));

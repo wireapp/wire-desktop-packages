@@ -46,6 +46,6 @@ logger.info(`Creating a shortcut for Windows ...`);
 const exeWithEnv = `%AppData%\\${appShortName}\\${exeFile} --env ${backend}`;
 const linkFile = path.resolve(`./${appName}.lnk`);
 
-fs.symlink(exeWithEnv, linkFile, 'junction')
+fs.symlink(exeWithEnv, linkFile, 'file')
   .then(() => logger.info(`Built shortcut in "${linkFile}".`))
-  .catch(logger.error);
+  .catch(error => logger.error(error));
