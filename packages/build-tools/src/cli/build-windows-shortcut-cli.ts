@@ -43,12 +43,13 @@ const {appName, appShortName, backend, exeFile} = commander;
 
 logger.info(`Creating a shortcut for Windows ...`);
 
-const fullExePath = `"^%LocalAppData%^\\${appShortName}\\${exeFile}"`;
+const fullExePath = `"%LocalAppData%\\${appShortName}\\${exeFile}"`;
 const exeArgs = `--env ${backend}`;
 const linkFile = path.resolve('./', appName);
 
 createWindowsShortcut({
   filepath: fullExePath,
+  force: true,
   linkArgs: exeArgs,
   linkName: appName,
 })
