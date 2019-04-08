@@ -13768,6 +13768,10 @@ windows-release@^3.1.0:
   dependencies:
     execa "^0.10.0"
 
+windows-shortcut-maker@ffflorian/windows-shortcut-maker#feat/async:
+  version "0.0.4"
+  resolved "https://codeload.github.com/ffflorian/windows-shortcut-maker/tar.gz/0e39b913923a838b392be3a9f29d1b704baf8dbc"
+
 windows-shortcuts@0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/windows-shortcuts/-/windows-shortcuts-0.1.6.tgz#27970c5c346ffd81821c3e12528c0babca0a5a99"
