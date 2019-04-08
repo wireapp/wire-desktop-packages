@@ -4,7 +4,8 @@
     "wire-build-macos": "dist/cli/build-macos-cli.js",
     "wire-build-macos-shortcut": "dist/cli/build-macos-shortcut-cli.js",
     "wire-build-win": "dist/cli/build-windows-cli.js",
-    "wire-build-win-installer": "dist/cli/build-windows-installer-cli.js"
+    "wire-build-win-installer": "dist/cli/build-windows-installer-cli.js",
+    "wire-build-win-shortcut": "dist/cli/build-windows-shortcut-cli.js"
   },
   "dependencies": {
     "commander": "2.20.0",

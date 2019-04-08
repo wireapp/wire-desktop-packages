@@ -53,4 +53,9 @@ fi
 open -a "\${WIRE_PATH}" --args --env "${backend}"`;
 }
 
-export {checkCommanderOptions, getLogger, getMacOSShortcutScript, writeJson};
+function getWindowsShortcut(exeFile: string, backend: string): string {
+  const fullExe = `%APPDATA%\\${exeFile.replace('.exe', '')}\\${exeFile}}`;
+  return `${fullExe} --env ${backend}`;
+}
+
+export {checkCommanderOptions, getLogger, getMacOSShortcutScript, getWindowsShortcut, writeJson};

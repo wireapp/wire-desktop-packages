@@ -28,10 +28,11 @@ import {checkCommanderOptions, getLogger, writeJson} from '../lib/build-utils';
 import {getCommonConfig, logEntries} from '../lib/commonConfig';
 import {LinuxConfig} from '../lib/Config';
 
-const logger = getLogger('wire-build-linux');
+const toolName = path.basename(__filename).replace('-cli.js', '');
+const logger = getLogger(toolName);
 
 commander
-  .name('wire-build-linux')
+  .name(toolName)
   .description('Build the Wire wrapper for Linux')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
   .parse(process.argv);

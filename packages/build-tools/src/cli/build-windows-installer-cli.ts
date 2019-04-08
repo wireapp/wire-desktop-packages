@@ -27,10 +27,11 @@ import {checkCommanderOptions, getLogger} from '../lib/build-utils';
 import {getCommonConfig} from '../lib/commonConfig';
 import {WindowsConfig} from '../lib/Config';
 
-const logger = getLogger('wire-build-windows-installer');
+const toolName = path.basename(__filename).replace('-cli.js', '');
+const logger = getLogger(toolName);
 
 commander
-  .name('wire-build-windows-installer')
+  .name(toolName)
   .description('Build the Wire installer for Windows')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
   .parse(process.argv);

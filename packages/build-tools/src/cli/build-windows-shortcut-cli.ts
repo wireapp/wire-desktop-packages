@@ -23,29 +23,26 @@ import commander from 'commander';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger, getMacOSShortcutScript} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, getWindowsShortcut} from '../lib/build-utils';
 
 const toolName = path.basename(__filename).replace('-cli.js', '');
 const logger = getLogger(toolName);
 
 commander
   .name(toolName)
-  .description('Build a Wire shortcut for macOS')
-  .option('-i, --bundle-id <id>', 'Specify the Wire bundle id', 'com.wearezeta.zclient.mac')
+  .description('Build a Wire shortcut for Windows')
+  .option('-e, --exeFile <id>', 'Specify the name of the Wire executable in AppData', 'Wire.exe')
   .option('-b, --backend <url>', 'Specify the backend (required)')
   .option('-n, --app-name <name>', 'Specify the app name', 'Wire')
   .parse(process.argv);
 
 checkCommanderOptions(commander, ['backend']);
 
-logger.info(`Creating a shortcut for macOS ...`);
+logger.info(`Creating a shortcut for Windows ...`);
 
-const outputDir = path.resolve(`./${commander.appName}.app`);
-const shortcutScript = getMacOSShortcutScript(commander.bundleId, commander.backend);
-const scriptFile = path.join(outputDir, commander.appName);
+const exeWithEnv = getWindowsShortcut(commander.exeFile, commander.backend);
+const linkFile = path.resolve(`./${commander.appName}.lnk`);
 
-fs.mkdir(outputDir)
-  .then(() => fs.writeFile(scriptFile, shortcutScript, 'utf8'))
-  .then(() => fs.chmod(scriptFile, '755'))
-  .then(() => logger.info(`Built shortcut in "${outputDir}".`))
+fs.symlink(exeWithEnv, linkFile, 'junction')
+  .then(() => logger.info(`Built shortcut in "${linkFile}".`))
   .catch(logger.error);
