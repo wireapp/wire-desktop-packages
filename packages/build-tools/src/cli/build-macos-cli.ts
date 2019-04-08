@@ -23,11 +23,11 @@ import commander from 'commander';
 import electronPackager from 'electron-packager';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger, writeJson} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, getToolName, writeJson} from '../lib/build-utils';
 import {getCommonConfig, logEntries} from '../lib/commonConfig';
 import {MacOSConfig} from '../lib/Config';
 
-const toolName = path.basename(__filename).replace('-cli.js', '');
+const toolName = getToolName(__filename);
 const logger = getLogger(toolName);
 
 commander

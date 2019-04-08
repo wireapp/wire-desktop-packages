@@ -23,25 +23,28 @@ import commander from 'commander';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger, getWindowsShortcut} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, getToolName} from '../lib/build-utils';
 
-const toolName = path.basename(__filename).replace('-cli.js', '');
+const toolName = getToolName(__filename);
 const logger = getLogger(toolName);
 
 commander
   .name(toolName)
   .description('Build a Wire shortcut for Windows')
   .option('-e, --exeFile <id>', 'Specify the name of the Wire executable in AppData', 'Wire.exe')
+  .option('-s, --app-short-name <id>', 'Specify the short name of the app', 'wire')
   .option('-b, --backend <url>', 'Specify the backend (required)')
   .option('-n, --app-name <name>', 'Specify the app name', 'Wire')
   .parse(process.argv);
 
-checkCommanderOptions(commander, ['backend']);
+checkCommanderOptions(commander, ['appName', 'appShortName', 'backend', 'exeFile']);
+
+const {appName, appShortName, backend, exeFile} = commander;
 
 logger.info(`Creating a shortcut for Windows ...`);
 
-const exeWithEnv = getWindowsShortcut(commander.exeFile, commander.backend);
-const linkFile = path.resolve(`./${commander.appName}.lnk`);
+const exeWithEnv = `%AppData%\\${appShortName}\\${exeFile} --env ${backend}`;
+const linkFile = path.resolve(`./${appName}.lnk`);
 
 fs.symlink(exeWithEnv, linkFile, 'junction')
   .then(() => logger.info(`Built shortcut in "${linkFile}".`))

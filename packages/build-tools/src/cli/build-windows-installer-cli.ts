@@ -23,11 +23,11 @@ import commander from 'commander';
 import electronWinstaller from 'electron-winstaller';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, getToolName} from '../lib/build-utils';
 import {getCommonConfig} from '../lib/commonConfig';
 import {WindowsConfig} from '../lib/Config';
 
-const toolName = path.basename(__filename).replace('-cli.js', '');
+const toolName = getToolName(__filename);
 const logger = getLogger(toolName);
 
 commander

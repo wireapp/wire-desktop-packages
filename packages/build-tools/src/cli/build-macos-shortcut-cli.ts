@@ -23,9 +23,9 @@ import commander from 'commander';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger, getMacOSShortcutScript} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, getMacOSShortcutScript, getToolName} from '../lib/build-utils';
 
-const toolName = path.basename(__filename).replace('-cli.js', '');
+const toolName = getToolName(__filename);
 const logger = getLogger(toolName);
 
 commander
@@ -36,7 +36,7 @@ commander
   .option('-n, --app-name <name>', 'Specify the app name', 'Wire')
   .parse(process.argv);
 
-checkCommanderOptions(commander, ['backend']);
+checkCommanderOptions(commander, ['appName', 'backend', 'bundleId']);
 
 logger.info(`Creating a shortcut for macOS ...`);
 

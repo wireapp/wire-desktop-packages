@@ -19,6 +19,7 @@
 import commander from 'commander';
 import * as fs from 'fs-extra';
 import logdown from 'logdown';
+import path from 'path';
 
 function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
   options.forEach(option => {
@@ -39,6 +40,11 @@ function getLogger(postfix: string): logdown.Logger {
   return logger;
 }
 
+function getToolName(fullFilename: string): string {
+  const fileName = path.basename(fullFilename).replace('-cli.js', '');
+  return `wire-${fileName}`;
+}
+
 async function writeJson<T extends Object>(fileName: string, data: T): Promise<void> {
   await fs.writeFile(fileName, `${JSON.stringify(data, null, 2)}\n`);
 }
@@ -53,9 +59,4 @@ fi
 open -a "\${WIRE_PATH}" --args --env "${backend}"`;
 }
 
-function getWindowsShortcut(exeFile: string, backend: string): string {
-  const fullExe = `%APPDATA%\\${exeFile.replace('.exe', '')}\\${exeFile}}`;
-  return `${fullExe} --env ${backend}`;
-}
-
-export {checkCommanderOptions, getLogger, getMacOSShortcutScript, getWindowsShortcut, writeJson};
+export {checkCommanderOptions, getLogger, getMacOSShortcutScript, getToolName, writeJson};
