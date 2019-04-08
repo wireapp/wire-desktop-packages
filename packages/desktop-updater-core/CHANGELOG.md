@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.1.6...@wireapp/desktop-updater-core@0.2.0) (2019-04-08)
+
+
+### Bug Fixes
+
+* **desktop-updater-core:** Move @types/debug to dependencies ([#422](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/issues/422)) ([5839d1c](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/commit/5839d1c))
+
+
+### Features
+
+* Added config.js serving from the local web server ([#423](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/issues/423)) ([b2db454](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/commit/b2db454))
+
+
+
+
+
 ## [0.1.6](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.1.5...@wireapp/desktop-updater-core@0.1.6) (2019-04-05)
 
 

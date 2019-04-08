@@ -21,31 +21,23 @@
 
 import commander from 'commander';
 import electronPackager from 'electron-packager';
-import logdown from 'logdown';
-import path from 'path';
+import * as path from 'path';
 
-import {checkCommanderOptions, writeJson} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, writeJson} from '../lib/build-utils';
 import {getCommonConfig, logEntries} from '../lib/commonConfig';
 
-const logger = logdown('@wireapp/deploy-tools/wire-build-windows', {
-  logger: console,
-  markdown: false,
-});
+const logger = getLogger('wire-build-windows');
 
 commander
   .name('wire-build-windows')
   .description('Build the Wire wrapper for Linux')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
-  .option('-p, --electron-package-json <path>', 'Specify the electron package.json path')
   .parse(process.argv);
 
-checkCommanderOptions(commander, ['wireJson', 'electronPackageJson']);
-const {electronPackageJson, wireJson} = commander;
-const {commonConfig, defaultConfig} = getCommonConfig({electronPackageJson, envFile: '.env.defaults', wireJson});
+checkCommanderOptions(commander, ['wireJson']);
 
-const wireJsonResolved = path.resolve(wireJson);
-const electronPackageJsonResolved = path.resolve(electronPackageJson);
-const originalElectronJson = require(electronPackageJsonResolved);
+const wireJsonResolved = path.resolve(commander.wireJson);
+const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
 
 const packagerOptions: electronPackager.Options = {
   appCopyright: commonConfig.copyright,
@@ -53,9 +45,9 @@ const packagerOptions: electronPackager.Options = {
   arch: 'ia32',
   asar: true,
   buildVersion: commonConfig.buildNumber,
-  dir: 'electron',
-  icon: 'electron/img/logo.ico',
-  ignore: /electron\/renderer\/src/,
+  dir: commonConfig.electronDirectory,
+  icon: `${commonConfig.electronDirectory}/img/logo.ico`,
+  ignore: new RegExp(`${commonConfig.electronDirectory}/renderer/src`),
   name: commonConfig.name,
   out: 'wrap/build',
   overwrite: true,
@@ -71,25 +63,14 @@ const packagerOptions: electronPackager.Options = {
   },
 };
 
-const newElectronPackageJson = {
-  ...originalElectronJson,
-  version: commonConfig.version,
-};
+logEntries(commonConfig, 'commonConfig', 'build-windows-cli');
 
-logEntries(commonConfig, 'commonConfig');
+logger.info(`Building ${commonConfig.name} ${commonConfig.version} for Windows ...`);
 
-logger.info(`Building ${commonConfig.name} for Windows v${commonConfig.version} ...`);
-
-writeJson(electronPackageJsonResolved, newElectronPackageJson)
-  .then(() => writeJson(wireJsonResolved, commonConfig))
+writeJson(wireJsonResolved, commonConfig)
   .then(() => electronPackager(packagerOptions))
   .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
-  .finally(() =>
-    Promise.all([
-      writeJson(wireJsonResolved, defaultConfig),
-      writeJson(electronPackageJsonResolved, originalElectronJson),
-    ])
-  )
+  .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
     logger.error(error);
     process.exit(1);

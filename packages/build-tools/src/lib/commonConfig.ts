@@ -18,28 +18,22 @@
  */
 
 import {execSync} from 'child_process';
-import dotenv from 'dotenv';
-import logdown from 'logdown';
-import path from 'path';
+import * as dotenv from 'dotenv';
+import * as fs from 'fs-extra';
+import * as path from 'path';
 
+import {getLogger} from './build-utils';
 import {CommonConfig} from './Config';
 
-const logger = logdown('@wireapp/deploy-tools/commonconfig', {
-  logger: console,
-  markdown: false,
-});
-
 export interface CommonConfigOptions {
-  electronPackageJson: string;
   envFile: string;
   wireJson: string;
 }
 
 const getCommonConfig = (options: CommonConfigOptions) => {
-  const {electronPackageJson, envFile, wireJson} = options;
+  const {envFile, wireJson} = options;
 
-  const {version}: {version: string} = require(wireJson);
-  const defaultConfig: CommonConfig = require(electronPackageJson);
+  const defaultConfig: CommonConfig = fs.readJsonSync(wireJson);
   const envFileResolved = path.resolve(envFile);
 
   dotenv.config({path: envFileResolved});
@@ -50,11 +44,11 @@ const getCommonConfig = (options: CommonConfigOptions) => {
     let commitId = 'unknown';
 
     try {
-      const execBuffer = execSync('git rev-parse HEAD');
+      const execBuffer = execSync('git rev-parse --short HEAD');
       commitId = execBuffer.toString().trim();
     } catch (error) {}
 
-    const versionWithoutZero = version.replace(/\.0$/, '');
+    const versionWithoutZero = defaultConfig.version.replace(/\.0$/, '');
     const buildNumber = `${process.env.BUILD_NUMBER || `0-${commitId}`}`;
     const maybeInternal = IS_PRODUCTION ? '' : '-internal';
 
@@ -69,6 +63,7 @@ const getCommonConfig = (options: CommonConfigOptions) => {
     copyright: process.env.APP_COPYRIGHT || defaultConfig.copyright,
     customProtocolName: process.env.APP_CUSTOM_PROTOCOL_NAME || defaultConfig.customProtocolName,
     description: process.env.APP_DESCRIPTION || defaultConfig.description,
+    electronDirectory: 'electron',
     environment: IS_PRODUCTION ? 'production' : defaultConfig.environment,
     legalUrl: process.env.URL_LEGAL || defaultConfig.legalUrl,
     licensesUrl: process.env.URL_LICENSES || defaultConfig.licensesUrl,
@@ -85,7 +80,9 @@ const getCommonConfig = (options: CommonConfigOptions) => {
   return {commonConfig, defaultConfig};
 };
 
-const logEntries = <T extends {}>(config: T, name: string): void => {
+const logEntries = <T extends {}>(config: T, name: string, callee: string): void => {
+  const logger = getLogger(callee);
+
   Object.entries(config).forEach(([key, value]) => {
     logger.info(`${name}.${key} set to "${value}". `);
   });
