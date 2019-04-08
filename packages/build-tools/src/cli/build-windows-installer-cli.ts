@@ -31,7 +31,7 @@ const logger = getLogger('wire-build-windows-installer');
 
 commander
   .name('wire-build-windows-installer')
-  .description('Build the Wire wrapper for Linux')
+  .description('Build the Wire installer for Windows')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
   .parse(process.argv);
 

@@ -43,4 +43,14 @@ async function writeJson<T extends Object>(fileName: string, data: T): Promise<v
   await fs.writeFile(fileName, `${JSON.stringify(data, null, 2)}\n`);
 }
 
-export {checkCommanderOptions, getLogger, writeJson};
+function getMacOSShortcutScript(bundleId: string, backend: string): string {
+  return `#!/usr/bin/env bash
+WIRE_PATH="$(mdfind kMDItemCFBundleIdentifier="${bundleId}")"
+if [ -z "\${WIRE_PATH}" ]; then
+  osascript -e 'display alert "Could not find local Wire app installation." as critical'
+  exit
+fi
+open -a "\${WIRE_PATH}" --args --env "${backend}"`;
+}
+
+export {checkCommanderOptions, getLogger, getMacOSShortcutScript, writeJson};

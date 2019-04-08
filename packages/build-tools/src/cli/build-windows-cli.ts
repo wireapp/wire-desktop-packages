@@ -30,7 +30,7 @@ const logger = getLogger('wire-build-windows');
 
 commander
   .name('wire-build-windows')
-  .description('Build the Wire wrapper for Linux')
+  .description('Build the Wire wrapper for Windows')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
   .parse(process.argv);
 

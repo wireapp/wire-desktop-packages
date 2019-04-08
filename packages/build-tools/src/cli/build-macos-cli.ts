@@ -31,7 +31,7 @@ const logger = getLogger('wire-build-macos');
 
 commander
   .name('wire-build-macos')
-  .description('Build the Wire wrapper for Linux')
+  .description('Build the Wire wrapper for macOS')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
   .parse(process.argv);
 
