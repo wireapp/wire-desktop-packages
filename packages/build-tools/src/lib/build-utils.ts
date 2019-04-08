@@ -17,7 +17,8 @@
  */
 
 import commander from 'commander';
-import fs from 'fs-extra';
+import * as fs from 'fs-extra';
+import logdown from 'logdown';
 
 function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
   options.forEach(option => {
@@ -28,8 +29,18 @@ function checkCommanderOptions(commanderInstance: typeof commander, options: str
   });
 }
 
+function getLogger(postfix: string): logdown.Logger {
+  const logger = logdown(`@wireapp/deploy-tools/${postfix}`, {
+    logger: console,
+    markdown: false,
+  });
+  logger.state.isEnabled = true;
+
+  return logger;
+}
+
 async function writeJson<T extends Object>(fileName: string, data: T): Promise<void> {
   await fs.writeFile(fileName, `${JSON.stringify(data, null, 2)}\n`);
 }
 
-export {checkCommanderOptions, writeJson};
+export {checkCommanderOptions, getLogger, writeJson};
