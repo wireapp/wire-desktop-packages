@@ -24,6 +24,7 @@ import {
   Decision as SpecDecision,
   Envelope as SpecEnvelope,
   Manifest as SpecManifest,
+  ServerWebConfigInterface,
 } from '@wireapp/desktop-updater-spec';
 import debug from 'debug';
 
@@ -80,6 +81,7 @@ export namespace Updater {
     public static currentWebappVersion?: string;
     public static trustStore: string[];
     public static updatesEndpoint: string;
+    public static webConfig: ServerWebConfigInterface;
 
     public static async runOnce(
       skipNotification: boolean = false, // Means we want the prompt asap (no notifications)
@@ -322,6 +324,12 @@ export namespace Updater {
         }
         if (installerWindow) {
           ErrorDispatcher.installerWindow = installerWindow.getPromptWindow();
+        }
+        if (this.webConfig && this.webConfig.RAYGUN_API_KEY && this.webConfig.RAYGUN_API_KEY !== '') {
+          ErrorDispatcher.raygunToken = this.webConfig.RAYGUN_API_KEY;
+        }
+        if (this.webConfig && this.webConfig.URL && this.webConfig.URL.SUPPORT_BASE) {
+          ErrorDispatcher.supportLink = this.webConfig.URL.SUPPORT_BASE;
         }
         ErrorDispatcher.error = error;
 
