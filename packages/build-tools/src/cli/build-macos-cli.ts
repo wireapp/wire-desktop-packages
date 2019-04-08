@@ -98,11 +98,9 @@ logEntries(commonConfig, 'commonConfig', 'build-macos-cli');
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 
-(async () => {
-  await writeJson(wireJsonResolved, commonConfig);
-  const [buildDir] = await electronPackager(packagerOptions);
-  logger.log(`Built package in "${buildDir}".`);
-})()
+writeJson(wireJsonResolved, commonConfig)
+  .then(() => electronPackager(packagerOptions))
+  .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
   .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
     logger.error(error);

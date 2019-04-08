@@ -67,11 +67,9 @@ logEntries(commonConfig, 'commonConfig', 'build-windows-cli');
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for Windows ...`);
 
-(async () => {
-  await writeJson(wireJsonResolved, commonConfig);
-  const [buildDir] = await electronPackager(packagerOptions);
-  logger.log(`Built package in "${buildDir}".`);
-})()
+writeJson(wireJsonResolved, commonConfig)
+  .then(() => electronPackager(packagerOptions))
+  .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
   .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
     logger.error(error);

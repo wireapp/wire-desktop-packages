@@ -119,12 +119,10 @@ logger.info(
   `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`
 );
 
-(async () => {
-  await writeJson(electronPackageJson, {...originalElectronJson, version: commonConfig.version});
-  await writeJson(wireJsonResolved, commonConfig);
-  const buildFiles = await electronBuilder.build({config: builderConfig, targets});
-  await buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`));
-})()
+writeJson(electronPackageJson, {...originalElectronJson, version: commonConfig.version})
+  .then(() => writeJson(wireJsonResolved, commonConfig))
+  .then(() => electronBuilder.build({config: builderConfig, targets}))
+  .then(buildFiles => buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`)))
   .finally(() =>
     Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
   )
