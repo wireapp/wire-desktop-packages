@@ -20,33 +20,28 @@
  */
 
 import commander from 'commander';
-import electronBuilder from 'electron-builder';
-import logdown from 'logdown';
-import path from 'path';
+import * as electronBuilder from 'electron-builder';
+import * as fs from 'fs-extra';
+import * as path from 'path';
 
-import {checkCommanderOptions, writeJson} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, writeJson} from '../lib/build-utils';
 import {getCommonConfig, logEntries} from '../lib/commonConfig';
 import {LinuxConfig} from '../lib/Config';
 
-const logger = logdown('@wireapp/deploy-tools/wire-build-linux', {
-  logger: console,
-  markdown: false,
-});
+const logger = getLogger('wire-build-linux');
 
 commander
   .name('wire-build-linux')
   .description('Build the Wire wrapper for Linux')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
-  .option('-p, --electron-package-json <path>', 'Specify the electron package.json path')
   .parse(process.argv);
 
-checkCommanderOptions(commander, ['wireJson', 'electronPackageJson']);
-const {electronPackageJson, wireJson} = commander;
+checkCommanderOptions(commander, ['wireJson']);
 
-const wireJsonResolved = path.resolve(wireJson);
-const electronPackageJsonResolved = path.resolve(electronPackageJson);
-const originalElectronJson = require(electronPackageJson);
-const {commonConfig, defaultConfig} = getCommonConfig({electronPackageJson, envFile: '.env.defaults', wireJson});
+const wireJsonResolved = path.resolve(commander.wireJson);
+const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
+const electronPackageJson = path.resolve(commonConfig.electronDirectory, 'package.json');
+const originalElectronJson = fs.readJsonSync(electronPackageJson);
 
 const linuxDefaultConfig: LinuxConfig = {
   /* tslint:disable:no-invalid-template-strings */
@@ -88,12 +83,13 @@ const debDepends = ['libappindicator1', 'libasound2', 'libgconf-2-4', 'libnotify
 
 const builderConfig: electronBuilder.Configuration = {
   asar: false,
+  buildVersion: commonConfig.version,
   deb: {
     ...platformSpecificConfig,
     depends: debDepends,
   },
   directories: {
-    app: 'electron',
+    app: commonConfig.electronDirectory,
     buildResources: 'resources',
     output: 'wrap/dist',
   },
@@ -115,26 +111,20 @@ const builderConfig: electronBuilder.Configuration = {
   },
 };
 
-const newElectronMetadata = {
-  ...originalElectronJson,
-  version: commonConfig.version,
-};
-
-logEntries(commonConfig, 'commonConfig');
+logEntries(commonConfig, 'commonConfig', 'build-linux-cli');
 
 const targets = electronBuilder.Platform.LINUX.createTarget(linuxConfig.targets, electronBuilder.archFromString('x64'));
 
-logger.info(`Building ${commonConfig.name} for Linux v${commonConfig.version} ...`);
+logger.info(
+  `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`
+);
 
-writeJson(electronPackageJsonResolved, newElectronMetadata)
+writeJson(electronPackageJson, {...originalElectronJson, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronBuilder.build({config: builderConfig, targets}))
   .then(buildFiles => buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`)))
   .finally(() =>
-    Promise.all([
-      writeJson(wireJsonResolved, defaultConfig),
-      writeJson(electronPackageJsonResolved, originalElectronJson),
-    ])
+    Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
   )
   .catch(error => {
     logger.error(error);

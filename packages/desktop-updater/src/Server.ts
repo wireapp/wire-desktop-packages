@@ -34,6 +34,7 @@ import {
   Utils as UpdaterUtils,
   VerifyMismatchEnvironment,
 } from '@wireapp/desktop-updater-core';
+import {ServerWebConfigInterface} from '@wireapp/desktop-updater-spec';
 
 import {Updater as UpdaterChild} from './Child';
 import {InterceptProtocol as proxifyProtocol, isInternetAvailable} from './Networking';
@@ -42,38 +43,6 @@ import {Config, Utils} from './index';
 
 import {BaseError} from 'make-error-cause';
 export class NotExistingError extends BaseError {}
-
-export interface ServerWebConfigInterface {
-  ANALYTICS_API_KEY: string;
-  APP_NAME: string;
-  BACKEND_REST: string;
-  BACKEND_WS: string;
-  FEATURE: {
-    CHECK_CONSENT: boolean;
-    ENABLE_ACCOUNT_REGISTRATION: boolean;
-    ENABLE_DEBUG: boolean;
-    ENABLE_PHONE_LOGIN: boolean;
-    ENABLE_SSO: boolean;
-    SHOW_LOADING_INFORMATION: boolean;
-  };
-  RAYGUN_API_KEY: string;
-  URL: {
-    ACCOUNT_BASE: string;
-    MOBILE_BASE: string;
-    PRIVACY_POLICY: string;
-    SUPPORT_BASE: string;
-    TEAMS_BASE: string;
-    TERMS_OF_USE_PERSONAL: string;
-    TERMS_OF_USE_TEAMS: string;
-    WEBSITE_BASE: string;
-  };
-}
-
-interface ServerWebConfigInternalInterface extends ServerWebConfigInterface {
-  APP_BASE: string;
-  ENVIRONMENT: string;
-  VERSION: string;
-}
 
 export interface ServerConstructorInterface {
   browserWindowOptions: Electron.BrowserWindowConstructorOptions;
@@ -95,7 +64,7 @@ export class Server {
   private browserWindow: Electron.BrowserWindow | undefined;
   private currentEnvironmentHostname: string | undefined;
   private internalHost: URL | undefined;
-  private webConfig: ServerWebConfigInterface | ServerWebConfigInternalInterface;
+  private webConfig: ServerWebConfigInterface;
   private readonly browserWindowOptions: Electron.BrowserWindowConstructorOptions;
   private readonly currentClientVersion: string;
   private readonly currentEnvironment: string;
@@ -136,6 +105,7 @@ export class Server {
     Updater.Main.currentEnvironment = this.currentEnvironment;
     Updater.Main.trustStore = this.trustStore;
     Updater.Main.updatesEndpoint = this.updatesEndpoint;
+    Updater.Main.webConfig = this.webConfig;
     Updater.Main.connectivityCheckEndpoints = this.webConfig.BACKEND_REST;
 
     if (!Server.WEB_SERVER_TOKEN_NAME.match(/^[a-zA-Z0-9]*$/)) {
@@ -335,7 +305,7 @@ export class Sandbox {
     private readonly options: {
       AccessToken: string;
       Config: {[key: string]: any};
-      WebConfig: {[key: string]: any};
+      WebConfig: ServerWebConfigInterface;
       DocumentRoot: string;
     }
   ) {}
