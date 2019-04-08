@@ -2,8 +2,8 @@
   "dependencies": {
     "@types/debug": "4.1.3",
     "@types/luxon": "1.11.1",
-    "@wireapp/desktop-updater-spec": "0.1.3",
-    "@wireapp/desktop-updater-ui": "0.1.3",
+    "@wireapp/desktop-updater-spec": "0.1.4",
+    "@wireapp/desktop-updater-ui": "0.1.4",
     "axios": "0.18.0",
     "compare-versions": "3.4.0",
     "debug": "4.1.1",
@@ -15,7 +15,7 @@
     "jasmine-ts": "0.3.0",
     "libsodium-wrappers": "0.7.4",
     "long": "4.0.0",
-    "luxon": "1.11.4",
+    "luxon": "1.12.1",
     "make-error-cause": "2.2.0",
     "protobufjs": "6.8.8",
     "random-js": "2.0.0",
@@ -23,7 +23,7 @@
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "throttle-debounce": "2.1.0",
-    "vm2": "3.6.10"
+    "vm2": "3.6.11"
   },
   "description": "Secure updater for Electron",
   "devDependencies": {
@@ -52,5 +52,5 @@
     "test:node": "node src/test/jasmine.js",
     "version": "yarn dist"
   },
-  "version": "0.2.0"
+  "version": "0.2.1"
 }
