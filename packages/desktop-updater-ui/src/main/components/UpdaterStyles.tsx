@@ -17,35 +17,44 @@
  *
  */
 
+import {Global, css} from '@emotion/core';
+import styled from '@emotion/styled';
 import {Button, Column, Columns, Content, H2, Paragraph, Small, StyledApp} from '@wireapp/react-ui-kit';
-import styled, {StyledComponentClass, createGlobalStyle} from 'styled-components';
+import React from 'react';
 
 const UpdaterContainer = styled(StyledApp)`
   background-color: transparent;
 `;
 
-const GlobalStyle = createGlobalStyle`
-  html, body {
-    user-select: none;
-    cursor: default;
-    background-color: transparent;
-    overflow: hidden;
-    -webkit-app-region: drag;
-  }
+const GlobalStyle = () => (
+  <Global
+    styles={css`
+      html,
+      body {
+        user-select: none;
+        cursor: default;
+        background-color: transparent;
+        overflow: hidden;
+        -webkit-app-region: drag;
+      }
 
-  *::selection {
-    background: transparent;
-    color: #171717;
-  }
-  *::-webkit-selection {
-    background: transparent;
-    color: #171717;
-  }
+      *::selection {
+        background: transparent;
+        color: #171717;
+      }
+      *::-webkit-selection {
+        background: transparent;
+        color: #171717;
+      }
 
-  button, input, label {
-    -webkit-app-region: no-drag;
-  }
-`;
+      button,
+      input,
+      label {
+        -webkit-app-region: no-drag;
+      }
+    `}
+  />
+);
 
 const SelectableParagraph = styled(Paragraph)`
   user-select: text;
@@ -54,7 +63,7 @@ const SelectableParagraph = styled(Paragraph)`
   margin-bottom: 0;
 `;
 
-const MainHeading: StyledComponentClass<React.ClassAttributes<HTMLHeadingElement>, any, any> = styled(H2)`
+const MainHeadingTitle: any = styled(H2)`
   margin-top: 10px;
   @media (max-width: 480px) {
     margin-top: 10px;
@@ -80,21 +89,19 @@ const ProgressBlockLoader = styled(ProgressBlock)`
 `;
 const ProgressBlockStats = ProgressBlock;
 
-const RegularButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(Button)`
+const RegularButton = styled(Button)`
   margin-bottom: 0;
   font-size: 14px;
 `;
 
-const DecisionButton: StyledComponentClass<React.ButtonHTMLAttributes<HTMLButtonElement>, any, any> = styled(
-  RegularButton
-)`
+const DecisionButton = styled(RegularButton)`
   width: 47.5%;
 
-  &:first-child {
+  &:first-of-type {
     margin-right: 2.5%;
   }
 
-  &:last-child {
+  &:last-of-type {
     margin-left: 2.5%;
   }
 `;
@@ -107,7 +114,7 @@ export {
   DecisionButton,
   GlobalStyle,
   MainContent,
-  MainHeading,
+  MainHeadingTitle,
   ProgressBlockLoader,
   ProgressBlockStats,
   ProgressContainer,

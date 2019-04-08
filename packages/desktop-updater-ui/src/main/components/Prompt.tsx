@@ -18,10 +18,10 @@
  */
 
 import * as Updater from '@wireapp/desktop-updater-spec';
-import * as React from 'react';
+import React from 'react';
 import {TranslatedPrompt} from './PromptView';
 
-export interface PromptContainerState {
+export interface PromptContainerProps {
   manifest?: Updater.Manifest;
   envelope: {publicKey: string};
   changelogUrl: string;
@@ -29,16 +29,15 @@ export interface PromptContainerState {
   isWebappTamperedWith: boolean;
 }
 
-interface Props {}
+interface State {}
 
-class PromptContainer extends React.Component<Props, PromptContainerState> {
+class PromptContainer extends React.Component<PromptContainerProps, State> {
   constructor(props) {
     super(props);
-    this.state = props;
   }
 
   render() {
-    return <TranslatedPrompt {...this.state} />;
+    return <TranslatedPrompt {...this.props} />;
   }
 }
 

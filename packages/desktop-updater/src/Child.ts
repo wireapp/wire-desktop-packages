@@ -31,6 +31,9 @@ import * as serveStatic from 'serve-static';
 
 import * as Random from 'random-js';
 
+// tslint:disable-next-line:no-console
+const log = console.log;
+
 export namespace Updater {
   export class Child {
     private internalHost: string | undefined;
@@ -38,6 +41,7 @@ export namespace Updater {
     private serve: typeof serveStatic;
 
     private static readonly MAX_RETRY_BEFORE_REJECT = Config.MAX_RETRY_BEFORE_REJECT;
+    private static readonly WEB_SERVER_CSP = Config.WEB_SERVER_CSP;
     private static readonly WEB_SERVER_HOST_CERTIFICATE = Config.WEB_SERVER_HOST_CERTIFICATE;
     private static readonly WEB_SERVER_HOST_LOCAL = Config.WEB_SERVER_HOST_LOCAL;
     private static readonly WEB_SERVER_HOST_PRIVATE_KEY = Config.WEB_SERVER_HOST_PRIVATE_KEY;
@@ -45,7 +49,7 @@ export namespace Updater {
     private static readonly WEB_SERVER_LISTEN_PORT_MAX = Config.WEB_SERVER_LISTEN_PORT_MAX;
     private static readonly WEB_SERVER_LISTEN_PORT_MIN = Config.WEB_SERVER_LISTEN_PORT_MIN;
     private static readonly WEB_SERVER_TOKEN_NAME = Config.WEB_SERVER_TOKEN_NAME;
-    private static readonly WEB_SERVER_CSP = Config.WEB_SERVER_CSP;
+    private static readonly WEB_SERVER_WEBCONFIG_NAME = Config.WEB_SERVER_WEBCONFIG_NAME;
 
     constructor() {}
 
@@ -89,20 +93,19 @@ export namespace Updater {
 
       // Don't accept requests if accessToken or Authorization header is not a string
       if (typeof AccessToken !== 'string' || typeof authorizationHeader !== 'string') {
-        // tslint:disable-next-line:no-console
-        console.log('Cancelled a request because the access token and/or authorization header was empty');
+        log('Cancelled a request because the access token and/or authorization header was empty');
         return Updater.Child.endRequest(res);
       }
 
       // Check the token
       if (AccessToken !== authorizationHeader.substr(Updater.Child.WEB_SERVER_TOKEN_NAME.length + 1)) {
-        // tslint:disable-next-line:no-console
-        console.log('Cancelled a request because the access token is invalid');
+        log('Cancelled a request because the access token is invalid');
         return Updater.Child.endRequest(res);
       }
 
       // Middleware for the config file
-      if (req.url && url.parse(req.url).pathname == '/config.js') {
+      if (req.url && url.parse(req.url).pathname == Updater.Child.WEB_SERVER_WEBCONFIG_NAME) {
+        log('Config file served');
         return Updater.Child.endWithWebConfig(res);
       }
 
@@ -134,14 +137,11 @@ export namespace Updater {
     public async stop(): Promise<void> {
       if (this.server) {
         this.server.close();
-
-        // tslint:disable-next-line:no-console
-        console.log('Server has been shutdown.');
+        log('Server has been shutdown.');
       }
 
       this.server = this.internalHost = undefined;
-      // tslint:disable-next-line:no-console
-      console.log('Server has been stopped.');
+      log('Server has been stopped.');
     }
 
     private listen(retry: number = 0): Promise<void> {
@@ -168,13 +168,11 @@ export namespace Updater {
             // Server is now active
             this.internalHost = `https://${Updater.Child.WEB_SERVER_HOST_LOCAL}:${portToUse}`;
 
-            // tslint:disable-next-line:no-console
-            console.log(`Listening on ${Updater.Child.WEB_SERVER_LISTEN}:${portToUse} v2, path: ${DocumentRoot}`);
+            log(`Listening on ${Updater.Child.WEB_SERVER_LISTEN}:${portToUse}, path: ${DocumentRoot}`);
             return resolve();
           })
           .once('error', (error: Error) => {
-            // tslint:disable-next-line:no-console
-            console.log(`Unable to listen on port ${portToUse} (${error['code']}), retrying with another port...`);
+            log(`Unable to listen on port ${portToUse} (${error['code']}), retrying with another port...`);
             return this.listen(++retry);
           });
       });
@@ -198,7 +196,7 @@ export default async callback => {
     });
   } catch (error) {
     // tslint:disable-next-line:no-console
-    console.log(error);
+    log(error);
     return callback(false, error);
   }
 };

@@ -19,12 +19,12 @@
 
 import * as Updater from '@wireapp/desktop-updater-spec';
 import {COLOR, Checkbox, CheckboxLabel, Container, Link, Opacity, Paragraph} from '@wireapp/react-ui-kit';
-import * as React from 'react';
+import React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import {EventDispatcher} from '../libs/EventDispatcher';
-import {PromptContainerState} from './Prompt';
+import {PromptContainerProps} from './Prompt';
 import {PromptChangelogModal, TranslatedPromptChangelogModal} from './PromptChangelogModal';
-import {DecisionButton, GlobalStyle, MainContent, MainHeading, UpdaterContainer} from './UpdaterStyles';
+import {DecisionButton, GlobalStyle, MainContent, MainHeadingTitle, UpdaterContainer} from './UpdaterStyles';
 
 interface State {
   decision: Updater.Decision;
@@ -34,7 +34,7 @@ interface State {
   activateChangelog: boolean;
 }
 
-class Prompt extends React.Component<PromptContainerState & WithTranslation, State> {
+class Prompt extends React.Component<PromptContainerProps & WithTranslation, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,7 +105,7 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
     this.setState(state => ({activateChangelog}));
   };
 
-  toggleChangelog = (event?: React.ChangeEvent<HTMLInputElement>): void => {
+  toggleChangelog = (event?: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
     this.setState(state => ({
       showChangelog: !state.showChangelog,
     }));
@@ -136,12 +136,16 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
           unmountOnExit={true}
           timeout={Prompt.OPACITY_TRANSITION_SPEED}
         >
-          <TranslatedPromptChangelogModal
-            onClose={() => this.toggleChangelog()}
-            manifest={manifest}
-            envelope={envelope}
-            changelogUrl={changelogUrl}
-          />
+          {manifest ? (
+            <TranslatedPromptChangelogModal
+              onClose={() => this.toggleChangelog()}
+              manifest={manifest}
+              envelope={envelope}
+              changelogUrl={changelogUrl}
+            />
+          ) : (
+            undefined
+          )}
         </Opacity>
         <Opacity
           in={!this.state.showChangelog && !this.state.activateChangelog}
@@ -150,12 +154,12 @@ class Prompt extends React.Component<PromptContainerState & WithTranslation, Sta
           timeout={Prompt.OPACITY_TRANSITION_SPEED}
         >
           <MainContent style={{width: '480px'}}>
-            <MainHeading>{title}</MainHeading>
+            <MainHeadingTitle>{title}</MainHeadingTitle>
             <Paragraph>
               {description}{' '}
               <Link
                 fontSize="16px"
-                textTransform="normal"
+                textTransform="none"
                 style={{fontWeight: 'normal'}}
                 onClick={this.toggleChangelog}
                 color={COLOR.BLUE}

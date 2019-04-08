@@ -18,7 +18,6 @@
  */
 
 import * as Long from 'long';
-export {updater as updateProto} from '../../proto/Protobuf';
 
 export interface ServerWebConfigInterface {
   ANALYTICS_API_KEY: string;

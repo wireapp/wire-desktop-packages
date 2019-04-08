@@ -17,10 +17,10 @@
  *
  */
 
+import styled from '@emotion/styled';
 import anime from 'animejs';
-import * as React from 'react';
+import React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
-import styled from 'styled-components';
 
 import {BridgeIPC} from '@wireapp/desktop-updater-spec';
 import {EventDispatcher} from '../libs/EventDispatcher';
@@ -29,12 +29,6 @@ import i18n from '../libs/Localization';
 interface UpdateBarState {
   isUpdateAvailable: boolean;
   screenshot?: string;
-}
-interface UpdaterAppContainerProps {
-  resize: boolean;
-}
-interface UpdaterScreenshotContainerProps {
-  freeze?: boolean;
 }
 
 const UpdaterContainer = styled.section`
@@ -82,12 +76,12 @@ const UpdaterBarMessage = styled.div`
   align-items: center;
 `;
 
-const UpdaterAppContainer = styled.div`
-  height: ${(props: UpdaterAppContainerProps) => (props.resize ? 'calc(100% - 38.5px)' : '100%')};
+const UpdaterAppContainer: any = styled.div`
+  height: ${(props: any) => (props.resize ? 'calc(100% - 38.5px)' : '100%')};
 `;
 
-const UpdaterScreenshotContainer = styled.div`
-  display: ${(props: UpdaterScreenshotContainerProps) => (props.freeze ? 'block' : 'none')};
+const UpdaterScreenshotContainer: any = styled.div`
+  display: ${(props: any) => (props.freeze ? 'block' : 'none')};
   position: absolute;
   width: 100%;
   height: 100%;
