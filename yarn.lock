@@ -1120,6 +1120,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
+"@ffflorian/windows-shortcut-maker@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ffflorian/windows-shortcut-maker/-/windows-shortcut-maker-1.0.0.tgz#2fb9eef7bbc8d8eabcb537317606422a0305bdae"
+  integrity sha512-68bhnkdNgTP2v21QOw/7f6HQ3IQbJfdR/EPcNNs9+wa6k2ygTd0MnadFFLi5EGEPRflilE0gSWuez1H73j5plQ==
+
 "@icons/material@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
@@ -13767,15 +13772,6 @@ windows-release@^3.1.0:
   integrity sha512-hBb7m7acFgQPQc222uEQTmdcGLeBmQLNLFIh0rDk3CwFOBrfjefLzEfEfmpMq8Af/n/GnFf3eYf203FY1PmudA==
   dependencies:
     execa "^0.10.0"
-
-windows-shortcut-maker@ffflorian/windows-shortcut-maker#feat/async:
-  version "0.0.4"
-  resolved "https://codeload.github.com/ffflorian/windows-shortcut-maker/tar.gz/0e39b913923a838b392be3a9f29d1b704baf8dbc"
-
-windows-shortcuts@0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/windows-shortcuts/-/windows-shortcuts-0.1.6.tgz#27970c5c346ffd81821c3e12528c0babca0a5a99"
-  integrity sha1-J5cMXDRv/YGCHD4SUowLq8oKWpk=
 
 wordwrap@~0.0.2:
   version "0.0.3"
