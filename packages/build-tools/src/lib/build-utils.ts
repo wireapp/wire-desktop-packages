@@ -19,7 +19,7 @@
 import commander from 'commander';
 import * as fs from 'fs-extra';
 import logdown from 'logdown';
-import path from 'path';
+import * as path from 'path';
 
 function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
   options.forEach(option => {

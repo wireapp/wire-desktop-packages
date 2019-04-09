@@ -95,7 +95,7 @@ if (macOsConfig.notarizeAppleId && macOsConfig.notarizeApplePassword) {
   };
 }
 
-logEntries(commonConfig, 'commonConfig', 'build-macos-cli');
+logEntries(commonConfig, 'commonConfig', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 

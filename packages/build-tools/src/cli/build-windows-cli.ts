@@ -64,7 +64,7 @@ const packagerOptions: electronPackager.Options = {
   },
 };
 
-logEntries(commonConfig, 'commonConfig', 'build-windows-cli');
+logEntries(commonConfig, 'commonConfig', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for Windows ...`);
 
