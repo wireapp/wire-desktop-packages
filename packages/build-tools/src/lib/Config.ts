@@ -36,6 +36,7 @@ interface CommonConfig {
   supportUrl: string;
   version: string;
   websiteUrl: string;
+  updateUrl?: string;
 }
 
 interface LinuxConfig {
