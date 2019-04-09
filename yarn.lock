@@ -1119,10 +1119,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
-"@ffflorian/windows-shortcut-maker@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ffflorian/windows-shortcut-maker/-/windows-shortcut-maker-1.0.0.tgz#2fb9eef7bbc8d8eabcb537317606422a0305bdae"
-  integrity sha512-68bhnkdNgTP2v21QOw/7f6HQ3IQbJfdR/EPcNNs9+wa6k2ygTd0MnadFFLi5EGEPRflilE0gSWuez1H73j5plQ==
+"@ffflorian/windows-shortcut-maker@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ffflorian/windows-shortcut-maker/-/windows-shortcut-maker-1.0.1.tgz#45fd6744d9a6f620bb9f011eea091d4d57fcdb7d"
+  integrity sha512-l4aXuI9CfHSEcQRbWaQG/zovHqK+BiUAabOLyQ77P/fnq8g9XdRrzifJwMQkvl50bTLBsgBlvtVsqH/Jv/EzSg==
 
 "@icons/material@^0.2.4":
   version "0.2.4"
