@@ -56,6 +56,7 @@ const wInstallerOptions: electronWinstaller.Options = {
   appDirectory: `wrap/build/${commonConfig.name}-win32-ia32`,
   authors: commonConfig.name,
   description: commonConfig.description,
+  exe: `${commonConfig.name}.exe`,
   iconUrl: windowsConfig.installerIconUrl,
   loadingGif: `${commonConfig.electronDirectory}/img/logo.256.png`,
   name: commonConfig.name,
