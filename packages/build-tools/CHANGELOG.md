@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.3...@wireapp/build-tools@0.1.4) (2019-04-09)
+
+
+### Bug Fixes
+
+* **build-tools:** Add updateUrl to wire.json ([#447](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/447)) ([19b16d4](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/19b16d4))
+
+
+
+
+
 ## [0.1.3](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.2...@wireapp/build-tools@0.1.3) (2019-04-09)
 
 
