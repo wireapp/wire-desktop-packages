@@ -19,6 +19,7 @@
 import commander from 'commander';
 import * as fs from 'fs-extra';
 import logdown from 'logdown';
+import * as path from 'path';
 
 function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
   options.forEach(option => {
@@ -39,8 +40,13 @@ function getLogger(postfix: string): logdown.Logger {
   return logger;
 }
 
+function getToolName(fullFilename: string): string {
+  const fileName = path.basename(fullFilename).replace(/-cli.[tj]s/, '');
+  return `wire-${fileName}`;
+}
+
 async function writeJson<T extends Object>(fileName: string, data: T): Promise<void> {
   await fs.writeFile(fileName, `${JSON.stringify(data, null, 2)}\n`);
 }
 
-export {checkCommanderOptions, getLogger, writeJson};
+export {checkCommanderOptions, getLogger, getToolName, writeJson};
