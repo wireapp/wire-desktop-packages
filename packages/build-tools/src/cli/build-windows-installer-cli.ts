@@ -20,7 +20,7 @@
  */
 
 import commander from 'commander';
-import electronWinstaller from 'electron-winstaller';
+import * as electronWinstaller from 'electron-winstaller';
 import * as path from 'path';
 
 import {checkCommanderOptions, getLogger} from '../lib/build-utils';
