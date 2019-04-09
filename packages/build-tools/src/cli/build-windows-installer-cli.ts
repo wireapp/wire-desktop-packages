@@ -58,16 +58,17 @@ const wInstallerOptions: electronWinstaller.Options = {
   description: commonConfig.description,
   exe: `${commonConfig.name}.exe`,
   iconUrl: windowsConfig.installerIconUrl,
-  loadingGif: `${commonConfig.electronDirectory}/img/logo.256.png`,
+  loadingGif: windowsConfig.loadingGif,
   name: commonConfig.name,
   noMsi: true,
   outputDirectory: 'wrap/dist',
-  remoteReleases: windowsConfig.updateUrl,
   setupExe: `${commonConfig.name}-Setup.exe`,
   setupIcon: `${commonConfig.electronDirectory}/img/logo.ico`,
   title: commonConfig.name,
   version: commonConfig.version.replace(/-.*$/, ''),
 };
+
+commonConfig.updateUrl = windowsConfig.updateUrl;
 
 logEntries(commonConfig, 'commonConfig', toolName);
 
