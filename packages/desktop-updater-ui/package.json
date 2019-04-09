@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@wireapp/react-ui-kit": "5.3.1",
+    "@wireapp/react-ui-kit": "5.3.3",
     "animejs": "3.0.1",
     "emotion": "10.0.9",
     "react-i18next": "10.6.1",
