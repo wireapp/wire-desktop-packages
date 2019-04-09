@@ -34,9 +34,9 @@ interface CommonConfig {
   privacyUrl: string;
   raygunApiKey: string;
   supportUrl: string;
+  updateUrl?: string;
   version: string;
   websiteUrl: string;
-  updateUrl?: string;
 }
 
 interface LinuxConfig {
