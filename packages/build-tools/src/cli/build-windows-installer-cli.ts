@@ -23,21 +23,22 @@ import commander from 'commander';
 import * as electronWinstaller from 'electron-winstaller';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger} from '../lib/build-utils';
-import {getCommonConfig} from '../lib/commonConfig';
+import {checkCommanderOptions, getLogger, getToolName, writeJson} from '../lib/build-utils';
+import {getCommonConfig, logEntries} from '../lib/commonConfig';
 import {WindowsConfig} from '../lib/Config';
 
-const logger = getLogger('wire-build-windows-installer');
+const toolName = getToolName(__filename);
+const logger = getLogger(toolName);
 
 commander
-  .name('wire-build-windows-installer')
-  .description('Build the Wire wrapper for Linux')
+  .name(toolName)
+  .description('Build the Wire installer for Windows')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
   .parse(process.argv);
 
 checkCommanderOptions(commander, ['wireJson']);
-const wireJson = commander.wireJson;
-const {commonConfig} = getCommonConfig({envFile: '.env.defaults', wireJson});
+const wireJsonResolved = path.resolve(commander.wireJson);
+const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
 
 const windowsDefaultConfig: WindowsConfig = {
   installerIconUrl: 'https://wire-app.wire.com/win/internal/wire.internal.ico',
@@ -57,22 +58,27 @@ const wInstallerOptions: electronWinstaller.Options = {
   description: commonConfig.description,
   iconUrl: windowsConfig.installerIconUrl,
   loadingGif: `${commonConfig.electronDirectory}/img/logo.256.png`,
+  name: commonConfig.name,
   noMsi: true,
   outputDirectory: 'wrap/dist',
+  remoteReleases: windowsConfig.updateUrl,
   setupExe: `${commonConfig.name}-Setup.exe`,
   setupIcon: `${commonConfig.electronDirectory}/img/logo.ico`,
   title: commonConfig.name,
   version: commonConfig.version.replace(/-.*$/, ''),
 };
 
+logEntries(commonConfig, 'commonConfig', toolName);
+
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} Installer for Windows ...`);
 
-electronWinstaller
-  .createWindowsInstaller(wInstallerOptions)
+writeJson(wireJsonResolved, commonConfig)
+  .then(() => electronWinstaller.createWindowsInstaller(wInstallerOptions))
   .then(() => {
     const outputDir = path.resolve(wInstallerOptions.outputDirectory || '');
     logger.log(`Built installer in "${outputDir}"`);
   })
+  .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
     logger.error(error);
     process.exit(1);

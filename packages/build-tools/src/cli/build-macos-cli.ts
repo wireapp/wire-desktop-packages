@@ -23,15 +23,16 @@ import commander from 'commander';
 import electronPackager from 'electron-packager';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger, writeJson} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, getToolName, writeJson} from '../lib/build-utils';
 import {getCommonConfig, logEntries} from '../lib/commonConfig';
 import {MacOSConfig} from '../lib/Config';
 
-const logger = getLogger('wire-build-macos');
+const toolName = getToolName(__filename);
+const logger = getLogger(toolName);
 
 commander
-  .name('wire-build-macos')
-  .description('Build the Wire wrapper for Linux')
+  .name(toolName)
+  .description('Build the Wire wrapper for macOS')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
   .parse(process.argv);
 
@@ -94,7 +95,7 @@ if (macOsConfig.notarizeAppleId && macOsConfig.notarizeApplePassword) {
   };
 }
 
-logEntries(commonConfig, 'commonConfig', 'build-macos-cli');
+logEntries(commonConfig, 'commonConfig', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 
