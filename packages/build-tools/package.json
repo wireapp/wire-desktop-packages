@@ -15,7 +15,7 @@
     "electron-winstaller": "2.7.0",
     "fs-extra": "7.0.1",
     "logdown": "3.2.8",
-    "@ffflorian/windows-shortcut-maker": "1.0.1"
+    "@ffflorian/windows-shortcut-maker": "1.1.0"
   },
   "description": "Wire's internal wrapper build tools",
   "devDependencies": {
