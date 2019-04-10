@@ -52,5 +52,5 @@
     "test:node": "electron-mocha --require ./babel-register.js ./src/**/*.test.main.ts",
     "version": "yarn dist"
   },
-  "version": "0.2.3"
+  "version": "0.2.4"
 }
