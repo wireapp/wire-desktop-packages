@@ -21,6 +21,7 @@
 
 import commander from 'commander';
 import electronPackager from 'electron-packager';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 
 import {checkCommanderOptions, getLogger, getToolName, writeJson} from '../lib/build-utils';
@@ -40,6 +41,8 @@ checkCommanderOptions(commander, ['wireJson']);
 
 const wireJsonResolved = path.resolve(commander.wireJson);
 const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
+const electronPackageJson = path.resolve(commonConfig.electronDirectory, 'package.json');
+const originalElectronJson = fs.readJsonSync(electronPackageJson);
 
 const macOsDefaultConfig: MacOSConfig = {
   bundleId: 'com.wearezeta.zclient.mac',
@@ -99,10 +102,13 @@ logEntries(commonConfig, 'commonConfig', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 
-writeJson(wireJsonResolved, commonConfig)
+writeJson(electronPackageJson, {...originalElectronJson, productName: commonConfig.name, version: commonConfig.version})
+  .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronPackager(packagerOptions))
   .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
-  .finally(() => writeJson(wireJsonResolved, defaultConfig))
+  .finally(() =>
+    Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
+  )
   .catch(error => {
     logger.error(error);
     process.exit(1);
