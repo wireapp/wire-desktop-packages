@@ -34,7 +34,7 @@
     "nyc": "13.3.0",
     "pure-uuid": "1.5.7",
     "rimraf": "2.6.3",
-    "typescript": "3.4.2"
+    "typescript": "3.4.3"
   },
   "files": [
     "dist"
