@@ -59,7 +59,7 @@ const wInstallerOptions: electronWinstaller.Options = {
   exe: `${commonConfig.name}.exe`,
   iconUrl: windowsConfig.installerIconUrl,
   loadingGif: windowsConfig.loadingGif,
-  name: commonConfig.name,
+  name: commonConfig.nameShort,
   noMsi: true,
   outputDirectory: 'wrap/dist',
   setupExe: `${commonConfig.name}-Setup.exe`,
