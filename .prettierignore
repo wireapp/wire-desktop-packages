@@ -3,3 +3,4 @@
 CHANGELOG.md
 node_modules
 package.json
+packages/desktop-updater-spec/proto/*.d.ts
