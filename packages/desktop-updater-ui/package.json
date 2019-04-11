@@ -22,7 +22,7 @@
     "@types/node": "11.13.4",
     "@types/react": "16.8.12",
     "@types/react-dom": "16.8.3",
-    "@wireapp/desktop-updater-spec": "0.1.5",
+    "@wireapp/desktop-updater-spec": "0.1.6",
     "babel-loader": "8.0.5",
     "css-loader": "2.1.1",
     "electron": "5.0.0-beta.8",
@@ -55,5 +55,5 @@
     "start": "start-storybook -p 9001 -c .storybook",
     "test": "exit 0"
   },
-  "version": "0.1.5"
+  "version": "0.1.6"
 }
