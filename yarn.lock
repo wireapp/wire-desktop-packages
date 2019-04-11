@@ -1076,7 +1076,7 @@
     "@emotion/utils" "0.11.1"
     object-assign "^4.1.1"
 
-"@emotion/styled@^10.0.7":
+"@emotion/styled@10.0.10", "@emotion/styled@^10.0.7":
   version "10.0.10"
   resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-10.0.10.tgz#ec241a9389a585b2c2638b709c262c28469ed92e"
   integrity sha512-k4p5WxwYJUVYKBlwOmfpqxeSwdPHqUycLHJY9ftleEvMfphYLB8lt9oPEkEty5XH4URh/wyUfZ2wW2ojrHODWA==
@@ -2446,10 +2446,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.8.12":
-  version "16.8.12"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.12.tgz#ffbdd7bcd2b7037c3f78e26c708922a2befbb71f"
-  integrity sha512-MZZiv11BQhsxFp5DHDmRKBi6Nv3jwOhRiFFDE7ZJ1+rb52gdOd9y/qY0+5wyV/PQVK9926wFMjpQj3BJ18pb4Q==
+"@types/react@*", "@types/react@16.8.13":
+  version "16.8.13"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.13.tgz#a82b15aad9ab91c40edca0d6889b7745ae24f053"
+  integrity sha512-otJ4ntMuHGrvm67CdDJMAls4WqotmAmW0g3HmWi9LCjSWXrxoXY/nHXrtmMfvPEEmGFNm6NdgMsJmnfH820Qaw==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -2636,14 +2636,14 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/react-ui-kit@5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.1.tgz#7b8a3e4d8024c200c70641d6f6bf52adad7e6b54"
-  integrity sha512-m+2+mDS/dEfdTJNCIKAfYgjF1IFMwrIscp46FeTAwFDq083n7NKDdQ5Y15SdR0tln/FhU3tZSxCA4KH0LxIx8Q==
+"@wireapp/react-ui-kit@5.3.3":
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.3.tgz#171a9c23bd7826115740d341ad058914156eba58"
+  integrity sha512-IYFSEMfeOktmgCuLebDyK0z8HB64AjpT2+x7IGgWynH5bADHoPB7COdQ6zSZslfCyok+c0hbFAfSAoOXEaCZWA==
   dependencies:
     "@emotion/core" "10.0.10"
     "@types/color" "3.0.0"
-    bazinga64 "5.3.55"
+    bazinga64 "5.3.56"
     color "3.1.0"
     emotion-normalize "10.0.0"
     react-transition-group "2.8.0"
@@ -3590,10 +3590,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.55:
-  version "5.3.55"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.55.tgz#54f694710b0baf95ce7f4a69dbcfa2a3960afe17"
-  integrity sha512-HU8q+wVr2cbTW7aIfcR6e62w1Crj6G4hPZjcieTn97ECWi2Asag96GkELDAuSKHiilOblfkiv/FAWbl/p8HZPQ==
+bazinga64@5.3.56:
+  version "5.3.56"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.56.tgz#9be1c08cf492d9f8f3f411198a81b369144816aa"
+  integrity sha512-PcKZFpLXGAH63+6X/nwKR6ZMO2slPymZV3Exde3/gIyXhNpmB0YRy8So7PzBApx0W37PIy0sfrncXH6yoZ4TUg==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
