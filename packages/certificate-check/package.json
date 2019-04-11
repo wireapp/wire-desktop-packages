@@ -4,7 +4,7 @@
   },
   "description": "Utilities to check that Wire's domains use the expected certificate.",
   "devDependencies": {
-    "@types/node": "11.13.2",
+    "@types/node": "11.13.4",
     "jasmine": "3.4.0",
     "rimraf": "2.6.3"
   },
@@ -22,5 +22,5 @@
     "test": "jasmine",
     "test:project": "yarn dist && yarn test"
   },
-  "version": "0.1.2"
+  "version": "0.1.4"
 }

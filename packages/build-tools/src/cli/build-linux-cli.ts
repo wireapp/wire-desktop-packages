@@ -120,7 +120,7 @@ logger.info(
   `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`
 );
 
-writeJson(electronPackageJson, {...originalElectronJson, version: commonConfig.version})
+writeJson(electronPackageJson, {...originalElectronJson, productName: commonConfig.name, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronBuilder.build({config: builderConfig, targets}))
   .then(buildFiles => buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`)))

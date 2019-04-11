@@ -5,8 +5,6 @@
     "@wireapp/react-ui-kit": "5.3.3",
     "animejs": "3.0.1",
     "emotion": "10.0.9",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
     "react-i18next": "10.6.2",
     "react-markdown": "4.0.6"
   },
@@ -23,10 +21,10 @@
     "@storybook/addon-knobs": "5.0.6",
     "@storybook/react": "5.0.6",
     "@types/luxon": "1.12.0",
-    "@types/node": "11.13.2",
+    "@types/node": "11.13.4",
     "@types/react": "16.8.12",
     "@types/react-dom": "16.8.3",
-    "@wireapp/desktop-updater-spec": "0.1.4",
+    "@wireapp/desktop-updater-spec": "0.1.6",
     "babel-loader": "8.0.5",
     "css-loader": "2.1.1",
     "electron": "5.0.0-beta.8",
@@ -57,5 +55,5 @@
     "start": "start-storybook -p 9001 -c .storybook",
     "test": "exit 0"
   },
-  "version": "0.1.4"
+  "version": "0.1.6"
 }

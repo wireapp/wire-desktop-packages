@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.5...@wireapp/build-tools@0.1.6) (2019-04-11)
+
+
+### Bug Fixes
+
+* **build-tools:** Set short name as Windows installer name ([#452](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/452)) ([881efdd](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/881efdd))
+
+
+
+
+
+## [0.1.5](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.4...@wireapp/build-tools@0.1.5) (2019-04-10)
+
+
+### Bug Fixes
+
+* **build-tools:** Write productName when building ([#450](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/450)) ([69b36c8](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/69b36c8))
+
+
+
+
+
+## [0.1.4](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.3...@wireapp/build-tools@0.1.4) (2019-04-09)
+
+
+### Bug Fixes
+
+* **build-tools:** Add updateUrl to wire.json ([#447](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/447)) ([19b16d4](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/19b16d4))
+
+
+
+
+
 ## [0.1.3](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.2...@wireapp/build-tools@0.1.3) (2019-04-09)
 
 

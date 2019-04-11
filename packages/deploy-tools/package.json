@@ -20,11 +20,11 @@
     "@types/form-data": "2.2.1",
     "@types/fs-extra": "5.0.5",
     "@types/jszip": "3.1.5",
-    "@types/node": "11.13.2",
+    "@types/node": "11.13.4",
     "axios": "0.18.0",
     "jasmine": "3.4.0",
     "rimraf": "2.6.3",
-    "typescript": "3.4.2"
+    "typescript": "3.4.3"
   },
   "files": [
     "dist"
@@ -41,5 +41,5 @@
     "test": "yarn test:node",
     "test:node": "jasmine --config=jasmine.json"
   },
-  "version": "0.1.2"
+  "version": "0.1.4"
 }
