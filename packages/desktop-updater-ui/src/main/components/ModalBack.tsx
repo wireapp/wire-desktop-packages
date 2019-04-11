@@ -92,6 +92,7 @@ const ModalClose = styled(ArrowIcon)`
 const ModalContent = styled.div<React.HTMLAttributes<HTMLDivElement>>`
   max-width: 100%;
   overflow-y: auto;
+  width: 100%;
 `;
 
 const ModalBackground = styled.div`
