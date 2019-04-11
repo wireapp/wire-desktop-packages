@@ -28,6 +28,12 @@ export class Utils {
   public static async readFileAsString(path: string): Promise<string> {
     return fs.readFileSync(path, {encoding: 'utf8'});
   }
+
+  public static removeCommitFromVersion(version: string) {
+    // Remove commit ID from current version
+    // E.g. 3.9.0-1f59136 -> 3.9.0
+    return version.replace(/-[a-z0-9]+$/gi, '');
+  }
 }
 
 export class UploadData {
