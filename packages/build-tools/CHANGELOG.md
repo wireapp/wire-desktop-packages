@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.6...@wireapp/build-tools@0.1.7) (2019-04-12)
+
+
+### Bug Fixes
+
+* **build-tools:** Set long name for Linux Desktop file ([df28f7b](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/df28f7b))
+
+
+
+
+
 ## [0.1.6](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.5...@wireapp/build-tools@0.1.6) (2019-04-11)
 
 
