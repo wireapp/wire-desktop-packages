@@ -43,7 +43,7 @@ interface LinuxConfig {
   artifactName: string;
   categories: string;
   keywords: string;
-  nameShort: string;
+  executableName: string;
   targets: string[];
 }
 

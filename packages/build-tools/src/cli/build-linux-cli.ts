@@ -48,16 +48,16 @@ const linuxDefaultConfig: LinuxConfig = {
   /* tslint:disable:no-invalid-template-strings */
   artifactName: '${productName}-${version}_${arch}.${ext}',
   categories: 'Network;InstantMessaging;Chat;VideoConference',
+  executableName: `${commonConfig.nameShort}-desktop`,
   keywords: 'chat;encrypt;e2e;messenger;videocall',
-  nameShort: commonConfig.name,
   targets: ['AppImage', 'deb', 'rpm'],
 };
 
 const linuxConfig: LinuxConfig = {
   ...linuxDefaultConfig,
   categories: process.env.LINUX_CATEGORIES || linuxDefaultConfig.categories,
+  executableName: process.env.LINUX_NAME_SHORT || linuxDefaultConfig.executableName,
   keywords: process.env.LINUX_KEYWORDS || linuxDefaultConfig.keywords,
-  nameShort: process.env.LINUX_NAME_SHORT || linuxDefaultConfig.nameShort,
   targets: process.env.LINUX_TARGET ? [process.env.LINUX_TARGET] : linuxDefaultConfig.targets,
 };
 
@@ -67,7 +67,7 @@ const linuxDesktopConfig = {
   Keywords: linuxConfig.keywords,
   MimeType: `x-scheme-handler/${commonConfig.customProtocolName}`,
   Name: commonConfig.name,
-  StartupWMClass: commonConfig.nameShort,
+  StartupWMClass: commonConfig.name,
   Version: '1.1',
 };
 
@@ -76,7 +76,7 @@ const platformSpecificConfig = {
   afterRemove: 'bin/deb/after-remove.tpl',
   category: 'Network',
   desktop: linuxDesktopConfig,
-  fpm: ['--name', linuxConfig.nameShort],
+  fpm: ['--name', linuxConfig.executableName],
 };
 
 const rpmDepends = ['alsa-lib', 'GConf2', 'libappindicator', 'libnotify', 'libXScrnSaver', 'libXtst', 'nss'];
@@ -101,7 +101,7 @@ const builderConfig: electronBuilder.Configuration = {
     artifactName: linuxConfig.artifactName,
     category: platformSpecificConfig.category,
     depends: debDepends,
-    executableName: linuxConfig.nameShort,
+    executableName: linuxConfig.executableName,
     target: linuxConfig.targets,
   },
   productName: commonConfig.name,
