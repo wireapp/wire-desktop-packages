@@ -66,7 +66,7 @@ const linuxDesktopConfig = {
   GenericName: commonConfig.description,
   Keywords: linuxConfig.keywords,
   MimeType: `x-scheme-handler/${commonConfig.customProtocolName}`,
-  Name: commonConfig.nameShort,
+  Name: commonConfig.name,
   StartupWMClass: commonConfig.nameShort,
   Version: '1.1',
 };
