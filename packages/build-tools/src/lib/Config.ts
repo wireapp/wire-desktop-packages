@@ -42,8 +42,8 @@ interface CommonConfig {
 interface LinuxConfig {
   artifactName: string;
   categories: string;
+  executableName: string;
   keywords: string;
-  nameShort: string;
   targets: string[];
 }
 
