@@ -2636,6 +2636,11 @@
   dependencies:
     jsrsasign "8.0.12"
 
+"@wireapp/prettier-config@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@wireapp/prettier-config/-/prettier-config-0.1.0.tgz#9013de56087eb865b7fd3559d6d3a81558573719"
+  integrity sha512-/NnQFYE+Hbz46Cfz3NhiOT9JxfaKFON4lHI+qzg19Zb2d8B0pxd/I6HZRSRH6ofV29IP+OT+IynvUFQOO2WUpg==
+
 "@wireapp/react-ui-kit@5.3.3":
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.3.tgz#171a9c23bd7826115740d341ad058914156eba58"
