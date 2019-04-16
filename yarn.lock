@@ -2636,17 +2636,17 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/react-ui-kit@5.3.3":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.3.tgz#171a9c23bd7826115740d341ad058914156eba58"
-  integrity sha512-IYFSEMfeOktmgCuLebDyK0z8HB64AjpT2+x7IGgWynH5bADHoPB7COdQ6zSZslfCyok+c0hbFAfSAoOXEaCZWA==
+"@wireapp/react-ui-kit@5.3.5":
+  version "5.3.5"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.5.tgz#a703c51f51c0ad8939d9016cb8d7d3123ae80c60"
+  integrity sha512-CUtS44Fc8skF86uYGRCyBNqFKhAS/recFJFdFzGftasuMhYMoKHNt4TKkJ5c1g7Of4fts5uBerJ9mu6HlSBKEA==
   dependencies:
     "@emotion/core" "10.0.10"
     "@types/color" "3.0.0"
-    bazinga64 "5.3.56"
+    bazinga64 "5.3.58"
     color "3.1.0"
     emotion-normalize "10.0.0"
-    react-transition-group "2.8.0"
+    react-transition-group "2.9.0"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -3590,10 +3590,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.56:
-  version "5.3.56"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.56.tgz#9be1c08cf492d9f8f3f411198a81b369144816aa"
-  integrity sha512-PcKZFpLXGAH63+6X/nwKR6ZMO2slPymZV3Exde3/gIyXhNpmB0YRy8So7PzBApx0W37PIy0sfrncXH6yoZ4TUg==
+bazinga64@5.3.58:
+  version "5.3.58"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.58.tgz#007d575d96c103a824e9610b5632b64f5ea85f77"
+  integrity sha512-ycBOgyDfKOQrr1bx8lRQbRBHXdYVXHfNRZUHQBkSGANNEM1+aPgmn7WdYxVe82Vcp54fbl9iiUm8OP2hcZLzGw==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -5304,7 +5304,7 @@ dom-converter@^0.2:
   dependencies:
     utila "~0.4"
 
-dom-helpers@^3.3.1:
+dom-helpers@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
   integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -11162,12 +11162,12 @@ react-textarea-autosize@^7.0.4:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-transition-group@2.8.0, react-transition-group@^2.2.1:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.8.0.tgz#d6d8f635d81a0955b67348be5d017cff77d6c75f"
-  integrity sha512-So23a1MPn8CGoW5WNU4l0tLiVkOFmeXSS1K4Roe+dxxqqHvI/2XBmj76jx+u96LHnQddWG7LX8QovPAainSmWQ==
+react-transition-group@2.9.0, react-transition-group@^2.2.1:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.9.0.tgz#df9cdb025796211151a436c69a8f3b97b5b07c8d"
+  integrity sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
   dependencies:
-    dom-helpers "^3.3.1"
+    dom-helpers "^3.4.0"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
