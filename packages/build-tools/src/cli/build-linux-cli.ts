@@ -41,23 +41,23 @@ checkCommanderOptions(commander, ['wireJson']);
 
 const wireJsonResolved = path.resolve(commander.wireJson);
 const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
-const electronPackageJson = path.resolve(commonConfig.electronDirectory, 'package.json');
-const originalElectronJson = fs.readJsonSync(electronPackageJson);
+const packageJson = path.resolve('package.json');
+const originalPackageJson = fs.readJsonSync(packageJson);
 
 const linuxDefaultConfig: LinuxConfig = {
   /* tslint:disable:no-invalid-template-strings */
   artifactName: '${productName}-${version}_${arch}.${ext}',
   categories: 'Network;InstantMessaging;Chat;VideoConference',
+  executableName: `${commonConfig.nameShort}-desktop`,
   keywords: 'chat;encrypt;e2e;messenger;videocall',
-  nameShort: commonConfig.name,
   targets: ['AppImage', 'deb', 'rpm'],
 };
 
 const linuxConfig: LinuxConfig = {
   ...linuxDefaultConfig,
   categories: process.env.LINUX_CATEGORIES || linuxDefaultConfig.categories,
+  executableName: process.env.LINUX_NAME_SHORT || linuxDefaultConfig.executableName,
   keywords: process.env.LINUX_KEYWORDS || linuxDefaultConfig.keywords,
-  nameShort: process.env.LINUX_NAME_SHORT || linuxDefaultConfig.nameShort,
   targets: process.env.LINUX_TARGET ? [process.env.LINUX_TARGET] : linuxDefaultConfig.targets,
 };
 
@@ -66,8 +66,8 @@ const linuxDesktopConfig = {
   GenericName: commonConfig.description,
   Keywords: linuxConfig.keywords,
   MimeType: `x-scheme-handler/${commonConfig.customProtocolName}`,
-  Name: commonConfig.nameShort,
-  StartupWMClass: commonConfig.nameShort,
+  Name: commonConfig.name,
+  StartupWMClass: commonConfig.name,
   Version: '1.1',
 };
 
@@ -76,7 +76,7 @@ const platformSpecificConfig = {
   afterRemove: 'bin/deb/after-remove.tpl',
   category: 'Network',
   desktop: linuxDesktopConfig,
-  fpm: ['--name', linuxConfig.nameShort],
+  fpm: ['--name', linuxConfig.executableName],
 };
 
 const rpmDepends = ['alsa-lib', 'GConf2', 'libappindicator', 'libnotify', 'libXScrnSaver', 'libXtst', 'nss'];
@@ -90,7 +90,6 @@ const builderConfig: electronBuilder.Configuration = {
     depends: debDepends,
   },
   directories: {
-    app: commonConfig.electronDirectory,
     buildResources: 'resources',
     output: 'wrap/dist',
   },
@@ -101,7 +100,7 @@ const builderConfig: electronBuilder.Configuration = {
     artifactName: linuxConfig.artifactName,
     category: platformSpecificConfig.category,
     depends: debDepends,
-    executableName: linuxConfig.nameShort,
+    executableName: linuxConfig.executableName,
     target: linuxConfig.targets,
   },
   productName: commonConfig.name,
@@ -120,13 +119,11 @@ logger.info(
   `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`
 );
 
-writeJson(electronPackageJson, {...originalElectronJson, productName: commonConfig.name, version: commonConfig.version})
+writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronBuilder.build({config: builderConfig, targets}))
   .then(buildFiles => buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`)))
-  .finally(() =>
-    Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
-  )
+  .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
     logger.error(error);
     process.exit(1);
