@@ -33,11 +33,6 @@
     "space-within-parens": [true, 0]
   },
   "linterOptions": {
-    "exclude": [
-      "**/bower_components/**",
-      "**/dist/**",
-      "**/node_modules/**",
-      "packages/desktop-updater-spec/proto/*.d.ts"
-    ]
+    "exclude": ["**/bower_components/**", "**/dist/**", "**/node_modules/**", "**/*.d.ts"]
   }
 }
