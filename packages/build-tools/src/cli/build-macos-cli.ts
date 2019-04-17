@@ -41,8 +41,8 @@ checkCommanderOptions(commander, ['wireJson']);
 
 const wireJsonResolved = path.resolve(commander.wireJson);
 const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
-const electronPackageJson = path.resolve(commonConfig.electronDirectory, 'package.json');
-const originalElectronJson = fs.readJsonSync(electronPackageJson);
+const packageJson = path.resolve('package.json');
+const originalPackageJson = fs.readJsonSync(packageJson);
 
 const macOsDefaultConfig: MacOSConfig = {
   bundleId: 'com.wearezeta.zclient.mac',
@@ -70,7 +70,7 @@ const packagerOptions: electronPackager.Options = {
   asar: true,
   buildVersion: commonConfig.buildNumber,
   darwinDarkModeSupport: true,
-  dir: commonConfig.electronDirectory,
+  dir: '.',
   extendInfo: 'resources/macos/custom.plist',
   helperBundleId: `${macOsConfig.bundleId}.helper`,
   icon: 'resources/macos/logo.icns',
@@ -102,13 +102,11 @@ logEntries(commonConfig, 'commonConfig', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 
-writeJson(electronPackageJson, {...originalElectronJson, productName: commonConfig.name, version: commonConfig.version})
+writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronPackager(packagerOptions))
   .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
-  .finally(() =>
-    Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
-  )
+  .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
     logger.error(error);
     process.exit(1);
