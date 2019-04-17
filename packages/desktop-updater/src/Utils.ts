@@ -32,7 +32,7 @@ export class Utils {
   public static removeCommitFromVersion(version: string) {
     // Remove commit ID from current version
     // E.g. 3.9.0-1f59136 -> 3.9.0
-    return version.replace(/-[a-z0-9]+$/gi, '');
+    return version.replace(/-[a-f0-9]+$/gi, '');
   }
 }
 
