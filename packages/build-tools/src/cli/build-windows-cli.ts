@@ -40,8 +40,8 @@ checkCommanderOptions(commander, ['wireJson']);
 
 const wireJsonResolved = path.resolve(commander.wireJson);
 const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
-const electronPackageJson = path.resolve(commonConfig.electronDirectory, 'package.json');
-const originalElectronJson = fs.readJsonSync(electronPackageJson);
+const packageJson = path.resolve('package.json');
+const originalPackageJson = fs.readJsonSync(packageJson);
 
 const packagerOptions: electronPackager.Options = {
   appCopyright: commonConfig.copyright,
@@ -49,7 +49,7 @@ const packagerOptions: electronPackager.Options = {
   arch: 'ia32',
   asar: true,
   buildVersion: commonConfig.buildNumber,
-  dir: commonConfig.electronDirectory,
+  dir: '.',
   icon: `${commonConfig.electronDirectory}/img/logo.ico`,
   ignore: new RegExp(`${commonConfig.electronDirectory}/renderer/src`),
   name: commonConfig.name,
@@ -71,13 +71,11 @@ logEntries(commonConfig, 'commonConfig', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for Windows ...`);
 
-writeJson(electronPackageJson, {...originalElectronJson, productName: commonConfig.name, version: commonConfig.version})
+writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronPackager(packagerOptions))
   .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
-  .finally(() =>
-    Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
-  )
+  .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
     logger.error(error);
     process.exit(1);
