@@ -90,7 +90,6 @@ const builderConfig: electronBuilder.Configuration = {
     depends: debDepends,
   },
   directories: {
-    app: commonConfig.electronDirectory,
     buildResources: 'resources',
     output: 'wrap/dist',
   },

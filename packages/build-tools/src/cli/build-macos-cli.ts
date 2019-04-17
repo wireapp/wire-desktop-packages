@@ -70,7 +70,7 @@ const packagerOptions: electronPackager.Options = {
   asar: true,
   buildVersion: commonConfig.buildNumber,
   darwinDarkModeSupport: true,
-  dir: commonConfig.electronDirectory,
+  dir: '.',
   extendInfo: 'resources/macos/custom.plist',
   helperBundleId: `${macOsConfig.bundleId}.helper`,
   icon: 'resources/macos/logo.icns',

@@ -49,7 +49,7 @@ const packagerOptions: electronPackager.Options = {
   arch: 'ia32',
   asar: true,
   buildVersion: commonConfig.buildNumber,
-  dir: commonConfig.electronDirectory,
+  dir: '.',
   icon: `${commonConfig.electronDirectory}/img/logo.ico`,
   ignore: new RegExp(`${commonConfig.electronDirectory}/renderer/src`),
   name: commonConfig.name,
