@@ -41,8 +41,8 @@ checkCommanderOptions(commander, ['wireJson']);
 
 const wireJsonResolved = path.resolve(commander.wireJson);
 const {commonConfig, defaultConfig} = getCommonConfig({envFile: '.env.defaults', wireJson: wireJsonResolved});
-const electronPackageJson = path.resolve(commonConfig.electronDirectory, 'package.json');
-const originalElectronJson = fs.readJsonSync(electronPackageJson);
+const packageJson = path.resolve('package.json');
+const originalPackageJson = fs.readJsonSync(packageJson);
 
 const linuxDefaultConfig: LinuxConfig = {
   /* tslint:disable:no-invalid-template-strings */
@@ -120,13 +120,11 @@ logger.info(
   `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`
 );
 
-writeJson(electronPackageJson, {...originalElectronJson, productName: commonConfig.name, version: commonConfig.version})
+writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronBuilder.build({config: builderConfig, targets}))
   .then(buildFiles => buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`)))
-  .finally(() =>
-    Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(electronPackageJson, originalElectronJson)])
-  )
+  .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
     logger.error(error);
     process.exit(1);
