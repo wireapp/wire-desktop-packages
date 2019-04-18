@@ -76,7 +76,7 @@ export class Server {
 
   constructor(options: ServerConstructorInterface) {
     this.browserWindowOptions = options.browserWindowOptions;
-    this.currentClientVersion = options.currentClientVersion;
+    this.currentClientVersion = Utils.removeCommitFromVersion(options.currentClientVersion);
     this.currentEnvironment = options.currentEnvironment;
     this.currentEnvironmentBaseUrl = new URL(options.currentEnvironmentBaseUrl);
     this.currentEnvironmentBaseUrlPlain = options.currentEnvironmentBaseUrl;
