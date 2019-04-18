@@ -134,7 +134,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
       manifest.fileContentLength.unsigned
     );
     return (
-      <Modal fullscreen onClose={this.hideChangelog} style={{backgroundColor: 'white'}}>
+      <Modal fullscreen onClose={this.hideChangelog}>
         <MainHeadingTitle>
           <Trans>What's new</Trans>
         </MainHeadingTitle>
