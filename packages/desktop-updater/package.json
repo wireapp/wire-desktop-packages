@@ -12,7 +12,7 @@
     "random-js": "2.0.0",
     "serve-static": "1.13.2",
     "set-cookie-parser": "2.3.5",
-    "vm2": "3.6.11"
+    "vm2": "3.7.0"
   },
   "description": "",
   "devDependencies": {
