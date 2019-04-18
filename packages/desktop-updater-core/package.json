@@ -23,7 +23,7 @@
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "throttle-debounce": "2.1.0",
-    "vm2": "3.6.11"
+    "vm2": "3.7.0"
   },
   "description": "Secure updater for Electron",
   "devDependencies": {
