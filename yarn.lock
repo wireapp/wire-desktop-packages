@@ -2636,27 +2636,27 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/eslint-config@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wireapp/eslint-config/-/eslint-config-0.1.0.tgz#f2e12c61c83d55c7e840f09a3805315e5870657a"
-  integrity sha512-0gz4RNUdGlVxCuR65PoMrVWiafTrTXmUqSFjTYCMN0JAyPkXbT02PNs4f4mYgPfiZWm2gOMj5Ce5XK/aoR0k2w==
+"@wireapp/eslint-config@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@wireapp/eslint-config/-/eslint-config-0.1.1.tgz#c40a5e4da7ae26c3fbf329f40686b4d65eed4713"
+  integrity sha512-VrvZuitrXDOyGJTs8Lg5SfGbUlhzx/pmhkt6AnlhKtKqxCEU+vaQnhwYFcxHB7kXNzi+J9xQhdunopNOK4jl7A==
 
 "@wireapp/prettier-config@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@wireapp/prettier-config/-/prettier-config-0.2.0.tgz#822f5d1db902550c09c8ef5efda2a36ca263a481"
   integrity sha512-wgFtwop3vWW1MaXwkcbDiwM9NP1JHRWwr09RLTAMQhCs9J1z8ciBnfpty/LxY2LXTRWZt1gEL2a+am/a0xpVPA==
 
-"@wireapp/react-ui-kit@5.3.5":
-  version "5.3.5"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.3.5.tgz#a703c51f51c0ad8939d9016cb8d7d3123ae80c60"
-  integrity sha512-CUtS44Fc8skF86uYGRCyBNqFKhAS/recFJFdFzGftasuMhYMoKHNt4TKkJ5c1g7Of4fts5uBerJ9mu6HlSBKEA==
+"@wireapp/react-ui-kit@5.4.1":
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-5.4.1.tgz#91f2c4653549b699f3945e0bcb1dd8d1dd89939a"
+  integrity sha512-f6AX14DdyBkHU9ny9efV1DosvX+hDpjDxUjhhO0+wInW2+E1j+hMS4w4V2c3RW8SdqrihrWUxWNdYVFVaNH/9A==
   dependencies:
     "@emotion/core" "10.0.10"
     "@types/color" "3.0.0"
-    bazinga64 "5.3.58"
+    bazinga64 "5.3.59"
     color "3.1.0"
     emotion-normalize "10.0.0"
-    react-transition-group "2.9.0"
+    react-transition-group "3.0.0"
 
 "@wireapp/tslint-config@0.1.0":
   version "0.1.0"
@@ -3596,10 +3596,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.3.58:
-  version "5.3.58"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.58.tgz#007d575d96c103a824e9610b5632b64f5ea85f77"
-  integrity sha512-ycBOgyDfKOQrr1bx8lRQbRBHXdYVXHfNRZUHQBkSGANNEM1+aPgmn7WdYxVe82Vcp54fbl9iiUm8OP2hcZLzGw==
+bazinga64@5.3.59:
+  version "5.3.59"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.3.59.tgz#2dda4eda0ae7cb8c41ab5f4fba44171c79febe02"
+  integrity sha512-iPd3j43cfHdyvHW/VeWRM3PRnzYd6rTWQQb8mEutzUPK4XA5ZakJxO4ZePOltQC/LzqH+Nx3M0kaow5SS9PbDQ==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -11182,7 +11182,17 @@ react-textarea-autosize@^7.0.4:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-transition-group@2.9.0, react-transition-group@^2.2.1:
+react-transition-group@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-3.0.0.tgz#36efa4db970d5eec5e3028e0c458931163fa3b9b"
+  integrity sha512-A9ojB/LWECbFj58SNfjK1X9aaAU+1olLS0DFSikvrr2KfMaiBELemHDa5dKNvcTk2t3gUtDL/PJpFrBKDfMpLg==
+  dependencies:
+    dom-helpers "^3.4.0"
+    loose-envify "^1.4.0"
+    prop-types "^15.6.2"
+    react-lifecycles-compat "^3.0.4"
+
+react-transition-group@^2.2.1:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.9.0.tgz#df9cdb025796211151a436c69a8f3b97b5b07c8d"
   integrity sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
