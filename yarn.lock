@@ -2658,10 +2658,10 @@
     emotion-normalize "10.0.0"
     react-transition-group "4.0.0"
 
-"@wireapp/tslint-config@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wireapp/tslint-config/-/tslint-config-0.1.0.tgz#cc2896b77fc1a747d06960e4e8c5e37863261471"
-  integrity sha512-sOHOZ42ov/0QtPVJwcvi75gSC6oGN584oHVxUgHFJjmyKEKn5ut4Pwg51ED0RPk8xVIDltlefZcI8Nc3QP8BKQ==
+"@wireapp/tslint-config@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wireapp/tslint-config/-/tslint-config-1.0.0.tgz#c79a558294bb4a3253261caeb97ecfcee2144e79"
+  integrity sha512-dHqflGGtACc4Ej19DycEmU7xENKjokAFCSxqBzr5msjLCmnhYZHA4ytCVvXyUBMaGknN+qmiIR/rPIVHIWEsUw==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
