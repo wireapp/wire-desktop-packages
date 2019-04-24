@@ -25,7 +25,7 @@ import {DateTime} from 'luxon';
 import React from 'react';
 import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import i18n from '../libs/Localization';
+import {i18n} from '../libs/Localization';
 import {Modal} from './ModalBack';
 import {MainHeadingTitle as UpdaterStylesMainHeadingTitle} from './UpdaterStyles';
 

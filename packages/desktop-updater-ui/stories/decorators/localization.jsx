@@ -17,7 +17,7 @@
  *
  */
 
-import i18n, {resourcesName} from '../../src/main/libs/Localization';
+import {i18n, resourcesName} from '../../src/main/libs/Localization';
 import {fallbackLanguage} from '../../src/main/libs/Localization';
 import {makeDecorator} from '@storybook/addons';
 import {select} from '@storybook/addon-knobs';

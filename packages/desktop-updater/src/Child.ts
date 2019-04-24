@@ -180,6 +180,7 @@ export namespace Updater {
   }
 }
 
+// tslint:disable-next-line:no-default-export
 export default async callback => {
   try {
     const server = new Updater.Child();
