@@ -24,7 +24,7 @@
     "@storybook/react": "5.0.10",
     "@types/luxon": "1.12.0",
     "@types/node": "11.13.7",
-    "@types/react": "16.8.13",
+    "@types/react": "16.8.14",
     "@types/react-dom": "16.8.4",
     "@wireapp/desktop-updater-spec": "0.1.6",
     "babel-loader": "8.0.5",
