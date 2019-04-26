@@ -14,4 +14,5 @@ node_modules
 npm-debug.log*
 package-lock.json
 packages/desktop-updater-ui/.renderer/bundle.js
+packages/desktop-updater-spec/proto/Protobuf*
 yarn-error.log

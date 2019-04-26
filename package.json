@@ -2,7 +2,7 @@
   "devDependencies": {
     "@wireapp/eslint-config": "0.1.1",
     "@wireapp/prettier-config": "0.2.0",
-    "@wireapp/tslint-config": "0.1.0",
+    "@wireapp/tslint-config": "1.0.2",
     "babel-eslint": "10.0.1",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.2.0",

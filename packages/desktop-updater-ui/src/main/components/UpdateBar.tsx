@@ -24,7 +24,7 @@ import {Trans, WithTranslation, withTranslation} from 'react-i18next';
 
 import {BridgeIPC} from '@wireapp/desktop-updater-spec';
 import {EventDispatcher} from '../libs/EventDispatcher';
-import i18n from '../libs/Localization';
+import {i18n} from '../libs/Localization';
 
 interface UpdateBarState {
   isUpdateAvailable: boolean;

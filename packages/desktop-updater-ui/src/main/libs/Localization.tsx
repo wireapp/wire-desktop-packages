@@ -36,4 +36,4 @@ i18n.use(initReactI18next).init({
   resources,
 });
 
-export default i18n;
+export {i18n};
