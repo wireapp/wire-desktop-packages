@@ -64,6 +64,7 @@ const wInstallerOptions: electronWinstaller.Options = {
   outputDirectory: 'wrap/dist',
   setupExe: `${commonConfig.name}-Setup.exe`,
   setupIcon: `${commonConfig.electronDirectory}/img/logo.ico`,
+  signWithParams: '/t http://timestamp.digicert.com /fd SHA256 /a',
   title: commonConfig.name,
   version: commonConfig.version.replace(/-.*$/, ''),
 };
