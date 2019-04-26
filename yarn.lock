@@ -2646,15 +2646,15 @@
   resolved "https://registry.yarnpkg.com/@wireapp/prettier-config/-/prettier-config-0.2.0.tgz#822f5d1db902550c09c8ef5efda2a36ca263a481"
   integrity sha512-wgFtwop3vWW1MaXwkcbDiwM9NP1JHRWwr09RLTAMQhCs9J1z8ciBnfpty/LxY2LXTRWZt1gEL2a+am/a0xpVPA==
 
-"@wireapp/react-ui-kit@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-6.0.0.tgz#5b3ba3cae900cc448cb2f909aa92eeded8fa1f6a"
-  integrity sha512-nXJJws/9LNbQwNRkjIiNydAFEPHQ0HQrU5o0ZIDad2SjuJHXB5WiL5La1pgWfGenJFxC0spU9PIq2VbrTkwoRQ==
+"@wireapp/react-ui-kit@6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-6.0.1.tgz#44bccabb70cf52b2b53fc005761c0341a0980784"
+  integrity sha512-PCtQh215FzPp4X5/gyPrlILQi5Xwot1yAC0CfA+SXSOJfE4L0Ebkjkb7SRlBd2ZssD/4Am/VKPtrb2jDBaJuAg==
   dependencies:
     "@emotion/core" "10.0.10"
     "@types/color" "3.0.0"
     bazinga64 "5.3.60"
-    color "3.1.0"
+    color "3.1.1"
     emotion-normalize "10.0.0"
     react-transition-group "4.0.0"
 
@@ -4391,10 +4391,10 @@ color-string@^1.5.2:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
 
-color@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/color/-/color-3.1.0.tgz#d8e9fb096732875774c84bf922815df0308d0ffc"
-  integrity sha512-CwyopLkuRYO5ei2EpzpIh6LqJMt6Mt+jZhO5VI5f/wJLZriXQE32/SSqzmrh+QB+AZT81Cj8yv+7zwToW8ahZg==
+color@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/color/-/color-3.1.1.tgz#7abf5c0d38e89378284e873c207ae2172dcc8a61"
+  integrity sha512-PvUltIXRjehRKPSy89VnDWFKY58xyhTLyxIg21vwQBI6qLwZNPmC8k3C1uytIgFKEpOIzN4y32iPm8231zFHIg==
   dependencies:
     color-convert "^1.9.1"
     color-string "^1.5.2"
