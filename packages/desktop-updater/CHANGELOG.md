@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater/compare/@wireapp/desktop-updater@0.2.7...@wireapp/desktop-updater@0.2.8) (2019-04-27)
+
+
+### Bug Fixes
+
+* **desktop-updater:** Remove commit ID from current version ([#454](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater/issues/454)) ([8629edd](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater/commit/8629edd))
+
+
+
+
+
 ## [0.2.7](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater/compare/@wireapp/desktop-updater@0.2.6...@wireapp/desktop-updater@0.2.7) (2019-04-17)
 
 **Note:** Version bump only for package @wireapp/desktop-updater

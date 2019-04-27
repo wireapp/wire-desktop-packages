@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.9...@wireapp/build-tools@0.2.0) (2019-04-27)
+
+
+### Features
+
+* **build-tools:** Add sign aprameters for windows installer ([#516](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/516)) ([505cde3](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/505cde3))
+
+
+
+
+
 ## [0.1.9](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.1.8...@wireapp/build-tools@0.1.9) (2019-04-17)
 
 **Note:** Version bump only for package @wireapp/build-tools
