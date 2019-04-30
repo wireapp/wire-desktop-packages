@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/compare/@wireapp/certificate-check@0.1.5...@wireapp/certificate-check@0.1.6) (2019-04-30)
+
+
+### Bug Fixes
+
+* **certificate-check:** Return error if no certificate given ([#529](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/issues/529)) ([90e2500](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/commit/90e2500))
+
+
+
+
+
 ## [0.1.5](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/compare/@wireapp/certificate-check@0.1.4...@wireapp/certificate-check@0.1.5) (2019-04-27)
 
 **Note:** Version bump only for package @wireapp/certificate-check
