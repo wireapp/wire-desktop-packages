@@ -88,7 +88,7 @@ function hostnameShouldBePinned(hostname: string): boolean {
 }
 
 function verifyPinning(hostname: string, certificate: ElectronCertificate): PinningResult {
-  if (certificate) {
+  if (!certificate) {
     return {
       errorMessage: 'No certificate provided by Electron.',
     };
