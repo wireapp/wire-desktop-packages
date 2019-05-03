@@ -4,7 +4,7 @@
   },
   "description": "Utilities to check that Wire's domains use the expected certificate.",
   "devDependencies": {
-    "@types/node": "11.13.8",
+    "@types/node": "11.13.9",
     "jasmine": "3.4.0",
     "rimraf": "2.6.3"
   },
