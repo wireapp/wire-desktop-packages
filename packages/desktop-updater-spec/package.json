@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@types/long": "4.0.0",
-    "@types/node": "11.13.9",
+    "@types/node": "12.0.0",
     "long": "4.0.0",
     "protobufjs": "6.8.8"
   },
