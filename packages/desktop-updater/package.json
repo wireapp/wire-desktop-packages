@@ -10,7 +10,7 @@
     "libsodium-wrappers": "0.7.4",
     "mime-types": "2.1.24",
     "random-js": "2.0.0",
-    "serve-static": "1.13.2",
+    "serve-static": "1.14.0",
     "set-cookie-parser": "2.3.5",
     "vm2": "3.8.1"
   },
