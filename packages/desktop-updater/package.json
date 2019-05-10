@@ -4,7 +4,7 @@
     "@wireapp/desktop-updater-core": "0.2.7",
     "axios": "0.18.0",
     "debug": "4.1.1",
-    "finalhandler": "1.1.1",
+    "finalhandler": "1.1.2",
     "fs-extra": "7.0.1",
     "jsrsasign": "8.0.12",
     "libsodium-wrappers": "0.7.4",
