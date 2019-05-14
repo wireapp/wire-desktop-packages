@@ -22,7 +22,7 @@
     "@babel/preset-typescript": "7.3.3",
     "@babel/register": "7.4.4",
     "@types/debug": "4.1.4",
-    "@types/fs-extra": "5.1.0",
+    "@types/fs-extra": "7.0.0",
     "@types/libsodium-wrappers": "0.7.5",
     "@types/mocha": "5.2.6",
     "@types/set-cookie-parser": "0.0.4",
