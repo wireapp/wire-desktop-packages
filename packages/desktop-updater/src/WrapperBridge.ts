@@ -20,7 +20,7 @@
 import {BridgeIPC} from '@wireapp/desktop-updater-spec';
 import {ipcRenderer} from 'electron';
 
-export function UpdaterBridgeIPC() {
+export function UpdaterBridgeIPC(): void {
   ipcRenderer.on(BridgeIPC.UPDATE_AVAILABLE, (event, detail) =>
     window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_AVAILABLE, {detail}))
   );

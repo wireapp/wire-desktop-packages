@@ -267,7 +267,7 @@ export class Server {
     return server;
   }
 
-  private async hookSessionSettingsToElectron(ses: Electron.Session) {
+  private async hookSessionSettingsToElectron(ses: Electron.Session): Promise<void> {
     try {
       await proxifyProtocol(
         ses,
@@ -291,7 +291,7 @@ export class Server {
     return sodium.randombytes_buf(128, 'base64');
   }
 
-  public static isPathAllowed(providedPath: fs.PathLike, allowedPath: string) {
+  public static isPathAllowed(providedPath: fs.PathLike, allowedPath: string): boolean {
     return path.normalize(providedPath.toString()).startsWith(allowedPath);
   }
 }

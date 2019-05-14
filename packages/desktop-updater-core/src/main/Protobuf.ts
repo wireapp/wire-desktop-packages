@@ -27,7 +27,7 @@ export class Protobuf {
     return protobuf.load(pathName);
   }
 
-  private static lookupType(type: string, root: protobuf.Root) {
+  private static lookupType(type: string, root: protobuf.Root): protobuf.Type {
     return root.lookupType(`updater.${type}`);
   }
 

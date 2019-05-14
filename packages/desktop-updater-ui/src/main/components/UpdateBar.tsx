@@ -113,11 +113,11 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
     };
   }
 
-  public async componentWillMount() {
+  public async componentWillMount(): Promise<void> {
     await i18n.changeLanguage('en');
   }
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     window.addEventListener(BridgeIPC.UPDATE_AVAILABLE, this._onUpdateAvailable);
     window.addEventListener(BridgeIPC.UPDATE_START_INSTALL, this._onUpdateStartInstall);
     window.addEventListener(BridgeIPC.UPDATE_END_INSTALL, this._onUpdateEndInstall);
@@ -171,7 +171,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
     EventDispatcher.send(BridgeIPC.UPDATE_AVAILABLE_DISPLAY);
   };
 
-  render() {
+  render(): JSX.Element {
     return (
       <UpdaterContainer>
         <UpdaterScreenshotContainer

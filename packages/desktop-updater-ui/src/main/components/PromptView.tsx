@@ -27,11 +27,11 @@ import {PromptChangelogModal, TranslatedPromptChangelogModal} from './PromptChan
 import {DecisionButton, GlobalStyle, MainContent, MainHeadingTitle, UpdaterContainer} from './UpdaterStyles';
 
 interface State {
+  activateChangelog: boolean;
   decision: Updater.Decision;
   enteringChangelog: boolean;
   exitedChangelog: boolean;
   showChangelog: boolean;
-  activateChangelog: boolean;
 }
 
 class Prompt extends React.Component<PromptContainerProps & WithTranslation, State> {
@@ -61,7 +61,7 @@ class Prompt extends React.Component<PromptContainerProps & WithTranslation, Sta
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState: State): Promise<void> {
     if (this.state.showChangelog !== prevState.showChangelog) {
       this.toggleChangelogVisibility(prevState.showChangelog);
       await Prompt.sleep(Prompt.OPACITY_TRANSITION_SPEED);
@@ -111,7 +111,7 @@ class Prompt extends React.Component<PromptContainerProps & WithTranslation, Sta
     }));
   };
 
-  render() {
+  render(): JSX.Element {
     const {t} = this.props;
     const {changelogUrl, envelope, isWebappBlacklisted, isWebappTamperedWith, manifest} = this.props;
     let title: string;

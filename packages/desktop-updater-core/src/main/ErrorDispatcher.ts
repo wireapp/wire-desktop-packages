@@ -73,7 +73,11 @@ export class ErrorDispatcher {
 
   public static error: BaseError;
 
-  private static async dialogCallback(resolve: Function, response: number, checkboxChecked: boolean) {
+  private static async dialogCallback(
+    resolve: Function,
+    response: number,
+    checkboxChecked: boolean
+  ): Promise<{tryAgain: boolean}> {
     // Destroy the prompt / installer window if present
     if (this.promptWindow) {
       this.promptWindow.destroy();
