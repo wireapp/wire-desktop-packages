@@ -32,13 +32,13 @@ export class InstallerError extends BaseError {}
 export class Installer extends WindowManager {
   private static readonly debug = debug(`wire:updater:installer`);
 
-  public get BROWSER_WINDOW_OPTIONS() {
-    return async () => ({
+  public async BROWSER_WINDOW_OPTIONS(): Promise<Electron.BrowserWindowConstructorOptions> {
+    return {
       closable: false,
       height: 153,
       title: await getLocales('installer:title'),
       width: 480,
-    });
+    };
   }
 
   constructor(public mainWindow?: Electron.BrowserWindow) {

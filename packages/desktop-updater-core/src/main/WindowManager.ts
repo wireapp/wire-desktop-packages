@@ -82,7 +82,7 @@ export abstract class WindowManager {
     },
   };
 
-  abstract BROWSER_WINDOW_OPTIONS: () => Promise<Electron.BrowserWindowConstructorOptions>;
+  abstract async BROWSER_WINDOW_OPTIONS(): Promise<Electron.BrowserWindowConstructorOptions>;
 
   protected whenClosed(): void {
     this.debug('whenClosed called');

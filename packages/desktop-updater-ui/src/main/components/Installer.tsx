@@ -83,7 +83,7 @@ class InstallerContainer extends React.Component<Props, InstallerContainerState>
     });
   };
 
-  render() {
+  render(): JSX.Element {
     return <TranslatedInstaller {...this.state} />;
   }
 }

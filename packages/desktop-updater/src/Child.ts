@@ -79,7 +79,7 @@ export namespace Updater {
       res.end();
     }
 
-    private static endWithWebConfig(res: http.ServerResponse) {
+    private static endWithWebConfig(res: http.ServerResponse): void {
       const body = `window.wire = window.wire || {}; window.wire.env = ${JSON.stringify(WebConfig)};`;
       res.writeHead(200, {
         'Content-Length': Buffer.byteLength(body),

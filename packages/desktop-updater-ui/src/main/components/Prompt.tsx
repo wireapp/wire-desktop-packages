@@ -36,7 +36,7 @@ class PromptContainer extends React.Component<PromptContainerProps, State> {
     super(props);
   }
 
-  render() {
+  render(): JSX.Element {
     return <TranslatedPrompt {...this.props} />;
   }
 }

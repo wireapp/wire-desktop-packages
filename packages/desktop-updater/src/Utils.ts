@@ -29,7 +29,7 @@ export class Utils {
     return fs.readFileSync(path, {encoding: 'utf8'});
   }
 
-  public static removeCommitFromVersion(version: string) {
+  public static removeCommitFromVersion(version: string): string {
     // Remove commit ID from current version
     // E.g. 3.9.0-1f59136 -> 3.9.0
     return version.replace(/-[a-f0-9]+$/gi, '');

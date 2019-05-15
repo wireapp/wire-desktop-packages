@@ -47,7 +47,7 @@ enum FileExtension {
 
 const TWO_HUNDRED_MB_IN_BYTES = 209715200;
 
-function checkCommanderOptions(commanderInstance: typeof commander, options: string[]) {
+function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
   options.forEach(option => {
     if (!commanderInstance.hasOwnProperty(option)) {
       commanderInstance.outputHelp();
@@ -56,7 +56,7 @@ function checkCommanderOptions(commanderInstance: typeof commander, options: str
   });
 }
 
-async function execAsync(command: string) {
+async function execAsync(command: string): Promise<string> {
   const {stderr, stdout} = await promisify(exec)(command);
   if (stderr) {
     throw new Error(stderr.trim());

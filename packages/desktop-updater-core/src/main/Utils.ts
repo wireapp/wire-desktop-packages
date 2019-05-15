@@ -123,7 +123,7 @@ export class Utils {
     return compareVersions(leftVersion, rightVersion);
   }
 
-  public static getFilenameFromChecksum(checksum: Buffer) {
+  public static getFilenameFromChecksum(checksum: Buffer): string {
     return `${checksum.toString('hex').substr(0, Config.Updater.FILENAME_CHECKSUM_LENGTH)}.${
       Config.Updater.DEFAULT_FILE_EXTENSION
     }`;

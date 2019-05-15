@@ -36,7 +36,7 @@ import {
 interface Props extends InstallerContainerState {}
 
 class Installer extends React.Component<Props & WithTranslation> {
-  render() {
+  render(): JSX.Element {
     const {installing, progress} = this.props;
     const remaining = progress.remaining ? Math.round(progress.remaining) : undefined;
     const transferred = (progress.transferred / 1000000).toFixed(1);

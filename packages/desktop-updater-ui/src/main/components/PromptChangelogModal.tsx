@@ -89,7 +89,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
     this.state = {...props, showSigningDetails: false};
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState: State): void {
     if (
       prevState.showSigningDetails !== this.state.showSigningDetails &&
       this.state.showSigningDetails &&
@@ -109,7 +109,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
     this.props.onClose();
   };
 
-  render() {
+  render(): JSX.Element {
     const {changelogUrl, envelope, manifest} = this.props;
     const heading: React.SFC<{level: number}> = props => {
       switch (props.level) {
