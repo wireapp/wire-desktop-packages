@@ -32,7 +32,7 @@
     "electron": "5.0.1",
     "i18next": "15.1.1",
     "long": "4.0.0",
-    "luxon": "1.13.2",
+    "luxon": "1.15.0",
     "react-hot-loader": "4.8.7",
     "rimraf": "2.6.3",
     "style-loader": "0.23.1",
