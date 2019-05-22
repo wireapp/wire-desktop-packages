@@ -30,7 +30,7 @@
     "babel-loader": "8.0.6",
     "css-loader": "2.1.1",
     "electron": "5.0.1",
-    "i18next": "15.1.1",
+    "i18next": "15.1.2",
     "long": "4.0.0",
     "luxon": "1.13.2",
     "react-hot-loader": "4.8.7",
