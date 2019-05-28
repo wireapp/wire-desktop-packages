@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/compare/@wireapp/certificate-check@0.1.6...@wireapp/certificate-check@0.1.7) (2019-05-28)
+
+**Note:** Version bump only for package @wireapp/certificate-check
+
+
+
+
+
 ## [0.1.6](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/compare/@wireapp/certificate-check@0.1.5...@wireapp/certificate-check@0.1.6) (2019-04-30)
 
 
