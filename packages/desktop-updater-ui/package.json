@@ -22,7 +22,7 @@
     "@storybook/addon-console": "1.1.0",
     "@storybook/addon-knobs": "5.0.11",
     "@storybook/react": "5.0.11",
-    "@types/luxon": "1.13.0",
+    "@types/luxon": "1.15.0",
     "@types/node": "~10",
     "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
