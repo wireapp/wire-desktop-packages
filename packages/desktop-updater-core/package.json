@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@types/debug": "4.1.4",
-    "@types/luxon": "1.13.0",
+    "@types/luxon": "1.15.0",
     "@wireapp/desktop-updater-spec": "0.1.9",
     "@wireapp/desktop-updater-ui": "0.1.11",
     "axios": "0.18.0",
