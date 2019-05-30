@@ -2702,10 +2702,10 @@
   resolved "https://registry.yarnpkg.com/@wireapp/prettier-config/-/prettier-config-0.2.0.tgz#822f5d1db902550c09c8ef5efda2a36ca263a481"
   integrity sha512-wgFtwop3vWW1MaXwkcbDiwM9NP1JHRWwr09RLTAMQhCs9J1z8ciBnfpty/LxY2LXTRWZt1gEL2a+am/a0xpVPA==
 
-"@wireapp/react-ui-kit@6.4.5":
-  version "6.4.5"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-6.4.5.tgz#15a9ef7e46c5926c6b12338acdc43f41ead1328e"
-  integrity sha512-WPOGi9RFxe0bdepSr0QpSDJSHN72Er0AvRLqb6Oox0jAyExJh2n4lYF5MWoH/+DNmayhqyfxxyztyT/FgHkicg==
+"@wireapp/react-ui-kit@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-6.5.0.tgz#82531ab6fa02105562ee392f871c5d1f6435c2fc"
+  integrity sha512-imLMtrHD6LygJh8oo5PKYdMGqVF2Eu0ljK/ynq9wo9MXC/z/ZtXV2skKsHcxVxJIA2cRlsWHLlr2UM0Gla+SFA==
   dependencies:
     "@emotion/core" "10.0.10"
     "@types/color" "3.0.0"
