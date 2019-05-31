@@ -17,11 +17,10 @@
  *
  */
 
-import * as http from 'http';
 import * as https from 'https';
 import * as tls from 'tls';
 
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponse, Method as AxiosMethod} from 'axios';
 import debug from 'debug';
 
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
@@ -44,34 +43,6 @@ const debugCheckServerIdentity = debug('wire:server:checkserveridentity');
 
 // Certificate pinning
 const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
-
-const httpsMock = {
-  ...https,
-  request: (options: https.RequestOptions, callback?: (res: http.IncomingMessage) => void): http.ClientRequest => {
-    const request = https.request(options, callback);
-
-    // If the socket is inactive after X seconds
-    // and we're still connecting, kill the socket
-    request.once('socket', socket => {
-      socket.setTimeout(TIMEOUT_SOCKET, () => {
-        if (socket.connecting || socket.destroyed) {
-          const error = 'Socket timed out';
-          debugInterceptProtocol(error);
-          // Pass the error to https://github.com/axios/axios/blob/master/lib/adapters/http.js#L242
-          request.emit('error', new Error(error));
-          // Note: Maybe we should also abort the request as well?
-          // Issue is that the promise won't be rejected and since there no way to know if
-          // Axios received the error, we would need our own adapter
-          if (!socket.destroyed) {
-            socket.destroy();
-          }
-        }
-      });
-    });
-
-    return request;
-  },
-};
 
 class AgentManager {
   public static readonly httpsAgentsDefaults: Partial<https.AgentOptions> = {
@@ -140,7 +111,7 @@ class AgentManager {
 
 class Request {
   public static async doRemote<T>(config: AxiosRequestConfig, cookies?: string): Promise<AxiosResponse<T>> {
-    const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
+    const options: AxiosRequestConfig = {
       ...globalAxiosConfig,
       ...config,
       headers: {
@@ -148,13 +119,12 @@ class Request {
         ...(cookies ? {Cookie: cookies} : {}),
       },
       httpsAgent: AgentManager.httpsAgents.remote,
-      transport: httpsMock,
     };
     return axios(options);
   }
 
   public static async doLocal<T>(config: AxiosRequestConfig, accessToken: string): Promise<AxiosResponse<T>> {
-    const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
+    const options: AxiosRequestConfig = {
       ...globalAxiosConfig,
       ...config,
       headers: {
@@ -163,7 +133,6 @@ class Request {
       },
       httpsAgent: AgentManager.httpsAgents.local,
       method: 'GET',
-      transport: httpsMock,
     };
     return axios(options);
   }
@@ -211,7 +180,7 @@ export const InterceptProtocol = async (
       ses.protocol.interceptStreamProtocol(
         INTERCEPTED_PROTOCOL,
         async (request: Electron.InterceptStreamProtocolRequest, callback: Function) => {
-          const {headers, method, url} = request;
+          const {headers, method, url} = request as {headers: Electron.Headers; method: AxiosMethod; url: string};
           const isLocalServer = url.startsWith(currentEnvironmentBaseUrlPlain);
 
           let response: AxiosResponse;
