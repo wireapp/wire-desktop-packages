@@ -21,7 +21,7 @@ import * as http from 'http';
 import * as https from 'https';
 import * as tls from 'tls';
 
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponse, Method as AxiosMethod} from 'axios';
 import debug from 'debug';
 
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
@@ -211,7 +211,7 @@ export const InterceptProtocol = async (
       ses.protocol.interceptStreamProtocol(
         INTERCEPTED_PROTOCOL,
         async (request: Electron.InterceptStreamProtocolRequest, callback: Function) => {
-          const {headers, method, url} = request;
+          const {headers, method, url} = request as {headers: Electron.Headers; method: AxiosMethod; url: string};
           const isLocalServer = url.startsWith(currentEnvironmentBaseUrlPlain);
 
           let response: AxiosResponse;
