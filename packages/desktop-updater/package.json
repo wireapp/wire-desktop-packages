@@ -24,7 +24,7 @@
     "@types/debug": "4.1.4",
     "@types/fs-extra": "7.0.0",
     "@types/libsodium-wrappers": "0.7.5",
-    "@types/mocha": "5.2.6",
+    "@types/mocha": "5.2.7",
     "@types/set-cookie-parser": "0.0.4",
     "babel-plugin-istanbul": "5.1.4",
     "electron": "5.0.2",
