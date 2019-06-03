@@ -2702,17 +2702,17 @@
   resolved "https://registry.yarnpkg.com/@wireapp/prettier-config/-/prettier-config-0.2.0.tgz#822f5d1db902550c09c8ef5efda2a36ca263a481"
   integrity sha512-wgFtwop3vWW1MaXwkcbDiwM9NP1JHRWwr09RLTAMQhCs9J1z8ciBnfpty/LxY2LXTRWZt1gEL2a+am/a0xpVPA==
 
-"@wireapp/react-ui-kit@6.5.0":
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-6.5.0.tgz#82531ab6fa02105562ee392f871c5d1f6435c2fc"
-  integrity sha512-imLMtrHD6LygJh8oo5PKYdMGqVF2Eu0ljK/ynq9wo9MXC/z/ZtXV2skKsHcxVxJIA2cRlsWHLlr2UM0Gla+SFA==
+"@wireapp/react-ui-kit@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-6.5.1.tgz#524fac69bebc7889826d70501c48ca8e2ad339b8"
+  integrity sha512-s+Q92ILraUBaeKR3hMCBeuIAohfaZ8SnUTv9+d1XIeuqueiAWG8GehlEZ8zeCNaXR5DoAYQML9hDQYBZUGu57g==
   dependencies:
     "@emotion/core" "10.0.10"
     "@types/color" "3.0.0"
-    bazinga64 "5.4.3"
+    bazinga64 "5.4.4"
     color "3.1.1"
     emotion-normalize "10.0.0"
-    react-transition-group "4.0.1"
+    react-transition-group "4.1.0"
 
 "@wireapp/tslint-config@1.1.0":
   version "1.1.0"
@@ -3662,10 +3662,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.4.3.tgz#f1b0bbf13a04f87b4fa62ae32c4996de49990d69"
-  integrity sha512-fUZaaZbBT0i4uN+93r/BMs9CyeFoRVmsQ2guffBcjh6oj+UMW1zMddrGUlhFCKgBgdFGODMPGkdF78GvQBV5uQ==
+bazinga64@5.4.4:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.4.4.tgz#6fc689bc7e8d177df75ebe67ab61c069dcec09d6"
+  integrity sha512-glwr6gLFdpeSSx0E3be9X2Mi8cIpQOa07IySIZSdK7qDBZjuerv/YRxw+bCjWsHz2eff0V5/BKri2Wi4QDiBMA==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
@@ -11343,10 +11343,10 @@ react-textarea-autosize@^7.0.4:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-transition-group@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.0.1.tgz#8cb8d58763e259da465385bb83b3b41b3ecba629"
-  integrity sha512-SsLcBYhO4afXJC9esL8XMxi/y0ZvEc7To0TvtrBELqzpjXQHPZOTxvuPh2/4EhYc0uSMfp2SExIxsyJ0pBdNzg==
+react-transition-group@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.1.0.tgz#7b50c0a93a6c127336187252c3c1a70eff3304ce"
+  integrity sha512-/OITbogb3emGN49WaP7468QGSde7er5w6eIHldIDCSQBq/9QTSCzs8OgpgmOnaUXCXzBUcK1zoZ6DqRlM8CJtA==
   dependencies:
     dom-helpers "^3.4.0"
     loose-envify "^1.4.0"
