@@ -119,9 +119,7 @@ class AgentManager {
           const pinningResults = verifyPinning(hostname, <any>certData);
           for (const result of Object.values(pinningResults)) {
             if (result === false) {
-              const error = `Certificate verification failed for "${hostname}":\n${
-                pinningResults.errorMessage
-              }, showing certificate pinning error dialog.`;
+              const error = `Certificate verification failed for "${hostname}":\n${pinningResults.errorMessage}, showing certificate pinning error dialog.`;
 
               debugCheckServerIdentity(error);
               return new Error(error);
