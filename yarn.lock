@@ -7611,10 +7611,10 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-husky@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-2.4.0.tgz#1bac7c44588f6e91f808b72efc82d24a57194f36"
-  integrity sha512-3k1wuZU20gFkphNWMjh2ISCFaqfbaLY7R9FST2Mj9HeRhUK9ydj9qQR8qfXlog3EctVGsyeilcZkIT7uBZDDVA==
+husky@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-2.4.1.tgz#dd00f9646f8693b93f7b3a12ba4be00be0eff7ab"
+  integrity sha512-ZRwMWHr7QruR22dQ5l3rEGXQ7rAQYsJYqaeCd+NyOsIFczAtqaApZQP3P4HwLZjCtFbm3SUNYoKuoBXX3AYYfw==
   dependencies:
     cosmiconfig "^5.2.0"
     execa "^1.0.0"
@@ -10813,12 +10813,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@1.18.2:
-  version "1.18.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
-  integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
-
-prettier@^1.17.0:
+prettier@1.18.2, prettier@^1.17.0:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
   integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
