@@ -81,7 +81,6 @@ const packagerOptions: electronPackager.Options = {
   overwrite: true,
   platform: 'mas',
   protocols: [{name: `${commonConfig.name} Core Protocol`, schemes: [commonConfig.customProtocolName]}],
-  prune: true,
   quiet: false,
 };
 
@@ -109,16 +108,18 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
   .then(() => electronPackager(packagerOptions))
   .then(([buildDir]) => {
     logger.log(`Built app in "${buildDir}".`);
+
     if (macOSConfig.certNameInstaller) {
-      const inputFile = path.join(buildDir, `${commonConfig.name}.app`);
-      const outFile = path.join(packagerOptions.out!, `${commonConfig.name}.pkg`);
+      const appFile = path.join(buildDir, `${commonConfig.name}.app`);
+      const pkgFile = path.join(packagerOptions.out!, `${commonConfig.name}.pkg`);
       return buildPkg({
-        app: inputFile,
-        identity: macOSConfig.certNameInstaller!,
-        pkg: outFile,
+        app: appFile,
+        identity: macOSConfig.certNameInstaller,
+        pkg: pkgFile,
         platform: 'mas',
       });
     }
+
     return;
   })
   .then(outFile => {

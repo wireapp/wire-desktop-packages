@@ -57,7 +57,6 @@ const packagerOptions: electronPackager.Options = {
   overwrite: true,
   platform: 'win32',
   protocols: [{name: `${commonConfig.name} Core Protocol`, schemes: [commonConfig.customProtocolName]}],
-  prune: true,
   quiet: false,
   win32metadata: {
     CompanyName: commonConfig.name,
