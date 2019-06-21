@@ -20,6 +20,7 @@
  */
 
 import commander from 'commander';
+import {flatAsync as buildPkg} from 'electron-osx-sign';
 import electronPackager from 'electron-packager';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -53,7 +54,7 @@ const macOsDefaultConfig: MacOSConfig = {
   notarizeApplePassword: null,
 };
 
-const macOsConfig: MacOSConfig = {
+const macOSConfig: MacOSConfig = {
   ...macOsDefaultConfig,
   bundleId: process.env.MACOS_BUNDLE_ID || macOsDefaultConfig.bundleId,
   certNameApplication: process.env.MACOS_CERTIFICATE_NAME_APPLICATION || macOsDefaultConfig.certNameApplication,
@@ -63,7 +64,7 @@ const macOsConfig: MacOSConfig = {
 };
 
 const packagerOptions: electronPackager.Options = {
-  appBundleId: macOsConfig.bundleId,
+  appBundleId: macOSConfig.bundleId,
   appCategoryType: 'public.app-category.social-networking',
   appCopyright: commonConfig.copyright,
   appVersion: commonConfig.version,
@@ -72,7 +73,7 @@ const packagerOptions: electronPackager.Options = {
   darwinDarkModeSupport: true,
   dir: '.',
   extendInfo: 'resources/macos/custom.plist',
-  helperBundleId: `${macOsConfig.bundleId}.helper`,
+  helperBundleId: `${macOSConfig.bundleId}.helper`,
   icon: 'resources/macos/logo.icns',
   ignore: /electron\/renderer\/src/,
   name: commonConfig.name,
@@ -80,21 +81,22 @@ const packagerOptions: electronPackager.Options = {
   overwrite: true,
   platform: 'mas',
   protocols: [{name: `${commonConfig.name} Core Protocol`, schemes: [commonConfig.customProtocolName]}],
+  prune: true,
   quiet: false,
 };
 
-if (macOsConfig.certNameApplication) {
+if (macOSConfig.certNameApplication) {
   packagerOptions.osxSign = {
     entitlements: 'resources/macos/entitlements/parent.plist',
     'entitlements-inherit': 'resources/macos/entitlements/child.plist',
-    identity: macOsConfig.certNameApplication,
+    identity: macOSConfig.certNameApplication,
   };
 }
 
-if (macOsConfig.notarizeAppleId && macOsConfig.notarizeApplePassword) {
+if (macOSConfig.notarizeAppleId && macOSConfig.notarizeApplePassword) {
   packagerOptions.osxNotarize = {
-    appleId: macOsConfig.notarizeAppleId,
-    appleIdPassword: macOsConfig.notarizeApplePassword,
+    appleId: macOSConfig.notarizeAppleId,
+    appleIdPassword: macOSConfig.notarizeApplePassword,
   };
 }
 
@@ -105,7 +107,25 @@ logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...
 writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronPackager(packagerOptions))
-  .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
+  .then(([buildDir]) => {
+    logger.log(`Built app in "${buildDir}".`);
+    if (macOSConfig.certNameInstaller) {
+      const inputFile = path.join(buildDir, `${commonConfig.name}.app`);
+      const outFile = path.join(packagerOptions.out!, `${commonConfig.name}.pkg`);
+      return buildPkg({
+        app: inputFile,
+        identity: macOSConfig.certNameInstaller!,
+        pkg: outFile,
+        platform: 'mas',
+      });
+    }
+    return;
+  })
+  .then(outFile => {
+    if (outFile) {
+      logger.log(`Built installer in "${packagerOptions.out}".`);
+    }
+  })
   .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
     logger.error(error);
