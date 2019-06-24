@@ -197,7 +197,7 @@ export const InterceptProtocol = async (
   internalHost: URL | undefined,
   accessToken: string | undefined,
   currentEnvironmentBaseUrlPlain: string,
-  currentEnvironmentBaseUrl: URL
+  currentEnvironmentBaseUrl: URL,
 ): Promise<void> => {
   if (!internalHost || !accessToken) {
     debugInterceptProtocol('Internal host or access token is not defined');
@@ -288,8 +288,8 @@ export const InterceptProtocol = async (
             return reject(error);
           }
           resolve();
-        }
-      )
-    )
+        },
+      ),
+    ),
   );
 };

@@ -50,7 +50,7 @@ export type i18nLanguageIdentifier =
 
 export async function getLocales(
   key: i18nLanguageIdentifier,
-  options?: string | i18next.TOptions<i18next.StringMap> | undefined
+  options?: string | i18next.TOptions<i18next.StringMap> | undefined,
 ): Promise<string> {
   if (!i18next.isInitialized) {
     // Wait the app to be ready in order to get the locale from Electron on Windows

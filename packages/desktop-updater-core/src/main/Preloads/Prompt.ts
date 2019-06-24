@@ -31,7 +31,7 @@ import {WindowSizeInterface} from '../WindowManager';
 window.addEventListener(
   'Prompt.TOPIC.SEND_DECISION',
   event => ipcRenderer.send('decision', (event as CustomEvent).detail),
-  {once: true}
+  {once: true},
 );
 
 // Resize event
@@ -41,9 +41,9 @@ window.addEventListener(
     const requestedSize: WindowSizeInterface = (event as CustomEvent).detail;
     ipcRenderer.send('resize', requestedSize);
   },
-  {once: false}
+  {once: false},
 );
 
 ipcRenderer.once('onDataReceived', (sender, detail) =>
-  window.dispatchEvent(new CustomEvent('onDataReceived', {detail}))
+  window.dispatchEvent(new CustomEvent('onDataReceived', {detail})),
 );

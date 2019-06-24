@@ -130,7 +130,7 @@ function verifyPinning(hostname: string, certificate: ElectronCertificate): Pinn
       if (issuerRootPubkeys.length > 0) {
         const x509 = new rs.X509();
         result.verifiedIssuerRootPubkeys = issuerRootPubkeys.some(pubkey =>
-          x509.verifySignature(issuerCertHex, rs.KEYUTIL.getKey(pubkey))
+          x509.verifySignature(issuerCertHex, rs.KEYUTIL.getKey(pubkey)),
         );
         if (!result.verifiedIssuerRootPubkeys) {
           const pubkeysCombined = issuerRootPubkeys.join(', ');

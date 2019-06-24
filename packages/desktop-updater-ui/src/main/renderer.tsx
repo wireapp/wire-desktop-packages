@@ -51,5 +51,5 @@ window.addEventListener(
       render(components[component](props), document.getElementById('root'));
     }
   },
-  {once: true}
+  {once: true},
 );

@@ -131,7 +131,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
     const updateSize = new Long(
       manifest.fileContentLength.low,
       manifest.fileContentLength.high,
-      manifest.fileContentLength.unsigned
+      manifest.fileContentLength.unsigned,
     );
     return (
       <Modal fullscreen onClose={this.hideChangelog}>
