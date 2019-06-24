@@ -45,7 +45,7 @@ describe('CookieManager', () => {
       await CookieManager.set(cookiesRaw, urlRaw, ephemeralSession);
       assert.strictEqual(
         await CookieManager.get(urlRaw, ephemeralSession),
-        'aws-priv=eyJ2IjoxLCJldSI6MSwic3QiOjB9; aws_lang=en; '
+        'aws-priv=eyJ2IjoxLCJldSI6MSwic3QiOjB9; aws_lang=en; ',
       );
     });
 

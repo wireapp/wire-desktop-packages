@@ -66,7 +66,7 @@ export namespace Updater {
           key: Updater.Child.WEB_SERVER_HOST_PRIVATE_KEY,
           secureProtocol: 'TLSv1_2_method',
         },
-        (req: http.IncomingMessage, res: http.ServerResponse) => this.onRequest(req, res)
+        (req: http.IncomingMessage, res: http.ServerResponse) => this.onRequest(req, res),
       );
 
       await this.listen();
@@ -159,7 +159,7 @@ export namespace Updater {
         // Get a random port
         const portToUse: number = Random.integer(
           Updater.Child.WEB_SERVER_LISTEN_PORT_MIN,
-          Updater.Child.WEB_SERVER_LISTEN_PORT_MAX
+          Updater.Child.WEB_SERVER_LISTEN_PORT_MAX,
         )(Random.nodeCrypto);
 
         // Listen on the port

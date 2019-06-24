@@ -53,7 +53,7 @@ export class Verifier {
     manifest: Updater.Manifest,
     webappVersion: string,
     currentWebappEnv: string,
-    currentWrapperVersion: string
+    currentWrapperVersion: string,
   ): Promise<void> {
     const {
       changelog,
@@ -101,7 +101,7 @@ export class Verifier {
     // Ensure wrapper version is valid
     if (!Utils.isValidVersion(minimumClientVersion) || !Utils.isValidVersion(currentWrapperVersion)) {
       throw new VerifyError(
-        `Client versions are not valid. Minimum client version is ${minimumClientVersion} and current wrapper version is ${currentWrapperVersion}`
+        `Client versions are not valid. Minimum client version is ${minimumClientVersion} and current wrapper version is ${currentWrapperVersion}`,
       );
     }
 
@@ -212,7 +212,7 @@ export class Verifier {
 
     if (Array.isArray(trustStore) === false) {
       throw new IntegrityError(
-        `Trust store does not exist for the environment "${currentEnvironment}" (or is not an array).`
+        `Trust store does not exist for the environment "${currentEnvironment}" (or is not an array).`,
       );
     }
     if (trustStore.length < 1) {
@@ -221,8 +221,8 @@ export class Verifier {
     if (trustStore.includes(publicKey.toString('hex')) === false) {
       throw new IntegrityError(
         `Public key is not in the trust store for environment "${currentEnvironment}". Public key: ${publicKey.toString(
-          'hex'
-        )}`
+          'hex',
+        )}`,
       );
     }
   }
@@ -234,11 +234,11 @@ export class Verifier {
         PublicKey: publicKey,
         Signature: signature,
       },
-      Verifier.sandboxOptions
+      Verifier.sandboxOptions,
     );
     if (isEnvelopeSafe === false) {
       throw new IntegrityError(
-        `Signature was invalid. Sig: ${signature.toString('base64')}, Data: ${data.toString('base64')}`
+        `Signature was invalid. Sig: ${signature.toString('base64')}, Data: ${data.toString('base64')}`,
       );
     }
   }
@@ -248,14 +248,14 @@ export class Verifier {
       {
         FileAsBuffer: file,
       },
-      Verifier.sandboxOptions
+      Verifier.sandboxOptions,
     );
 
     if (calculatedChecksum.equals(expectedChecksum) === false) {
       throw new IntegrityError(
         `Checksum verification failed. Checksum: ${calculatedChecksum.toString(
-          'hex'
-        )}, Expected checksum: ${expectedChecksum.toString('hex')}`
+          'hex',
+        )}, Expected checksum: ${expectedChecksum.toString('hex')}`,
       );
     }
   }

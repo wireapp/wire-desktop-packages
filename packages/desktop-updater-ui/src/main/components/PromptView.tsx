@@ -67,7 +67,7 @@ class Prompt extends React.Component<PromptContainerProps & WithTranslation, Sta
       await Prompt.sleep(Prompt.OPACITY_TRANSITION_SPEED);
       EventDispatcher.send(
         Prompt.TOPIC.SEND_RESIZE_BROWSER_WINDOW,
-        this.state.showChangelog ? PromptChangelogModal.CHANGELOG_WINDOW_SIZE : PromptChangelogModal.PROMPT_WINDOW_SIZE
+        this.state.showChangelog ? PromptChangelogModal.CHANGELOG_WINDOW_SIZE : PromptChangelogModal.PROMPT_WINDOW_SIZE,
       );
       // Note: setTimeout is needed since we cannot know when macOS resized the window
       await Prompt.sleep(Prompt.OPACITY_TRANSITION_DELAY);
@@ -119,7 +119,7 @@ class Prompt extends React.Component<PromptContainerProps & WithTranslation, Sta
     if (isWebappTamperedWith) {
       title = t('Wire needs to be reinstalled');
       description = t(
-        'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your data.'
+        'We detected that internal components of Wire are corrupted and needs to be reinstalled. You will not lose your data.',
       );
     } else if (isWebappBlacklisted) {
       title = t('Your version of Wire is outdated');

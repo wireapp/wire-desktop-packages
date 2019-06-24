@@ -27,9 +27,9 @@ const module = <any>{export: 0};
 import {ipcRenderer} from 'electron';
 
 window.addEventListener('WrapperOutdated.TOPIC.ON_BUTTON_CLICK', event =>
-  ipcRenderer.send('onButtonClicked', (event as CustomEvent).detail)
+  ipcRenderer.send('onButtonClicked', (event as CustomEvent).detail),
 );
 
 ipcRenderer.once('onDataReceived', (sender, detail) =>
-  window.dispatchEvent(new CustomEvent('onDataReceived', {detail}))
+  window.dispatchEvent(new CustomEvent('onDataReceived', {detail})),
 );

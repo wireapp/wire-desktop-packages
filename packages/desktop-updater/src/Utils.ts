@@ -45,7 +45,7 @@ export class UploadData {
 
   public static async getData(
     uploadData: Electron.UploadData[] | undefined,
-    ses: Electron.Session
+    ses: Electron.Session,
   ): Promise<Buffer | undefined> {
     const data = uploadData ? uploadData[0] : {blobUUID: undefined, bytes: undefined};
 
