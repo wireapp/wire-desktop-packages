@@ -324,9 +324,6 @@ export class Sandbox {
               /**
                * Mock for fs.createReadStream
                * Returns a new ReadStream object.
-               *
-               * @param path
-               * @param options
                */
               createReadStream(
                 fsPath: fs.PathLike,

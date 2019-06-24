@@ -104,10 +104,6 @@ export class Installer extends WindowManager {
     return (img as any).toDataURL();
   }
 
-  /**
-   *
-   * @param progressEvent Progress interface
-   */
   public onDownloadProgress(progressEvent: ProgressInterface): void {
     if (this.browserWindow && !this.browserWindow.isDestroyed()) {
       this.browserWindow.webContents.send('progress', progressEvent);
