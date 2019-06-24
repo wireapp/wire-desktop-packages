@@ -9,8 +9,8 @@
     "commander": "2.20.0",
     "dotenv": "8.0.0",
     "electron-builder": "20.44.4",
-    "electron-packager": "14.0.0",
     "electron-osx-sign": "0.4.11",
+    "electron-packager": "14.0.0",
     "electron-winstaller": "2.7.0",
     "fs-extra": "8.0.1",
     "logdown": "3.2.8"
@@ -41,5 +41,5 @@
     "test": "yarn test:node",
     "test:node": "exit 0"
   },
-  "version": "0.2.2"
+  "version": "0.3.0"
 }

@@ -2,8 +2,8 @@
   "dependencies": {
     "@types/debug": "4.1.4",
     "@types/luxon": "1.15.1",
-    "@wireapp/desktop-updater-spec": "0.1.9",
-    "@wireapp/desktop-updater-ui": "0.1.11",
+    "@wireapp/desktop-updater-spec": "0.1.10",
+    "@wireapp/desktop-updater-ui": "0.1.12",
     "axios": "0.19.0",
     "compare-versions": "3.5.0",
     "debug": "4.1.1",
@@ -51,5 +51,5 @@
     "test": "yarn test:node",
     "test:node": "node src/test/jasmine.js"
   },
-  "version": "0.2.8"
+  "version": "0.2.9"
 }

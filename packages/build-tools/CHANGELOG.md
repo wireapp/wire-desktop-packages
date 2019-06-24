@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.2.2...@wireapp/build-tools@0.3.0) (2019-06-24)
+
+
+### Features
+
+* **build-tools:** Create macOS installer (WEBAPP-6252) ([#729](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/729)) ([4f4787b](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/4f4787b))
+
+
+
+
+
 ## [0.2.2](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.2.1...@wireapp/build-tools@0.2.2) (2019-05-28)
 
 **Note:** Version bump only for package @wireapp/build-tools
