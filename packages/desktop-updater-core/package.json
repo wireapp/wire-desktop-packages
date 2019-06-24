@@ -48,9 +48,8 @@
   "scripts": {
     "clear": "rimraf dist",
     "dist": "yarn clear && tsc --project tsconfig.json",
-    "test": "yarn dist && yarn test:node",
-    "test:node": "node src/test/jasmine.js",
-    "version": "yarn dist"
+    "test": "yarn test:node",
+    "test:node": "node src/test/jasmine.js"
   },
   "version": "0.2.8"
 }

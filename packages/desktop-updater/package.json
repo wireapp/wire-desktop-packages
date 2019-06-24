@@ -48,9 +48,8 @@
     "coverage": "yarn test:node && nyc report",
     "dist": "yarn clear && tsc",
     "start": "electron demo.js",
-    "test": "yarn dist && yarn test:node",
-    "test:node": "electron-mocha --require ./babel-register.js ./src/**/*.test.main.ts",
-    "version": "yarn dist"
+    "test": "yarn test:node",
+    "test:node": "electron-mocha --require ./babel-register.js ./src/**/*.test.main.ts"
   },
   "version": "0.2.10"
 }
