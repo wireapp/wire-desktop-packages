@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.3.0...@wireapp/build-tools@0.4.0) (2019-06-25)
+
+
+### Features
+
+* **build-tools:** Log objects in config ([e69f9c4](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/e69f9c4))
+* **build-tools:** Log specific options ([d6a727a](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/d6a727a))
+
+
+
+
+
 # [0.3.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.2.2...@wireapp/build-tools@0.3.0) (2019-06-24)
 
 
