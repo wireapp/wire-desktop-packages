@@ -110,24 +110,28 @@ logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...
 writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, version: commonConfig.version})
   .then(() => writeJson(wireJsonResolved, commonConfig))
   .then(() => electronPackager(packagerOptions))
-  .then(async ([buildDir]) => {
+  .then(([buildDir]) => {
     logger.log(`Built app in "${buildDir}".`);
     if (macOSConfig.certNameInstaller) {
       const appFile = path.join(buildDir, `${commonConfig.name}.app`);
       const pkgFile = path.join(packagerOptions.out!, `${commonConfig.name}.pkg`);
 
       if (commander.manualSign) {
-        await manualMacOSSign(buildDir, appFile, pkgFile, commonConfig, macOSConfig);
-      } else {
-        await buildPkg({
-          app: appFile,
-          identity: macOSConfig.certNameInstaller,
-          pkg: pkgFile,
-          platform: 'mas',
-        });
+        return manualMacOSSign(buildDir, appFile, pkgFile, commonConfig, macOSConfig);
       }
-      logger.log(`Built installer in "${packagerOptions.out}".`);
+
+      return buildPkg({
+        app: appFile,
+        identity: macOSConfig.certNameInstaller,
+        pkg: pkgFile,
+        platform: 'mas',
+      });
     }
+
+    return;
+  })
+  .then(() => {
+    logger.log(`Built installer in "${packagerOptions.out}".`);
   })
   .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
