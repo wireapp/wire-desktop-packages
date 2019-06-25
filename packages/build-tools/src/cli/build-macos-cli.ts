@@ -118,7 +118,7 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
       const pkgFile = path.join(packagerOptions.out!, `${commonConfig.name}.pkg`);
 
       if (commander.manualSign) {
-        return manualMacOSSign(buildDir, appFile, pkgFile, commonConfig, macOSConfig);
+        return manualMacOSSign(appFile, pkgFile, commonConfig, macOSConfig, logger);
       }
 
       return buildPkg({

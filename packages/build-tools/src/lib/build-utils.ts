@@ -22,7 +22,6 @@ import * as fs from 'fs-extra';
 import logdown from 'logdown';
 import * as path from 'path';
 import {promisify} from 'util';
-const execAsync = promisify(exec);
 
 import {CommonConfig, MacOSConfig} from './Config';
 
@@ -55,12 +54,22 @@ export async function writeJson<T extends Object>(fileName: string, data: T): Pr
 }
 
 export async function manualMacOSSign(
-  buildDir: string,
   appFile: string,
   pkgFile: string,
   commonConfig: CommonConfig,
   macOSConfig: MacOSConfig,
+  logger: logdown.Logger,
 ): Promise<void> {
+  async function execAsync(command): Promise<void> {
+    const {stderr, stdout} = await promisify(exec)(command);
+    if (stderr) {
+      throw new Error(stderr);
+    }
+    if (stdout) {
+      logger.info(stdout);
+    }
+  }
+
   const inheritEntitlements = 'resources/macos/entitlements/child.plist';
   const mainEntitlements = 'resources/macos/entitlements/parent.plist';
 
