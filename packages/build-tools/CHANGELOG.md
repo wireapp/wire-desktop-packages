@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.4.0...@wireapp/build-tools@0.5.0) (2019-06-25)
+
+
+### Features
+
+* **build-tools:** Manually sign macOS files ([#749](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/749)) ([5973d8a](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/5973d8a))
+
+
+
+
+
 # [0.4.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.3.0...@wireapp/build-tools@0.4.0) (2019-06-25)
 
 
