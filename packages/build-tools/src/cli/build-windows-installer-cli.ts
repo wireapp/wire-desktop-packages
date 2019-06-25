@@ -72,6 +72,7 @@ const wInstallerOptions: electronWinstaller.Options = {
 commonConfig.updateUrl = windowsConfig.updateUrl;
 
 logEntries(commonConfig, 'commonConfig', toolName);
+logEntries(wInstallerOptions, 'wInstallerOptions', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} Installer for Windows ...`);
 

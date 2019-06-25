@@ -112,6 +112,7 @@ const builderConfig: electronBuilder.Configuration = {
 };
 
 logEntries(commonConfig, 'commonConfig', toolName);
+logEntries(builderConfig, 'builderConfig', toolName);
 
 const targets = electronBuilder.Platform.LINUX.createTarget(linuxConfig.targets, electronBuilder.archFromString('x64'));
 

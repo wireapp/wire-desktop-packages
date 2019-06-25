@@ -36,6 +36,7 @@ commander
   .name(toolName)
   .description('Build the Wire wrapper for macOS')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
+  .option('-c, --config <path>', 'Specify a config.json file')
   .parse(process.argv);
 
 checkCommanderOptions(commander, ['wireJson']);
@@ -100,6 +101,7 @@ if (macOSConfig.notarizeAppleId && macOSConfig.notarizeApplePassword) {
 }
 
 logEntries(commonConfig, 'commonConfig', toolName);
+logEntries(macOSConfig, 'macOSConfig', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for macOS ...`);
 
