@@ -112,6 +112,7 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
   .then(() => electronPackager(packagerOptions))
   .then(([buildDir]) => {
     logger.log(`Built app in "${buildDir}".`);
+
     if (macOSConfig.certNameInstaller) {
       const appFile = path.join(buildDir, `${commonConfig.name}.app`);
       const pkgFile = path.join(packagerOptions.out!, `${commonConfig.name}.pkg`);
@@ -131,7 +132,9 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
     return;
   })
   .then(() => {
-    logger.log(`Built installer in "${packagerOptions.out}".`);
+    if (macOSConfig.certNameInstaller) {
+      logger.log(`Built installer in "${packagerOptions.out}".`);
+    }
   })
   .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {

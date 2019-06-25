@@ -36,7 +36,7 @@ export function checkCommanderOptions(commanderInstance: typeof commander, optio
 }
 
 export function getLogger(postfix: string): logdown.Logger {
-  const logger = logdown(`@wireapp/deploy-tools/${postfix}`, {
+  const logger = logdown(`@wireapp/build-tools/${postfix}`, {
     logger: console,
     markdown: false,
   });
