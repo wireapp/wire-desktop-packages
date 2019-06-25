@@ -63,7 +63,7 @@ export async function manualMacOSSign(
   async function execAsync(command): Promise<void> {
     const {stderr, stdout} = await promisify(exec)(command);
     if (stderr) {
-      throw new Error(stderr);
+      logger.error(stderr);
     }
     if (stdout) {
       logger.info(stdout);
