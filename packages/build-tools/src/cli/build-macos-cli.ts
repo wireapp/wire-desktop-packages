@@ -25,7 +25,7 @@ import electronPackager from 'electron-packager';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-import {checkCommanderOptions, getLogger, getToolName, writeJson} from '../lib/build-utils';
+import {checkCommanderOptions, getLogger, getToolName, manualMacOSSign, writeJson} from '../lib/build-utils';
 import {getCommonConfig, logEntries} from '../lib/commonConfig';
 import {MacOSConfig} from '../lib/Config';
 
@@ -36,7 +36,7 @@ commander
   .name(toolName)
   .description('Build the Wire wrapper for macOS')
   .option('-w, --wire-json <path>', 'Specify the wire.json path')
-  .option('-c, --config <path>', 'Specify a config.json file')
+  .option('-m, --manual-sign', 'Manually sign and package the app')
   .parse(process.argv);
 
 checkCommanderOptions(commander, ['wireJson']);
@@ -85,19 +85,21 @@ const packagerOptions: electronPackager.Options = {
   quiet: false,
 };
 
-if (macOSConfig.certNameApplication) {
-  packagerOptions.osxSign = {
-    entitlements: 'resources/macos/entitlements/parent.plist',
-    'entitlements-inherit': 'resources/macos/entitlements/child.plist',
-    identity: macOSConfig.certNameApplication,
-  };
-}
+if (!commander.manualSign) {
+  if (macOSConfig.certNameApplication) {
+    packagerOptions.osxSign = {
+      entitlements: 'resources/macos/entitlements/parent.plist',
+      'entitlements-inherit': 'resources/macos/entitlements/child.plist',
+      identity: macOSConfig.certNameApplication,
+    };
+  }
 
-if (macOSConfig.notarizeAppleId && macOSConfig.notarizeApplePassword) {
-  packagerOptions.osxNotarize = {
-    appleId: macOSConfig.notarizeAppleId,
-    appleIdPassword: macOSConfig.notarizeApplePassword,
-  };
+  if (macOSConfig.notarizeAppleId && macOSConfig.notarizeApplePassword) {
+    packagerOptions.osxNotarize = {
+      appleId: macOSConfig.notarizeAppleId,
+      appleIdPassword: macOSConfig.notarizeApplePassword,
+    };
+  }
 }
 
 logEntries(commonConfig, 'commonConfig', toolName);
@@ -114,6 +116,11 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
     if (macOSConfig.certNameInstaller) {
       const appFile = path.join(buildDir, `${commonConfig.name}.app`);
       const pkgFile = path.join(packagerOptions.out!, `${commonConfig.name}.pkg`);
+
+      if (commander.manualSign) {
+        return manualMacOSSign(appFile, pkgFile, commonConfig, macOSConfig, logger);
+      }
+
       return buildPkg({
         app: appFile,
         identity: macOSConfig.certNameInstaller,
@@ -124,8 +131,8 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
 
     return;
   })
-  .then(outFile => {
-    if (outFile) {
+  .then(() => {
+    if (macOSConfig.certNameInstaller) {
       logger.log(`Built installer in "${packagerOptions.out}".`);
     }
   })
