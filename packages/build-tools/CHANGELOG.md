@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.5.0...@wireapp/build-tools@0.5.1) (2019-06-25)
+
+
+### Bug Fixes
+
+* **build-tools:** Log errors instead of throwing them ([5632045](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/5632045))
+
+
+
+
+
 # [0.5.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.4.0...@wireapp/build-tools@0.5.0) (2019-06-25)
 
 
