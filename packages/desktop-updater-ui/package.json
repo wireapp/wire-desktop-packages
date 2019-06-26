@@ -4,7 +4,7 @@
     "@emotion/styled": "10.0.12",
     "@wireapp/react-ui-kit": "7.1.1",
     "animejs": "3.0.1",
-    "emotion": "10.0.9",
+    "emotion": "10.0.14",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-i18next": "10.11.2",
