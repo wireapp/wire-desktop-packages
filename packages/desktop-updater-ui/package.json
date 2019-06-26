@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@emotion/core": "10.0.14",
-    "@emotion/styled": "10.0.12",
+    "@emotion/styled": "10.0.14",
     "@wireapp/react-ui-kit": "7.1.1",
     "animejs": "3.0.1",
     "emotion": "10.0.14",
