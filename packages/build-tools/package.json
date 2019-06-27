@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/debug": "4.1.4",
     "@types/dotenv": "6.1.1",
-    "@types/electron-packager": "13.0.1",
+    "@types/electron-packager": "14.0.0",
     "@types/electron-winstaller": "2.6.2",
     "@types/fs-extra": "8.0.0",
     "@types/node": "~10",
