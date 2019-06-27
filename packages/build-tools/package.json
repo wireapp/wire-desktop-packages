@@ -21,7 +21,7 @@
     "@types/dotenv": "6.1.1",
     "@types/electron-packager": "13.0.1",
     "@types/electron-winstaller": "2.6.2",
-    "@types/fs-extra": "7.0.0",
+    "@types/fs-extra": "8.0.0",
     "@types/node": "~10",
     "rimraf": "2.6.3",
     "typescript": "3.5.2"
