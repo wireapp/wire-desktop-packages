@@ -22,6 +22,7 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
+import {inspect} from 'util';
 import {getLogger} from './build-utils';
 import {CommonConfig} from './Config';
 
@@ -82,16 +83,7 @@ const getCommonConfig = (options: CommonConfigOptions) => {
 
 const logEntries = <T extends Object>(config: T, name: string, callee: string): void => {
   const logger = getLogger(callee);
-
-  Object.entries(config).forEach(([key, value]) => {
-    if (value instanceof Array) {
-      value = value.join(',');
-    } else if (value instanceof Object) {
-      logEntries(value, `${name}.${key}`, callee);
-    } else {
-      logger.info(`${name}.${key} set to "${value}". `);
-    }
-  });
+  logger.info(name, inspect(config, {depth: Infinity}));
 };
 
 export {getCommonConfig, logEntries};
