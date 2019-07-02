@@ -1,6 +1,6 @@
 /*
  * Wire
- * Copyright (C) 2018 Wire Swiss GmbH
+ * Copyright (C) 2019 Wire Swiss GmbH
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,25 @@
  *
  */
 
-const Jasmine = require('jasmine');
-const JasmineConsoleReporter = require('jasmine-console-reporter');
+import * as fs from 'fs-extra';
+import * as path from 'path';
 
-const reporter = new JasmineConsoleReporter({
-  activity: 'dots', // boolean or string ("dots"|"star"|"flip"|"bouncingBar"|...)
-  beep: true,
-  cleanStack: 1, // (0|false)|(1|true)|2|3
-  colors: 2, // (0|false)|(1|true)|2
-  emoji: true,
-  listStyle: 'indent', // "flat"|"indent"
-  verbosity: 3, // (0|false)|1|2|(3|true)|4
+declare global {
+  namespace NodeJS {
+    interface Global {
+      __coverage__: {};
+    }
+  }
+}
+
+const writeCoverageReport = (coverage: Object) => {
+  const outputFile = path.resolve(process.cwd(), `.nyc_output/coverage.${process['type']}.json`);
+  fs.outputJsonSync(outputFile, coverage);
+};
+
+after(() => {
+  const coverageInfo = global.__coverage__;
+  if (coverageInfo) {
+    writeCoverageReport(coverageInfo);
+  }
 });
-const jasmine = new Jasmine();
-
-jasmine.loadConfigFile('src/test/jasmine.json');
-jasmine.addReporter(reporter);
-jasmine.execute();

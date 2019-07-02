@@ -20,7 +20,7 @@
 import {ipcMain} from 'electron';
 import * as os from 'os';
 
-import {Config} from './Config';
+import {ConfigWrapperOutdated} from './Config';
 import {Utils} from './Utils';
 
 import {WindowManager} from './WindowManager';
@@ -37,7 +37,7 @@ export class WrapperOutdated extends WindowManager {
   private static readonly ENVIRONMENT: string = os.type();
   private static readonly IS_MACOS: boolean = WrapperOutdated.ENVIRONMENT === 'Darwin';
 
-  public get BROWSER_WINDOW_OPTIONS() {
+  public get BROWSER_WINDOW_OPTIONS(): () => Promise<Partial<Electron.BrowserWindowConstructorOptions>> {
     return async () => ({
       height: 203,
       title: await getLocales('wrapper-outdated:title'),
@@ -65,9 +65,9 @@ export class WrapperOutdated extends WindowManager {
     const {showDetails} = options;
     if (showDetails === true) {
       if (WrapperOutdated.IS_MACOS) {
-        await Utils.openExternalLink(Config.WrapperOutdated.WRAPPER_UPDATE_LINK_MACOS, false);
+        await Utils.openExternalLink(ConfigWrapperOutdated.WRAPPER_UPDATE_LINK_MACOS, false);
       } else {
-        await Utils.openExternalLink(Config.WrapperOutdated.WRAPPER_UPDATE_LINK_OTHERS);
+        await Utils.openExternalLink(ConfigWrapperOutdated.WRAPPER_UPDATE_LINK_OTHERS);
       }
     }
 

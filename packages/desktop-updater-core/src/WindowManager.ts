@@ -37,6 +37,7 @@ export abstract class WindowManager {
   constructor(protected mainWindow?: Electron.BrowserWindow) {}
 
   protected browserWindow?: Electron.BrowserWindow;
+  public abstract get BROWSER_WINDOW_OPTIONS(): () => Promise<Partial<Electron.BrowserWindowConstructorOptions>>;
 
   private readonly attachedMode = typeof this.mainWindow !== 'undefined';
   private readonly IS_MACOS = process.platform === 'darwin';
@@ -81,8 +82,6 @@ export abstract class WindowManager {
       webviewTag: false,
     },
   };
-
-  abstract BROWSER_WINDOW_OPTIONS: () => Promise<Electron.BrowserWindowConstructorOptions>;
 
   protected whenClosed(): void {
     this.debug('whenClosed called');

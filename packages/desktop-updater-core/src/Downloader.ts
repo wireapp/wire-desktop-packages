@@ -26,7 +26,8 @@ import {throttle} from 'throttle-debounce';
 
 import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
-import {Config} from './Config';
+import {ConfigDownloader, ConfigUpdater} from './Config';
+
 import {ProtobufError} from './Protobuf';
 import {Sandbox} from './Sandbox';
 import {Updater} from './Updater';
@@ -65,13 +66,13 @@ export class DownloadError extends BaseError {}
  */
 
 export class Downloader {
-  private static readonly CIPHERS: string = Config.Downloader.CIPHERS;
-  private static readonly MANIFEST_FILE: string = Config.Updater.MANIFEST_FILE;
-  private static readonly MAX_CONTENT_LENGTH: number = Config.Downloader.MAX_CONTENT_LENGTH;
-  private static readonly PINNING_CERTIFICATE: string = Config.Downloader.PINNING_CERTIFICATE;
-  private static readonly TIMEOUT: number = Config.Downloader.TIMEOUT;
-  private static readonly UPDATE_SPEC = Config.Downloader.UPDATE_SPEC;
-  private static readonly USER_AGENT: string = Config.Downloader.USER_AGENT;
+  private static readonly CIPHERS: string = ConfigDownloader.CIPHERS;
+  private static readonly MANIFEST_FILE: string = ConfigUpdater.MANIFEST_FILE;
+  private static readonly MAX_CONTENT_LENGTH: number = ConfigDownloader.MAX_CONTENT_LENGTH;
+  private static readonly PINNING_CERTIFICATE: string = ConfigDownloader.PINNING_CERTIFICATE;
+  private static readonly TIMEOUT: number = ConfigDownloader.TIMEOUT;
+  private static readonly UPDATE_SPEC = ConfigDownloader.UPDATE_SPEC;
+  private static readonly USER_AGENT: string = ConfigDownloader.USER_AGENT;
 
   private static readonly debug = debug('wire:updater:downloader');
 
@@ -203,6 +204,7 @@ export class Downloader {
         result[currentKey] = entry instanceof Uint8Array ? Buffer.from(entry) : entry;
         return result;
       },
+      // tslint:disable-next-line:no-object-literal-type-assertion
       {} as U
     );
   }

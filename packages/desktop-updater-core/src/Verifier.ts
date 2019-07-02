@@ -21,7 +21,8 @@ import * as Long from 'long';
 import {DateTime} from 'luxon';
 import {NodeVMOptions} from 'vm2';
 
-import {Config} from './Config';
+import {ConfigUpdater, ConfigVerifier} from './Config';
+
 import {Environment} from './Environment';
 import {Sandbox} from './Sandbox';
 import {Updater} from './Updater';
@@ -45,7 +46,7 @@ export class Verifier {
     },
   };
 
-  private static readonly MAX_EXPIRES_TIME: number = Config.Verifier.MAX_EXPIRES_TIME;
+  private static readonly MAX_EXPIRES_TIME: number = ConfigVerifier.MAX_EXPIRES_TIME;
 
   public static readonly OUTDATED = {WRAPPER: '0', WEBAPP: '1'};
 
@@ -66,7 +67,7 @@ export class Verifier {
     }: Updater.Manifest = manifest;
 
     // Check if specVersion is equal to ours
-    if (specVersion !== Config.Updater.SPEC_VERSION) {
+    if (specVersion !== ConfigUpdater.SPEC_VERSION) {
       throw new VerifyError('Current specs number is not supported');
     }
 
@@ -87,7 +88,7 @@ export class Verifier {
     }
 
     // Ensure maximal distance in time between release and expiration time is not longer than the limitation
-    if (<number>releaseDate.diff(expiresOn, 'milliseconds').toObject().milliseconds > Verifier.MAX_EXPIRES_TIME) {
+    if (<number>expiresOn.diff(releaseDate, 'milliseconds').toObject().milliseconds > Verifier.MAX_EXPIRES_TIME) {
       throw new VerifyError('This update exceed the enforced validity limitation');
     }
 
@@ -106,7 +107,7 @@ export class Verifier {
     }
 
     // PART 3: Check webapp version
-    const defaultOutdatedWebappVersion: DateTime = Utils.parseWebappVersion(Config.Updater.FALLBACK_WEB_VERSION)
+    const defaultOutdatedWebappVersion: DateTime = Utils.parseWebappVersion(ConfigUpdater.FALLBACK_WEB_VERSION)
       .buildDate;
     const currentWebappVersion: DateTime = Utils.parseWebappVersion(webappVersion).buildDate;
 
@@ -149,16 +150,14 @@ export class Verifier {
     // PART 3: Check file-related data
 
     // Check if checksum is present and is a buffer
-    if (Buffer.isBuffer(fileChecksum) === false) {
-      throw new VerifyError('File checksum is not a buffer');
+    if (!Buffer.isBuffer(fileChecksum) || fileChecksum.length !== ConfigVerifier.BLAKE2B_HASH_BYTES) {
+      throw new VerifyError('Could not convert the checksum to a hexdecimal value');
     }
-
-    // Check if checksum is present and is a buffer
-    try {
-      fileChecksum.toString('hex');
-      fileChecksumCompressed.toString('hex');
-    } catch (error) {
-      throw new VerifyError('Could not convert the checksum to a hexdecimal value', error);
+    if (
+      !Buffer.isBuffer(fileChecksumCompressed) ||
+      fileChecksumCompressed.length !== ConfigVerifier.BLAKE2B_HASH_BYTES
+    ) {
+      throw new VerifyError('Could not convert the checksum (compressed) to a hexdecimal value');
     }
 
     // Check if content length is not more than 100MB (or the maximum allowed settings)

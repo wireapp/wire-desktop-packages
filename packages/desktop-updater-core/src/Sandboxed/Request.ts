@@ -75,7 +75,7 @@ class Request {
     });
   }
 
-  private static calculateProgress(bufferLength: number) {
+  private static calculateProgress(bufferLength: number): void {
     this.progress.transferred += bufferLength;
     this.progress.elapsed = (Date.now() - this.progress.startedAt) / 1000;
 

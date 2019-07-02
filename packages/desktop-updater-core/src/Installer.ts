@@ -17,9 +17,10 @@
  *
  */
 
-import * as debug from 'debug';
+import debug from 'debug';
 
-import {Config} from './Config';
+import {ConfigUpdater} from './Config';
+
 import {getLocales} from './Localization';
 import {Utils} from './Utils';
 import {WindowManager} from './WindowManager';
@@ -32,7 +33,7 @@ export class InstallerError extends BaseError {}
 export class Installer extends WindowManager {
   private static readonly debug = debug(`wire:updater:installer`);
 
-  public get BROWSER_WINDOW_OPTIONS() {
+  public get BROWSER_WINDOW_OPTIONS(): () => Promise<Partial<Electron.BrowserWindowConstructorOptions>> {
     return async () => ({
       closable: false,
       height: 153,
@@ -117,7 +118,7 @@ export class Installer extends WindowManager {
   public static async save(fileName: string, fileRaw: Buffer, envelopeRaw: Buffer): Promise<void> {
     this.debug('Saving bundle and manifest...');
     const bundle = Utils.writeFileAsBuffer(Utils.resolvePath(fileName), fileRaw);
-    const manifest = Utils.writeFileAsBuffer(Utils.resolvePath(Config.Updater.MANIFEST_FILE), envelopeRaw);
+    const manifest = Utils.writeFileAsBuffer(Utils.resolvePath(ConfigUpdater.MANIFEST_FILE), envelopeRaw);
     await bundle;
     await manifest;
   }

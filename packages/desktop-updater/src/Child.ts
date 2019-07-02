@@ -196,7 +196,6 @@ export default async callback => {
       },
     });
   } catch (error) {
-    // tslint:disable-next-line:no-console
     log(error);
     return callback(false, error);
   }

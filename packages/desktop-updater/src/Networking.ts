@@ -27,7 +27,7 @@ import debug from 'debug';
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
 import {session} from 'electron';
 import {CookieManager} from './CookieManager';
-import {Config} from './index';
+import {ConfigServer} from './index';
 import {UploadData} from './Utils';
 
 export const INTERCEPTED_PROTOCOL = 'https';
@@ -43,7 +43,7 @@ const globalAxiosConfig: AxiosRequestConfig = {
 const debugCheckServerIdentity = debug('wire:server:checkserveridentity');
 
 // Certificate pinning
-const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
+export const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
 
 const httpsMock = {
   ...https,
@@ -87,14 +87,14 @@ class AgentManager {
   } = {
     local: new https.Agent({
       ...AgentManager.httpsAgentsDefaults,
-      ca: Config.Server.WEB_SERVER_HOST_CERTIFICATE,
+      ca: ConfigServer.WEB_SERVER_HOST_CERTIFICATE,
       checkServerIdentity: (hostname: string, cert: tls.PeerCertificate) => {
-        if (hostname !== Config.Server.WEB_SERVER_HOST_LOCAL) {
+        if (hostname !== ConfigServer.WEB_SERVER_HOST_LOCAL) {
           return new Error('This agent can only be used for the local web server');
         }
         return undefined;
       },
-      ciphers: Config.Server.WEB_SERVER_CIPHERS,
+      ciphers: ConfigServer.WEB_SERVER_CIPHERS,
     }),
     remote: new https.Agent({
       ...AgentManager.httpsAgentsDefaults,
@@ -138,7 +138,7 @@ class AgentManager {
   };
 }
 
-class Request {
+export class Request {
   public static async doRemote<T>(config: AxiosRequestConfig, cookies?: string): Promise<AxiosResponse<T>> {
     const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
       ...globalAxiosConfig,
@@ -159,7 +159,7 @@ class Request {
       ...config,
       headers: {
         ...config.headers,
-        Authorization: `${Config.Server.WEB_SERVER_TOKEN_NAME} ${accessToken}`,
+        Authorization: `${ConfigServer.WEB_SERVER_TOKEN_NAME} ${accessToken}`,
       },
       httpsAgent: AgentManager.httpsAgents.local,
       method: 'GET',

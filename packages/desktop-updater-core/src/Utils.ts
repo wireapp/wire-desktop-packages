@@ -17,15 +17,16 @@
  *
  */
 
-import * as compareVersions from 'compare-versions';
-import * as debug from 'debug';
+import debug from 'debug';
 import {Notification, app, shell} from 'electron';
-// fsExtra will use the patched fs from Electron
+// `fsExtra` will use the patched `fs` from Electron
 import * as fs from 'fs-extra';
 import {DateTime} from 'luxon';
 import * as path from 'path';
-import {Config} from './Config';
+import {ConfigUpdater} from './Config';
 import {Environment} from './Environment';
+
+const compareVersions = require('compare-versions');
 
 export interface WebappVersionInterface {
   buildDate: DateTime;
@@ -123,9 +124,9 @@ export class Utils {
     return compareVersions(leftVersion, rightVersion);
   }
 
-  public static getFilenameFromChecksum(checksum: Buffer) {
-    return `${checksum.toString('hex').substr(0, Config.Updater.FILENAME_CHECKSUM_LENGTH)}.${
-      Config.Updater.DEFAULT_FILE_EXTENSION
+  public static getFilenameFromChecksum(checksum: Buffer): string {
+    return `${checksum.toString('hex').substr(0, ConfigUpdater.FILENAME_CHECKSUM_LENGTH)}.${
+      ConfigUpdater.DEFAULT_FILE_EXTENSION
     }`;
   }
 
@@ -171,7 +172,7 @@ export class Utils {
       (await this.readDirectory(from)).map(async filename => {
         this.debug('Filename is: %s', filename);
         const shouldCopy =
-          filename.endsWith(`.${Config.Updater.DEFAULT_FILE_EXTENSION}`) || filename === Config.Updater.MANIFEST_FILE;
+          filename.endsWith(`.${ConfigUpdater.DEFAULT_FILE_EXTENSION}`) || filename === ConfigUpdater.MANIFEST_FILE;
         if (shouldCopy) {
           await this.copyFile(path.resolve(from, filename), path.resolve(to, filename));
         } else {
@@ -187,7 +188,7 @@ export class Utils {
       // If the app is packaged, use /Applications/Wire.app/Contents/Resources/,
       // otherwise use ./wire-desktop/.bundle/internal, both are one directory up
       '../',
-      Config.Updater.LOCAL_BUNDLE_FOLDER_NAME,
+      ConfigUpdater.LOCAL_BUNDLE_FOLDER_NAME,
       `${Environment.currentEnvironment.toLowerCase()}/`
     );
     this.debug('LCB path is %s', localPath);
@@ -198,7 +199,7 @@ export class Utils {
   }
 
   public static resolvePath(filename: string = ''): string {
-    return path.join(Utils.USER_DATA_FOLDER, Config.Updater.UPDATER_DATA_FOLDER_NAME, filename);
+    return path.join(Utils.USER_DATA_FOLDER, ConfigUpdater.UPDATER_DATA_FOLDER_NAME, filename);
   }
 
   public static resolveRootPath(): string {
@@ -208,7 +209,7 @@ export class Utils {
   public static async openExternalLink(url: string, secure: boolean = true): Promise<void> {
     if (url.startsWith('https://') === false && secure === true) {
       this.debug('Denied to open external URL: %s', url);
-      return;
+      throw Error('Denied to open external URL');
     }
 
     this.debug('Opening external URL: %s', url);

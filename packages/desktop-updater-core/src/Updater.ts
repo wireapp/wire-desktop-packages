@@ -29,7 +29,8 @@ import {
 import debug from 'debug';
 
 import {app, ipcMain} from 'electron';
-import {Config} from './Config';
+import {ConfigUpdater} from './Config';
+
 import {DiskPersistence as Persist} from './DiskPersistence';
 import {Downloader} from './Downloader';
 import {Environment} from './Environment';
@@ -57,10 +58,10 @@ export namespace Updater {
   }
 
   export class Main {
-    private static readonly PERIODIC_INTERVAL: number = Config.Updater.PERIODIC_INTERVAL;
-    private static readonly CONNECTIVITY_INTERNAL: number = Config.Updater.CONNECTIVITY_INTERNAL;
-    private static readonly BROADCAST_RENDERER_TIMEOUT: number = Config.Updater.BROADCAST_RENDERER_TIMEOUT;
-    private static readonly FALLBACK_WEB_VERSION: string = Config.Updater.FALLBACK_WEB_VERSION;
+    private static readonly PERIODIC_INTERVAL: number = ConfigUpdater.PERIODIC_INTERVAL;
+    private static readonly CONNECTIVITY_INTERNAL: number = ConfigUpdater.CONNECTIVITY_INTERNAL;
+    private static readonly BROADCAST_RENDERER_TIMEOUT: number = ConfigUpdater.BROADCAST_RENDERER_TIMEOUT;
+    private static readonly FALLBACK_WEB_VERSION: string = ConfigUpdater.FALLBACK_WEB_VERSION;
 
     public static reload?: (documentRoot: string) => Promise<void>;
     public static isInternetAvailable?: (url: string) => Promise<boolean>;
@@ -69,7 +70,7 @@ export namespace Updater {
     private static _continueUpdate?: Function = undefined;
 
     private static readonly debug = debug('wire:updater');
-    private static readonly persist = new Persist(Utils.resolvePath(Config.Updater.SETTINGS_FILE));
+    private static readonly persist = new Persist(Utils.resolvePath(ConfigUpdater.SETTINGS_FILE));
 
     private static PERIODIC_TIMER?: NodeJS.Timer;
     private static isBusy: boolean = false;
@@ -429,7 +430,7 @@ export namespace Updater {
       trustStore: string[]
     ): Promise<Partial<Updater.Manifest>> {
       // Check if manifest file exist locally
-      const manifestFile = Utils.resolvePath(Config.Updater.MANIFEST_FILE);
+      const manifestFile = Utils.resolvePath(ConfigUpdater.MANIFEST_FILE);
       if ((await fs.pathExists(manifestFile)) === false) {
         throw new ManifestNotFoundError('Could not find manifest file');
       }

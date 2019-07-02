@@ -17,7 +17,6 @@
  *
  */
 
-export {Config} from './Config';
 export {Downloader} from './Downloader';
 export {Environment} from './Environment';
 export {Installer} from './Installer';

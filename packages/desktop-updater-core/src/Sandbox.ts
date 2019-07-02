@@ -19,7 +19,7 @@
 
 import * as path from 'path';
 
-import * as debug from 'debug';
+import debug from 'debug';
 import {Utils} from './Utils';
 
 import {NodeVM as VirtualMachine, NodeVMOptions} from 'vm2';

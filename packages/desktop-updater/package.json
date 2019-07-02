@@ -2,6 +2,7 @@
   "dependencies": {
     "@wireapp/certificate-check": "0.1.6",
     "@wireapp/desktop-updater-core": "0.2.7",
+    "@wireapp/tslint-config": "1.2.0",
     "axios": "0.18.0",
     "debug": "4.1.1",
     "finalhandler": "1.1.1",
@@ -9,6 +10,7 @@
     "jsrsasign": "8.0.12",
     "libsodium-wrappers": "0.7.4",
     "mime-types": "2.1.24",
+    "nock": "10.0.6",
     "random-js": "2.0.0",
     "serve-static": "1.13.2",
     "set-cookie-parser": "2.3.5",

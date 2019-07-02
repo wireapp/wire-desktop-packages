@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "outDir": "dist/commonjs",
-    "rootDir": "src/main",
-    "types": ["jasmine", "libsodium-wrappers", "long", "debug"]
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["fs-extra", "debug", "libsodium-wrappers", "long", "mocha"]
   },
-  "exclude": ["dist/commonjs", "node_modules", "src/test"],
+  "exclude": ["dist/commonjs", "node_modules"],
   "extends": "../../tsconfig.json"
 }

@@ -18,13 +18,14 @@
  */
 
 import * as fs from 'fs-extra';
-import * as sodium from 'libsodium-wrappers';
 import * as path from 'path';
 import {URL} from 'url';
 
 import debug from 'debug';
 import {BrowserWindow, app, session, webContents} from 'electron';
 import {NodeVM as VirtualMachine} from 'vm2';
+
+const sodium = require('libsodium-wrappers');
 
 import {
   Environment,
@@ -39,7 +40,7 @@ import {ServerWebConfigInterface} from '@wireapp/desktop-updater-spec';
 import {Updater as UpdaterChild} from './Child';
 import {InterceptProtocol as proxifyProtocol, isInternetAvailable} from './Networking';
 
-import {Config, Utils} from './index';
+import {ConfigServer, Utils} from './index';
 
 import {BaseError} from 'make-error-cause';
 export class NotExistingError extends BaseError {}
@@ -58,7 +59,7 @@ export interface ServerConstructorInterface {
 export class Server {
   private static readonly debug = debug('wire:server');
 
-  private static readonly WEB_SERVER_TOKEN_NAME = Config.Server.WEB_SERVER_TOKEN_NAME;
+  private static readonly WEB_SERVER_TOKEN_NAME = ConfigServer.WEB_SERVER_TOKEN_NAME;
 
   private accessToken: string | undefined;
   private browserWindow: Electron.BrowserWindow | undefined;
@@ -245,16 +246,16 @@ export class Server {
     return this.browserWindow;
   }
 
-  private async createWebInstance(documentRoot: string): Promise<UpdaterChild.Child> {
+  public async createWebInstance(documentRoot: string): Promise<UpdaterChild.Child> {
     // Generate the credentials that will be used to validate HTTPS requests
     this.accessToken = await this.generateToken();
     if (typeof this.accessToken === 'undefined') {
       throw new Error('Access token not available');
     }
     Server.debug('Running VM...');
-    const sandbox = new Sandbox(path.resolve(__dirname, 'Child.js'), {
+    const sandbox = new Sandbox(path.resolve(__dirname, '../dist/Child.js'), {
       AccessToken: this.accessToken,
-      Config: Config.Server,
+      Config: ConfigServer,
       DocumentRoot: documentRoot,
       WebConfig: this.webConfig,
     });
@@ -289,10 +290,6 @@ export class Server {
   private async generateToken(): Promise<string> {
     await sodium.ready;
     return sodium.randombytes_buf(128, 'base64');
-  }
-
-  public static isPathAllowed(providedPath: fs.PathLike, allowedPath: string) {
-    return path.normalize(providedPath.toString()).startsWith(allowedPath);
   }
 }
 
@@ -375,7 +372,6 @@ export class Sandbox {
               },
             },
           },
-          // ToDo: Until folder where the node_modules is known, disable root folder restrictions
           //root: path.resolve(__dirname, './'),
         },
       });

@@ -17,8 +17,19 @@
  *
  */
 
-export {ConfigServer} from './Config';
-export {Environment} from '@wireapp/desktop-updater-core';
-export {Server} from './Server';
-export {UpdaterBridgeIPC} from './WrapperBridge';
-export {Utils} from './Utils';
+import * as assert from 'assert';
+import {Environment} from './Environment';
+
+describe('Environment', () => {
+  it('returns a saved environment', async () => {
+    const oldEnvironment = await Environment.get();
+    const newEnvironment = 'PIKAPIKA';
+    await Environment.set(newEnvironment);
+    assert.strictEqual(newEnvironment, await Environment.get());
+    await Environment.set(oldEnvironment);
+  });
+
+  it('convert url to hostname', () => {
+    assert.strictEqual('https://wire.com', Environment.convertUrlToHostname('https://wire.com/home'));
+  });
+});

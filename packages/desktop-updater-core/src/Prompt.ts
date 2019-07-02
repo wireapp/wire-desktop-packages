@@ -19,7 +19,8 @@
 
 import {ipcMain} from 'electron';
 
-import {Config} from './Config';
+import {ConfigPrompt, ConfigUpdater} from './Config';
+
 import {getLocales} from './Localization';
 import {Updater} from './Updater';
 import {WindowManager} from './WindowManager';
@@ -28,9 +29,9 @@ import {BaseError} from 'make-error-cause';
 export class PromptError extends BaseError {}
 
 export class Prompt extends WindowManager {
-  private static readonly IPC_DECISION_NAME: string = Config.Prompt.IPC_DECISION_NAME;
+  private static readonly IPC_DECISION_NAME: string = ConfigPrompt.IPC_DECISION_NAME;
 
-  public get BROWSER_WINDOW_OPTIONS() {
+  public get BROWSER_WINDOW_OPTIONS(): () => Promise<Partial<Electron.BrowserWindowConstructorOptions>> {
     return async () => ({
       height: 250,
       title: await getLocales('prompt:title'),
@@ -97,7 +98,7 @@ export class Prompt extends WindowManager {
   public didFinishLoad(): void {
     super.didFinishLoad();
     this.signalRenderer({
-      changelogUrl: Config.Updater.CHANGELOG_URL,
+      changelogUrl: ConfigUpdater.CHANGELOG_URL,
       envelope: {
         publicKey: Buffer.from(this.Envelope.publicKey).toString('hex'),
       },
