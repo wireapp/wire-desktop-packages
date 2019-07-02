@@ -46,7 +46,7 @@ export class Prompt extends WindowManager {
     protected currentWebappVersion: string,
     private readonly isWebappBlacklisted: boolean,
     private readonly isWebappTamperedWith: boolean,
-    private readonly isUpdatesInstallAutomatically: boolean
+    private readonly isUpdatesInstallAutomatically: boolean,
   ) {
     super(mainWindow);
   }
@@ -68,7 +68,7 @@ export class Prompt extends WindowManager {
           if (this.browserWindow) {
             this.browserWindow.close();
           }
-        })
+        }),
       );
 
       // Close window via escape if webapp is not blacklisted

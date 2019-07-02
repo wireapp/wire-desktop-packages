@@ -21,7 +21,7 @@ import * as http from 'http';
 import * as https from 'https';
 import * as tls from 'tls';
 
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponse, Method as AxiosMethod} from 'axios';
 import debug from 'debug';
 
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
@@ -43,7 +43,8 @@ const globalAxiosConfig: AxiosRequestConfig = {
 const debugCheckServerIdentity = debug('wire:server:checkserveridentity');
 
 // Certificate pinning
-export const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
+export const buildCert = cert =>
+  `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
 
 const httpsMock = {
   ...https,
@@ -119,9 +120,7 @@ class AgentManager {
           const pinningResults = verifyPinning(hostname, <any>certData);
           for (const result of Object.values(pinningResults)) {
             if (result === false) {
-              const error = `Certificate verification failed for "${hostname}":\n${
-                pinningResults.errorMessage
-              }, showing certificate pinning error dialog.`;
+              const error = `Certificate verification failed for "${hostname}":\n${pinningResults.errorMessage}, showing certificate pinning error dialog.`;
 
               debugCheckServerIdentity(error);
               return new Error(error);
@@ -199,7 +198,7 @@ export const InterceptProtocol = async (
   internalHost: URL | undefined,
   accessToken: string | undefined,
   currentEnvironmentBaseUrlPlain: string,
-  currentEnvironmentBaseUrl: URL
+  currentEnvironmentBaseUrl: URL,
 ): Promise<void> => {
   if (!internalHost || !accessToken) {
     debugInterceptProtocol('Internal host or access token is not defined');
@@ -211,7 +210,7 @@ export const InterceptProtocol = async (
       ses.protocol.interceptStreamProtocol(
         INTERCEPTED_PROTOCOL,
         async (request: Electron.InterceptStreamProtocolRequest, callback: Function) => {
-          const {headers, method, url} = request;
+          const {headers, method, url} = request as {headers: Electron.Headers; method: AxiosMethod; url: string};
           const isLocalServer = url.startsWith(currentEnvironmentBaseUrlPlain);
 
           let response: AxiosResponse;
@@ -290,8 +289,8 @@ export const InterceptProtocol = async (
             return reject(error);
           }
           resolve();
-        }
-      )
-    )
+        },
+      ),
+    ),
   );
 };

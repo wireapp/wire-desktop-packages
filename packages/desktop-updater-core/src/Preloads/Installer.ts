@@ -28,9 +28,9 @@ import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {ipcRenderer} from 'electron';
 
 ipcRenderer.on('progress', (event, detail: ProgressInterface) =>
-  window.dispatchEvent(new CustomEvent('Installer.TOPIC.ON_PROGRESS', {detail}))
+  window.dispatchEvent(new CustomEvent('Installer.TOPIC.ON_PROGRESS', {detail})),
 );
 
 ipcRenderer.once('onDataReceived', (sender, detail) =>
-  window.dispatchEvent(new CustomEvent('onDataReceived', {detail}))
+  window.dispatchEvent(new CustomEvent('onDataReceived', {detail})),
 );

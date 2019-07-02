@@ -76,8 +76,8 @@ export class ErrorDispatcher {
   private static async dialogCallback(
     resolve: Function,
     response: number,
-    checkboxChecked: boolean
-  ): Promise<() => void> {
+    checkboxChecked: boolean,
+  ): Promise<{tryAgain: boolean}> {
     // Destroy the prompt / installer window if present
     if (this.promptWindow) {
       this.promptWindow.destroy();
@@ -129,7 +129,7 @@ export class ErrorDispatcher {
           // ToDo: Until folder where the node_modules is known, disable root folder restrictions
           //root: path.resolve(__dirname,  '../'),
         },
-      }
+      },
     );
   }
 
@@ -223,7 +223,7 @@ export class ErrorDispatcher {
       this.debug('Showing errorDispatcher prompt');
       try {
         dialog.showMessageBox(options, async (response: number, checkboxChecked: boolean) =>
-          this.dialogCallback(resolve, response, checkboxChecked)
+          this.dialogCallback(resolve, response, checkboxChecked),
         );
       } catch (error) {
         this.debug(error);

@@ -90,7 +90,7 @@ export namespace Updater {
       firstLaunch: boolean = false,
       // Is there an environment mismatch between local settings and local webapp?
       // If yes it's likely because we just changed our environment
-      localEnvironmentMismatch: boolean = false
+      localEnvironmentMismatch: boolean = false,
     ): Promise<Updater.Manifest | undefined> {
       if (this.isBusy) {
         this.debug('Skipped update check because runOnce() is already running');
@@ -159,7 +159,7 @@ export namespace Updater {
         const verifyEnvelopeIntegrity = Verifier.verifyEnvelopeIntegrity(
           envelope.data,
           envelope.signature,
-          envelope.publicKey
+          envelope.publicKey,
         );
         await ensurePublicKeyIsTrusted;
         await verifyEnvelopeIntegrity;
@@ -177,7 +177,7 @@ export namespace Updater {
             manifest,
             this.currentWebappVersion,
             this.currentWebappEnvironment,
-            this.currentClientVersion
+            this.currentClientVersion,
           );
         } catch (error) {
           if (error instanceof BlacklistedVersionError) {
@@ -228,7 +228,7 @@ export namespace Updater {
 
               // Bypass broadcastUpdateToRenderer
               await this.continueUpdate({forced: false});
-            }
+            },
           );
 
           // Send message to renderer so it knows there is an update
@@ -271,7 +271,7 @@ export namespace Updater {
             this.currentWebappVersion,
             isWebappBlacklisted,
             isWebappTamperedWith,
-            isUpdatesInstallAutomatically
+            isUpdatesInstallAutomatically,
           );
           decision = await promptWindow.show();
           if (decision.allow === false) {
@@ -299,7 +299,7 @@ export namespace Updater {
           manifest.fileChecksum,
           manifest.fileChecksumCompressed,
           fileName,
-          progressEvent => (installerWindow ? installerWindow.onDownloadProgress(progressEvent) : undefined)
+          progressEvent => (installerWindow ? installerWindow.onDownloadProgress(progressEvent) : undefined),
         );
 
         this.debug('Installing new bundle and manifest');
@@ -427,7 +427,7 @@ export namespace Updater {
 
     public static async getLocalVersion(
       currentClientVersion: string,
-      trustStore: string[]
+      trustStore: string[],
     ): Promise<Partial<Updater.Manifest>> {
       // Check if manifest file exist locally
       const manifestFile = Utils.resolvePath(ConfigUpdater.MANIFEST_FILE);
@@ -452,13 +452,13 @@ export namespace Updater {
         const verifyEnvelopeIntegrity = Verifier.verifyEnvelopeIntegrity(
           envelope.data,
           envelope.signature,
-          envelope.publicKey
+          envelope.publicKey,
         );
         const verifyManifest = Verifier.verifyManifest(
           manifest,
           manifest.webappVersionNumber,
           manifest.targetEnvironment,
-          currentClientVersion
+          currentClientVersion,
         );
 
         await ensurePublicKeyIsTrusted;

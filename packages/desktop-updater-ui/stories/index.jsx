@@ -107,7 +107,7 @@ function renderPrompt(data) {
             PRODUCTION: 'PRODUCTION',
             STAGING: 'STAGING',
           },
-          manifest.targetEnvironment
+          manifest.targetEnvironment,
         ),
         webappVersionNumber: text('Web app version', manifest.webappVersionNumber),
       }}
@@ -126,7 +126,7 @@ function renderWrapperOutdated(data) {
           Others: null,
           macOS: 'darwin',
         },
-        environment
+        environment,
       )}
     />
   );
@@ -148,7 +148,7 @@ storiesOf('Installer', module)
         total: 0,
         transferred: 0,
       },
-    })
+    }),
   )
   .add('In progress', () =>
     renderInstaller({
@@ -162,7 +162,7 @@ storiesOf('Installer', module)
         total: 7477716,
         transferred: 6336123,
       },
-    })
+    }),
   )
   .add('Finished', () =>
     renderInstaller({
@@ -176,7 +176,7 @@ storiesOf('Installer', module)
         total: 7477716,
         transferred: 6336123,
       },
-    })
+    }),
   );
 
 storiesOf('Prompt', module)
@@ -187,7 +187,7 @@ storiesOf('Prompt', module)
       isWebappBlacklisted: false,
       isWebappTamperedWith: false,
       manifest: GENERIC_MANIFEST,
-    })
+    }),
   )
   .add('Webapp version is blacklisted', () =>
     renderPrompt({
@@ -196,7 +196,7 @@ storiesOf('Prompt', module)
       isWebappBlacklisted: true,
       isWebappTamperedWith: false,
       manifest: GENERIC_MANIFEST,
-    })
+    }),
   )
   .add('Bundle is damaged', () =>
     renderPrompt({
@@ -205,9 +205,9 @@ storiesOf('Prompt', module)
       isWebappBlacklisted: false,
       isWebappTamperedWith: true,
       manifest: GENERIC_MANIFEST,
-    })
+    }),
   );
 
 storiesOf('WrapperOutdated', module).add('Wrapper version is blacklisted', () =>
-  renderWrapperOutdated({environment: 'darwin'})
+  renderWrapperOutdated({environment: 'darwin'}),
 );

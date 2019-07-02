@@ -50,7 +50,7 @@ class WrapperOutdated extends React.Component<Props & WithTranslation> {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <UpdaterContainer>
         <MainContent>

@@ -168,7 +168,7 @@ export class Server {
           skipNotification,
           isWebappTamperedWith,
           firstLaunch,
-          localEnvironmentMismatch
+          localEnvironmentMismatch,
         );
         if (typeof manifest === 'undefined') {
           throw new Error('Required update denied, server cannot be started. Exiting.');
@@ -268,14 +268,14 @@ export class Server {
     return server;
   }
 
-  private async hookSessionSettingsToElectron(ses: Electron.Session) {
+  private async hookSessionSettingsToElectron(ses: Electron.Session): Promise<void> {
     try {
       await proxifyProtocol(
         ses,
         this.internalHost,
         this.accessToken,
         this.currentEnvironmentBaseUrlPlain,
-        this.currentEnvironmentBaseUrl
+        this.currentEnvironmentBaseUrl,
       );
     } catch (error) {
       Server.debug('Unable to intercept protocol of a session, exiting the app. Error: %s', error);
@@ -304,7 +304,7 @@ export class Sandbox {
       Config: {[key: string]: any};
       WebConfig: ServerWebConfigInterface;
       DocumentRoot: string;
-    }
+    },
   ) {}
 
   public run(): Promise<{internalHost: string; server: UpdaterChild.Child}> {
@@ -321,9 +321,6 @@ export class Sandbox {
               /**
                * Mock for fs.createReadStream
                * Returns a new ReadStream object.
-               *
-               * @param path
-               * @param options
                */
               createReadStream(
                 fsPath: fs.PathLike,
@@ -338,7 +335,7 @@ export class Sandbox {
                       start?: number | undefined;
                       end?: number | undefined;
                     }
-                  | undefined
+                  | undefined,
               ): fs.ReadStream | undefined {
                 // Ensure requested path is within the document root
                 if (!path.normalize(fsPath.toString()).startsWith(DocumentRoot)) {
@@ -357,7 +354,7 @@ export class Sandbox {
                */
               stat(
                 fsPath: string | Buffer,
-                callback: (err: NodeJS.ErrnoException, stats: any /* fs.Stats */) => void
+                callback: (err: NodeJS.ErrnoException, stats: any /* fs.Stats */) => void,
               ): void {
                 // Ensure requested path is within the document root
                 if (!path.normalize(fsPath.toString()).startsWith(DocumentRoot)) {

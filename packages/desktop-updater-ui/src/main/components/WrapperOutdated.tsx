@@ -32,7 +32,7 @@ class WrapperOutdatedContainer extends React.Component<Props, WrapperOutdatedSta
     this.state = props;
   }
 
-  render() {
+  render(): JSX.Element {
     return <TranslatedWrapperOutdated {...this.state} />;
   }
 }

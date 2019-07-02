@@ -80,11 +80,17 @@ const getCommonConfig = (options: CommonConfigOptions) => {
   return {commonConfig, defaultConfig};
 };
 
-const logEntries = <T extends {}>(config: T, name: string, callee: string): void => {
+const logEntries = <T extends Object>(config: T, name: string, callee: string): void => {
   const logger = getLogger(callee);
 
   Object.entries(config).forEach(([key, value]) => {
-    logger.info(`${name}.${key} set to "${value}". `);
+    if (value instanceof Array) {
+      value = value.join(',');
+    } else if (value instanceof Object) {
+      logEntries(value, `${name}.${key}`, callee);
+    } else {
+      logger.info(`${name}.${key} set to "${value}". `);
+    }
   });
 };
 

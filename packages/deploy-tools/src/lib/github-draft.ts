@@ -135,7 +135,7 @@ class GitHubDraftDeployer {
     } catch (error) {
       this.logger.error('Error response from GitHub:', error.response.data);
       throw new Error(
-        `Draft creation failed with status code "${error.response.status}": "${error.response.statusText}"`
+        `Draft creation failed with status code "${error.response.status}": "${error.response.statusText}"`,
       );
     }
   }
@@ -168,7 +168,7 @@ class GitHubDraftDeployer {
     } catch (uploadError) {
       this.logger.error('Error response from GitHub:', uploadError.response.data);
       this.logger.error(
-        `Upload failed with status code "${uploadError.response.status}": ${uploadError.response.statusText}"`
+        `Upload failed with status code "${uploadError.response.status}": ${uploadError.response.statusText}"`,
       );
       this.logger.info('Deleting draft because upload failed ...');
 
@@ -178,7 +178,7 @@ class GitHubDraftDeployer {
       } catch (deleteError) {
         this.logger.error('Error response from GitHub:', deleteError.response.data);
         throw new Error(
-          `Deletion failed with status code "${deleteError.response.status}: ${deleteError.response.statusText}"`
+          `Deletion failed with status code "${deleteError.response.status}: ${deleteError.response.statusText}"`,
         );
       } finally {
         throw new Error('Uploading asset failed');

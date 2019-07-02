@@ -76,7 +76,7 @@ export class Utils {
 
   public static async displayNotification(
     options: Electron.NotificationConstructorOptions,
-    callback: (type: string, event: Event, index?: number) => void
+    callback: (type: string, event: Event, index?: number) => void,
   ): Promise<Notification> {
     const notification = new Notification(options);
 
@@ -178,7 +178,7 @@ export class Utils {
         } else {
           this.debug('"%s" has been skipped', filename);
         }
-      })
+      }),
     );
   }
 
@@ -189,7 +189,7 @@ export class Utils {
       // otherwise use ./wire-desktop/.bundle/internal, both are one directory up
       '../',
       ConfigUpdater.LOCAL_BUNDLE_FOLDER_NAME,
-      `${Environment.currentEnvironment.toLowerCase()}/`
+      `${Environment.currentEnvironment.toLowerCase()}/`,
     );
     this.debug('LCB path is %s', localPath);
     if (await !fs.pathExists(localPath)) {

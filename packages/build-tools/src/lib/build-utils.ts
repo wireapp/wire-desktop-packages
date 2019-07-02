@@ -16,12 +16,16 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
+import {exec} from 'child_process';
 import commander from 'commander';
 import * as fs from 'fs-extra';
 import logdown from 'logdown';
 import * as path from 'path';
+import {promisify} from 'util';
 
-function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
+import {CommonConfig, MacOSConfig} from './Config';
+
+export function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
   options.forEach(option => {
     if (!commanderInstance.hasOwnProperty(option)) {
       commanderInstance.outputHelp();
@@ -30,8 +34,8 @@ function checkCommanderOptions(commanderInstance: typeof commander, options: str
   });
 }
 
-function getLogger(postfix: string): logdown.Logger {
-  const logger = logdown(`@wireapp/deploy-tools/${postfix}`, {
+export function getLogger(postfix: string): logdown.Logger {
+  const logger = logdown(`@wireapp/build-tools/${postfix}`, {
     logger: console,
     markdown: false,
   });
@@ -40,13 +44,64 @@ function getLogger(postfix: string): logdown.Logger {
   return logger;
 }
 
-function getToolName(fullFilename: string): string {
+export function getToolName(fullFilename: string): string {
   const fileName = path.basename(fullFilename).replace(/-cli.[tj]s/, '');
   return `wire-${fileName}`;
 }
 
-async function writeJson<T extends Object>(fileName: string, data: T): Promise<void> {
+export async function writeJson<T extends Object>(fileName: string, data: T): Promise<void> {
   await fs.writeFile(fileName, `${JSON.stringify(data, null, 2)}\n`);
 }
 
-export {checkCommanderOptions, getLogger, getToolName, writeJson};
+export async function manualMacOSSign(
+  appFile: string,
+  pkgFile: string,
+  commonConfig: CommonConfig,
+  macOSConfig: MacOSConfig,
+  logger: logdown.Logger,
+): Promise<void> {
+  async function execAsync(command): Promise<void> {
+    const {stderr, stdout} = await promisify(exec)(command);
+    if (stderr) {
+      logger.error(stderr);
+    }
+    if (stdout) {
+      logger.info(stdout);
+    }
+  }
+
+  const inheritEntitlements = 'resources/macos/entitlements/child.plist';
+  const mainEntitlements = 'resources/macos/entitlements/parent.plist';
+
+  if (macOSConfig.certNameApplication) {
+    const filesToSign = [
+      '/Frameworks/Electron Framework.framework/Versions/A/Electron Framework',
+      '/Frameworks/Electron Framework.framework/Versions/A/Libraries/libffmpeg.dylib',
+      '/Frameworks/Electron Framework.framework/',
+      `/Frameworks/${commonConfig.name} Helper.app/Contents/MacOS/${commonConfig.name} Helper`,
+      `/Frameworks/${commonConfig.name} Helper.app/`,
+      `/Library/LoginItems/${commonConfig.name} Login Helper.app/Contents/MacOS/${commonConfig.name} Login Helper`,
+      `/Library/LoginItems/${commonConfig.name} Login Helper.app/`,
+    ];
+
+    for (const fileName of filesToSign) {
+      const fullPath = `${appFile}/Contents${fileName}`;
+      await execAsync(
+        `codesign --deep -fs '${macOSConfig.certNameApplication}' --entitlements '${inheritEntitlements}' '${fullPath}'`,
+      );
+    }
+
+    if (macOSConfig.certNameInstaller) {
+      const appExecutable = `${appFile}/Contents/MacOS/${commonConfig.name}`;
+      await execAsync(
+        `codesign -fs '${macOSConfig.certNameApplication}' --entitlements '${inheritEntitlements}' '${appExecutable}'`,
+      );
+      await execAsync(
+        `codesign -fs '${macOSConfig.certNameApplication}' --entitlements '${mainEntitlements}' '${appFile}'`,
+      );
+      await execAsync(
+        `productbuild --component '${appFile}' /Applications --sign '${macOSConfig.certNameInstaller}' '${pkgFile}'`,
+      );
+    }
+  }
+}

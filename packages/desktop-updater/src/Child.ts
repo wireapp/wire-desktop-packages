@@ -66,7 +66,7 @@ export namespace Updater {
           key: Updater.Child.WEB_SERVER_HOST_PRIVATE_KEY,
           secureProtocol: 'TLSv1_2_method',
         },
-        (req: http.IncomingMessage, res: http.ServerResponse) => this.onRequest(req, res)
+        (req: http.IncomingMessage, res: http.ServerResponse) => this.onRequest(req, res),
       );
 
       await this.listen();
@@ -79,7 +79,7 @@ export namespace Updater {
       res.end();
     }
 
-    private static endWithWebConfig(res: http.ServerResponse) {
+    private static endWithWebConfig(res: http.ServerResponse): void {
       const body = `window.wire = window.wire || {}; window.wire.env = ${JSON.stringify(WebConfig)};`;
       res.writeHead(200, {
         'Content-Length': Buffer.byteLength(body),
@@ -159,7 +159,7 @@ export namespace Updater {
         // Get a random port
         const portToUse: number = Random.integer(
           Updater.Child.WEB_SERVER_LISTEN_PORT_MIN,
-          Updater.Child.WEB_SERVER_LISTEN_PORT_MAX
+          Updater.Child.WEB_SERVER_LISTEN_PORT_MAX,
         )(Random.nodeCrypto);
 
         // Listen on the port

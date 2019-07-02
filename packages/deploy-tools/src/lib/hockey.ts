@@ -128,7 +128,7 @@ class HockeyDeployer {
     } catch (error) {
       this.logger.error(error);
       throw new Error(
-        `Hockey version creation failed with status code "${error.response.status}": "${error.response.statusText}"`
+        `Hockey version creation failed with status code "${error.response.status}": "${error.response.statusText}"`,
       );
     }
   }
@@ -168,7 +168,7 @@ class HockeyDeployer {
     } catch (error) {
       this.logger.error(error);
       throw new Error(
-        `Hockey version upload failed with status code "${error.response.status}": "${error.response.statusText}"`
+        `Hockey version upload failed with status code "${error.response.status}": "${error.response.statusText}"`,
       );
     }
   }

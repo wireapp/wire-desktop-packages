@@ -20,24 +20,24 @@
 import {BridgeIPC} from '@wireapp/desktop-updater-spec';
 import {ipcRenderer} from 'electron';
 
-export function UpdaterBridgeIPC() {
+export function UpdaterBridgeIPC(): void {
   ipcRenderer.on(BridgeIPC.UPDATE_AVAILABLE, (event, detail) =>
-    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_AVAILABLE, {detail}))
+    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_AVAILABLE, {detail})),
   );
   ipcRenderer.on(BridgeIPC.UPDATE_INSTALLED, (event, detail) =>
-    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_INSTALLED, {detail: null}))
+    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_INSTALLED, {detail: null})),
   );
   ipcRenderer.on(BridgeIPC.UPDATE_START_INSTALL, (event, detail) =>
-    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_START_INSTALL, {detail}))
+    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_START_INSTALL, {detail})),
   );
   ipcRenderer.on(BridgeIPC.UPDATE_END_INSTALL, (event, detail) =>
-    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_END_INSTALL, {detail: null}))
+    window.dispatchEvent(new CustomEvent(BridgeIPC.UPDATE_END_INSTALL, {detail: null})),
   );
 
   window.addEventListener(BridgeIPC.UPDATE_AVAILABLE_ACK, event =>
-    ipcRenderer.send(BridgeIPC.UPDATE_AVAILABLE_ACK, (event as CustomEvent).detail)
+    ipcRenderer.send(BridgeIPC.UPDATE_AVAILABLE_ACK, (event as CustomEvent).detail),
   );
   window.addEventListener(BridgeIPC.UPDATE_AVAILABLE_DISPLAY, event =>
-    ipcRenderer.send(BridgeIPC.UPDATE_AVAILABLE_DISPLAY, (event as CustomEvent).detail)
+    ipcRenderer.send(BridgeIPC.UPDATE_AVAILABLE_DISPLAY, (event as CustomEvent).detail),
   );
 }

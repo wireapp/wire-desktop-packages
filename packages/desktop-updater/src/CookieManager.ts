@@ -66,9 +66,9 @@ export class CookieManager {
             url: origin,
             value: cookie.value,
           },
-          session
+          session,
         );
-      })
+      }),
     );
   }
 

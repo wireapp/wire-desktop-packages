@@ -33,7 +33,7 @@ describe('Sandbox', () => {
       await sandbox.run({
         sampleConstant,
       }),
-      sampleConstant
+      sampleConstant,
     );
   });
 });

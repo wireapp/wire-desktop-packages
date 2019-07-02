@@ -68,6 +68,7 @@ const packagerOptions: electronPackager.Options = {
 };
 
 logEntries(commonConfig, 'commonConfig', toolName);
+logEntries(packagerOptions, 'packagerOptions', toolName);
 
 logger.info(`Building ${commonConfig.name} ${commonConfig.version} for Windows ...`);
 

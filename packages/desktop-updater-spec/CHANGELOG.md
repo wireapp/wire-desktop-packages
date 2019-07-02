@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-spec/compare/@wireapp/desktop-updater-spec@0.1.9...@wireapp/desktop-updater-spec@0.1.10) (2019-06-24)
+
+**Note:** Version bump only for package @wireapp/desktop-updater-spec
+
+
+
+
+
+## [0.1.9](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-spec/compare/@wireapp/desktop-updater-spec@0.1.8...@wireapp/desktop-updater-spec@0.1.9) (2019-05-28)
+
+**Note:** Version bump only for package @wireapp/desktop-updater-spec
+
+
+
+
+
 ## [0.1.8](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-spec/compare/@wireapp/desktop-updater-spec@0.1.7...@wireapp/desktop-updater-spec@0.1.8) (2019-04-30)
 
 **Note:** Version bump only for package @wireapp/desktop-updater-spec

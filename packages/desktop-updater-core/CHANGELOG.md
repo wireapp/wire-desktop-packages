@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.10](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.2.9...@wireapp/desktop-updater-core@0.2.10) (2019-06-25)
+
+**Note:** Version bump only for package @wireapp/desktop-updater-core
+
+
+
+
+
+## [0.2.9](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.2.8...@wireapp/desktop-updater-core@0.2.9) (2019-06-24)
+
+**Note:** Version bump only for package @wireapp/desktop-updater-core
+
+
+
+
+
+## [0.2.8](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.2.7...@wireapp/desktop-updater-core@0.2.8) (2019-05-28)
+
+**Note:** Version bump only for package @wireapp/desktop-updater-core
+
+
+
+
+
 ## [0.2.7](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-core/compare/@wireapp/desktop-updater-core@0.2.6...@wireapp/desktop-updater-core@0.2.7) (2019-04-30)
 
 **Note:** Version bump only for package @wireapp/desktop-updater-core

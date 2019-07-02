@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.5.0...@wireapp/build-tools@0.5.1) (2019-06-25)
+
+
+### Bug Fixes
+
+* **build-tools:** Log errors instead of throwing them ([5632045](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/5632045))
+
+
+
+
+
+# [0.5.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.4.0...@wireapp/build-tools@0.5.0) (2019-06-25)
+
+
+### Features
+
+* **build-tools:** Manually sign macOS files ([#749](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/749)) ([5973d8a](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/5973d8a))
+
+
+
+
+
+# [0.4.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.3.0...@wireapp/build-tools@0.4.0) (2019-06-25)
+
+
+### Features
+
+* **build-tools:** Log objects in config ([e69f9c4](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/e69f9c4))
+* **build-tools:** Log specific options ([d6a727a](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/d6a727a))
+
+
+
+
+
+# [0.3.0](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.2.2...@wireapp/build-tools@0.3.0) (2019-06-24)
+
+
+### Features
+
+* **build-tools:** Create macOS installer (WEBAPP-6252) ([#729](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/729)) ([4f4787b](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/4f4787b))
+
+
+
+
+
+## [0.2.2](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.2.1...@wireapp/build-tools@0.2.2) (2019-05-28)
+
+**Note:** Version bump only for package @wireapp/build-tools
+
+
+
+
+
 ## [0.2.1](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.2.0...@wireapp/build-tools@0.2.1) (2019-04-30)
 
 **Note:** Version bump only for package @wireapp/build-tools

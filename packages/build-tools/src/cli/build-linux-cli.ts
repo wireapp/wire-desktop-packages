@@ -112,11 +112,12 @@ const builderConfig: electronBuilder.Configuration = {
 };
 
 logEntries(commonConfig, 'commonConfig', toolName);
+logEntries(builderConfig, 'builderConfig', toolName);
 
 const targets = electronBuilder.Platform.LINUX.createTarget(linuxConfig.targets, electronBuilder.archFromString('x64'));
 
 logger.info(
-  `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`
+  `Building ${commonConfig.name} ${commonConfig.version} for Linux (targets: ${linuxConfig.targets.join(', ')})...`,
 );
 
 writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, version: commonConfig.version})

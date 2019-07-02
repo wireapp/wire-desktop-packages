@@ -13,8 +13,8 @@
     "@wireapp/certificate-check": "0.0.3"
   },
   "devDependencies": {
-    "electron": "5.0.0",
-    "electron-builder": "20.39.0"
+    "electron": "5.0.6",
+    "electron-builder": "20.44.4"
   },
   "files": [
     "electron"
@@ -35,5 +35,5 @@
     "start": "electron .",
     "test": "exit 0"
   },
-  "version": "0.2.3"
+  "version": "0.2.6"
 }

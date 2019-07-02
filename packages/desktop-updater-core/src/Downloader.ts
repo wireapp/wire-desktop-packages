@@ -124,7 +124,7 @@ export class Downloader {
           // ToDo: Until folder where the node_modules is known, disable root folder restrictions
           //root: path.resolve(__dirname,  '../'),
         },
-      }
+      },
     );
   }
 
@@ -143,7 +143,7 @@ export class Downloader {
     checksum: Buffer,
     checksumCompressed: Buffer,
     fileName: string,
-    onDownloadProgress: Function = (progressEvent: ProgressInterface) => {}
+    onDownloadProgress: Function = (progressEvent: ProgressInterface) => {},
   ): Promise<Buffer> {
     try {
       const throttledOnDownloadProgress = throttle(50, (progressEvent: ProgressInterface) => {
@@ -205,7 +205,7 @@ export class Downloader {
         return result;
       },
       // tslint:disable-next-line:no-object-literal-type-assertion
-      {} as U
+      {} as U,
     );
   }
 

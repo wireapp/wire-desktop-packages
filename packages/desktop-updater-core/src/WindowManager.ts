@@ -43,7 +43,7 @@ export abstract class WindowManager {
   private readonly IS_MACOS = process.platform === 'darwin';
   private readonly RENDERER_DOCUMENT_ROOT = path.join(
     path.dirname(require.resolve('@wireapp/desktop-updater-ui')),
-    '../../'
+    '../../',
   );
   protected readonly RENDERER_HTML = path.join(this.RENDERER_DOCUMENT_ROOT, '.renderer/index.html');
   protected readonly RENDERER_PRELOAD = path.join(__dirname, `Preloads/${this.WINDOW_TYPE}.js`);
@@ -136,7 +136,7 @@ export abstract class WindowManager {
     // Debug
     if (this.debug.enabled) {
       this.browserWindow.webContents.on('console-message', (event, level, message) =>
-        this.debug(`From WebContents: ${message}`)
+        this.debug(`From WebContents: ${message}`),
       );
     }
 
@@ -181,7 +181,7 @@ export abstract class WindowManager {
         // Anything below will close the window with
         this.debug('Forbidden URL requested: "%s"', url);
         return callback({cancel: true});
-      }
+      },
     );
   }
 
