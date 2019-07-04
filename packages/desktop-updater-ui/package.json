@@ -33,7 +33,7 @@
     "i18next": "17.0.4",
     "long": "4.0.0",
     "luxon": "1.16.0",
-    "react-hot-loader": "4.11.1",
+    "react-hot-loader": "4.12.2",
     "rimraf": "2.6.3",
     "style-loader": "0.23.1",
     "webpack": "4.35.0",
