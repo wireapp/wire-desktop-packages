@@ -18,6 +18,7 @@
  */
 
 import * as assert from 'assert';
+import {app} from 'electron';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import {performance} from 'perf_hooks';
@@ -212,12 +213,67 @@ describe('Utils', () => {
   });
 
   describe('getLCBPath', () => {
+    const LCB_PATH = path.join(app.getAppPath(), '..', '.bundle', 'production');
+    afterEach(async () => {
+      try {
+        await fs.remove(LCB_PATH);
+      } catch (error) {}
+    });
+
     it('resolves the locally cached bundle path', async () => {
-      const expected = '/node_modules/electron-mocha/.bundle/production';
+      await fs.ensureDir(LCB_PATH);
       const actual = await Utils.getLCBPath();
-      if (!actual.endsWith(expected)) {
-        assert.fail(`LCB path is invalid, got ${actual} but expected ${expected}`);
+      if (actual !== LCB_PATH) {
+        assert.fail(`LCB path is invalid, got ${actual} but expected ${LCB_PATH}`);
       }
+    });
+
+    it('fails when the folder does not exist', () => {
+      // tslint:disable-next-line
+      assert.rejects(Utils.getLCBPath(), {
+        message: 'LCB path does not exist',
+        name: 'Error',
+      });
+    });
+  });
+
+  describe('copyBundleFiles', () => {
+    it('can copy files from one folder to another', async () => {
+      const src = path.join(rootDir, 'fakebundle');
+      const dest = path.resolve(rootDir, '..', '.tmp', 'fakebundle');
+
+      await fs.remove(dest);
+      await fs.ensureDir(dest);
+      await Utils.copyBundleFiles(src, dest);
+
+      const destFolderFiles = await Utils['readDirectory'](dest);
+      assert.strictEqual(destFolderFiles.includes('manifest.dat'), true);
+      assert.strictEqual(destFolderFiles.includes('fakeasar.asar'), true);
+      assert.strictEqual(destFolderFiles.includes('willbeskiped.txt'), false);
+    });
+  });
+
+  describe('readDirectory', () => {
+    it('fails when the directory does not exist', () => {
+      const randomValue = Math.random();
+      // tslint:disable-next-line
+      assert.rejects(Utils['readDirectory'](`/unknown/folder/${randomValue}`), {
+        message: `ENOENT: no such file or directory, scandir '/unknown/folder/${randomValue}'`,
+        name: 'Error',
+      });
+    });
+  });
+
+  describe('copyFile', () => {
+    it('fails when the source file does not exist', () => {
+      const randomValue = Math.random();
+      const src = path.resolve(rootDir, '..', '.tmp', `${randomValue}.txt`);
+      const dest = path.resolve(rootDir, '..', '.tmp', `${randomValue}_copy.txt`);
+      // tslint:disable-next-line
+      assert.rejects(Utils['copyFile'](src, dest), {
+        message: `ENOENT: no such file or directory, copyfile '${src}' -> '${dest}'`,
+        name: 'Error',
+      });
     });
   });
 });

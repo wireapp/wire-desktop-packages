@@ -167,7 +167,7 @@ export class Utils {
     });
   }
 
-  public static async copyFiles(from: string, to: string): Promise<void> {
+  public static async copyBundleFiles(from: string, to: string): Promise<void> {
     await Promise.all(
       (await this.readDirectory(from)).map(async filename => {
         this.debug('Filename is: %s', filename);
@@ -192,7 +192,7 @@ export class Utils {
       `${Environment.currentEnvironment.toLowerCase()}/`,
     );
     this.debug('LCB path is %s', localPath);
-    if (await !fs.pathExists(localPath)) {
+    if (!(await fs.pathExists(localPath))) {
       throw Error('LCB path does not exist');
     }
     return localPath;
