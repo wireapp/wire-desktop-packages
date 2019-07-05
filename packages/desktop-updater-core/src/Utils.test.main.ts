@@ -20,6 +20,8 @@
 import * as assert from 'assert';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import {performance} from 'perf_hooks';
+
 import {Utils} from './Utils';
 
 describe('Utils', () => {
@@ -118,7 +120,7 @@ describe('Utils', () => {
 
       test = Utils.parseWebappVersion('-0-04-12-13-37');
       assert.strictEqual(test.buildDate.isValid, false);
-      assert.strictEqual(test.environment, '');
+      assert.strictEqual(test.environment, undefined);
     });
   });
 
@@ -141,7 +143,7 @@ describe('Utils', () => {
       const publicKey = 'ffbab1f0d42ef879c589dd2b85437875b63b9f706ffaa8926fccfb5b8e9abc53';
       assert.strictEqual(
         await Utils.getFilenameFromChecksum(Buffer.from(publicKey, 'hex')),
-        'ffbab1f0d42ef879c589dd2b85437875.asar'
+        'ffbab1f0d42ef879c589dd2b85437875.asar',
       );
     });
   });
@@ -162,7 +164,7 @@ describe('Utils', () => {
         Utils.getDocumentRoot(publicKey), {
           message: 'Document root does not exist',
           name: 'Error',
-        }
+        },
       );
     });
   });
@@ -182,6 +184,30 @@ describe('Utils', () => {
         message: 'Denied to open external URL',
         name: 'Error',
       });
+    });
+  });
+
+  describe('formatWebppVersionFull', () => {
+    it('can format a webapp version', () => {
+      const webappVersion = '2019-06-06-12-31-prod';
+      assert.strictEqual(Utils.formatWebappVersionFull(Utils.parseWebappVersion(webappVersion)), webappVersion);
+    });
+
+    it('can format a webapp version without a specified environment', () => {
+      const webappVersion = '2019-06-06-12-31';
+      assert.strictEqual(Utils.formatWebappVersionFull(Utils.parseWebappVersion(webappVersion)), webappVersion);
+    });
+  });
+
+  describe('sleep', () => {
+    it('can sleep for a specified amount of time', async () => {
+      const msToSleep = 1000;
+      const before = performance.now();
+      await Utils.sleep(msToSleep);
+      const elapsed = performance.now() - before;
+      if (elapsed < msToSleep || elapsed > msToSleep + 10) {
+        assert.fail(`Expected timing was ~${msToSleep}ms, not ${elapsed}ms`);
+      }
     });
   });
 });

@@ -107,7 +107,7 @@ export class Utils {
         zone: 'Europe/Berlin',
       }),
       // e.g. [ '-prod', 'prod', index: 16, input: '2018-02-07-20-54-prod' ]
-      environment: environment ? environment[1] : '',
+      environment: environment ? environment[1] : undefined,
     };
   }
 
