@@ -210,4 +210,14 @@ describe('Utils', () => {
       }
     });
   });
+
+  describe('getLCBPath', () => {
+    it('resolves the locally cached bundle path', async () => {
+      const expected = '/node_modules/electron-mocha/.bundle/production';
+      const actual = await Utils.getLCBPath();
+      if (!actual.endsWith(expected)) {
+        assert.fail(`LCB path is invalid, got ${actual} but expected ${expected}`);
+      }
+    });
+  });
 });

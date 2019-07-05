@@ -36,7 +36,7 @@ export class Sandbox {
   public constructor(readonly file: string, readonly userPath?: string) {
     this.path =
       typeof userPath === 'undefined'
-        ? path.resolve(__dirname, 'Sandboxed', `${file}.js`)
+        ? path.resolve(__dirname, '..', 'dist', 'Sandboxed', `${file}.js`)
         : path.resolve(userPath, file);
   }
 

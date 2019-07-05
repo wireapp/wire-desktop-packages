@@ -18,7 +18,7 @@
  */
 
 import * as assert from 'assert';
-import Long from 'long';
+import * as Long from 'long';
 import {ConfigUpdater} from './Config';
 import {Updater} from './Updater';
 import {Utils} from './Utils';
@@ -44,11 +44,33 @@ interface ErrorInterface {
 const currentWebappEnv = 'PRODUCTION';
 
 describe('Verifier', () => {
+  describe('verifyFileIntegrity', () => {
+    const expectedChecksum =
+      '021ced8799296ceca557832ab941a50b4a11f83478cf141f51f933f653ab9fbcc05a037cddbed06e309bf334942c4e58cdf1a46e237911ccd7fcf9787cbc7fd0';
+    const file = Buffer.from('hello world');
+
+    it('can verify the integrity of a file', async () => {
+      await Verifier.verifyFileIntegrity(file, Buffer.from(expectedChecksum, 'hex'));
+    });
+
+    it('can fails when the integrity is invalid', () => {
+      const wrongChecksum = expectedChecksum
+        .split('')
+        .reverse()
+        .join('');
+      // tslint:disable-next-line
+      assert.rejects(Verifier.verifyFileIntegrity(file, Buffer.from(wrongChecksum, 'hex')), {
+        message: `Checksum verification failed. Checksum: ${expectedChecksum}, Expected checksum: ${wrongChecksum}`,
+        name: 'IntegrityError',
+      });
+    });
+  });
+
   describe('ensurePublicKeyIsTrusted', () => {
     const publicKeyBuffer = Buffer.from('ffbab1f0d42ef879c589dd2b85437875b63b9f706ffaa8926fccfb5b8e9abc53', 'hex');
     const anotherPublicKeyBuffer = Buffer.from(
       '3942e683bb97a2d84beb6df14bbe25ee5e327a3fc4b05723ff835cd6d6e8d96b',
-      'hex'
+      'hex',
     );
     const trustStore = [publicKeyBuffer.toString('hex')];
 
@@ -57,7 +79,7 @@ describe('Verifier', () => {
       toVerifyPublicKey: Buffer = publicKeyBuffer,
       toVerifyTrustStore: string[] = trustStore,
       error: ErrorInterface,
-      env?: string
+      env?: string,
     ): Promise<void> =>
       assert.rejects(Verifier.ensurePublicKeyIsTrusted(toVerifyPublicKey, toVerifyTrustStore, env), error);
 
@@ -71,7 +93,7 @@ describe('Verifier', () => {
           message: 'Public key provided is not a buffer.',
           name: 'IntegrityError',
         },
-        currentWebappEnv
+        currentWebappEnv,
       ));
 
     it('fails when the provided trust store is not an Array', () =>
@@ -82,7 +104,7 @@ describe('Verifier', () => {
           message: 'Trust store does not exist for the environment "PRODUCTION" (or is not an array).',
           name: 'IntegrityError',
         },
-        currentWebappEnv
+        currentWebappEnv,
       ));
 
     it('fails when the provided trust store is empty', () =>
@@ -93,7 +115,7 @@ describe('Verifier', () => {
           message: 'No keys are present in the trust store for the environment "PRODUCTION".',
           name: 'IntegrityError',
         },
-        currentWebappEnv
+        currentWebappEnv,
       ));
 
     it('fails when the provided pulic key is not present in the trust store', () =>
@@ -105,7 +127,7 @@ describe('Verifier', () => {
             'Public key is not in the trust store for environment "PRODUCTION". Public key: 3942e683bb97a2d84beb6df14bbe25ee5e327a3fc4b05723ff835cd6d6e8d96b',
           name: 'IntegrityError',
         },
-        currentWebappEnv
+        currentWebappEnv,
       ));
   });
 
@@ -154,16 +176,16 @@ describe('Verifier', () => {
       error: ErrorInterface,
       toVerifyCurrentWebappVersionNumber = currentWebappVersionNumber,
       toVerifyCurrentWebappEnv = currentWebappEnv,
-      toVerifyCurrentWrapperVersion = currentWrapperVersion
+      toVerifyCurrentWrapperVersion = currentWrapperVersion,
     ): Promise<void> =>
       assert.rejects(
         Verifier.verifyManifest(
           {...legitManifest, ...manifest},
           toVerifyCurrentWebappVersionNumber,
           toVerifyCurrentWebappEnv,
-          toVerifyCurrentWrapperVersion
+          toVerifyCurrentWrapperVersion,
         ),
-        error
+        error,
       );
 
     it('can verify a legit manifest', async () => {
@@ -176,7 +198,7 @@ describe('Verifier', () => {
         {
           message: 'Current specs number is not supported',
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -186,7 +208,7 @@ describe('Verifier', () => {
         {
           message: 'Local environment mismatch the remote one',
           name: 'VerifyMismatchEnvironment',
-        }
+        },
       );
     });
 
@@ -197,7 +219,7 @@ describe('Verifier', () => {
         {
           message: 'This update expired and is no longer valid',
           name: 'VerifyExpirationError',
-        }
+        },
       );
     });
 
@@ -208,7 +230,7 @@ describe('Verifier', () => {
         {
           message: 'This update exceed the enforced validity limitation',
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -228,7 +250,7 @@ describe('Verifier', () => {
         {
           message: 'This update has not been yet released',
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -240,7 +262,7 @@ describe('Verifier', () => {
         {
           message: `Client versions are not valid. Minimum client version is ${invalidVersionString} and current wrapper version is ${currentWrapperVersion}`,
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -260,7 +282,7 @@ describe('Verifier', () => {
         {
           message: 'This webapp version is too old to be used',
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -305,7 +327,7 @@ describe('Verifier', () => {
         {
           message: 'The given update is older than ours',
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -316,7 +338,7 @@ describe('Verifier', () => {
         {
           message: 'This webapp version have a minimum requirement that is too old to be used',
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -327,7 +349,7 @@ describe('Verifier', () => {
         {
           message: 'Minimum version required cannot be satisfacted as latest version is lower',
           name: 'VerifyError',
-        }
+        },
       );
     });
 
@@ -364,7 +386,7 @@ describe('Verifier', () => {
           name: 'VerifyMismatchEnvironment',
         },
         currentWebappVersionNumber,
-        'DEVELOPMENT'
+        'DEVELOPMENT',
       );
     });
   });
