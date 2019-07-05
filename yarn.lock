@@ -2830,6 +2830,16 @@
   dependencies:
     jsrsasign "8.0.12"
 
+"@wireapp/desktop-updater-spec@0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@wireapp/desktop-updater-spec/-/desktop-updater-spec-0.1.9.tgz#97dff628866f51717e6c6dd53a1b386ae08e34c2"
+  integrity sha512-mkifYGM/wdGlVp67dZKn0lAjap+JqPPxBMj/QXsiJv4nQ7kf6UhhFMF08VsTkF9Z/BDw1wQ0GfOHelBqjAhKgA==
+  dependencies:
+    "@types/long" "4.0.0"
+    "@types/node" "~10"
+    long "4.0.0"
+    protobufjs "6.8.8"
+
 "@wireapp/eslint-config@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@wireapp/eslint-config/-/eslint-config-0.1.1.tgz#c40a5e4da7ae26c3fbf329f40686b4d65eed4713"
