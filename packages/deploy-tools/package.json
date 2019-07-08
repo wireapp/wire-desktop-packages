@@ -6,11 +6,11 @@
     "wire-deploy-s3-win-releases": "dist/cli/s3-win-releases-cli.js"
   },
   "dependencies": {
-    "aws-sdk": "2.483.0",
+    "aws-sdk": "2.488.0",
     "axios": "0.19.0",
     "commander": "2.20.0",
     "form-data": "2.4.0",
-    "fs-extra": "8.0.1",
+    "fs-extra": "8.1.0",
     "globby": "10.0.1",
     "jszip": "3.2.1",
     "logdown": "3.2.8"
