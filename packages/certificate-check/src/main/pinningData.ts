@@ -29,12 +29,12 @@ export interface PinningData {
   url: RegExp;
 }
 
-const WILDCARD_CERT_FINGERPRINT: string = '3pHQns2wdYtN4b2MWsMguGw70gISyhBZLZDpbj+EmdU=';
-const MULTIDOMAIN_CERT_FINGERPRINT: string = 'bORoZ2vRsPJ4WBsUdL1h3Q7C50ZaBqPwngDmDVw+wHA=';
-const CERT_ALGORITHM_RSA: string = '2a864886f70d010101';
-const PUBLIC_KEY_VERISIGN_CLASS3_G5_ROOT: string =
+export const WILDCARD_CERT_FINGERPRINT: string = '3pHQns2wdYtN4b2MWsMguGw70gISyhBZLZDpbj+EmdU=';
+export const MULTIDOMAIN_CERT_FINGERPRINT: string = 'bORoZ2vRsPJ4WBsUdL1h3Q7C50ZaBqPwngDmDVw+wHA=';
+export const CERT_ALGORITHM_RSA: string = '2a864886f70d010101';
+export const PUBLIC_KEY_VERISIGN_CLASS3_G5_ROOT: string =
   '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAryQICCl6NZ5gDKrnSztO\n3Hy8PEUcuyvg/ikC+VcIo2SFFSf18a3IMYldIugqqqZCs4/4uVW3sbdLs/6PfgdX\n7O9D22ZiFWHPYA2k2N744MNiCD1UE+tJyllUhSblK48bn+v1oZHCM0nYQ2NqUkvS\nj+hwUU3RiWl7x3D2s9wSdNt7XUtW05a/FXehsPSiJfKvHJJnGOX0BgTvkLnkAOTd\nOrUZ/wK69Dzu4IvrN4vs9Nes8vbwPa/ddZEzGR0cQMt0JBkhk9kU/qwqUseP1QRJ\n5I1jR4g8aYPL/ke9K35PxZWuDp3U0UPAZ3PjFAh+5T+fc7gzCs9dPzSHloruU+gl\nFQIDAQAB\n-----END PUBLIC KEY-----\n';
-const PINS: PinningData[] = [
+export const PINS: PinningData[] = [
   {
     publicKeyInfo: [
       {
@@ -71,11 +71,3 @@ const PINS: PinningData[] = [
     url: /^[a-z0-9]{14,63}\.cloudfront\.net$/i,
   },
 ];
-
-export {
-  CERT_ALGORITHM_RSA,
-  MULTIDOMAIN_CERT_FINGERPRINT,
-  PINS,
-  PUBLIC_KEY_VERISIGN_CLASS3_G5_ROOT,
-  WILDCARD_CERT_FINGERPRINT,
-};

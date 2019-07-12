@@ -30,11 +30,11 @@
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check-tool",
   "scripts": {
     "build": "exit 0",
+    "build:linux": "yarn clean && electron-builder --linux deb --x64",
+    "build:macos": "yarn clean && electron-builder --mac --x64",
+    "build:windows": "yarn clean && electron-builder --win --ia32",
     "clean": "rimraf dist",
     "dist": "exit 0",
-    "dist:linux": "yarn clean && electron-builder --linux deb --x64",
-    "dist:macos": "yarn clean && electron-builder --mac --x64",
-    "dist:windows": "yarn clean && electron-builder --win --ia32",
     "pack": "yarn clean && electron-builder --dir",
     "start": "electron . --devtools",
     "test": "exit 0"

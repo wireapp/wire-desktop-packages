@@ -21,8 +21,9 @@
 
 /**
  * @typedef {import('tls').DetailedPeerCertificate} PeerCertificate
- * @typedef {import('@wireapp/certificate-check').CertData} CertData
- * @typedef {{certData: CertData, hostname: string}} ConnectionResult
+ * @typedef {import('tls').TLSSocket} TLSSocket
+ * @typedef {import('@wireapp/certificate-check').ElectronCertificate} ElectronCertificate
+ * @typedef {{certData: ElectronCertificate, hostname: string}} ConnectionResult
  */
 
 const certutils = require('@wireapp/certificate-check');
@@ -47,10 +48,10 @@ const connect = hostname => {
   return new Promise(resolve => {
     https
       .get(`https://${hostname}`)
-      .on('socket', socket => {
+      .on('socket', (/** @type {TLSSocket} */ socket) => {
         socket.on('secureConnect', () => {
-          /** @type {PeerCertificate} */
           const cert = socket.getPeerCertificate(true);
+          /** @type {ElectronCertificate} */
           const certData = {
             data: buildCert(cert),
             issuerCert: {

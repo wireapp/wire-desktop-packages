@@ -23,15 +23,30 @@ const rs = require('jsrsasign');
 
 import {PINS} from './pinningData';
 
-export interface CertData {
+interface ElectronCertificate {
   data: string;
-  issuerCert: {
-    data: string;
-  };
+  fingerprint: string;
+  issuer: CertificatePrincipal;
+  issuerCert: ElectronCertificate;
+  issuerName: string;
+  serialNumber: string;
+  subject: CertificatePrincipal;
+  subjectName: string;
+  validExpiry: number;
+  validStart: number;
+}
+
+interface CertificatePrincipal {
+  commonName: string;
+  country: string;
+  locality: string;
+  organizations: string[];
+  organizationUnits: string[];
+  state: string;
 }
 
 export interface PinningResult {
-  certificate?: CertData;
+  certificate?: ElectronCertificate;
   decoding?: boolean;
   errorMessage?: string;
   fingerprintCheck?: boolean;
@@ -72,7 +87,7 @@ export function hostnameShouldBePinned(hostname: string): boolean {
   return PINS.some(pin => pin.url.test(hostname.toLowerCase().trim()));
 }
 
-export function verifyPinning(hostname: string, certificate?: CertData): PinningResult {
+export function verifyPinning(hostname: string, certificate?: ElectronCertificate): PinningResult {
   if (!certificate) {
     return {
       errorMessage: 'No certificate provided by Electron.',
