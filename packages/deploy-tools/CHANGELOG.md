@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/deploy-tools/compare/@wireapp/deploy-tools@0.1.9...@wireapp/deploy-tools@0.1.10) (2019-07-12)
+
+**Note:** Version bump only for package @wireapp/deploy-tools
+
+
+
+
+
 ## [0.1.9](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/deploy-tools/compare/@wireapp/deploy-tools@0.1.8...@wireapp/deploy-tools@0.1.9) (2019-06-25)
 
 **Note:** Version bump only for package @wireapp/deploy-tools

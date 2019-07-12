@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/compare/@wireapp/certificate-check@0.1.8...@wireapp/certificate-check@0.1.9) (2019-07-12)
+
+
+### Bug Fixes
+
+* **certificate-check-tool:** Add node integration ([#827](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/issues/827)) ([2208a95](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/commit/2208a95))
+
+
+
+
+
 ## [0.1.8](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check/compare/@wireapp/certificate-check@0.1.7...@wireapp/certificate-check@0.1.8) (2019-06-24)
 
 **Note:** Version bump only for package @wireapp/certificate-check
