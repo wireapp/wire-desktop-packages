@@ -10,11 +10,14 @@
   },
   "description": "Tool to check that Wire's domains use the expected certificate.",
   "dependencies": {
-    "@wireapp/certificate-check": "0.0.3"
+    "@wireapp/certificate-check": "0.1.8",
+    "minimist": "1.2.0"
   },
   "devDependencies": {
+    "@types/node": "~10",
     "electron": "5.0.6",
-    "electron-builder": "20.44.4"
+    "electron-builder": "20.44.4",
+    "rimraf": "2.6.3"
   },
   "files": [
     "electron"
@@ -27,13 +30,13 @@
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check-tool",
   "scripts": {
     "build": "exit 0",
-    "clean": "exit 0",
+    "clean": "rimraf dist",
     "dist": "exit 0",
-    "dist:linux": "electron-builder --linux deb --x64",
-    "dist:macos": "electron-builder --mac --x64",
-    "dist:windows": "electron-builder --win --ia32",
-    "pack": "electron-builder --dir",
-    "start": "electron .",
+    "dist:linux": "yarn clean && electron-builder --linux deb --x64",
+    "dist:macos": "yarn clean && electron-builder --mac --x64",
+    "dist:windows": "yarn clean && electron-builder --win --ia32",
+    "pack": "yarn clean && electron-builder --dir",
+    "start": "electron . --devtools",
     "test": "exit 0"
   },
   "version": "0.2.6"

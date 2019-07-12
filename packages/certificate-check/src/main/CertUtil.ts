@@ -23,8 +23,15 @@ const rs = require('jsrsasign');
 
 import {PINS} from './pinningData';
 
+export interface CertData {
+  data: string;
+  issuerCert: {
+    data: string;
+  };
+}
+
 export interface PinningResult {
-  certificate?: ElectronCertificate;
+  certificate?: CertData;
   decoding?: boolean;
   errorMessage?: string;
   fingerprintCheck?: boolean;
@@ -32,33 +39,11 @@ export interface PinningResult {
   verifiedPublicKeyInfo?: boolean;
 }
 
-interface ElectronCertificate {
-  data: string;
-  fingerprint: string;
-  issuer: ElectronCertificatePrincipal;
-  issuerCert: ElectronCertificate;
-  issuerName: string;
-  serialNumber: string;
-  subject: ElectronCertificatePrincipal;
-  subjectName: string;
-  validExpiry: number;
-  validStart: number;
-}
-
-interface ElectronCertificatePrincipal {
-  commonName: string;
-  country: string;
-  locality: string;
-  organizations: string[];
-  organizationUnits: string[];
-  state: string;
-}
-
-function buildCert(buffer: Buffer): string {
+export function buildCert(buffer: Buffer): string {
   return `-----BEGIN CERTIFICATE-----\n${buffer.toString('base64')}\n-----END CERTIFICATE-----`;
 }
 
-function getDERFormattedCertificate(url: string): Promise<Buffer> {
+export function getDERFormattedCertificate(url: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     try {
       const request = https.get(url, () => {
@@ -71,7 +56,7 @@ function getDERFormattedCertificate(url: string): Promise<Buffer> {
   });
 }
 
-function getFingerprint(derCert: Buffer): string {
+export function getFingerprint(derCert: Buffer): string {
   const derBinary = derCert.toString('binary');
   const hexDerFileContents = rs.rstrtohex(derBinary);
   const pemString = rs.KJUR.asn1.ASN1Util.getPEMStringFromHex(hexDerFileContents, 'CERTIFICATE');
@@ -83,11 +68,11 @@ function getFingerprint(derCert: Buffer): string {
     .digest('base64');
 }
 
-function hostnameShouldBePinned(hostname: string): boolean {
+export function hostnameShouldBePinned(hostname: string): boolean {
   return PINS.some(pin => pin.url.test(hostname.toLowerCase().trim()));
 }
 
-function verifyPinning(hostname: string, certificate: ElectronCertificate): PinningResult {
+export function verifyPinning(hostname: string, certificate?: CertData): PinningResult {
   if (!certificate) {
     return {
       errorMessage: 'No certificate provided by Electron.',
@@ -188,5 +173,3 @@ function verifyPinning(hostname: string, certificate: ElectronCertificate): Pinn
 
   return result;
 }
-
-export {buildCert, getDERFormattedCertificate, getFingerprint, hostnameShouldBePinned, verifyPinning};

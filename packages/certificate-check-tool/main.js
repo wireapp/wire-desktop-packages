@@ -19,29 +19,37 @@
 
 //@ts-check
 
+/**
+ * @typedef {import('tls').DetailedPeerCertificate} PeerCertificate
+ * @typedef {import('@wireapp/certificate-check').CertData} CertData
+ * @typedef {{certData: CertData, hostname: string}} ConnectionResult
+ */
+
 const certutils = require('@wireapp/certificate-check');
-const electron = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 const https = require('https');
-
-const {app, ipcMain} = electron;
-const BrowserWindow = electron.BrowserWindow;
-
-const platform = {
-  IS_LINUX: process.platform === 'linux',
-  IS_MAC_OS: process.platform === 'darwin',
-  IS_WINDOWS: process.platform === 'win32',
-};
+const minimist = require('minimist');
+const argv = minimist(process.argv.slice(1));
 
 let mainWindow = null;
 
+/**
+ * @param {PeerCertificate} cert - The certificate to build
+ * @returns {string} The built certificate
+ */
 const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
 
+/**
+ * @param {string} hostname - The hostname to connect to
+ * @returns {Promise<ConnectionResult | null>} The result
+ */
 const connect = hostname => {
   return new Promise(resolve => {
     https
       .get(`https://${hostname}`)
       .on('socket', socket => {
         socket.on('secureConnect', () => {
+          /** @type {PeerCertificate} */
           const cert = socket.getPeerCertificate(true);
           const certData = {
             data: buildCert(cert),
@@ -54,27 +62,36 @@ const connect = hostname => {
       })
       .on('error', err => {
         console.error(err);
-        resolve({certData: {}, hostname});
+        resolve(null);
       });
   });
 };
 
+/**
+ * @param {string[]} hostnames - The hostnames to verify
+ * @returns {Promise<void>} When all hostnames are checked
+ */
 const verifyHosts = async hostnames => {
-  const certPromises = hostnames.map(hostname => connect(hostname));
+  const certificates = await Promise.all(hostnames.map(connect));
 
-  const objects = await Promise.all(certPromises);
-
-  objects.forEach(({certData, hostname}) => {
+  for (const {certData, hostname} of certificates) {
     const result = certutils.verifyPinning(hostname, certData);
     mainWindow.webContents.send('result', {hostname, result});
-  });
+  }
 };
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+    },
     width: 800,
   });
+
+  if (argv.devtools) {
+    mainWindow.webContents.openDevTools({mode: 'detach'});
+  }
 
   mainWindow.on('closed', () => (mainWindow = null));
 
@@ -97,17 +114,5 @@ const createWindow = () => {
 };
 
 app.on('ready', () => createWindow());
-
-app.on('window-all-closed', () => {
-  app.quit();
-});
-
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
-
-if (platform.IS_LINUX) {
-  app.disableHardwareAcceleration();
-}
+app.on('window-all-closed', () => app.quit());
+app.on('activate', () => mainWindow === null && createWindow());
