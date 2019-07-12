@@ -10,7 +10,7 @@
     "dotenv": "8.0.0",
     "electron-builder": "20.44.4",
     "electron-osx-sign": "0.4.11",
-    "electron-packager": "14.0.0",
+    "electron-packager": "14.0.1",
     "electron-winstaller": "2.7.0",
     "fs-extra": "8.1.0",
     "logdown": "3.2.8"
