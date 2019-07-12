@@ -24,6 +24,15 @@ const rs = require('jsrsasign');
 
 import {PINS} from './pinningData';
 
+export interface PinningResult {
+  certificate?: ElectronCertificate;
+  decoding?: boolean;
+  errorMessage?: string;
+  fingerprintCheck?: boolean;
+  verifiedIssuerRootPubkeys?: boolean;
+  verifiedPublicKeyInfo?: boolean;
+}
+
 export interface ElectronCertificate {
   data: string;
   fingerprint?: string;
@@ -44,15 +53,6 @@ interface CertificatePrincipal {
   organizations: string[];
   organizationUnits: string[];
   state: string;
-}
-
-export interface PinningResult {
-  certificate?: ElectronCertificate;
-  decoding?: boolean;
-  errorMessage?: string;
-  fingerprintCheck?: boolean;
-  verifiedIssuerRootPubkeys?: boolean;
-  verifiedPublicKeyInfo?: boolean;
 }
 
 export function buildCert(buffer: Buffer): string {
