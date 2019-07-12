@@ -19,21 +19,22 @@
 
 import * as crypto from 'crypto';
 import * as https from 'https';
+import {TLSSocket} from 'tls';
 const rs = require('jsrsasign');
 
 import {PINS} from './pinningData';
 
-interface ElectronCertificate {
+export interface ElectronCertificate {
   data: string;
-  fingerprint: string;
-  issuer: CertificatePrincipal;
-  issuerCert: ElectronCertificate;
-  issuerName: string;
-  serialNumber: string;
-  subject: CertificatePrincipal;
-  subjectName: string;
-  validExpiry: number;
-  validStart: number;
+  fingerprint?: string;
+  issuer?: CertificatePrincipal;
+  issuerCert?: ElectronCertificate;
+  issuerName?: string;
+  serialNumber?: string;
+  subject?: CertificatePrincipal;
+  subjectName?: string;
+  validExpiry?: number;
+  validStart?: number;
 }
 
 interface CertificatePrincipal {
@@ -62,7 +63,7 @@ export function getDERFormattedCertificate(url: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     try {
       const request = https.get(url, () => {
-        const certificate = (request.socket as any).getPeerCertificate(true);
+        const certificate = (request.socket as TLSSocket).getPeerCertificate(true);
         resolve(certificate.raw);
       });
     } catch (error) {
@@ -91,6 +92,12 @@ export function verifyPinning(hostname: string, certificate?: ElectronCertificat
   if (!certificate) {
     return {
       errorMessage: 'No certificate provided by Electron.',
+    };
+  }
+
+  if (!certificate.issuerCert) {
+    return {
+      errorMessage: 'No issuer certificate in certificate.',
     };
   }
 
