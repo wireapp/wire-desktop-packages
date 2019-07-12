@@ -15,7 +15,7 @@
     "jasmine-ts": "0.3.0",
     "libsodium-wrappers": "0.7.4",
     "long": "4.0.0",
-    "luxon": "1.16.1",
+    "luxon": "1.17.1",
     "make-error-cause": "2.2.1",
     "protobufjs": "6.8.8",
     "random-js": "2.1.0",
