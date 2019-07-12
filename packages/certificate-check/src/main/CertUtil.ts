@@ -19,6 +19,7 @@
 
 import * as crypto from 'crypto';
 import * as https from 'https';
+import {TLSSocket} from 'tls';
 const rs = require('jsrsasign');
 
 import {PINS} from './pinningData';
@@ -32,20 +33,20 @@ export interface PinningResult {
   verifiedPublicKeyInfo?: boolean;
 }
 
-interface ElectronCertificate {
+export interface ElectronCertificate {
   data: string;
-  fingerprint: string;
-  issuer: ElectronCertificatePrincipal;
-  issuerCert: ElectronCertificate;
-  issuerName: string;
-  serialNumber: string;
-  subject: ElectronCertificatePrincipal;
-  subjectName: string;
-  validExpiry: number;
-  validStart: number;
+  fingerprint?: string;
+  issuer?: CertificatePrincipal;
+  issuerCert?: ElectronCertificate;
+  issuerName?: string;
+  serialNumber?: string;
+  subject?: CertificatePrincipal;
+  subjectName?: string;
+  validExpiry?: number;
+  validStart?: number;
 }
 
-interface ElectronCertificatePrincipal {
+interface CertificatePrincipal {
   commonName: string;
   country: string;
   locality: string;
@@ -54,15 +55,15 @@ interface ElectronCertificatePrincipal {
   state: string;
 }
 
-function buildCert(buffer: Buffer): string {
+export function buildCert(buffer: Buffer): string {
   return `-----BEGIN CERTIFICATE-----\n${buffer.toString('base64')}\n-----END CERTIFICATE-----`;
 }
 
-function getDERFormattedCertificate(url: string): Promise<Buffer> {
+export function getDERFormattedCertificate(url: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     try {
       const request = https.get(url, () => {
-        const certificate = (request.socket as any).getPeerCertificate(true);
+        const certificate = (request.socket as TLSSocket).getPeerCertificate(true);
         resolve(certificate.raw);
       });
     } catch (error) {
@@ -71,7 +72,7 @@ function getDERFormattedCertificate(url: string): Promise<Buffer> {
   });
 }
 
-function getFingerprint(derCert: Buffer): string {
+export function getFingerprint(derCert: Buffer): string {
   const derBinary = derCert.toString('binary');
   const hexDerFileContents = rs.rstrtohex(derBinary);
   const pemString = rs.KJUR.asn1.ASN1Util.getPEMStringFromHex(hexDerFileContents, 'CERTIFICATE');
@@ -83,14 +84,20 @@ function getFingerprint(derCert: Buffer): string {
     .digest('base64');
 }
 
-function hostnameShouldBePinned(hostname: string): boolean {
+export function hostnameShouldBePinned(hostname: string): boolean {
   return PINS.some(pin => pin.url.test(hostname.toLowerCase().trim()));
 }
 
-function verifyPinning(hostname: string, certificate: ElectronCertificate): PinningResult {
+export function verifyPinning(hostname: string, certificate?: ElectronCertificate): PinningResult {
   if (!certificate) {
     return {
       errorMessage: 'No certificate provided by Electron.',
+    };
+  }
+
+  if (!certificate.issuerCert) {
+    return {
+      errorMessage: 'No issuer certificate in certificate.',
     };
   }
 
@@ -188,5 +195,3 @@ function verifyPinning(hostname: string, certificate: ElectronCertificate): Pinn
 
   return result;
 }
-
-export {buildCert, getDERFormattedCertificate, getFingerprint, hostnameShouldBePinned, verifyPinning};

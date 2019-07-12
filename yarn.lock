@@ -2828,13 +2828,6 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@wireapp/certificate-check@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@wireapp/certificate-check/-/certificate-check-0.0.3.tgz#6ee6bf23847daebdc35bb8489778bb575b3bf7ee"
-  integrity sha512-ppZtZvIL74x+np27Cq5wedX5xY3srVED7jkKb37xrKxl/Te5f0moRA4fGZ8AfyiMl/TPemYR8cS4eRdKKq5ENg==
-  dependencies:
-    jsrsasign "8.0.12"
-
 "@wireapp/eslint-config@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@wireapp/eslint-config/-/eslint-config-0.1.1.tgz#c40a5e4da7ae26c3fbf329f40686b4d65eed4713"
@@ -9625,7 +9618,7 @@ minimist@0.0.8:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
   integrity sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
 
-minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0:
+minimist@1.2.0, minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
