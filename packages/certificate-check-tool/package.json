@@ -23,6 +23,7 @@
   "main": "main.js",
   "name": "@wireapp/certificate-check-tool",
   "private": true,
+  "productName": "Certificate Check Tool",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check-tool",
   "scripts": {
     "build": "exit 0",
