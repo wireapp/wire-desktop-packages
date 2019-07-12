@@ -63,7 +63,7 @@ const connect = hostname => {
       })
       .on('error', err => {
         console.error(err);
-        resolve(null);
+        resolve({certData: null, hostname});
       });
   });
 };
