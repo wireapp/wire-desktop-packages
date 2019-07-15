@@ -17,15 +17,15 @@
  *
  */
 
-import {ipcRenderer, shell} from 'electron';
+import {Event, ipcRenderer, shell} from 'electron';
 import * as os from 'os';
 import {VerificationResult, ipcChannel} from './main';
 
 function isReady(callback: () => void): void {
-  if (
+  const documentReady =
     document.readyState === 'complete' ||
-    (document.readyState !== 'loading' && !(document.documentElement as any).doScroll)
-  ) {
+    (document.readyState !== 'loading' && !(document.documentElement as any).doScroll);
+  if (documentReady) {
     callback();
   } else {
     window.addEventListener('load', callback);
@@ -33,17 +33,16 @@ function isReady(callback: () => void): void {
 }
 
 const createElement = (type: string, options: Record<string, string>) => {
-  const el = document.createElement(type);
-  Object.keys(options).forEach(option => (el[option] = options[option]));
-  return el;
+  const element = document.createElement(type);
+  Object.assign(element, options);
+  return element;
 };
-
-const getElementById = (id: string) => document.getElementById(id);
 
 let log = `--- Wire Certificate Check log from ${new Date().toISOString()} on ${os.platform()} ${os.arch()} ---\n\n`;
 
 isReady(() => {
-  const divHostnames = getElementById('hostnames');
+  const divHostnames = document.getElementById('hostnames');
+
   ipcRenderer.on(ipcChannel.HOSTNAMES, (event: Event, hostnames: string[]) =>
     hostnames.forEach(hostname => {
       const divHostname = createElement('div', {id: `host-${hostname.replace(/\./g, '-')}`});
@@ -65,13 +64,13 @@ isReady(() => {
       icon = '✔️';
     } else {
       icon = '❌';
-      const spanResult = getElementById('result');
-      const pResultText = getElementById('result-text');
+      const spanResult = document.getElementById('result');
+      const pResultText = document.getElementById('result-text');
 
       if (!pResultText) {
         const pText = createElement('p', {id: 'result-text', innerText: 'At least one check failed.'});
         spanResult!.appendChild(pText);
-        getElementById('sendmail')!.style.display = 'block';
+        document.getElementById('sendmail')!.style.display = 'block';
       }
 
       log += `*${hostname}*: ${errorMessage}\n`;
@@ -83,7 +82,7 @@ isReady(() => {
     document.querySelector(query)!.innerHTML = icon;
   });
 
-  getElementById('sendmail')!.addEventListener('click', async event => {
+  document.getElementById('sendmail')!.addEventListener('click', async event => {
     event.preventDefault();
     const subject = encodeURIComponent('Certificate Check Report');
     const body = encodeURIComponent(log);
