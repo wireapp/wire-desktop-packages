@@ -17,31 +17,16 @@
  *
  */
 
-import {ElectronCertificate, PinningResult, verifyPinning} from '@wireapp/certificate-check';
-import {BrowserWindow, app, ipcMain} from 'electron';
+import {ElectronCertificate, verifyPinning} from '@wireapp/certificate-check';
+import {BrowserWindow, app} from 'electron';
 import * as https from 'https';
 import * as minimist from 'minimist';
 import * as path from 'path';
 import {DetailedPeerCertificate, TLSSocket} from 'tls';
 
-export interface ConnectionResult {
-  certData?: ElectronCertificate;
-  error?: string;
-}
-
-export interface VerificationResult {
-  error?: string;
-  hostname: string;
-  result: PinningResult;
-}
-
-export enum ipcChannel {
-  HOSTNAMES = 'hostnames',
-  RESULT = 'result',
-}
+import {ConnectionResult, ipcChannel} from './interfaces';
 
 const argv = minimist(process.argv.slice(1));
-const preloadFile = path.join(app.getAppPath(), 'dist/preload.js');
 
 const hostnames = [
   'app.wire.com',
@@ -53,7 +38,7 @@ const hostnames = [
 
 let mainWindow: BrowserWindow | null = null;
 
-const buildCert = (cert: DetailedPeerCertificate): string => {
+const buildStringCert = (cert: DetailedPeerCertificate): string => {
   return `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
 };
 
@@ -68,9 +53,9 @@ const connect = (hostname: string): Promise<ConnectionResult> => {
         socket.on('secureConnect', () => {
           const cert = socket.getPeerCertificate(true);
           const certData: ElectronCertificate = {
-            data: buildCert(cert),
+            data: buildStringCert(cert),
             issuerCert: {
-              data: buildCert(cert.issuerCertificate),
+              data: buildStringCert(cert.issuerCertificate),
             },
           };
           resolve({certData});
@@ -100,7 +85,7 @@ const createWindow = async () => {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      preload: preloadFile,
+      preload: path.resolve(__dirname, 'preload.js'),
     },
     width: 800,
   });
@@ -112,14 +97,10 @@ const createWindow = async () => {
   mainWindow.on('closed', () => (mainWindow = null));
 
   await mainWindow.loadFile('index.html');
+  mainWindow!.show();
+  mainWindow!.webContents.send(ipcChannel.HOSTNAMES, hostnames);
 
-  mainWindow.webContents.on('dom-ready', () => {
-    mainWindow!.show();
-    ipcMain.on('html-ready', async () => {
-      mainWindow!.webContents.send(ipcChannel.HOSTNAMES, hostnames);
-      await verifyHosts(hostnames);
-    });
-  });
+  await verifyHosts(hostnames);
 };
 
 app.on('ready', () => createWindow());

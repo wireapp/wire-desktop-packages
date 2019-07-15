@@ -19,18 +19,8 @@
 
 import {Event, ipcRenderer, shell} from 'electron';
 import * as os from 'os';
-import {VerificationResult, ipcChannel} from './main';
 
-function isReady(callback: () => void): void {
-  const documentReady =
-    document.readyState === 'complete' ||
-    (document.readyState !== 'loading' && !(document.documentElement as any).doScroll);
-  if (documentReady) {
-    callback();
-  } else {
-    window.addEventListener('load', callback);
-  }
-}
+import {VerificationResult, ipcChannel} from './interfaces';
 
 const createElement = (type: string, options: Record<string, string>) => {
   const element = document.createElement(type);
@@ -40,55 +30,51 @@ const createElement = (type: string, options: Record<string, string>) => {
 
 let log = `--- Wire Certificate Check log from ${new Date().toISOString()} on ${os.platform()} ${os.arch()} ---\n\n`;
 
-isReady(() => {
-  const divHostnames = document.getElementById('hostnames');
+ipcRenderer.on(ipcChannel.HOSTNAMES, (event: Event, hostnames: string[]) =>
+  hostnames.forEach(hostname => {
+    const spanStatus = createElement('span', {className: 'status'});
+    const spanHostname = createElement('span', {innerText: hostname});
 
-  ipcRenderer.on(ipcChannel.HOSTNAMES, (event: Event, hostnames: string[]) =>
-    hostnames.forEach(hostname => {
-      const divHostname = createElement('div', {id: `host-${hostname.replace(/\./g, '-')}`});
-      const spanStatus = createElement('span', {className: 'status'});
-      const spanHostname = createElement('span', {innerText: hostname});
+    const divHostname = createElement('div', {id: `host-${hostname.replace(/\./g, '-')}`});
+    divHostname.appendChild(spanStatus);
+    divHostname.appendChild(spanHostname);
 
-      divHostname.appendChild(spanStatus);
-      divHostname.appendChild(spanHostname);
-      divHostnames!.appendChild(divHostname);
-    }),
-  );
+    document.getElementById('hostnames')!.appendChild(divHostname);
+  }),
+);
 
-  ipcRenderer.on(ipcChannel.RESULT, (event: Event, data: VerificationResult) => {
-    const {hostname, error: getError, result} = data;
-    const {errorMessage = '', verifiedPublicKeyInfo} = result;
-    let icon: string;
+ipcRenderer.on(ipcChannel.RESULT, (event: Event, data: VerificationResult) => {
+  const {hostname, error: getError, result} = data;
+  const {errorMessage = '', verifiedPublicKeyInfo} = result;
+  let icon: string;
+  const divSendmail = document.getElementById('sendmail')!;
 
-    if (verifiedPublicKeyInfo === true) {
-      icon = '✔️';
-    } else {
-      icon = '❌';
-      const spanResult = document.getElementById('result');
-      const pResultText = document.getElementById('result-text');
+  if (verifiedPublicKeyInfo === true) {
+    icon = '✔️';
+  } else {
+    icon = '❌';
+    const spanResult = document.getElementById('result');
+    const pResultText = document.getElementById('result-text');
 
-      if (!pResultText) {
-        const pText = createElement('p', {id: 'result-text', innerText: 'At least one check failed.'});
-        spanResult!.appendChild(pText);
-        document.getElementById('sendmail')!.style.display = 'block';
-      }
-
-      log += `*${hostname}*: ${errorMessage}\n`;
-      log += `get error: ${getError}\n`;
-      log += `\nRemote certificate:\n${JSON.stringify(result)}\n\n${'-'.repeat(66)}\n\n`;
+    if (!pResultText) {
+      const pText = createElement('p', {id: 'result-text', innerText: 'At least one check failed.'});
+      spanResult!.appendChild(pText);
+      divSendmail.style.display = 'block';
     }
 
-    const query = `#host-${hostname.replace(/\./g, '-')} .status`;
-    document.querySelector(query)!.innerHTML = icon;
-  });
+    log += `*${hostname}*: ${errorMessage}\n`;
+    log += `get error: ${getError}\n`;
+    log += `\nRemote certificate:\n${JSON.stringify(result)}\n\n${'-'.repeat(66)}\n\n`;
+  }
 
-  document.getElementById('sendmail')!.addEventListener('click', async event => {
+  const query = `#host-${hostname.replace(/\./g, '-')} .status`;
+  document.querySelector(query)!.innerHTML = icon;
+
+  divSendmail.addEventListener('click', async event => {
     event.preventDefault();
     const subject = encodeURIComponent('Certificate Check Report');
     const body = encodeURIComponent(log);
     const mailToLink = `mailto:support+web@wire.com?subject=${subject}&body=${body}`;
     await shell.openExternal(mailToLink);
   });
-
-  ipcRenderer.send('html-ready');
 });
