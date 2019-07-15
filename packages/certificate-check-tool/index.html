@@ -38,8 +38,8 @@
         }));
 
         ipcRenderer.on('result', (event, data) => {
-          const {hostname, result} = data;
-          const {errorMessage = '', verifiedPublicKeyInfo, certificate: {data: certData = {}} = {}} = result;
+          const {hostname, error: getError, result} = data;
+          const {errorMessage = '', verifiedPublicKeyInfo} = result;
           let icon;
 
           if (verifiedPublicKeyInfo === true) {
@@ -56,7 +56,8 @@
             }
 
             log += `*${hostname}*: ${errorMessage}\n`;
-            log += `\nRemote certificate:\n${JSON.stringify(result)}\n\n------------------------------------------------------------------\n\n`;
+            log += `get error: ${getError}\n`;
+            log += `\nRemote certificate:\n${JSON.stringify(result)}\n\n${'-'.repeat(66)}\n\n`;
           }
 
           const query = `#host-${hostname.replace(/\./g, '-')} .status`;
