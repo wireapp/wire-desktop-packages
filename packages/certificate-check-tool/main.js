@@ -23,7 +23,7 @@
  * @typedef {import('tls').DetailedPeerCertificate} PeerCertificate
  * @typedef {import('tls').TLSSocket} TLSSocket
  * @typedef {import('@wireapp/certificate-check').ElectronCertificate} ElectronCertificate
- * @typedef {{certData: ElectronCertificate, hostname: string}} ConnectionResult
+ * @typedef {{certData: ElectronCertificate, error?: string, hostname: string}} ConnectionResult
  */
 
 const certutils = require('@wireapp/certificate-check');
@@ -47,7 +47,10 @@ const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('bas
 const connect = hostname => {
   return new Promise(resolve => {
     https
-      .get(`https://${hostname}`)
+      .get({
+        host: hostname,
+        protocol: 'https:',
+      })
       .on('socket', (/** @type {TLSSocket} */ socket) => {
         socket.on('secureConnect', () => {
           const cert = socket.getPeerCertificate(true);
@@ -61,9 +64,9 @@ const connect = hostname => {
           resolve({certData, hostname});
         });
       })
-      .on('error', err => {
-        console.error(err);
-        resolve({certData: null, hostname});
+      .on('error', error => {
+        console.error(error);
+        resolve({certData: null, error: error.message, hostname});
       });
   });
 };
@@ -75,9 +78,9 @@ const connect = hostname => {
 const verifyHosts = async hostnames => {
   const certificates = await Promise.all(hostnames.map(connect));
 
-  for (const {certData, hostname} of certificates) {
+  for (const {certData, error, hostname} of certificates) {
     const result = certutils.verifyPinning(hostname, certData);
-    mainWindow.webContents.send('result', {hostname, result});
+    mainWindow.webContents.send('result', {error, hostname, result});
   }
 };
 
