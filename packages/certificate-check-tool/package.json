@@ -14,28 +14,32 @@
     "minimist": "1.2.0"
   },
   "devDependencies": {
-    "@types/node": "~10",
+    "@types/minimist": "1.2.0",
+    "@types/node": "12.6.2",
     "electron": "5.0.6",
     "electron-builder": "20.44.4",
-    "rimraf": "2.6.3"
+    "rimraf": "2.6.3",
+    "typescript": "3.5.3"
   },
   "files": [
     "electron"
   ],
   "license": "GPL-3.0",
-  "main": "main.js",
+  "main": "dist/main.js",
   "name": "@wireapp/certificate-check-tool",
   "private": true,
   "productName": "Certificate Check Tool",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/certificate-check-tool",
   "scripts": {
-    "build": "exit 0",
-    "build:linux": "yarn clean && electron-builder --linux deb --x64",
-    "build:macos": "yarn clean && electron-builder --mac --x64",
-    "build:windows": "yarn clean && electron-builder --win --ia32",
+    "build": "yarn build:node",
+    "build:node": "tsc",
+    "build:linux": "yarn dist && electron-builder --linux deb --x64",
+    "build:macos": "yarn dist && electron-builder --mac --x64",
+    "build:windows": "yarn dist && electron-builder --win --ia32",
     "clean": "rimraf dist",
-    "dist": "exit 0",
-    "pack": "yarn clean && electron-builder --dir",
+    "dist": "yarn clean && yarn build:node",
+    "pack": "yarn dist && electron-builder --dir",
+    "prestart": "yarn dist",
     "start": "electron . --devtools",
     "test": "exit 0"
   },
