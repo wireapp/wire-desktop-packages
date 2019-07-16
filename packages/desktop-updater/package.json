@@ -11,7 +11,7 @@
     "mime-types": "2.1.24",
     "random-js": "2.1.0",
     "serve-static": "1.14.1",
-    "set-cookie-parser": "2.3.5",
+    "set-cookie-parser": "2.3.8",
     "vm2": "3.8.2"
   },
   "description": "",
