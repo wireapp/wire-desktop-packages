@@ -41,5 +41,5 @@
     "test": "yarn test:node",
     "test:node": "exit 0"
   },
-  "version": "0.5.2"
+  "version": "0.5.3"
 }
