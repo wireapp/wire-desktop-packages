@@ -99,7 +99,6 @@ const builderConfig: electronBuilder.Configuration = {
   linux: {
     artifactName: linuxConfig.artifactName,
     category: platformSpecificConfig.category,
-    depends: debDepends,
     executableName: linuxConfig.executableName,
     target: linuxConfig.targets,
   },
