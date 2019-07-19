@@ -28,7 +28,7 @@
     "@types/react-dom": "16.8.4",
     "@wireapp/desktop-updater-spec": "0.1.11",
     "babel-loader": "8.0.6",
-    "css-loader": "3.0.0",
+    "css-loader": "3.1.0",
     "electron": "5.0.7",
     "i18next": "17.0.6",
     "long": "4.0.0",
