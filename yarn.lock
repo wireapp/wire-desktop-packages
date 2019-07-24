@@ -5935,10 +5935,10 @@ electron-osx-sign@0.4.11, electron-osx-sign@^0.4.11:
     minimist "^1.2.0"
     plist "^3.0.1"
 
-electron-packager@14.0.1:
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/electron-packager/-/electron-packager-14.0.1.tgz#a0e027448877c25294428f1348a2257b6685b155"
-  integrity sha512-KS+oKTmrfTGuTHixMOd6o+nA0VIMg8ogdOYJ8N0OtALxazXKRQCFusXH53+QnzZt+NATav+f9Eh7S2n7fiUArA==
+electron-packager@14.0.2:
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/electron-packager/-/electron-packager-14.0.2.tgz#b9d722e6f4c4481e125a3bfde9080af23b5e5466"
+  integrity sha512-QJyttK+GlgJFwjueOpGWN7gZ67WsHkstzCieAyojiw6mLzdBz54q+2oZidF7GfB8bkWVxsMUQa7WrHV13e2eQw==
   dependencies:
     "@electron/get" "^1.3.0"
     asar "^2.0.1"
@@ -14719,15 +14719,7 @@ yargs-parser@^11.1.1:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-parser@^13.0.0, yargs-parser@^13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.0.tgz#7016b6dd03e28e1418a510e258be4bff5a31138f"
-  integrity sha512-Yq+32PrijHRri0vVKQEm+ys8mbqWjLiwQkMFNXEENutzLPP0bE4Lcd4iA3OQY5HF+GD3xXxf0MEHb8E4/SA3AA==
-  dependencies:
-    camelcase "^5.0.0"
-    decamelize "^1.2.0"
-
-yargs-parser@^13.1.1:
+yargs-parser@^13.0.0, yargs-parser@^13.1.0, yargs-parser@^13.1.1:
   version "13.1.1"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.1.tgz#d26058532aa06d365fe091f6a1fc06b2f7e5eca0"
   integrity sha512-oVAVsHz6uFrg3XQheFII8ESO2ssAf9luWuAd6Wexsu4F3OtIW0o8IribPXYrD4WC24LWtPrJlGy87y5udK+dxQ==
