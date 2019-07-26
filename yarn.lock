@@ -2886,14 +2886,14 @@
   resolved "https://registry.yarnpkg.com/@wireapp/prettier-config/-/prettier-config-0.3.0.tgz#e8129b31021c81d90d564d9c4ff0f7f7b514e943"
   integrity sha512-BFokvX4NZlkhWq5/OoJUCS8Iels+MeRgzpd5V9QR3hj5swwCFGxJOAL7soPXkSNWo91gI1qwiTp8szB1O9aCfQ==
 
-"@wireapp/react-ui-kit@7.5.3":
-  version "7.5.3"
-  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-7.5.3.tgz#aa503085a180ff9596ec3cbb84a8c4cb1bde0b6b"
-  integrity sha512-3pwPH+VyaQbGEYjvOpEKd8f+Zu5vJY5hjBxxEC22Suctdft4LeInp7gWCKHkZe8U0rk2FId9Y7mdfpxCkvAX8Q==
+"@wireapp/react-ui-kit@7.8.2":
+  version "7.8.2"
+  resolved "https://registry.yarnpkg.com/@wireapp/react-ui-kit/-/react-ui-kit-7.8.2.tgz#66276a46100eeadf45db3dff10b35c7f29c79e2d"
+  integrity sha512-zlzbaZtam+iRvGMO7vYBSDoZxh5aGHaqyR3tTwW/FE2r0nsd9PvDQuh9T+Qg1jWHmuyql+szj4sVQ0IdVVpCfA==
   dependencies:
     "@emotion/core" "10.0.14"
     "@types/color" "3.0.0"
-    bazinga64 "5.5.6"
+    bazinga64 "5.5.7"
     color "3.1.2"
     emotion-normalize "10.1.0"
     react-transition-group "4.2.1"
@@ -3872,10 +3872,10 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-bazinga64@5.5.6:
-  version "5.5.6"
-  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.5.6.tgz#d98e615d70656133663e16d95cdfdddd68fe88ad"
-  integrity sha512-PSAy0rC3OsWjj5L6rlMp2iMuMN2L0TqimjrcJrffXjnq0YyavaKbRmCcm1dEQ0RkTYPbIKqovFMCZyeffo3m0A==
+bazinga64@5.5.7:
+  version "5.5.7"
+  resolved "https://registry.yarnpkg.com/bazinga64/-/bazinga64-5.5.7.tgz#818d0140e19f60ce0ac41af7b1542616c0744bd8"
+  integrity sha512-wFilBMRYZZp0L2JcXpEBV0yM2S7DN8Vceq3CRJC1A/PAsGIXWzpqaxSQYW8mcXmdW3auG7kBE9sB5OV34y6R2Q==
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
