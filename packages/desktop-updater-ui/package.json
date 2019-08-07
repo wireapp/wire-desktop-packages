@@ -29,7 +29,7 @@
     "@wireapp/desktop-updater-spec": "0.1.11",
     "babel-loader": "8.0.6",
     "css-loader": "3.1.0",
-    "electron": "5.0.8",
+    "electron": "6.0.1",
     "i18next": "17.0.6",
     "long": "4.0.0",
     "luxon": "1.17.2",
