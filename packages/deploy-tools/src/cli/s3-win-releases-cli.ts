@@ -105,6 +105,6 @@ if (!commander.wrapperBuild.includes('#')) {
 
   logger.log('Done updating releases on S3.');
 })().catch(error => {
-  logger.error(error);
+  console.error(error);
   process.exit(1);
 });
