@@ -37,8 +37,8 @@ commander
   .option('-w, --wrapper-build <build>', 'Specify the wrapper build (e.g. "Linux#3.7.1234")')
   .option('-s, --s3path <s3path>', 'Specify the base path on S3 (e.g. "apps/windows")')
   .option('-p, --path <path>', 'Specify the local path to search for files (e.g. "../../wrap")')
-  .option('-i, --key-id <path>', 'Specify the AWS access key ID')
-  .option('-k, --secret-key <path>', 'Specify the AWS secret access key ID')
+  .option('-i, --key-id <id>', 'Specify the AWS access key ID')
+  .option('-k, --secret-key <id>', 'Specify the AWS secret access key ID')
   .option('-d, --dry-run', 'Just log without actually uploading')
   .parse(process.argv);
 
