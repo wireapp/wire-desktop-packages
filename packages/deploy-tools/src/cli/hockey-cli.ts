@@ -55,7 +55,7 @@ function getUploadFile(platform: string, basePath: string): Promise<FindResult> 
   } else if (platform.includes('windows')) {
     return find('*-Setup.exe', {cwd: basePath});
   } else if (platform.includes('macos')) {
-    return find('*.pkg', {cwd: basePath});
+    return platform.includes('internal') ? find('*.zip', {cwd: basePath}) : find('*.pkg', {cwd: basePath});
   } else {
     throw new Error(`Invalid platform "${platform}"`);
   }
@@ -71,7 +71,7 @@ function getUploadFile(platform: string, basePath: string): Promise<FindResult> 
 
   logger.log(`Compressing "${filePath} ..."`);
 
-  const zipFile = await zip(filePath, filePath.replace(/\.([^.]+)$/, '.zip'));
+  const zipFile = filePath.endsWith('.zip') ? filePath : await zip(filePath, filePath.replace(/\.([^.]+)$/, '.zip'));
 
   logger.log(`Creating app version "${majorVersion}.${minorVersion}" on Hockey ...`);
 
