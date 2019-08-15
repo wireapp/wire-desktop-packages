@@ -28,6 +28,7 @@ import {CommonConfig, MacOSConfig} from './Config';
 export function checkCommanderOptions(commanderInstance: typeof commander, options: string[]): void {
   options.forEach(option => {
     if (!commanderInstance.hasOwnProperty(option)) {
+      console.error(`Environment variable "${option}" is not set.`);
       commanderInstance.outputHelp();
       process.exit(1);
     }
