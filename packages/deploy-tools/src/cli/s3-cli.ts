@@ -73,6 +73,6 @@ if (!commander.wrapperBuild.includes('#')) {
 
   logger.log('Done uploading to S3.');
 })().catch(error => {
-  logger.error(error);
+  console.error(error);
   process.exit(1);
 });

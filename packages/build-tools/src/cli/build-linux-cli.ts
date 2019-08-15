@@ -126,6 +126,6 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
   .then(buildFiles => buildFiles.forEach(buildFile => logger.log(`Built package "${buildFile}".`)))
   .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
-    logger.error(error);
+    console.error(error);
     process.exit(1);
   });

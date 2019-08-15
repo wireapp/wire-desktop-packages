@@ -138,6 +138,6 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
   })
   .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
-    logger.error(error);
+    console.error(error);
     process.exit(1);
   });

@@ -78,6 +78,6 @@ writeJson(packageJson, {...originalPackageJson, productName: commonConfig.name, 
   .then(([buildDir]) => logger.log(`Built package in "${buildDir}".`))
   .finally(() => Promise.all([writeJson(wireJsonResolved, defaultConfig), writeJson(packageJson, originalPackageJson)]))
   .catch(error => {
-    logger.error(error);
+    console.error(error);
     process.exit(1);
   });

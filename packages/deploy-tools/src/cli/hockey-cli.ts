@@ -96,6 +96,6 @@ function getUploadFile(platform: string, basePath: string): Promise<FindResult> 
 
   logger.log('Done uploading to Hockey.');
 })().catch(error => {
-  logger.error(error);
+  console.error(error);
   process.exit(1);
 });

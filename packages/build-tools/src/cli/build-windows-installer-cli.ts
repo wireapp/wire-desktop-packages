@@ -84,6 +84,6 @@ writeJson(wireJsonResolved, commonConfig)
   })
   .finally(() => writeJson(wireJsonResolved, defaultConfig))
   .catch(error => {
-    logger.error(error);
+    console.error(error);
     process.exit(1);
   });

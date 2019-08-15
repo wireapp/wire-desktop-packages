@@ -106,6 +106,6 @@ const endsWithAny = (suffixes: string[], str: string) => suffixes.some(suffix =>
 
   logger.log('Done creating draft.');
 })().catch(error => {
-  logger.error(error);
+  console.error(error);
   process.exit(1);
 });
