@@ -40,5 +40,5 @@
     "test": "yarn test:node",
     "test:node": "jasmine --config=jasmine.json"
   },
-  "version": "0.1.11"
+  "version": "0.1.12"
 }

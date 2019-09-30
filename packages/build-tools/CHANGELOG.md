@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.4](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.5.3...@wireapp/build-tools@0.5.4) (2019-09-30)
+
+
+### Bug Fixes
+
+* **build-tools:** Unpack native node modules on macOS ([#967](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/issues/967)) ([13c2840](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/commit/13c2840))
+
+
+
+
+
 ## [0.5.3](https://github.com/wireapp/wire-desktop-packages/tree/master/packages/build-tools/compare/@wireapp/build-tools@0.5.2...@wireapp/build-tools@0.5.3) (2019-07-16)
 
 **Note:** Version bump only for package @wireapp/build-tools
