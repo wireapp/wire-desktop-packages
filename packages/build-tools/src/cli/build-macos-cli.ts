@@ -69,7 +69,9 @@ const packagerOptions: electronPackager.Options = {
   appCategoryType: 'public.app-category.social-networking',
   appCopyright: commonConfig.copyright,
   appVersion: commonConfig.version,
-  asar: true,
+  asar: {
+    unpack: '*.node',
+  },
   buildVersion: commonConfig.buildNumber,
   darwinDarkModeSupport: true,
   dir: '.',
