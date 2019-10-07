@@ -4758,10 +4758,10 @@ commander@~2.19.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
   integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
 
-comment-parser@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-0.6.1.tgz#88040c7c0a57c62e64962c3e888518620a42e7c9"
-  integrity sha512-Putzd7Ilyvknmb1KxGf5el9uw0sPx9gEVnDrm8tlvXGN1i8Uaa2VBxB32hUhfzTlrEhhxNQ+pKq4ZNe8wNxjmw==
+comment-parser@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-0.6.2.tgz#b71e8fcacad954bea616779391838150d0096dcb"
+  integrity sha512-Wdms0Q8d4vvb2Yk72OwZjwNWtMklbC5Re7lD9cjCP/AG1fhocmc0TrxGBBAXPLy8fZQPrfHGgyygwI0lA7pbzA==
 
 common-tags@^1.8.0:
   version "1.8.0"
@@ -6279,15 +6279,14 @@ eslint-plugin-jasmine@2.10.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-jasmine/-/eslint-plugin-jasmine-2.10.1.tgz#5733b709e751f4bc40e31e1c16989bd2cdfbec97"
   integrity sha1-VzO3CedR9LxA4x4cFpib0s377Jc=
 
-eslint-plugin-jsdoc@15.8.0:
-  version "15.8.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-15.8.0.tgz#74cf0f35dec8524a6bd011f0cf199d24e09517f2"
-  integrity sha512-J6ozWkaAgBh1eLdQE+C2wcXhoEgDmGJOSB6zMF5ktEtMBnU62xT3wfHcUacuTnv6rt+ollC0uZThaEpGA+sTNg==
+eslint-plugin-jsdoc@15.9.10:
+  version "15.9.10"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-15.9.10.tgz#7cf8e0f4d2bba3e540e80acf119306f3fe31fd26"
+  integrity sha512-m3jQQ7MJCnOksAhrQU5wSuPZQND1qvFNGBddhM2k3P9dJRg1N0fKHl79SE2ZV/ykd2RV1flsMHEa46kY2RCUPA==
   dependencies:
-    comment-parser "^0.6.1"
+    comment-parser "^0.6.2"
     debug "^4.1.1"
-    flat-map-polyfill "^0.3.8"
-    jsdoctypeparser "5.0.1"
+    jsdoctypeparser "^5.1.1"
     lodash "^4.17.15"
     object.entries-ponyfill "^1.0.1"
     regextras "^0.6.1"
@@ -6912,11 +6911,6 @@ flat-cache@^2.0.1:
     flatted "^2.0.0"
     rimraf "2.6.3"
     write "1.0.3"
-
-flat-map-polyfill@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/flat-map-polyfill/-/flat-map-polyfill-0.3.8.tgz#4ec0bfb7c70e2962f00db03548d3620471fd8697"
-  integrity sha512-ZfmD5MnU7GglUEhiky9C7yEPaNq1/wh36RDohe+Xr3nJVdccwHbdTkFIYvetcdsoAckUKT51fuf44g7Ni5Doyg==
 
 flat@^4.1.0:
   version "4.1.0"
@@ -8734,10 +8728,10 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jsdoctypeparser@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/jsdoctypeparser/-/jsdoctypeparser-5.0.1.tgz#0d6bc09bb8bebeca5a588fcd508228d2189409a3"
-  integrity sha512-dYwcK6TKzvq+ZKtbp4sbQSW9JMo6s+4YFfUs5D/K7bZsn3s1NhEhZ+jmIPzby0HbkbECBe+hNPEa6a+E21o94w==
+jsdoctypeparser@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/jsdoctypeparser/-/jsdoctypeparser-5.1.1.tgz#99c57412fe736c70024bf54204ed1bb93cf4a49f"
+  integrity sha512-APGygIJrT5bbz5lsVt8vyLJC0miEbQf/z9ZBfTr4RYvdia8AhWMRlYgivvwHG5zKD/VW3d6qpChCy64hpQET3A==
 
 jsesc@^2.5.1:
   version "2.5.2"
