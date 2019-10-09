@@ -12,7 +12,7 @@
   },
   "description": "Interface for Wire's desktop updater.",
   "devDependencies": {
-    "@babel/core": "7.5.5",
+    "@babel/core": "7.6.3",
     "@babel/plugin-proposal-class-properties": "7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "7.5.5",
     "@babel/preset-env": "7.5.5",
