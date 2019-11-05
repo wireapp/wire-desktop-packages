@@ -33,7 +33,7 @@
     "husky": "3.0.3",
     "nyc": "14.1.1",
     "pure-uuid": "1.5.7",
-    "rimraf": "2.6.3",
+    "rimraf": "3.0.0",
     "typescript": "3.5.3"
   },
   "files": [
