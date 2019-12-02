@@ -20,7 +20,7 @@
     "@babel/preset-typescript": "7.3.3",
     "@storybook/addon-actions": "5.1.10",
     "@storybook/addon-console": "1.2.1",
-    "@storybook/addon-knobs": "5.1.10",
+    "@storybook/addon-knobs": "5.2.7",
     "@storybook/react": "5.1.10",
     "@types/luxon": "1.15.2",
     "@types/node": "~10",
