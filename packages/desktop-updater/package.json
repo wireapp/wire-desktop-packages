@@ -20,7 +20,7 @@
     "@babel/plugin-proposal-class-properties": "7.5.5",
     "@babel/preset-env": "7.5.5",
     "@babel/preset-typescript": "7.3.3",
-    "@babel/register": "7.5.5",
+    "@babel/register": "7.7.7",
     "@types/debug": "4.1.4",
     "@types/fs-extra": "8.0.0",
     "@types/libsodium-wrappers": "0.7.5",
