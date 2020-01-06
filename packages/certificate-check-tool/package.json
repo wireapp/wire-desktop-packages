@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@types/minimist": "1.2.0",
-    "@types/node": "10.14.15",
+    "@types/node": "13.1.4",
     "electron": "5.0.9",
     "electron-builder": "20.44.4",
     "rimraf": "2.6.3",
