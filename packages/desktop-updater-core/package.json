@@ -32,7 +32,7 @@
     "electron": "5.0.9",
     "electron-build-env": "0.2.0",
     "electron-rebuild": "1.8.5",
-    "husky": "3.0.3",
+    "husky": "4.0.9",
     "karma": "4.2.0",
     "rimraf": "2.6.3",
     "typescript": "3.5.3"
