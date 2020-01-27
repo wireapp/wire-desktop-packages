@@ -17,7 +17,7 @@
  *
  */
 
-import * as sodium from 'libsodium-wrappers';
+import sodium from 'libsodium-wrappers';
 
 declare const Data: Buffer;
 declare const Signature: Buffer;

@@ -18,7 +18,7 @@
  */
 
 import * as compareVersions from 'compare-versions';
-import * as debug from 'debug';
+import debug from 'debug';
 import {Notification, app, shell} from 'electron';
 // fsExtra will use the patched fs from Electron
 import * as fs from 'fs-extra';
@@ -119,8 +119,8 @@ export class Utils {
     return buildDate.toFormat(`${Utils.WEBAPP_VERSION_FORMAT}${environmentFormat}`);
   }
 
-  public static compareClientVersion(leftVersion: string, rightVersion: string): number {
-    return compareVersions(leftVersion, rightVersion);
+  public static compareClientVersion(leftVersion: string, rightVersion: string): boolean {
+    return compareVersions.compare(leftVersion, rightVersion, '>=');
   }
 
   public static getFilenameFromChecksum(checksum: Buffer): string {

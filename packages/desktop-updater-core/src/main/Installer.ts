@@ -17,7 +17,7 @@
  *
  */
 
-import * as debug from 'debug';
+import debug from 'debug';
 
 import {Config} from './Config';
 import {getLocales} from './Localization';

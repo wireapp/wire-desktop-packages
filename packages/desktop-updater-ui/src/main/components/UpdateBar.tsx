@@ -190,7 +190,7 @@ class UpdateBar extends React.Component<WithTranslation, UpdateBarState> {
           <UpdaterBar>
             <UpdaterBarMessage>
               <Trans>A new version of Wire is available</Trans>
-              <UpdaterBarDetails href="javascript://" onClick={this._onClickOnDetails}>
+              <UpdaterBarDetails href="#" onClick={this._onClickOnDetails}>
                 <Trans>Learn more</Trans>
               </UpdaterBarDetails>
             </UpdaterBarMessage>

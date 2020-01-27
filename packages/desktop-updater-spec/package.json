@@ -1,14 +1,14 @@
 {
   "dependencies": {
-    "@types/long": "4.0.0",
-    "@types/node": "~10",
+    "@types/long": "4.0.1",
+    "@types/node": "~13",
     "long": "4.0.0",
     "protobufjs": "6.8.8"
   },
   "description": "Types shared by Wire Desktop Updater components.",
   "devDependencies": {
-    "rimraf": "2.6.3",
-    "typescript": "3.5.3"
+    "rimraf": "3.0.0",
+    "typescript": "3.7.5"
   },
   "files": [
     "dist",

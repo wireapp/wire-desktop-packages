@@ -19,7 +19,7 @@
 
 import {app} from 'electron';
 import i18next from 'i18next';
-import * as Backend from 'i18next-node-fs-backend';
+import Backend from 'i18next-node-fs-backend';
 import * as path from 'path';
 
 const CONFIG = {
@@ -48,10 +48,7 @@ export type i18nLanguageIdentifier =
   | 'updater:newUpdateAvailableTitle'
   | 'wrapper-outdated:title';
 
-export async function getLocales(
-  key: i18nLanguageIdentifier,
-  options?: string | i18next.TOptions<i18next.StringMap> | undefined,
-): Promise<string> {
+export async function getLocales(key: i18nLanguageIdentifier, options?: string | {}): Promise<string> {
   if (!i18next.isInitialized) {
     // Wait the app to be ready in order to get the locale from Electron on Windows
     await app.isReady();

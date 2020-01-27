@@ -19,7 +19,7 @@
 
 import * as path from 'path';
 
-import * as debug from 'debug';
+import debug from 'debug';
 import {Utils} from './Utils';
 
 import {NodeVM as VirtualMachine, NodeVMOptions} from 'vm2';
@@ -60,7 +60,10 @@ export class Sandbox {
     this.debug('Lauching VM...');
     return new Promise((resolve, reject) => {
       try {
-        return vm.run(this.script!, this.path)(data => {
+        return vm.run(
+          this.script!,
+          this.path,
+        )(data => {
           this.debug('Callback received');
           if (data instanceof Error) {
             this.debug('Fatal error inside sandbox detected');
