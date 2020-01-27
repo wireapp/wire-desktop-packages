@@ -30,7 +30,7 @@ export class CookieManager {
   private static readonly translateExpirationDate = (expires: Date | undefined) =>
     expires ? Math.round(expires.getTime() / 1000) : undefined;
 
-  private static async _set(cookieData: Electron.Details, session: Electron.Session): Promise<void> {
+  private static async _set(cookieData: Electron.CookiesSetDetails, session: Electron.Session): Promise<void> {
     if (!cookieData.name || !cookieData.value) {
       throw new Error('Cookie name and value must be set');
     }

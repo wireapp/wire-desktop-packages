@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@types/node": "12",
     "@wireapp/certificate-check": "0.1.9",
     "@wireapp/desktop-updater-core": "0.2.13",
     "axios": "0.19.2",
@@ -27,7 +28,7 @@
     "@types/mocha": "5.2.7",
     "@types/set-cookie-parser": "0.0.6",
     "babel-plugin-istanbul": "6.0.0",
-    "electron": "6.1.7",
+    "electron": "7.1.8",
     "electron-mocha": "8.2.0",
     "fs-extra": "8.1.0",
     "husky": "4.2.1",
