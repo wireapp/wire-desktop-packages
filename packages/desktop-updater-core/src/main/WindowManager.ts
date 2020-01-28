@@ -60,7 +60,7 @@ export abstract class WindowManager {
     show: false,
     titleBarStyle: this.attachedMode ? undefined : 'hidden',
     useContentSize: true,
-    vibrancy: this.IS_MACOS ? 'menu' : undefined,
+    vibrancy: this.IS_MACOS ? 'medium-light' : undefined,
     webPreferences: {
       allowRunningInsecureContent: false,
       backgroundThrottling: false,
