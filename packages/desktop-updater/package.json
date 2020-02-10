@@ -2,7 +2,7 @@
   "dependencies": {
     "@wireapp/certificate-check": "0.1.9",
     "@wireapp/desktop-updater-core": "0.2.13",
-    "axios": "0.19.0",
+    "axios": "0.19.2",
     "debug": "4.1.1",
     "finalhandler": "1.1.2",
     "fs-extra": "8.1.0",
