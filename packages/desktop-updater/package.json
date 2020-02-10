@@ -28,7 +28,7 @@
     "@types/set-cookie-parser": "0.0.5",
     "babel-plugin-istanbul": "5.2.0",
     "electron": "5.0.9",
-    "electron-mocha": "8.1.1",
+    "electron-mocha": "8.2.0",
     "fs-extra": "8.1.0",
     "husky": "3.0.3",
     "nyc": "14.1.1",
