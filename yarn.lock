@@ -13997,10 +13997,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
   integrity sha512-iq+S7vZJE60yejDYM0ek6zg308+UZsdtPExWP9VZoCFCz1zkJoXFnAX7aZfd/ZwrkidzdUZL0C/ryW+JwAiIGw==
 
-vm2@3.8.2:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.8.2.tgz#7744c40f669c079db4fda44b8edae64afd26cfb0"
-  integrity sha512-FE9slf0o4YoD2Jf7VEjytHTac2SMt2J4ahf9Tw9YLLVqJm0DQiMpmN+I0+RsnOZ0kb7PyeR1rLxathXZWJ23kg==
+vm2@3.8.4:
+  version "3.8.4"
+  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.8.4.tgz#882be9135467942d84d1af80b6e6549b57c69041"
+  integrity sha512-5HThl+RBO/pwE9SF0kM4nLrpq5vXHBNk4BMX27xztvl0j1RsZ4/PMVJAu9rM9yfOtTo5KroL7XNX3031ExleSw==
 
 void-elements@^2.0.0, void-elements@^2.0.1:
   version "2.0.1"
