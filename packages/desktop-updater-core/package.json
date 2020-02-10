@@ -19,7 +19,7 @@
     "make-error-cause": "2.2.1",
     "protobufjs": "6.8.8",
     "random-js": "2.1.0",
-    "raygun": "0.10.1",
+    "raygun": "0.10.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "throttle-debounce": "2.1.0",
