@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@types/long": "4.0.0",
+    "@types/long": "4.0.1",
     "@types/node": "~10",
     "long": "4.0.0",
     "protobufjs": "6.8.8"
