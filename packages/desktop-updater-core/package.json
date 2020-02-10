@@ -16,7 +16,7 @@
     "libsodium-wrappers": "0.7.5",
     "long": "4.0.0",
     "luxon": "1.17.2",
-    "make-error-cause": "2.2.1",
+    "make-error-cause": "2.3.0",
     "protobufjs": "6.8.8",
     "random-js": "2.1.0",
     "raygun": "0.10.1",
