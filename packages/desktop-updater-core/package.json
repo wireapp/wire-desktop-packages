@@ -5,7 +5,7 @@
     "@types/node": "12",
     "@wireapp/desktop-updater-spec": "0.1.11",
     "axios": "0.19.2",
-    "compare-versions": "3.5.1",
+    "compare-versions": "3.6.0",
     "debug": "4.1.1",
     "i18next": "19.0.3",
     "i18next-electron-language-detector": "0.0.10",
