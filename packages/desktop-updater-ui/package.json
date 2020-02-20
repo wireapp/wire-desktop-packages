@@ -3,7 +3,7 @@
     "@emotion/core": "10.0.27",
     "@emotion/styled": "10.0.27",
     "@types/node": "12",
-    "@wireapp/react-ui-kit": "7.26.4",
+    "@wireapp/react-ui-kit": "7.26.8",
     "animejs": "3.1.0",
     "emotion": "10.0.27",
     "react": "16.12.0",
