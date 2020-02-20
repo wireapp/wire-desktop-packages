@@ -21,10 +21,9 @@ import debug from 'debug';
 import {dialog} from 'electron';
 import {BaseError} from 'make-error-cause';
 
-import {DownloadError} from './Downloader';
+import {DownloadError, ProtobufError} from './Downloader';
 import {InstallerError} from './Installer';
 import {getLocales} from './Localization';
-import {ProtobufError} from './Protobuf';
 import {Sandbox} from './Sandbox';
 import {LogicalError} from './Updater';
 import {Utils} from './Utils';
@@ -222,7 +221,8 @@ export class ErrorDispatcher {
 
       this.debug('Showing errorDispatcher prompt');
       try {
-        dialog.showMessageBox(options, async (response: number, checkboxChecked: boolean) =>
+        // BrowserWindow is optional but is not in the definitions...
+        (dialog as any).showMessageBox(options, async (response: number, checkboxChecked: boolean) =>
           this.dialogCallback(resolve, response, checkboxChecked),
         );
       } catch (error) {

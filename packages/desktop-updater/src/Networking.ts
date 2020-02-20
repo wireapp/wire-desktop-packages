@@ -208,8 +208,8 @@ export const InterceptProtocol = async (
     ses.protocol.uninterceptProtocol(INTERCEPTED_PROTOCOL, () =>
       ses.protocol.interceptStreamProtocol(
         INTERCEPTED_PROTOCOL,
-        async (request: Electron.InterceptStreamProtocolRequest, callback: Function) => {
-          const {headers, method, url} = request as {headers: Electron.Headers; method: AxiosMethod; url: string};
+        async (request: Electron.Request, callback: Function) => {
+          const {headers, method, url} = request as {headers: Record<string, string>; method: AxiosMethod; url: string};
           const isLocalServer = url.startsWith(currentEnvironmentBaseUrlPlain);
 
           let response: AxiosResponse;

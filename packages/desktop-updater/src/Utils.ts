@@ -39,10 +39,6 @@ export class Utils {
 export class UploadData {
   private static readonly debug = debug('wire:uploaddata');
 
-  private static getBlobFromUUID(ses: Electron.Session, identifier: string): Promise<Buffer> {
-    return new Promise(resolve => ses.getBlobData(identifier, result => resolve(result)));
-  }
-
   public static async getData(
     uploadData: Electron.UploadData[] | undefined,
     ses: Electron.Session,
@@ -51,7 +47,7 @@ export class UploadData {
 
     if (data.blobUUID) {
       UploadData.debug('Getting upload data Blob from UUID "%s"', data.blobUUID);
-      return this.getBlobFromUUID(ses, data.blobUUID);
+      return ses.getBlobData(data.blobUUID);
     }
 
     if (data.bytes) {

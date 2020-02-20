@@ -17,7 +17,7 @@
  *
  */
 
-import * as Long from 'long';
+import Long from 'long';
 import {DateTime} from 'luxon';
 import {NodeVMOptions} from 'vm2';
 
@@ -81,7 +81,7 @@ export class Verifier {
       throw new VerifyError('Expected ISO 8601 dates are not valid');
     }
 
-    // Ensure release date is not inferior to current time
+    // Ensure release date is not before the current local (system) time
     if (releaseDate > currentTime) {
       throw new VerifyError('This update has not been yet released');
     }
@@ -117,7 +117,7 @@ export class Verifier {
     const localEnvironment: string = await Environment.get();
     const isSameEnvironment = localEnvironment === webappVersionEnv;
 
-    // Ensure web versions are valid dates
+    // Ensure that all dates related to the web app are valid
     if (
       !defaultOutdatedWebappVersion ||
       !currentWebappVersion.isValid ||
@@ -127,16 +127,17 @@ export class Verifier {
       throw new VerifyError('Webapp versions are not valid');
     }
 
-    // Ensure none of the dates are below the default outdated webapp version
-    // that is set if no webapp version is available
+    // Ensure that the manifest does not contains a webapp version too old to be used
     if (defaultOutdatedWebappVersion >= webappVersionNumber) {
       throw new VerifyError('This webapp version is too old to be used');
     }
+
+    // Ensure that the manifest does not contains a webapp's minimum requirement too old to be used
     if (defaultOutdatedWebappVersion >= minimumWebAppVersionNumber) {
       throw new VerifyError('This webapp version have a minimum requirement that is too old to be used');
     }
 
-    // Ensure this version is newer or equal to the one installed
+    // Ensure the webapp version is newer or equal to the one installed
     if (currentWebappVersion > webappVersionNumber && isSameEnvironment === true) {
       throw new VerifyError('The given update is older than ours');
     }
@@ -148,12 +149,10 @@ export class Verifier {
 
     // PART 3: Check file-related data
 
-    // Check if checksum is present and is a buffer
+    // Ensure that the integrity checksum for the bundle is present and is a Buffer
     if (Buffer.isBuffer(fileChecksum) === false) {
       throw new VerifyError('File checksum is not a buffer');
     }
-
-    // Check if checksum is present and is a buffer
     try {
       fileChecksum.toString('hex');
       fileChecksumCompressed.toString('hex');
@@ -161,27 +160,27 @@ export class Verifier {
       throw new VerifyError('Could not convert the checksum to a hexdecimal value', error);
     }
 
-    // Check if content length is not more than 100MB (or the maximum allowed settings)
+    // Ensure that the file content length is a Long
     if (Long.isLong(fileContentLength) === false) {
       throw new VerifyError('File content length is not a Long value');
     }
 
     // PART 4: Check other data
 
-    // Check if changelog is indeed a string
+    // Ensure that the changelog is indeed a string
     if (typeof changelog !== 'string') {
       throw new VerifyError('Changelog is not a string');
     }
 
-    // Check if there is at least an author
+    // Ensure to have at least one provided author for this update
     if (Array.isArray(author) === false || author.length < 1) {
       throw new VerifyError('No author has been specified for this update');
     }
 
     // Do the blacklist / mismatch checks at the end (otherwise we will skip some checks)
 
-    // Ensure the wrapper is not blacklisted
-    if (Utils.compareClientVersion(currentWrapperVersion, minimumClientVersion) === -1) {
+    // Ensure the local wrapper version is not blacklisted by using the provided minimum wrapper version
+    if (!Utils.compareClientVersion(currentWrapperVersion, minimumClientVersion)) {
       throw new BlacklistedVersionError(Verifier.OUTDATED.WRAPPER);
     }
 
@@ -190,6 +189,7 @@ export class Verifier {
       throw new VerifyMismatchEnvironment('Local environment mismatch the remote one');
     }
 
+    // Ensure the webapp bundle target our environment
     // Throw an error if environment mismatch the remote one
     // Note: This check must come before checking if the web app is blacklisted as
     // we're going to reinstall it anyway
@@ -197,7 +197,7 @@ export class Verifier {
       throw new VerifyMismatchEnvironment('This webapp bundle is not intended for this environment');
     }
 
-    // Ensure the webapp is not blacklisted
+    // Ensure the webapp is not blacklisted by using the manifest webapp minimum requirement
     if (minimumWebAppVersionNumber > currentWebappVersion) {
       throw new BlacklistedVersionError(Verifier.OUTDATED.WEBAPP);
     }

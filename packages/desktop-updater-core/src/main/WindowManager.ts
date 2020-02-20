@@ -60,7 +60,7 @@ export abstract class WindowManager {
     show: false,
     titleBarStyle: this.attachedMode ? undefined : 'hidden',
     useContentSize: true,
-    vibrancy: this.IS_MACOS ? 'menu' : undefined,
+    vibrancy: this.IS_MACOS ? 'medium-light' : undefined,
     webPreferences: {
       allowRunningInsecureContent: false,
       backgroundThrottling: false,
@@ -76,7 +76,6 @@ export abstract class WindowManager {
       scrollBounce: true,
       session: session.fromPartition(WindowManager.SESSION_NAME),
       webSecurity: true,
-      webaudio: false,
       webgl: false,
       webviewTag: false,
     },
@@ -158,7 +157,7 @@ export abstract class WindowManager {
     // see https://github.com/electron/electron/issues/8841
     this.browserWindow.webContents.session.webRequest.onBeforeRequest(
       {
-        urls: ['*'],
+        urls: ['*://*/*'],
       },
       async (details, callback) => {
         // Only allow renderer document root

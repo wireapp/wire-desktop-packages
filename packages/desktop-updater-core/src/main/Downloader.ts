@@ -27,12 +27,12 @@ import {throttle} from 'throttle-debounce';
 import {ProgressInterface} from '@wireapp/desktop-updater-spec';
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {Config} from './Config';
-import {ProtobufError} from './Protobuf';
 import {Sandbox} from './Sandbox';
 import {Updater} from './Updater';
 import {Verifier} from './Verifier';
 
 export class DownloadError extends BaseError {}
+export class ProtobufError extends BaseError {}
 
 /**
  * The downloader is protected against:
@@ -197,14 +197,11 @@ export class Downloader {
   }
 
   private static convertBuffers<T, U>(data: T): U {
-    return Object.keys(data).reduce<U>(
-      (result, currentKey) => {
-        const entry = data[currentKey];
-        result[currentKey] = entry instanceof Uint8Array ? Buffer.from(entry) : entry;
-        return result;
-      },
-      {} as U,
-    );
+    return Object.keys(data).reduce<U>((result, currentKey) => {
+      const entry = data[currentKey];
+      result[currentKey] = entry instanceof Uint8Array ? Buffer.from(entry) : entry;
+      return result;
+    }, {} as U);
   }
 
   public static extractEnvelopeFrom(raw: Buffer): Updater.Envelope {

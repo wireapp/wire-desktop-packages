@@ -17,7 +17,7 @@
  *
  */
 
-import * as debug from 'debug';
+import debug from 'debug';
 
 import {Config} from './Config';
 import {getLocales} from './Localization';
@@ -63,7 +63,7 @@ export class Installer extends WindowManager {
       }
 
       if (this.browserWindow) {
-        this.browserWindow.setClosable(true);
+        this.browserWindow.closable = true;
         this.browserWindow.close();
       }
     } else {
@@ -83,13 +83,13 @@ export class Installer extends WindowManager {
     if (this.mainWindow) {
       if (freeze) {
         this.debug('Resize off');
-        this.mainWindow.setResizable(false);
+        this.mainWindow.resizable = false;
         const screenshot = await this.screenshotMainWindow();
         this.debug('Sent screenshot to webapp');
         this.mainWindow.webContents.send(BridgeIPC.UPDATE_START_INSTALL, {freeze: true, screenshot});
       } else {
         this.mainWindow.webContents.send(BridgeIPC.UPDATE_END_INSTALL);
-        this.mainWindow.setResizable(true);
+        this.mainWindow.resizable = true;
         await Utils.sleep(4500);
       }
     }

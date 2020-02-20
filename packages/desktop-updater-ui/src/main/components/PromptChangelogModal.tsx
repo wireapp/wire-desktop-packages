@@ -203,7 +203,7 @@ class PromptChangelogModal extends React.Component<Props & WithTranslation, Stat
             <Selectable>{manifest.webappVersionNumber}</Selectable>
           </NormalText>
         </Paragraph>
-        <Link fontSize="14px" textTransform="none" bold href="javascript://" onClick={this.toggleSigningDetails}>
+        <Link fontSize="14px" textTransform="none" bold href="#" onClick={this.toggleSigningDetails}>
           <Trans>This update is digitally signed.</Trans>
         </Link>
         {this.state.showSigningDetails ? (

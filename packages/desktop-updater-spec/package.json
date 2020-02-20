@@ -1,14 +1,14 @@
 {
   "dependencies": {
-    "@types/long": "4.0.0",
-    "@types/node": "~10",
+    "@types/long": "4.0.1",
+    "@types/node": "12",
     "long": "4.0.0",
     "protobufjs": "6.8.8"
   },
   "description": "Types shared by Wire Desktop Updater components.",
   "devDependencies": {
-    "rimraf": "2.6.3",
-    "typescript": "3.5.3"
+    "rimraf": "3.0.0",
+    "typescript": "3.7.5"
   },
   "files": [
     "dist",
@@ -20,9 +20,7 @@
   "name": "@wireapp/desktop-updater-spec",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-spec",
   "scripts": {
-    "build": "yarn build:proto && yarn build:node",
-    "build:node": "tsc",
-    "build:proto": "node proto/compile.js",
+    "build": "tsc",
     "clean": "rimraf dist",
     "dist": "yarn clean && yarn build",
     "test": "yarn test:node",
