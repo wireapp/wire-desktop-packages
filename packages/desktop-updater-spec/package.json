@@ -20,9 +20,7 @@
   "name": "@wireapp/desktop-updater-spec",
   "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater-spec",
   "scripts": {
-    "build": "yarn build:proto && yarn build:node",
-    "build:node": "tsc",
-    "build:proto": "node proto/compile.js",
+    "build": "tsc",
     "clean": "rimraf dist",
     "dist": "yarn clean && yarn build",
     "test": "yarn test:node",
