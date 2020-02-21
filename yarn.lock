@@ -6002,10 +6002,10 @@ electron-publish@20.44.4:
     lazy-val "^1.0.4"
     mime "^2.4.4"
 
-electron-rebuild@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-1.9.0.tgz#4ad9d9bc0816b7e52eaffd6520ff62e1d9376d0f"
-  integrity sha512-lnHW+gJIhukqVhME2v+LRDldafWwP0kGOPEpPuj59+F4NHEfu/vOjk8OLBcgDGt72CSWZm7zFUDE07oZxQJbHw==
+electron-rebuild@1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-1.10.0.tgz#06d72f70879e67af8d30b5c0ecfe8aadaba06602"
+  integrity sha512-n10i30GJg7JH8yZL3ZY3x80YtKmSYuuN8cl+3Feljm+sQDU4rUW1jbnYGu0eUHlK3kPOiNWPtW7srGcwZ9p1zQ==
   dependencies:
     colors "^1.3.3"
     debug "^4.1.1"
@@ -6015,7 +6015,7 @@ electron-rebuild@1.9.0:
     node-gyp "^6.0.1"
     ora "^3.4.0"
     spawn-rx "^3.0.0"
-    yargs "^13.2.4"
+    yargs "^14.2.0"
 
 electron-to-chromium@^1.3.122:
   version "1.3.340"
@@ -15253,7 +15253,7 @@ yargs@6.6.0:
     y18n "^3.2.1"
     yargs-parser "^4.2.0"
 
-yargs@^14.2.2:
+yargs@^14.2.0, yargs@^14.2.2:
   version "14.2.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-14.2.2.tgz#2769564379009ff8597cdd38fba09da9b493c4b5"
   integrity sha512-/4ld+4VV5RnrynMhPZJ/ZpOCGSCeghMykZ3BhdFBDa9Wy/RH6uEGNWDJog+aUlq+9OM1CFTgtYRW5Is1Po9NOA==
