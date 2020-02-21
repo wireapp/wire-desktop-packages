@@ -19,7 +19,7 @@
     "electron": "6.1.7",
     "electron-builder": "20.44.4",
     "rimraf": "2.6.3",
-    "typescript": "3.5.3"
+    "typescript": "3.8.2"
   },
   "files": [
     "electron"
