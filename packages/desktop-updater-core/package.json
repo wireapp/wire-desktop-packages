@@ -3,7 +3,7 @@
     "@types/debug": "4.1.5",
     "@types/luxon": "1.21.0",
     "@types/node": "12",
-    "@wireapp/desktop-updater-spec": "0.1.11",
+    "@wireapp/desktop-updater-spec": "0.1.12",
     "axios": "0.19.2",
     "compare-versions": "3.6.0",
     "debug": "4.1.1",
@@ -54,5 +54,5 @@
     "test": "yarn test:node",
     "test:node": "node src/test/jasmine.js"
   },
-  "version": "0.2.13"
+  "version": "0.2.14"
 }

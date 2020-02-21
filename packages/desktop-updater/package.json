@@ -1,8 +1,8 @@
 {
   "dependencies": {
     "@types/node": "12",
-    "@wireapp/certificate-check": "0.1.9",
-    "@wireapp/desktop-updater-core": "0.2.13",
+    "@wireapp/certificate-check": "0.1.10",
+    "@wireapp/desktop-updater-core": "0.2.14",
     "axios": "0.19.2",
     "debug": "4.1.1",
     "finalhandler": "1.1.2",
@@ -52,5 +52,5 @@
     "test": "yarn test:node",
     "test:node": "electron-mocha --require ./babel-register.js ./src/**/*.test.main.ts"
   },
-  "version": "0.2.15"
+  "version": "0.2.16"
 }
