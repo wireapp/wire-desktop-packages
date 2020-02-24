@@ -167,29 +167,6 @@ class Request {
   }
 }
 
-const debugIsInternetAvailable = debug('wire:server:isinternetavailable');
-
-export const isInternetAvailable = async (url: string) => {
-  debugIsInternetAvailable('Checking if "%s" is online...', url);
-  try {
-    await Request.doRemote({
-      ...globalAxiosConfig,
-      headers: {
-        'User-Agent': session.defaultSession ? session.defaultSession.getUserAgent() : '',
-      },
-      method: 'HEAD',
-      url,
-    });
-  } catch (error) {
-    if (!error.response) {
-      debugIsInternetAvailable('Error while checking for internet connection');
-      debugIsInternetAvailable(error);
-      return false;
-    }
-  }
-  return true;
-};
-
 const debugInterceptProtocol = debug('wire:server:interceptprotocol');
 
 export const InterceptProtocol = async (
