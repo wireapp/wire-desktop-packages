@@ -25,8 +25,8 @@ import axios, {AxiosRequestConfig, AxiosResponse, Method as AxiosMethod} from 'a
 import debug from 'debug';
 
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
+import {Config} from './Config';
 import {CookieManager} from './CookieManager';
-import {Config} from './index';
 import {UploadData} from './Utils';
 
 export const INTERCEPTED_PROTOCOL = 'https';
@@ -44,7 +44,7 @@ const debugCheckServerIdentity = debug('wire:server:checkserveridentity');
 // Certificate pinning
 const buildCert = cert => `-----BEGIN CERTIFICATE-----\n${cert.raw.toString('base64')}\n-----END CERTIFICATE-----`;
 
-const httpsMock = {
+const httpsExtends = {
   ...https,
   request: (options: https.RequestOptions, callback?: (res: http.IncomingMessage) => void): http.ClientRequest => {
     const request = https.request(options, callback);
@@ -137,7 +137,7 @@ class AgentManager {
 
 class Request {
   public static async doRemote<T>(config: AxiosRequestConfig, cookies?: string): Promise<AxiosResponse<T>> {
-    const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
+    const options: AxiosRequestConfig & {transport: typeof httpsExtends} = {
       ...globalAxiosConfig,
       ...config,
       headers: {
@@ -145,13 +145,13 @@ class Request {
         ...(cookies ? {Cookie: cookies} : {}),
       },
       httpsAgent: AgentManager.httpsAgents.remote,
-      transport: httpsMock,
+      transport: httpsExtends,
     };
     return axios(options);
   }
 
   public static async doLocal<T>(config: AxiosRequestConfig, accessToken: string): Promise<AxiosResponse<T>> {
-    const options: AxiosRequestConfig & {transport: typeof httpsMock} = {
+    const options: AxiosRequestConfig & {transport: typeof httpsExtends} = {
       ...globalAxiosConfig,
       ...config,
       headers: {
@@ -160,7 +160,7 @@ class Request {
       },
       httpsAgent: AgentManager.httpsAgents.local,
       method: 'GET',
-      transport: httpsMock,
+      transport: httpsExtends,
     };
     return axios(options);
   }

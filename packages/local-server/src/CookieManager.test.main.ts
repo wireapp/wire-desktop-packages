@@ -20,6 +20,7 @@
 import * as assert from 'assert';
 import {session} from 'electron';
 import UUID from 'pure-uuid';
+
 import {CookieManager} from './CookieManager';
 
 describe('CookieManager', () => {

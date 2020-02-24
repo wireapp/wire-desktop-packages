@@ -17,25 +17,22 @@
  *
  */
 
+import debug from 'debug';
+import {app, session} from 'electron';
 import * as fs from 'fs-extra';
 import * as sodium from 'libsodium-wrappers';
 import * as path from 'path';
 import {URL} from 'url';
-
-import debug from 'debug';
-import {BrowserWindow, app, session} from 'electron';
 import {NodeVM as VirtualMachine} from 'vm2';
-
-import {LocalServer as LocalServerChild} from './Child';
+import {Config} from './Config';
 import {InterceptProtocol as proxifyProtocol} from './Networking';
-
-import {Config, Utils} from './index';
+import {LocalServer as LocalServerChild} from './Server';
+import {Utils} from './Utils';
 
 import {BaseError} from 'make-error-cause';
 export class NotExistingError extends BaseError {}
 
 export interface ServerConstructorInterface {
-  browserWindowOptions: Electron.BrowserWindowConstructorOptions;
   intercept: string;
   documentRoot: string;
 }
@@ -46,17 +43,14 @@ export class Server {
   private static readonly WEB_SERVER_TOKEN_NAME = Config.Server.WEB_SERVER_TOKEN_NAME;
 
   private accessToken: string | undefined;
-  private browserWindow: Electron.BrowserWindow | undefined;
   private internalHost: URL | undefined;
-  private readonly browserWindowOptions: Electron.BrowserWindowConstructorOptions;
-  private readonly currentEnvironmentBaseUrl: URL;
-  private readonly currentEnvironmentBaseUrlPlain: string;
+  private readonly interceptBaseUrl: URL;
+  private readonly interceptBaseUrlPlain: string;
   private readonly documentRoot: string;
 
-  constructor(options: ServerConstructorInterface) {
-    this.browserWindowOptions = options.browserWindowOptions;
-    this.currentEnvironmentBaseUrl = new URL(options.intercept);
-    this.currentEnvironmentBaseUrlPlain = options.intercept;
+  constructor(private readonly browserWindow: Electron.BrowserWindow, options: ServerConstructorInterface) {
+    this.interceptBaseUrl = new URL(options.intercept);
+    this.interceptBaseUrlPlain = options.intercept;
     this.documentRoot = options.documentRoot;
   }
 
@@ -65,7 +59,7 @@ export class Server {
       throw new Error('Server is already active');
     }
 
-    if (typeof this.currentEnvironmentBaseUrl === 'undefined') {
+    if (typeof this.interceptBaseUrl === 'undefined') {
       throw new Error('Environment URL must be available');
     }
 
@@ -76,15 +70,14 @@ export class Server {
     // Note: We must wait the app to be ready first
     await app.whenReady();
 
-    Server.debug('Webapp url is %s', this.currentEnvironmentBaseUrl.toString());
-    this.browserWindow = new BrowserWindow({...this.browserWindowOptions});
+    Server.debug('Webapp url is %s', this.interceptBaseUrl.toString());
 
     // Start the server inside a VM
     await this.createWebInstance(this.documentRoot);
 
     // Modify the webviews in order to accept the custom protocol
     this.browserWindow.webContents.on('will-attach-webview', async (event, webPreferences, params) => {
-      if (params.src.startsWith(`${this.currentEnvironmentBaseUrl.origin}/`)) {
+      if (params.src.startsWith(`${this.interceptBaseUrl.origin}/`)) {
         Server.debug('New webapp webview detected, allowing Electron to perform normally inside...');
         const ses = session.fromPartition(params.partition);
 
@@ -123,8 +116,8 @@ export class Server {
         ses,
         this.internalHost,
         this.accessToken,
-        this.currentEnvironmentBaseUrlPlain,
-        this.currentEnvironmentBaseUrl,
+        this.interceptBaseUrlPlain,
+        this.interceptBaseUrl,
       );
     } catch (error) {
       Server.debug('Unable to intercept protocol of a session, exiting the app. Error: %s', error);

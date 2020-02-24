@@ -21,13 +21,11 @@ declare const Config: {[key: string]: any};
 declare const DocumentRoot: string;
 declare const AccessToken: string;
 
+import * as finalhandler from 'finalhandler';
 import * as http from 'http';
 import * as https from 'https';
-
-import * as finalhandler from 'finalhandler';
-import * as serveStatic from 'serve-static';
-
 import * as Random from 'random-js';
+import * as serveStatic from 'serve-static';
 
 // tslint:disable-next-line:no-console
 const log = console.log;
