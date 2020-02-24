@@ -2,7 +2,6 @@
   "dependencies": {
     "@types/node": "13",
     "@wireapp/certificate-check": "0.1.10",
-    "@wireapp/desktop-updater-core": "0.2.14",
     "axios": "0.19.2",
     "debug": "4.1.1",
     "finalhandler": "1.1.2",
@@ -42,8 +41,8 @@
   ],
   "license": "GPL-3.0",
   "main": "./dist/index.js",
-  "name": "@wireapp/desktop-updater",
-  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/desktop-updater",
+  "name": "@wireapp/local-server",
+  "repository": "https://github.com/wireapp/wire-desktop-packages/tree/master/packages/local-server",
   "scripts": {
     "clear": "rimraf dist",
     "coverage": "yarn test:node && nyc report",
@@ -52,5 +51,5 @@
     "test": "yarn test:node",
     "test:node": "electron-mocha --require ./babel-register.js ./src/**/*.test.main.ts"
   },
-  "version": "0.2.16"
+  "version": "0.0.1"
 }

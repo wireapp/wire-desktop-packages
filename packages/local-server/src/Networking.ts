@@ -25,7 +25,6 @@ import axios, {AxiosRequestConfig, AxiosResponse, Method as AxiosMethod} from 'a
 import debug from 'debug';
 
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
-import {session} from 'electron';
 import {CookieManager} from './CookieManager';
 import {Config} from './index';
 import {UploadData} from './Utils';

@@ -13,5 +13,4 @@ lerna-debug.log
 node_modules
 npm-debug.log*
 package-lock.json
-packages/desktop-updater-ui/.renderer/bundle.js
 yarn-error.log

@@ -26,7 +26,7 @@ import debug from 'debug';
 import {BrowserWindow, app, session} from 'electron';
 import {NodeVM as VirtualMachine} from 'vm2';
 
-import {Updater as UpdaterChild} from './Child';
+import {LocalServer as LocalServerChild} from './Child';
 import {InterceptProtocol as proxifyProtocol} from './Networking';
 
 import {Config, Utils} from './index';
@@ -96,7 +96,7 @@ export class Server {
     return this.browserWindow;
   }
 
-  private async createWebInstance(documentRoot: string): Promise<UpdaterChild.Child> {
+  private async createWebInstance(documentRoot: string): Promise<LocalServerChild.Child> {
     // Generate the credentials that will be used to validate HTTPS requests
     this.accessToken = await this.generateToken();
     if (typeof this.accessToken === 'undefined') {
@@ -159,7 +159,7 @@ export class Sandbox {
     },
   ) {}
 
-  public run(): Promise<{internalHost: string; server: UpdaterChild.Child}> {
+  public run(): Promise<{internalHost: string; server: LocalServerChild.Child}> {
     return new Promise(async (resolve, reject) => {
       const DocumentRoot = this.options.DocumentRoot;
 

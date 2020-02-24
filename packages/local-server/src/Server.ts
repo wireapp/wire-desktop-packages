@@ -32,7 +32,7 @@ import * as Random from 'random-js';
 // tslint:disable-next-line:no-console
 const log = console.log;
 
-export namespace Updater {
+export namespace LocalServer {
   export class Child {
     private internalHost: string | undefined;
     private server: https.Server | undefined;
@@ -58,9 +58,9 @@ export namespace Updater {
 
       this.server = https.createServer(
         {
-          cert: Updater.Child.WEB_SERVER_HOST_CERTIFICATE,
+          cert: LocalServer.Child.WEB_SERVER_HOST_CERTIFICATE,
           ciphers: 'ECDHE-RSA-AES128-GCM-SHA256',
-          key: Updater.Child.WEB_SERVER_HOST_PRIVATE_KEY,
+          key: LocalServer.Child.WEB_SERVER_HOST_PRIVATE_KEY,
           secureProtocol: 'TLSv1_2_method',
         },
         (req: http.IncomingMessage, res: http.ServerResponse) => this.onRequest(req, res),
@@ -82,13 +82,13 @@ export namespace Updater {
       // Don't accept requests if accessToken or Authorization header is not a string
       if (typeof AccessToken !== 'string' || typeof authorizationHeader !== 'string') {
         log('Cancelled a request because the access token and/or authorization header was empty');
-        return Updater.Child.endRequest(res);
+        return LocalServer.Child.endRequest(res);
       }
 
       // Check the token
-      if (AccessToken !== authorizationHeader.substr(Updater.Child.WEB_SERVER_TOKEN_NAME.length + 1)) {
+      if (AccessToken !== authorizationHeader.substr(LocalServer.Child.WEB_SERVER_TOKEN_NAME.length + 1)) {
         log('Cancelled a request because the access token is invalid');
-        return Updater.Child.endRequest(res);
+        return LocalServer.Child.endRequest(res);
       }
 
       // Serve the file
@@ -108,7 +108,7 @@ export namespace Updater {
           res.setHeader('X-XSS-Protection', '1; mode=block');
           res.setHeader('Referrer-Header', 'no-referrer');
           res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-          res.setHeader('Content-Security-Policy', Updater.Child.WEB_SERVER_CSP);
+          res.setHeader('Content-Security-Policy', LocalServer.Child.WEB_SERVER_CSP);
 
           // Disable caching
           res.setHeader('Cache-Control', 'no-cache');
@@ -129,7 +129,7 @@ export namespace Updater {
     private listen(retry: number = 0): Promise<void> {
       return new Promise((resolve, reject) => {
         // Ensure we do not reach the max retry limit
-        if (retry >= Updater.Child.MAX_RETRY_BEFORE_REJECT) {
+        if (retry >= LocalServer.Child.MAX_RETRY_BEFORE_REJECT) {
           return reject(new Error('Maximum attempts reached. Could not listen on a port, aborting.'));
         }
 
@@ -140,17 +140,17 @@ export namespace Updater {
 
         // Get a random port
         const portToUse: number = Random.integer(
-          Updater.Child.WEB_SERVER_LISTEN_PORT_MIN,
-          Updater.Child.WEB_SERVER_LISTEN_PORT_MAX,
+          LocalServer.Child.WEB_SERVER_LISTEN_PORT_MIN,
+          LocalServer.Child.WEB_SERVER_LISTEN_PORT_MAX,
         )(Random.nodeCrypto);
 
         // Listen on the port
         return this.server
-          .listen(portToUse, Updater.Child.WEB_SERVER_LISTEN, () => {
+          .listen(portToUse, LocalServer.Child.WEB_SERVER_LISTEN, () => {
             // Server is now active
-            this.internalHost = `https://${Updater.Child.WEB_SERVER_HOST_LOCAL}:${portToUse}`;
+            this.internalHost = `https://${LocalServer.Child.WEB_SERVER_HOST_LOCAL}:${portToUse}`;
 
-            log(`Listening on ${Updater.Child.WEB_SERVER_LISTEN}:${portToUse}, path: ${DocumentRoot}`);
+            log(`Listening on ${this.internalHost}, path: ${DocumentRoot}`);
             return resolve();
           })
           .once('error', (error: Error) => {
@@ -165,7 +165,7 @@ export namespace Updater {
 // tslint:disable-next-line:no-default-export
 export default async callback => {
   try {
-    const server = new Updater.Child();
+    const server = new LocalServer.Child();
     const {internalHost} = await server.start();
     if (typeof internalHost === 'undefined') {
       throw new Error('Unable to get internal host. Server is likely not running.');
