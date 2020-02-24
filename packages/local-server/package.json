@@ -48,6 +48,7 @@
     "clear": "rimraf dist",
     "coverage": "yarn test:node && nyc report",
     "dist": "yarn clear && tsc",
+    "release": "lerna publish",
     "start": "electron demo.js",
     "test": "yarn test:node",
     "test:node": "electron-mocha --require ./babel-register.js ./src/**/*.test.main.ts"
