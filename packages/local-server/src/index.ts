@@ -27,7 +27,6 @@ import {NodeVM as VirtualMachine} from 'vm2';
 import {Config} from './Config';
 import {InterceptProtocol as proxifyProtocol} from './Networking';
 import {LocalServer as LocalServerChild} from './Server';
-import {Utils} from './Utils';
 
 import {BaseError} from 'make-error-cause';
 export class NotExistingError extends BaseError {}
@@ -48,13 +47,13 @@ export class Server {
   private readonly interceptBaseUrlPlain: string;
   private readonly documentRoot: string;
 
-  constructor(private readonly browserWindow: Electron.BrowserWindow, options: ServerConstructorInterface) {
+  constructor(options: ServerConstructorInterface) {
     this.interceptBaseUrl = new URL(options.intercept);
     this.interceptBaseUrlPlain = options.intercept;
     this.documentRoot = options.documentRoot;
   }
 
-  public async start(): Promise<Electron.BrowserWindow> {
+  public async attachTo(browserWindow: Electron.BrowserWindow): Promise<void> {
     if (this.isServerEnabled()) {
       throw new Error('Server is already active');
     }
@@ -69,24 +68,21 @@ export class Server {
 
     // Note: We must wait the app to be ready first
     await app.whenReady();
-
     Server.debug('Webapp url is %s', this.interceptBaseUrl.toString());
 
     // Start the server inside a VM
     await this.createWebInstance(this.documentRoot);
 
     // Modify the webviews in order to accept the custom protocol
-    this.browserWindow.webContents.on('will-attach-webview', async (event, webPreferences, params) => {
-      if (params.src.startsWith(`${this.interceptBaseUrl.origin}/`)) {
-        Server.debug('New webapp webview detected, allowing Electron to perform normally inside...');
+    browserWindow.webContents.on('will-attach-webview', async (_event, webPreferences, params) => {
+      if (params.src.startsWith(`${this.interceptBaseUrl.origin}/`) && this.isServerEnabled()) {
+        Server.debug('New webapp webview detected, intercept ...');
         const ses = session.fromPartition(params.partition);
 
         await this.hookSessionSettingsToElectron(ses);
         webPreferences.session = ses;
       }
     });
-
-    return this.browserWindow;
   }
 
   private async createWebInstance(documentRoot: string): Promise<LocalServerChild.Child> {
@@ -95,7 +91,8 @@ export class Server {
     if (typeof this.accessToken === 'undefined') {
       throw new Error('Access token not available');
     }
-    Server.debug('Running VM...');
+
+    Server.debug('Starting VM...');
     const sandbox = new Sandbox(path.resolve(__dirname, 'Server.js'), {
       AccessToken: this.accessToken,
       Config: Config.Server,
@@ -105,7 +102,7 @@ export class Server {
 
     // Set internal host
     this.internalHost = new URL(internalHost);
-    Server.debug('Internal host is: %o', this.internalHost);
+    Server.debug('Internal host is: %o', this.internalHost.origin);
 
     return server;
   }
@@ -226,7 +223,8 @@ export class Sandbox {
 
       Sandbox.debug('Lauching VM... (2)');
       try {
-        const callback = this.vm.run(await Utils.readFileAsString(this.filename), this.filename);
+        const fileContent = await fs.readFile(this.filename, {encoding: 'utf8'});
+        const callback = this.vm.run(fileContent, this.filename);
 
         // VM callback
         callback.default(internalHost => resolve(internalHost));
