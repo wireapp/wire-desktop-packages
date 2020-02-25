@@ -27,7 +27,6 @@ import {NodeVM as VirtualMachine} from 'vm2';
 import {Config} from './Config';
 import {InterceptProtocol as proxifyProtocol} from './Networking';
 import {LocalServer as LocalServerChild} from './Server';
-import {Utils} from './Utils';
 
 import {BaseError} from 'make-error-cause';
 export class NotExistingError extends BaseError {}
@@ -224,7 +223,8 @@ export class Sandbox {
 
       Sandbox.debug('Lauching VM... (2)');
       try {
-        const callback = this.vm.run(await Utils.readFileAsString(this.filename), this.filename);
+        const fileContent = await fs.readFile(this.filename, {encoding: 'utf8'});
+        const callback = this.vm.run(fileContent, this.filename);
 
         // VM callback
         callback.default(internalHost => resolve(internalHost));
