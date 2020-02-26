@@ -25,17 +25,19 @@ import * as path from 'path';
 import {URL} from 'url';
 import {NodeVM as VirtualMachine} from 'vm2';
 import {Config} from './Config';
-import {InterceptProtocol as proxifyProtocol} from './Networking';
+import {proxifyProtocol} from './Networking';
 import {LocalServer as LocalServerChild} from './Server';
-import {Utils} from './Utils';
 
 import {BaseError} from 'make-error-cause';
+
 export class NotExistingError extends BaseError {}
 
 export interface ServerConstructorInterface {
   intercept: string;
   documentRoot: string;
 }
+
+export {proxifyNetworkingLayer} from './Networking';
 
 export class Server {
   private static readonly debug = debug('wire:server');
