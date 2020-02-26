@@ -30,7 +30,6 @@ import debug from 'debug';
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
 import {Config} from './Config';
 import {CookieManager} from './CookieManager';
-import {UploadData} from './Utils';
 
 export const INTERCEPTED_PROTOCOL = 'https';
 export const TIMEOUT_SOCKET = 5000; // 5 seconds
@@ -74,6 +73,29 @@ const httpsExtends = {
     return request;
   },
 };
+
+class UploadData {
+  private static readonly debug = debug('wire:uploaddata');
+
+  public static async getData(
+    uploadData: Electron.UploadData[] | undefined,
+    ses: Electron.Session,
+  ): Promise<Buffer | undefined> {
+    const data = uploadData ? uploadData[0] : {blobUUID: undefined, bytes: undefined};
+
+    if (data.blobUUID) {
+      UploadData.debug('Getting upload data Blob from UUID "%s"', data.blobUUID);
+      return ses.getBlobData(data.blobUUID);
+    }
+
+    if (data.bytes) {
+      UploadData.debug('Getting upload data bytes');
+      return data.bytes;
+    }
+
+    return undefined;
+  }
+}
 
 class AgentManager {
   public static readonly httpsAgentsDefaults: Partial<https.AgentOptions> = {
