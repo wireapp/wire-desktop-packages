@@ -193,6 +193,8 @@ export function proxifyNetworkingLayer(proxyUrl: string | url.UrlWithStringQuery
       hostname,
       port,
       protocol,
+      secureEndpoint: true,
+      secureProxy: protocol === 'https:',
     })
   );
 }
