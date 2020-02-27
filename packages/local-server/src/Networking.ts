@@ -20,8 +20,11 @@
 import * as http from 'http';
 import * as https from 'https';
 import * as tls from 'tls';
+import * as url from 'url';
 
 import axios, {AxiosRequestConfig, AxiosResponse, Method as AxiosMethod} from 'axios';
+const HttpsProxyAgent = require('https-proxy-agent');
+
 import debug from 'debug';
 
 import {hostnameShouldBePinned, verifyPinning} from '@wireapp/certificate-check';
@@ -102,11 +105,11 @@ class AgentManager {
     rejectUnauthorized: true,
     secureProtocol: 'TLSv1_2_method',
   };
-  public static readonly httpsAgents: {
-    local: https.Agent;
-    remote: https.Agent;
+  public static readonly httpsAgentsOptions: {
+    local: https.AgentOptions;
+    remote: https.AgentOptions;
   } = {
-    local: new https.Agent({
+    local: {
       ...AgentManager.httpsAgentsDefaults,
       ca: Config.Server.WEB_SERVER_HOST_CERTIFICATE,
       checkServerIdentity: (hostname: string, cert: tls.PeerCertificate) => {
@@ -116,8 +119,8 @@ class AgentManager {
         return undefined;
       },
       ciphers: Config.Server.WEB_SERVER_CIPHERS,
-    }),
-    remote: new https.Agent({
+    },
+    remote: {
       ...AgentManager.httpsAgentsDefaults,
       checkServerIdentity: (hostname: string, cert: tls.PeerCertificate) => {
         // Make sure the certificate is issued to the host we are connected to
@@ -153,8 +156,47 @@ class AgentManager {
 
         return undefined;
       },
-    }),
+    },
   };
+
+  public static httpsAgents = {
+    local: new https.Agent(AgentManager.httpsAgentsOptions.local),
+    remote: new https.Agent(AgentManager.httpsAgentsOptions.remote),
+  };
+};
+
+// This will allow the proxy agent to be set after we init the local web server
+function HotswapRemoteAgent(agentToReplaceWith: https.Agent): void {
+  if (AgentManager.httpsAgents?.remote?.destroy) {
+    AgentManager.httpsAgents.remote.destroy();
+  }
+  AgentManager.httpsAgents.remote = agentToReplaceWith;
+}
+
+const debugProxifyNetworkingLayer = debug('wire:server:proxifynetworkinglayer');
+
+// Forward traffic to a HTTP(S) proxy server
+let proxySet = false;
+export function proxifyNetworkingLayer(proxyUrl: string | url.UrlWithStringQuery, overwrite: boolean = false): void {
+  const {auth, hostname, port, protocol} = typeof proxyUrl === 'string' ? url.parse(proxyUrl) : proxyUrl;
+  if (proxySet && !overwrite) {
+    debugProxifyNetworkingLayer('The HTTPS remote agent is already using a proxy, use "overwrite" option to force it');
+    return;
+  }
+  proxySet = true;
+
+  debugProxifyNetworkingLayer('Hot swapping HTTPS remote agent...', {auth, hostname, port, protocol});
+  HotswapRemoteAgent(
+    new HttpsProxyAgent({
+      ...AgentManager.httpsAgentsOptions.remote,
+      auth,
+      hostname,
+      port,
+      protocol,
+      secureEndpoint: true,
+      secureProxy: protocol === 'https:',
+    })
+  );
 }
 
 class Request {
@@ -188,9 +230,9 @@ class Request {
   }
 }
 
-const debugInterceptProtocol = debug('wire:server:interceptprotocol');
+const debugInterceptProtocol = debug('wire:server:proxifyprotocol');
 
-export const InterceptProtocol = async (
+export const proxifyProtocol = async (
   ses: Electron.Session,
   internalHost: URL | undefined,
   accessToken: string | undefined,
