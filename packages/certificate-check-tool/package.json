@@ -11,7 +11,7 @@
   "description": "Tool to check that Wire's domains use the expected certificate.",
   "dependencies": {
     "@wireapp/certificate-check": "0.1.10",
-    "minimist": "1.2.0"
+    "minimist": "1.2.2"
   },
   "devDependencies": {
     "@types/minimist": "1.2.0",
