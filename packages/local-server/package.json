@@ -6,7 +6,7 @@
     "debug": "4.1.1",
     "finalhandler": "1.1.2",
     "fs-extra": "8.1.0",
-    "jsrsasign": "8.0.12",
+    "jsrsasign": "8.0.15",
     "libsodium-wrappers": "0.7.6",
     "make-error-cause": "2.3.0",
     "mime-types": "2.1.26",
