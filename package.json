@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "2.21.0",
+    "@typescript-eslint/eslint-plugin": "2.32.0",
     "@typescript-eslint/parser": "2.21.0",
     "@wireapp/eslint-config": "1.4.0",
     "@wireapp/prettier-config": "0.3.0",
