@@ -10,7 +10,7 @@
   },
   "description": "Tool to check that Wire's domains use the expected certificate.",
   "dependencies": {
-    "@wireapp/certificate-check": "0.1.10",
+    "@wireapp/certificate-check": "0.1.11",
     "minimist": "1.2.5"
   },
   "devDependencies": {
@@ -43,5 +43,5 @@
     "start": "electron . --devtools",
     "test": "exit 0"
   },
-  "version": "0.3.3"
+  "version": "0.3.4"
 }
