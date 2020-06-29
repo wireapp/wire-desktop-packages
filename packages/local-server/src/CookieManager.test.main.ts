@@ -19,14 +19,14 @@
 
 import * as assert from 'assert';
 import {session} from 'electron';
-import UUID from 'pure-uuid';
+import UUID from 'uuidjs';
 
 import {CookieManager} from './CookieManager';
 
 describe('CookieManager', () => {
   let ephemeralSession: Electron.Session;
   beforeEach(() => {
-    ephemeralSession = session.fromPartition(new UUID(4).format());
+    ephemeralSession = session.fromPartition(UUID.genV4().toString());
   });
 
   describe('get', () => {
