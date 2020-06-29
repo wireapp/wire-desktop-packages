@@ -28,16 +28,13 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "*.{ts,tsx}": [
-      "tslint --config tslint.json --project tsconfig.json --fix",
-      "git add"
+      "tslint --config tslint.json --project tsconfig.json --fix"
     ],
     "*.{json,md,scss,yml}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "prettier": "@wireapp/prettier-config",
