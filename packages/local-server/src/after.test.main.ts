@@ -17,8 +17,12 @@
  *
  */
 
-import * as fs from 'fs-extra';
+import * as fs from 'fs';
 import * as path from 'path';
+
+declare var process: NodeJS.Process & {
+  type: string;
+};
 
 declare global {
   namespace NodeJS {
@@ -29,8 +33,10 @@ declare global {
 }
 
 const writeCoverageReport = (coverage: Object) => {
-  const outputFile = path.resolve(process.cwd(), `.nyc_output/coverage.${process['type']}.json`);
-  fs.outputJsonSync(outputFile, coverage);
+  const outputDir = path.resolve(process.cwd(), '.nyc_output');
+  const outputFile = path.join(outputDir, `/coverage.${process.type}.json`);
+  fs.mkdirSync(outputDir);
+  fs.writeFileSync(outputFile, JSON.stringify(coverage));
 };
 
 after(() => {

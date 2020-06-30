@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "types": ["fs-extra", "libsodium-wrappers", "mocha", "set-cookie-parser"]
+    "types": ["libsodium-wrappers", "mocha", "set-cookie-parser"]
   },
   "exclude": ["dist", "node_modules", "src/**/*.test*.ts"],
   "extends": "../../tsconfig.json"

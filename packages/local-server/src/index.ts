@@ -19,7 +19,7 @@
 
 import debug from 'debug';
 import {app, session} from 'electron';
-import * as fs from 'fs-extra';
+import * as fs from 'fs';
 import * as sodium from 'libsodium-wrappers';
 import * as path from 'path';
 import {URL} from 'url';
@@ -196,7 +196,7 @@ export class Sandbox {
                */
               stat(
                 fsPath: string | Buffer,
-                callback: (err: NodeJS.ErrnoException, stats: any /* fs.Stats */) => void,
+                callback: (err: NodeJS.ErrnoException | null, stats: fs.Stats | null) => void,
               ): void {
                 // Ensure requested path is within the document root
                 if (!path.normalize(fsPath.toString()).startsWith(DocumentRoot)) {
@@ -212,7 +212,7 @@ export class Sandbox {
             },
           },
           // ToDo: Until folder where the node_modules is known, disable root folder restrictions
-          //root: path.resolve(__dirname, './'),
+          // root: path.resolve(__dirname, './'),
         },
       });
 
@@ -223,7 +223,7 @@ export class Sandbox {
 
       Sandbox.debug('Lauching VM... (2)');
       try {
-        const fileContent = await fs.readFile(this.filename, {encoding: 'utf8'});
+        const fileContent = await fs.promises.readFile(this.filename, {encoding: 'utf8'});
         const callback = this.vm.run(fileContent, this.filename);
 
         // VM callback
