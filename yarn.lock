@@ -511,12 +511,12 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-syntax-typescript@^7.8.3":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.8.3.tgz#c1f659dda97711a569cef75275f7e15dcaa6cabc"
-  integrity sha512-GO1MQ/SGGGoiEXY0e0bSpHimJvxqB7lktLLIq2pv8xG7WZ8IMEle74jIe1FhprHBWjwjZtXHkycDLZXIWM5Wfg==
+"@babel/plugin-syntax-typescript@^7.10.4":
+  version "7.10.4"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.10.4.tgz#2f55e770d3501e83af217d782cb7517d7bb34d25"
+  integrity sha512-oSAEz1YkBCAKr5Yiq8/BNtvSAPwkp/IyUnwZogd8p+F0RuYQQrLeRUzIQhueQTTBy/F+a40uS7OFKxnkRvmvFQ==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.8.3"
+    "@babel/helper-plugin-utils" "^7.10.4"
 
 "@babel/plugin-transform-arrow-functions@^7.10.4":
   version "7.10.4"
@@ -754,14 +754,14 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-typescript@^7.8.3":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.8.3.tgz#be6f01a7ef423be68e65ace1f04fc407e6d88917"
-  integrity sha512-Ebj230AxcrKGZPKIp4g4TdQLrqX95TobLUWKd/CwG7X1XHUH1ZpkpFvXuXqWbtGRWb7uuEWNlrl681wsOArAdQ==
+"@babel/plugin-transform-typescript@^7.10.4":
+  version "7.10.4"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.10.4.tgz#8b01cb8d77f795422277cc3fcf45af72bc68ba78"
+  integrity sha512-3WpXIKDJl/MHoAN0fNkSr7iHdUMHZoppXjf2HJ9/ed5Xht5wNIsXllJXdityKOxeA3Z8heYRb1D3p2H5rfCdPw==
   dependencies:
-    "@babel/helper-create-class-features-plugin" "^7.8.3"
-    "@babel/helper-plugin-utils" "^7.8.3"
-    "@babel/plugin-syntax-typescript" "^7.8.3"
+    "@babel/helper-create-class-features-plugin" "^7.10.4"
+    "@babel/helper-plugin-utils" "^7.10.4"
+    "@babel/plugin-syntax-typescript" "^7.10.4"
 
 "@babel/plugin-transform-unicode-escapes@^7.10.4":
   version "7.10.4"
@@ -859,13 +859,13 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/preset-typescript@7.8.3":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.8.3.tgz#90af8690121beecd9a75d0cc26c6be39d1595d13"
-  integrity sha512-qee5LgPGui9zQ0jR1TeU5/fP9L+ovoArklEqY12ek8P/wV5ZeM/VYSQYwICeoT6FfpJTekG9Ilay5PhwsOpMHA==
+"@babel/preset-typescript@7.10.4":
+  version "7.10.4"
+  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.10.4.tgz#7d5d052e52a682480d6e2cc5aa31be61c8c25e36"
+  integrity sha512-SdYnvGPv+bLlwkF2VkJnaX/ni1sMNetcGI1+nThF1gyv6Ph8Qucc4ZZAjM5yZcE/AKRXIOTZz7eSRDWOEjPyRQ==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.8.3"
-    "@babel/plugin-transform-typescript" "^7.8.3"
+    "@babel/helper-plugin-utils" "^7.10.4"
+    "@babel/plugin-transform-typescript" "^7.10.4"
 
 "@babel/register@7.10.4":
   version "7.10.4"
