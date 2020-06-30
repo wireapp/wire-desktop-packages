@@ -17,7 +17,7 @@
     "@types/minimist": "1.2.0",
     "@types/node": "10.14.15",
     "electron": "8.0.1",
-    "electron-builder": "22.3.2",
+    "electron-builder": "22.7.0",
     "rimraf": "3.0.2",
     "typescript": "3.9.5"
   },
