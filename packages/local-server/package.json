@@ -5,7 +5,7 @@
     "axios": "0.19.2",
     "debug": "4.1.1",
     "finalhandler": "1.1.2",
-    "jsrsasign": "8.0.20",
+    "jsrsasign": "9.1.9",
     "libsodium-wrappers": "0.7.6",
     "make-error-cause": "2.3.0",
     "mime-types": "2.1.27",
