@@ -3,7 +3,7 @@
     "@types/node": "12",
     "@wireapp/certificate-check": "0.1.12",
     "axios": "0.19.2",
-    "debug": "4.1.1",
+    "debug": "4.2.0",
     "finalhandler": "1.1.2",
     "jsrsasign": "8.0.20",
     "libsodium-wrappers": "0.7.6",
