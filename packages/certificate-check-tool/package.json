@@ -14,7 +14,7 @@
     "minimist": "1.2.5"
   },
   "devDependencies": {
-    "@types/minimist": "1.2.0",
+    "@types/minimist": "1.2.1",
     "@types/node": "10.14.15",
     "electron": "8.2.4",
     "electron-builder": "22.7.0",
