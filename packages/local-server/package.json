@@ -27,7 +27,7 @@
     "@types/set-cookie-parser": "0.0.6",
     "babel-plugin-istanbul": "6.0.0",
     "electron": "8.2.4",
-    "electron-mocha": "8.2.2",
+    "electron-mocha": "10.0.0",
     "husky": "4.2.5",
     "nyc": "15.1.0",
     "rimraf": "3.0.2",
